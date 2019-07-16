@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import QuizContainer from './mcQuiz/QuizContainer'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+//I've chosen to leave App as a router even though no routing is really happening now in case it makes sense to have multiple routes later, e.g. for login or different types of quizzes, etc.
+    return (
+      <Router>
+        <Route path='/' exact component={QuizContainer} />
+      </Router>
+    )
 
-export default App;
+  }
+
+
+export default App
