@@ -164,7 +164,6 @@ function Quiz (props) {
           <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
             {currentQ.choices.map(choice => {
               let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
-              console.log('test ' + inpt);
               return (
               <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={inpt} redButton={incorrectTry} />)})}
           </div>

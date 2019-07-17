@@ -13,7 +13,7 @@ function QuizContainer(props) {
 
     const config = {
         method: 'post',
-        url:'http://localhost:4000',
+        url:'/api/loadquiz',
         data: {numQs: 16},
         type: 'application/json',
     }
