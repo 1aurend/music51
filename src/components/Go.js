@@ -10,7 +10,7 @@ export default function Go(props) {
 
   return (
     <div style={go}>
-      <button onClick={props.onClick} style={{height:"5rem", width: "5rem", display: 'block', border: 'none', cursor: 'pointer'}}><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 35.06"><title>go</title><path d={path} style={{fill: 'black'}}/></svg></button>
+      <button onClick={props.onClick} style={{height:"5rem", width: "5rem", display: 'block', border: 'none', cursor: 'pointer', background: 'none'}}><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 35.06"><title>go</title><path d={path} style={{fill: 'black'}}/></svg></button>
     </div>
   )
 
