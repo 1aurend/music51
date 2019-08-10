@@ -7,7 +7,7 @@ import SideBar from './SideBar'
 import { pagegrid, question, choices, results, questionh2, questiontext } from './quizStyles'
 
 
-function Quiz (props) {
+export default function Quiz (props) {
 
   const [currentQ, nextQ] = useState(props.data[0].questions[0])
   const [endOfQ, doneQ] = useState(false)
@@ -202,5 +202,3 @@ function Quiz (props) {
 
 
 }
-
-export default Quiz

@@ -1,5 +1,5 @@
 import React from 'react'
-import QuizContainer from './mcQuiz/QuizContainer'
+import QuizContainer from './components/QuizContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 

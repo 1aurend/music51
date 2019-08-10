@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 
-function Chord(props) {
+export default function Chord(props) {
 
   const container = useRef(document.createElement('container'))
   const [loading, done] = useState(true)
@@ -94,5 +94,3 @@ function Chord(props) {
 )
 
 }
-
-export default Chord

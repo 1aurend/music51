@@ -9,7 +9,7 @@ export default function Options({checked, onChange, onCheck}) {
 
     return (
       <div style={selector}>
-        <h3>We recommend 10 chords with a goal of 1 second per question, but you can enter a different number of chords here for a longer or shorter session:</h3>
+        <h3>We recommend 10 chords with a goal of less than 2 seconds per question, but you can enter a different number of chords here for a longer or shorter session:</h3>
         <input onChange={onChange} type="text" placeholder="10"/>
         <div>
             <h3>Chord Types</h3>

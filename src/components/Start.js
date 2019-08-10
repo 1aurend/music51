@@ -5,7 +5,7 @@ import Go from './Go.js'
 import Quiz from './Quiz'
 
 
-function Start(props) {
+export default function Start(props) {
 
   const numQs = useRef(1)
   const [ready, launchQuiz] = useState(false)
@@ -82,5 +82,3 @@ function Start(props) {
 
 
 }
-
-export default Start

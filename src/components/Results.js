@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function Results({ data }) {
+export default function Results({ data }) {
 
   console.log(JSON.stringify(data, null, 4));
 
@@ -70,15 +70,13 @@ function Results({ data }) {
   inversions.meanTime = mean(inversions.times)
 
   return (
-    <React.Fragment>
+    <>
       <h2>Your Results:</h2>
       <p>Note Names: You averaged {noteNames.meanAttempts} attempts and {noteNames.meanTime} seconds per question.</p>
       <p>Root Notes: You averaged {roots.meanAttempts} attempts and {roots.meanTime} seconds per question.</p>
       <p>Chord Quality: You averaged {quality.meanAttempts} attempts and {quality.meanTime} seconds per question.</p>
       <p>Inversions: You averaged {inversions.meanAttempts} attempts and {inversions.meanTime} seconds per question.</p>
-    </React.Fragment>
+    </>
   )
 
 }
-
-export default Results
