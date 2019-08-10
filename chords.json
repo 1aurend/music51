@@ -1,0 +1,304 @@
+[
+    {
+        "notes": [
+            "G",
+            "Bb",
+            "E"
+        ],
+        "octaves": [
+            "4",
+            "4",
+            "5"
+        ],
+        "clef": [
+            "treble"
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the pitches, lowest to highest",
+                "answers": [
+                    "G",
+                    "B",
+                    "E"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "Identify the root note",
+                "answers": [
+                    "E"
+                ],
+                "choices": [
+                    "G",
+                    "B",
+                    "E"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "Identify the chord quality",
+                "answers": [
+                    "o"
+                ],
+                "choices": [
+                    "M",
+                    "m",
+                    "o",
+                    "+"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "Name the chord's inversion with figured bass symbols",
+                "answers": [
+                    "63"
+                ],
+                "choices": [
+                    "root",
+                    "53",
+                    "63",
+                    "64"
+                ]
+            }
+        ]
+    },
+    {
+        "notes": [
+            "A",
+            "C",
+            "E"
+        ],
+        "octaves": [
+            "4",
+            "5",
+            "5"
+        ],
+        "clef": [
+            "treble"
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the pitches, lowest to highest",
+                "answers": [
+                    "A",
+                    "C",
+                    "E"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "Identify the root note",
+                "answers": [
+                    "A"
+                ],
+                "choices": [
+                    "A",
+                    "C",
+                    "E"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "Identify the chord quality",
+                "answers": [
+                    "m"
+                ],
+                "choices": [
+                    "M",
+                    "m",
+                    "o",
+                    "+"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "Name the chord's inversion with figured bass symbols",
+                "answers": [
+                    "root"
+                ],
+                "choices": [
+                    "root",
+                    "53",
+                    "63",
+                    "64"
+                ]
+            }
+        ]
+    },
+    {
+        "notes": [
+            "F#",
+            "B",
+            "D"
+        ],
+        "octaves": [
+            "4",
+            "4",
+            "5"
+        ],
+        "clef": [
+            "treble"
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the pitches, lowest to highest",
+                "answers": [
+                    "F",
+                    "B",
+                    "D"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "Identify the root note",
+                "answers": [
+                    "B"
+                ],
+                "choices": [
+                    "F",
+                    "B",
+                    "D"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "Identify the chord quality",
+                "answers": [
+                    "m"
+                ],
+                "choices": [
+                    "M",
+                    "m",
+                    "o",
+                    "+"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "Name the chord's inversion with figured bass symbols",
+                "answers": [
+                    "64"
+                ],
+                "choices": [
+                    "root",
+                    "53",
+                    "63",
+                    "64"
+                ]
+            }
+        ]
+    },
+    {
+        "notes": [
+            "F#",
+            "A",
+            "C#",
+            "E"
+        ],
+        "octaves": [
+            "4",
+            "4",
+            "5",
+            "5"
+        ],
+        "clef": [
+            "treble"
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the pitches, lowest to highest",
+                "answers": [
+                    "F",
+                    "A",
+                    "C",
+                    "E"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "Identify the root note",
+                "answers": [
+                    "F"
+                ],
+                "choices": [
+                    "F",
+                    "A",
+                    "C",
+                    "E"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "Identify the chord quality",
+                "answers": [
+                    "min7"
+                ],
+                "choices": [
+                    "maj7",
+                    "min7",
+                    "dom7",
+                    "o7",
+                    "ø7"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "Name the chord's inversion with figured bass symbols",
+                "answers": [
+                    "root"
+                ],
+                "choices": [
+                    "root",
+                    "753",
+                    "65",
+                    "43",
+                    "42"
+                ]
+            }
+        ]
+    }
+]

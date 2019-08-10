@@ -1,5 +1,6 @@
 import Airtable from 'airtable'
 import groupChords from './groupchords.js'
+import fs from 'fs'
 
 require('dotenv').config()
 
@@ -36,6 +37,7 @@ export default async function loadQuiz() {
 
     const chords = groupChords(data)
     console.log(chords)
+    fs.writeFileSync('./chords.json', JSON.stringify(chords, null, 4))
     return chords
 
     }

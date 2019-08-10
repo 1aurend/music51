@@ -193,7 +193,7 @@ function Quiz (props) {
           <h2 style={questionh2}>End of Quiz!</h2>
         </div>
         <div style={results}>
-          <Results data={sessionData}/>
+          <Results data={sessionData.current}/>
           <button onClick={(e) => {startOver(true)}}>Start Over</button>
         </div>
       </div>
