@@ -2,19 +2,22 @@ import React from 'react'
 import { choicebutton } from './quizStyles'
 
 
-export default function Choice(props) {
+export default function Choice({ choice, input, red, onClick}) {
 
   let style = choicebutton
 
-  if (props.redButton[props.redButton.length-1]) {
-    if (props.choice === props.input) {
-      style = {...style, backgroundColor: 'red'}
+    if (choice === input) {
+      if (red) {
+        style = {...style, backgroundColor: 'red'}
+      }
+      else {
+        style = {...style, backgroundColor: 'chartreuse'}
+      }
     }
-  }
 
 
   return (
-    <button style={style} onClick={props.onClick}>{props.choice}</button>
+    <button style={style} onClick={onClick}>{choice}</button>
   )
 
 }

@@ -13,9 +13,8 @@ export default function Start(props) {
   const sessionId = useRef(Date.now())
   const [quiz, setQuiz] = useState([])
   const [options, updateOptions] = useState({
-    chordTypes: {major:true, minor:true, aug:true, dim:true},
-    clefs: {treble:true, base:true},
-    roots: {easy:true, medium:true, hard:true}
+    chordTypes: {triads:true, sevenths:true},
+    roots: {common:true, any:true}
   })
 
 

@@ -13,7 +13,8 @@ export default function Quiz (props) {
   const [endOfQ, doneQ] = useState(false)
   const [reset, startOver] = useState(false)
   const [noteColors, addColor] = useState([])
-  const [incorrectTry, turnRed] = useState([false])
+  const [incorrectTry, turnRed] = useState(false)
+  const [currentInput, nextInput] = useState(null)
   const currentChord = useRef(props.data[0])
   const answersSideBar = useRef([])
 
@@ -50,6 +51,7 @@ export default function Quiz (props) {
   function handleClick(input) {
 
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'click'}]
+    nextInput(input)
     checkInput(input)
   }
 
@@ -59,6 +61,7 @@ export default function Quiz (props) {
     let key = e.key
     let input = key.toUpperCase()
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
+    nextInput(input)
     checkInput(input)
   }
 
@@ -75,9 +78,9 @@ export default function Quiz (props) {
         endTime: '',
         elapsedTime: '',
       }
-
       if (subQ.current.answers.length === currentQ.answers.length) {
         addColor([...noteColors, input])
+        turnRed(false)
         chord.current.questions.push(subQ.current)
         console.log('next Q: ' + chord.current.questions.length);
         answersSideBar.current = [...answersSideBar.current, currentQ.answers]
@@ -85,11 +88,11 @@ export default function Quiz (props) {
       }
       else {
         addColor([...noteColors, input])
-        turnRed([...incorrectTry, false])
+        turnRed(false)
       }
     }
     else {
-      turnRed([...incorrectTry, true])
+      turnRed(true)
     }
   }
 
@@ -98,7 +101,8 @@ export default function Quiz (props) {
     if (endOfQ === true) {
       setTimeout(() => {
         addColor([])
-        turnRed([])
+        turnRed(false)
+        nextInput(null)
         if (chord.current.questions.length < currentChord.current.questions.length) {
           subQ.current = {
             text: props.data[sessionData.current.results.length].questions[chord.current.questions.length].questionText,
@@ -153,7 +157,7 @@ export default function Quiz (props) {
     return <Start data={props.data}/> //this is hacky...circular prop passing... figure out how often we want to fetch new data and where to really store it
   }
 
-  if (subQ.current.answers.length < currentQ.answers.length && sessionData.current.results.length < props.data.length) {
+  if (sessionData.current.results.length < props.data.length) {
       return (
         <div style={pagegrid}>
           <div style={question}>
@@ -163,29 +167,31 @@ export default function Quiz (props) {
         </div>
           <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
             {currentQ.choices.map(choice => {
-              let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
+              // let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
               return (
-              <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={inpt} redButton={incorrectTry} />)})}
+              <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
           </div>
         </div>
       )
   }
-  else if (subQ.current.answers.length === currentQ.answers.length && sessionData.current.results.length !== props.data.length) {
-    return (
-      <div style={pagegrid}>
-        <div style={question}>
-          <h2 style={questiontext}>{currentQ.questionText}</h2>
-          <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
-          <h2>that's right!</h2>
-          <SideBar text={answersSideBar.current} />
-        </div>
-        <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
-          {currentQ.choices.map(choice => {return (
-            <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} redButton={incorrectTry} />)})}
-        </div>
-      </div>
-    )
-  }
+  // else if (subQ.current.answers.length === currentQ.answers.length && sessionData.current.results.length !== props.data.length) {
+  //   return (
+  //     <div style={pagegrid}>
+  //       <div style={question}>
+  //         <h2 style={questiontext}>{currentQ.questionText}</h2>
+  //         <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
+  //         <h2>that's right!</h2>
+  //         <SideBar text={answersSideBar.current} />
+  //       </div>
+  //       <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
+  //         {currentQ.choices.map(choice => {
+  //           // let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
+  //           return (
+  //           <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} redButton={incorrectTry} greenButton={correctChoice} />)})}
+  //       </div>
+  //     </div>
+  //   )
+  // }
   else if (sessionData.current.results.length === props.data.length) {
       return (
       <div style={pagegrid}>
