@@ -1,6 +1,9 @@
 import React from 'react'
 import QuizContainer from './components/QuizContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "shards-ui/dist/css/shards.min.css"
+
 
 
 function App() {

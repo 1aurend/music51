@@ -41,6 +41,6 @@ Backburner:
 LD To Do:
 -fix menu options //done
 -add chord generator
--key down focus
+-key down focus //done
 -turn right answers green //done
 -add bootstrap

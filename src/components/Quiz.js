@@ -165,33 +165,14 @@ export default function Quiz (props) {
             <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
             <SideBar text={answersSideBar.current} />
         </div>
-          <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
+          <div style={choices} onKeyDown={(e) => onKeyPressed(e)} tabIndex="1" ref={choices => choices && choices.focus()}>
             {currentQ.choices.map(choice => {
-              // let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
               return (
               <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
           </div>
         </div>
       )
   }
-  // else if (subQ.current.answers.length === currentQ.answers.length && sessionData.current.results.length !== props.data.length) {
-  //   return (
-  //     <div style={pagegrid}>
-  //       <div style={question}>
-  //         <h2 style={questiontext}>{currentQ.questionText}</h2>
-  //         <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
-  //         <h2>that's right!</h2>
-  //         <SideBar text={answersSideBar.current} />
-  //       </div>
-  //       <div style={choices} onKeyDown={(e) => onKeyPressed(e)} ref={keyDownRef}>
-  //         {currentQ.choices.map(choice => {
-  //           // let inpt = answer.current.tries[answer.current.tries.length-1] ? answer.current.tries[answer.current.tries.length-1].input : null
-  //           return (
-  //           <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} redButton={incorrectTry} greenButton={correctChoice} />)})}
-  //       </div>
-  //     </div>
-  //   )
-  // }
   else if (sessionData.current.results.length === props.data.length) {
       return (
       <div style={pagegrid}>
