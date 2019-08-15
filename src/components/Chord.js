@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Col, Row } from 'shards-react'
 
 
 export default function Chord(props) {
@@ -20,7 +21,7 @@ export default function Chord(props) {
       for (var j = 0; j < props.notes.length; j++) {
         let noteName = props.notes[j].length === 1 ? props.notes[j] : props.notes[j].slice(0,-1)
         if (props.colors[i] === noteName) {
-          colors.push({key: j, color: 'chartreuse'})
+          colors.push({key: j, color: '#17c671'})
         }
       }
     }
@@ -38,13 +39,13 @@ export default function Chord(props) {
 
     let renderer = new VF.Renderer(container.current, VF.Renderer.Backends.SVG);
 
-    renderer.resize('1000px', '500px')
+    renderer.resize('500px', '250px')
 
     let context = renderer.getContext()
 
-    context.setViewBox(300,150,400,200)
+    context.setViewBox(0,0,200,100)
 
-    let stave = new VF.Stave(400, 200, 200)
+    let stave = new VF.Stave(0, 0, 180)
 
     stave.addClef(props.clef).addTimeSignature("4/4")
 
@@ -70,7 +71,7 @@ export default function Chord(props) {
       let voice = new VF.Voice({num_beats: 4,  beat_value: 4});
       voice.addTickables(notes);
 
-      let formatter = new VF.Formatter().joinVoices([voice]).format([voice], 200);
+      let formatter = new VF.Formatter().joinVoices([voice]).format([voice], 100);
 
       voice.draw(context, stave);
   }
@@ -86,7 +87,7 @@ export default function Chord(props) {
     <div ref={container} style={{
       display: "block",
       alignItems: 'center',
-      padding: 10,
+      // padding: 10,
       width: '100%',
       height: '100%',
   }}>

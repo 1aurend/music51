@@ -63,7 +63,7 @@ export default function Start(props) {
 
   if (!ready) {
     return (
-      <Container fluid className="main-content-container px-4" style={{backgroundColor: '#e5e6eb', minHeight: '100vh'}}>
+      <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '100vh'}}>
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
@@ -72,7 +72,7 @@ export default function Start(props) {
             <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck}/>
           </Col>
         </Row>
-        <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}} noGutters>
+        <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
             <Go onClick={generateQuiz}/>
         </Row>
       </Container>

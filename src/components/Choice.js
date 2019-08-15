@@ -11,7 +11,7 @@ export default function Choice({ choice, input, red, onClick}) {
         style = {...style, backgroundColor: 'red'}
       }
       else {
-        style = {...style, backgroundColor: 'chartreuse'}
+        style = {...style, backgroundColor: '#17c671'}
       }
     }
 

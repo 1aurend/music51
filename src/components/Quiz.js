@@ -5,6 +5,12 @@ import Results from './Results.js'
 import Start from './Start'
 import SideBar from './SideBar'
 import { pagegrid, question, choices, results, questionh2, questiontext } from './quizStyles'
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+} from 'shards-react'
 
 
 export default function Quiz (props) {
@@ -159,18 +165,22 @@ export default function Quiz (props) {
 
   if (sessionData.current.results.length < props.data.length) {
       return (
-        <div style={pagegrid}>
-          <div style={question}>
-            <h2 style={questiontext}>{currentQ.questionText}</h2>
-            <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
-            <SideBar text={answersSideBar.current} />
-        </div>
-          <div style={choices} onKeyDown={(e) => onKeyPressed(e)} tabIndex="1" ref={choices => choices && choices.focus()}>
+        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: '#e5e6eb', minHeight: '100vh'}} onKeyDown={(e) => onKeyPressed(e)} tabIndex="1" ref={container => container && container.focus()}>
+          <Row noGutters style={{paddingTop: '5%'}}></Row>
+          <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
+            <Col sm='12' lg='8' style={{border: '5px solid black', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>{currentQ.questionText}</h2></Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+                <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
+              </Row>
+            </Col>
+          </Row>
+          <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}} noGutters>
             {currentQ.choices.map(choice => {
               return (
               <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
-          </div>
-        </div>
+          </Row>
+        </Container>
       )
   }
   else if (sessionData.current.results.length === props.data.length) {
