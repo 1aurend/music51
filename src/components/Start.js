@@ -66,26 +66,26 @@ export default function Start(props) {
   let calculateBorderRadius = () => {
     if (size.width > 1000) {
       if (size.width > size.height) {
-        return (`3%/${(size.width/size.height)*4}%`)
+        return (`3%/${(size.width/size.height)*3}%`)
       }
       else {
-        return(`${(size.width/size.height)*4}%/3%`)
+        return(`${(size.width/size.height)*3}%/3%`)
       }
     }
     else if (size.width < 1000 && size.width > 500) {
       if (size.width > size.height) {
-        return (`7%/${(size.width/size.height)*3}%`)
+        return (`7%/${(size.width/size.height)*4}%`)
       }
       else {
-        return(`${(size.width/size.height)*3}%/7%`)
+        return(`${(size.width/size.height)*4}%/7%`)
       }
     }
     else {
       if (size.width > size.height) {
-        return (`7%/${(size.width/size.height)*14}%`)
+        return (`7%/${(size.height/size.width)*3}%`)
       }
       else {
-        return(`${(size.width/size.height)*14}%/7%`)
+        return(`${(size.height/size.width)*3}%/7%`)
       }
     }
   }

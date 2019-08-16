@@ -72,7 +72,6 @@ function staffAdjust(chord){
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
-  console.log('here in randomChord!');
   // choose a random structure, root, and accidental
   let newStructure = randomchoice(Object.keys(triads));
   let newClass = triads[newStructure].class
@@ -251,4 +250,10 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
 
 
 
-export default () => { return randomChord(triads, subsets, rootAccidentals, accidentals, ip) }
+export default (numQs) => {
+  let chords = []
+  for (var i = 0; i < numQs; i++) {
+    chords.push(randomChord(triads, subsets, rootAccidentals, accidentals, ip))
+  }
+  return chords
+}

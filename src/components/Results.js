@@ -2,7 +2,7 @@ import React from 'react'
 import { Row } from 'shards-react'
 
 
-export default function Results({ data }) {
+export default function Results({ data, progress }) {
 
   console.log(JSON.stringify(data, null, 4));
 

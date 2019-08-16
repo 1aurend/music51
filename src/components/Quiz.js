@@ -24,8 +24,7 @@ export default function Quiz (props) {
                                     height: window.innerHeight
                                   })
   const currentChord = useRef(props.data[0])
-  const answersSideBar = useRef([])
-
+  const [progress, showProgress] = useState(false)
 
   const sessionData = useRef(
     {
@@ -87,7 +86,6 @@ export default function Quiz (props) {
         turnRed(false)
         chord.current.questions.push(subQ.current)
         console.log('next Q: ' + chord.current.questions.length);
-        answersSideBar.current = [...answersSideBar.current, currentQ.answers]
         doneQ(true)
       }
       else {
@@ -124,7 +122,6 @@ export default function Quiz (props) {
         }
         else {
           sessionData.current.results= [...sessionData.current.results, chord.current]
-          answersSideBar.current = []
           if (sessionData.current.results.length < props.data.length) {
             chord.current = {
               chord: props.data[sessionData.current.results.length].notes,
@@ -167,10 +164,10 @@ export default function Quiz (props) {
   let calculateBorderRadius = () => {
     if (size.width > 1000) {
       if (size.width > size.height) {
-        return (`3%/${(size.width/size.height)*4}%`)
+        return (`3%/${(size.width/size.height)*3}%`)
       }
       else {
-        return(`${(size.width/size.height)*4}%/3%`)
+        return(`${(size.width/size.height)*3}%/3%`)
       }
     }
     else if (size.width < 1000 && size.width > 500) {
@@ -183,10 +180,10 @@ export default function Quiz (props) {
     }
     else {
       if (size.width > size.height) {
-        return (`7%/${(size.width/size.height)*14}%`)
+        return (`7%/${(size.height/size.width)*3}%`)
       }
       else {
-        return(`${(size.width/size.height)*14}%/7%`)
+        return(`${(size.height/size.width)*3}%/7%`)
       }
     }
   }
@@ -232,11 +229,11 @@ export default function Quiz (props) {
             <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
                 <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                  <Col sm='12' lg='8'><Results data={sessionData.current}/></Col>
+                  <Col sm='12' lg='8'><Results data={sessionData.current} progress={progress}/></Col>
                 </Row>
                 <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                   <Button style={{marginRight: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Keep Going</Button>
-                  <Button style={{marginLeft: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Check My Progress</Button>
+                  <Button style={{marginLeft: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
                 </Row>
               </Col>
             </Row>
