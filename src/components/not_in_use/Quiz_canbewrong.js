@@ -4,7 +4,6 @@ import Choice from './Choice'
 import Results from './Results.js'
 import Start from './Start'
 import { Link } from 'react-router-dom'
-import { pagegrid, question, choices, results, questionh2 } from './quizStyles'
 
 
 function Quiz (props) {

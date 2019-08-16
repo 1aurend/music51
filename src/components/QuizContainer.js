@@ -33,7 +33,7 @@ function QuizContainer(props) {
   }, [])
 
   if (!quizData) {
-    return <div><h2>Loading...</h2></div>
+    return <div style={{height: '100vh', backgroundColor: 'black'}}><h2>Loading...</h2></div>
   }
   else {
     console.log(quizData);

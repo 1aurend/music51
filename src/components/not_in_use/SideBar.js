@@ -1,5 +1,4 @@
 import React from 'react'
-import { sidebar, sidebarh4 } from './quizStyles'
 
 
 export default function SideBar(props) {

@@ -1,10 +1,10 @@
 import React from 'react'
-import { choicebutton } from './quizStyles'
+import { Button } from 'shards-react'
 
 
 export default function Choice({ choice, input, red, onClick}) {
 
-  let style = choicebutton
+  let style = {height: '10vh', width: '10vh', marginLeft: '2%', marginRight: '2%', marginBottom: '2%', fontWeight: '400', fontSize: '2rem'}
 
     if (choice === input) {
       if (red) {
@@ -17,7 +17,7 @@ export default function Choice({ choice, input, red, onClick}) {
 
 
   return (
-    <button style={style} onClick={onClick}>{choice}</button>
+    <Button theme="light" style={style} onClick={onClick}>{choice}</Button>
   )
 
 }

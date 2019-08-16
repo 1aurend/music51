@@ -1,4 +1,5 @@
 import React from 'react'
+import { Row } from 'shards-react'
 
 
 export default function Results({ data }) {
@@ -60,22 +61,26 @@ export default function Results({ data }) {
 
 
   const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
-  noteNames.meanAttempts = mean(noteNames.attempts)
-  noteNames.meanTime = mean(noteNames.times)
-  roots.meanAttempts = mean(roots.attempts)
-  roots.meanTime = mean(roots.times)
-  quality.meanAttempts = mean(quality.attempts)
-  quality.meanTime = mean(quality.times)
-  inversions.meanAttempts = mean(inversions.attempts)
-  inversions.meanTime = mean(inversions.times)
+  function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
+  noteNames.meanAttempts = round(mean(noteNames.attempts),4)
+  noteNames.meanTime = round(mean(noteNames.times),4)
+  roots.meanAttempts = round(mean(roots.attempts),4)
+  roots.meanTime = round(mean(roots.times),4)
+  quality.meanAttempts = round(mean(quality.attempts),4)
+  quality.meanTime = round(mean(quality.times),4)
+  inversions.meanAttempts = round(mean(inversions.attempts),4)
+  inversions.meanTime = round(mean(inversions.times),4)
 
   return (
     <>
-      <h2>Your Results:</h2>
-      <p>Note Names: You averaged {noteNames.meanAttempts} attempts and {noteNames.meanTime} seconds per question.</p>
-      <p>Root Notes: You averaged {roots.meanAttempts} attempts and {roots.meanTime} seconds per question.</p>
-      <p>Chord Quality: You averaged {quality.meanAttempts} attempts and {quality.meanTime} seconds per question.</p>
-      <p>Inversions: You averaged {inversions.meanAttempts} attempts and {inversions.meanTime} seconds per question.</p>
+      <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3>Your Results:</h3></Row>
+      <Row><p><strong>Note Names: </strong>You averaged <strong>{noteNames.meanAttempts}</strong> attempts and <strong>{noteNames.meanTime}</strong> seconds per question.</p></Row>
+      <Row><p><strong>Root Notes: </strong>You averaged <strong>{roots.meanAttempts}</strong> attempts and <strong>{roots.meanTime}</strong> seconds per question.</p></Row>
+      <Row><p><strong>Chord Quality: </strong>You averaged <strong>{quality.meanAttempts}</strong> attempts and <strong>{quality.meanTime}</strong> seconds per question.</p></Row>
+      <Row><p><strong>Inversions: </strong>You averaged <strong>{inversions.meanAttempts}</strong> attempts and <strong>{inversions.meanTime}</strong> seconds per question.</p></Row>
     </>
   )
 

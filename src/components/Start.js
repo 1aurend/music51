@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import { pagegrid, question, startinputs, questionh2, questionh3 } from './quizStyles'
 import Options from './Options.js'
 import Go from './Go.js'
 import Quiz from './Quiz'
@@ -13,7 +12,7 @@ import {
 
 export default function Start(props) {
 
-  const numQs = useRef(1)
+  const numQs = useRef(1) //needs to be set to 10?
   const [ready, launchQuiz] = useState(false)
   const userId = useRef('somebody')
   const sessionId = useRef(Date.now())
@@ -66,7 +65,7 @@ export default function Start(props) {
       <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '100vh'}}>
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-          <Col sm='12' lg='8' style={{border: '5px solid black', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+          <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3% / 6%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={{textAlign: 'center'}}>Music 51</h1></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={{margin: 'auto', textAlign: 'center'}}>Prototype</h2></Row>
             <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck}/>

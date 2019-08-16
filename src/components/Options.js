@@ -1,5 +1,4 @@
 import React from 'react'
-import { selector } from './quizStyles'
 import {
   Container,
   Row,

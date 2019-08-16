@@ -43,4 +43,6 @@ LD To Do:
 -add chord generator
 -key down focus //done
 -turn right answers green //done
--add bootstrap
+-add bootstrap //done
+-border radius as size variable
+-size of stave proportional to vh

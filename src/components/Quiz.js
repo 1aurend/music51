@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Chord from './Chord'
 import Choice from './Choice'
-import Results from './Results.js'
+import Results from './Results'
 import Start from './Start'
-import SideBar from './SideBar'
-import { pagegrid, question, choices, results, questionh2, questiontext } from './quizStyles'
+import QuizContainer from './QuizContainer'
 import {
   Container,
   Row,
@@ -160,40 +159,51 @@ export default function Quiz (props) {
 
 
   if (reset) {
-    return <Start data={props.data}/> //this is hacky...circular prop passing... figure out how often we want to fetch new data and where to really store it
+    return <QuizContainer /> //this is hacky...circular prop passing... figure out how often we want to fetch new data and where to really store it
   }
 
   if (sessionData.current.results.length < props.data.length) {
       return (
-        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: '#e5e6eb', minHeight: '100vh'}} onKeyDown={(e) => onKeyPressed(e)} tabIndex="1" ref={container => container && container.focus()}>
+        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
           <Row noGutters style={{paddingTop: '5%'}}></Row>
           <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-            <Col sm='12' lg='8' style={{border: '5px solid black', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3%/8%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>{currentQ.questionText}</h2></Row>
-              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                 <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
               </Row>
             </Col>
           </Row>
-          <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}} noGutters>
-            {currentQ.choices.map(choice => {
-              return (
-              <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
-          </Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}} noGutters>
+                <Col sm='12' lg='8' style={{marginLeft: '5%', marginRight: '5%'}}>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}}>
+                  {currentQ.choices.map(choice => {
+                    return (
+                    <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
+                  </Row>
+                </Col>
+            </Row>
+            <div onKeyDown={(e) => onKeyPressed(e)} tabIndex="1" ref={keyboard => keyboard && keyboard.focus()}></div>
         </Container>
+
       )
   }
   else if (sessionData.current.results.length === props.data.length) {
       return (
-      <div style={pagegrid}>
-        <div style={question}>
-          <h2 style={questionh2}>End of Quiz!</h2>
-        </div>
-        <div style={results}>
-          <Results data={sessionData.current}/>
-          <button onClick={(e) => {startOver(true)}}>Start Over</button>
-        </div>
-      </div>
+        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
+          <Row noGutters style={{paddingTop: '5%'}}></Row>
+          <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
+            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3%/7%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
+                <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
+                  <Col sm='12' lg='8'><Results data={sessionData.current}/></Col>
+                </Row>
+                <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
+                  <Button theme='success' onClick={(e) => {startOver(true)}}>Start Over</Button>
+                </Row>
+              </Col>
+            </Row>
+        </Container>
     )
   }
 
