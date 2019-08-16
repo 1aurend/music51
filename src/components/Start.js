@@ -8,6 +8,7 @@ import {
   Col,
   Button,
 } from 'shards-react'
+import generateChords from '../chordGenerator'
 
 
 export default function Start(props) {
@@ -19,8 +20,12 @@ export default function Start(props) {
   const [quiz, setQuiz] = useState([])
   const [options, updateOptions] = useState({
     chordTypes: {triads:true, sevenths:true},
-    roots: {common:true, any:true}
+    roots: {common:true, any:false}
   })
+  const [size, setSize] = useState({
+                                    width: window.innerWidth,
+                                    height: window.innerHeight
+                                  })
 
 
   let generateQuiz = (e) => {
@@ -29,8 +34,7 @@ export default function Start(props) {
     for (var i = 0; i < numQs.current; i++) {
       qs.push(props.data[i])
     }
-
-      //generateChords(options, setQuiz) change to this after adding chord generator
+      // qs = [...qs, generateChords()]
       setQuiz(qs)
       launchQuiz(true)
   }
@@ -59,15 +63,45 @@ export default function Start(props) {
 
   console.log(JSON.stringify(options, null, 4));
 
+  let calculateBorderRadius = () => {
+    if (size.width > 1000) {
+      if (size.width > size.height) {
+        return (`3%/${(size.width/size.height)*4}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*4}%/3%`)
+      }
+    }
+    else if (size.width < 1000 && size.width > 500) {
+      if (size.width > size.height) {
+        return (`7%/${(size.width/size.height)*3}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*3}%/7%`)
+      }
+    }
+    else {
+      if (size.width > size.height) {
+        return (`7%/${(size.width/size.height)*14}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*14}%/7%`)
+      }
+    }
+  }
+  const borderRadius = calculateBorderRadius().toString()
+  console.log(borderRadius);
+
+
 
   if (!ready) {
     return (
       <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '100vh'}}>
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-          <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3% / 6%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+          <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={{textAlign: 'center'}}>Music 51</h1></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={{margin: 'auto', textAlign: 'center'}}>Prototype</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={{margin: 'auto', textAlign: 'center'}}>Chord Identification</h2></Row>
             <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck}/>
           </Col>
         </Row>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Chord from './Chord'
+import Chord from './ChordAT'
 import Choice from './Choice'
 import Results from './Results'
-import Start from './Start'
 import QuizContainer from './QuizContainer'
 import {
   Container,
@@ -20,6 +19,10 @@ export default function Quiz (props) {
   const [noteColors, addColor] = useState([])
   const [incorrectTry, turnRed] = useState(false)
   const [currentInput, nextInput] = useState(null)
+  const [size, setSize] = useState({
+                                    width: window.innerWidth,
+                                    height: window.innerHeight
+                                  })
   const currentChord = useRef(props.data[0])
   const answersSideBar = useRef([])
 
@@ -49,9 +52,6 @@ export default function Quiz (props) {
     elapsedTime: '',
   })
 
-  const keyDownRef = useRef(null)
-  // useFocusOnKeyDown(keyDownRef, true)
-
 
   function handleClick(input) {
 
@@ -62,9 +62,8 @@ export default function Quiz (props) {
 
   function onKeyPressed(e) {
 
-    console.log('here is key: ' + e.key);
     let key = e.key
-    let input = key.toUpperCase()
+    let input = key.toUpperCase() //add function here for mapping keyboard input
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
     nextInput(input)
     checkInput(input)
@@ -157,6 +156,43 @@ export default function Quiz (props) {
   }, [endOfQ, props.data])
 
 
+  useEffect(() => {
+    const handleResize = () => setSize({width: window.innerWidth, height: window.innerHeight})
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+  }
+  },[])
+
+  let calculateBorderRadius = () => {
+    if (size.width > 1000) {
+      if (size.width > size.height) {
+        return (`3%/${(size.width/size.height)*4}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*4}%/3%`)
+      }
+    }
+    else if (size.width < 1000 && size.width > 500) {
+      if (size.width > size.height) {
+        return (`7%/${(size.width/size.height)*4}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*4}%/7%`)
+      }
+    }
+    else {
+      if (size.width > size.height) {
+        return (`7%/${(size.width/size.height)*14}%`)
+      }
+      else {
+        return(`${(size.width/size.height)*14}%/7%`)
+      }
+    }
+  }
+  const borderRadius = calculateBorderRadius().toString()
+  console.log(borderRadius);
+
 
   if (reset) {
     return <QuizContainer /> //this is hacky...circular prop passing... figure out how often we want to fetch new data and where to really store it
@@ -167,10 +203,10 @@ export default function Quiz (props) {
         <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
           <Row noGutters style={{paddingTop: '5%'}}></Row>
           <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3%/8%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>{currentQ.questionText}</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-                <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} />
+                <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} colors={noteColors} size={size.width} />
               </Row>
             </Col>
           </Row>
@@ -193,13 +229,14 @@ export default function Quiz (props) {
         <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
           <Row noGutters style={{paddingTop: '5%'}}></Row>
           <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '3%/7%', marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
                 <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
                   <Col sm='12' lg='8'><Results data={sessionData.current}/></Col>
                 </Row>
                 <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-                  <Button theme='success' onClick={(e) => {startOver(true)}}>Start Over</Button>
+                  <Button style={{marginRight: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Keep Going</Button>
+                  <Button style={{marginLeft: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Check My Progress</Button>
                 </Row>
               </Col>
             </Row>

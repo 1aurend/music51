@@ -46,3 +46,9 @@ LD To Do:
 -add bootstrap //done
 -border radius as size variable
 -size of stave proportional to vh
+-switch to shards red
+
+
+Things:
+-fix accidentals in generator
+-stave spacing/zoom
