@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Chord from './ChordAT'
+import Chord from './Chord'
 import Choice from './Choice'
 import Results from './Results'
 import QuizContainer from './QuizContainer'

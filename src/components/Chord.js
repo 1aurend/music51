@@ -44,6 +44,27 @@ export default function Chord(props) {
 
   useEffect(() => {
 
+    let staveSize = {
+      svgWidth: '',
+      svgHeight: '',
+      viewBoxWidth: 0,
+      viewBoxHeight: 0,
+    }
+
+    if (props.size >= 500) {
+      staveSize.svgWidth = '500px'
+      staveSize.svgHeight = '250px'
+      staveSize.viewBoxWidth = 200
+      staveSize.viewBoxHeight = 100
+    }
+    else {
+      staveSize.svgWidth = '300px'
+      staveSize.svgHeight = '150px'
+      staveSize.viewBoxWidth = 200
+      staveSize.viewBoxHeight = 100
+    }
+
+
     let Vex = require('vexflow')
 
     if (container.current.firstChild) {
@@ -54,11 +75,11 @@ export default function Chord(props) {
 
     let renderer = new VF.Renderer(container.current, VF.Renderer.Backends.SVG);
 
-    renderer.resize('500px', '250px')
+    renderer.resize(staveSize.svgWidth, staveSize.svgHeight)
 
     let context = renderer.getContext()
 
-    context.setViewBox(0,0,200,100)
+    context.setViewBox(-10,0,staveSize.viewBoxWidth,staveSize.viewBoxHeight)
 
     let stave = new VF.Stave(0, 0, 180)
 

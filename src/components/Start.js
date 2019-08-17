@@ -30,12 +30,13 @@ export default function Start(props) {
 
   let generateQuiz = (e) => {
 
-    let qs = []
-    for (var i = 0; i < numQs.current; i++) {
-      qs.push(props.data[i])
-    }
-      // qs = [...qs, generateChords()]
-      setQuiz(qs)
+    // let qs = []
+    // for (var i = 0; i < numQs.current; i++) {
+    //   qs.push(props.data[i])
+    // }
+    //   // qs = [...qs, generateChords()]
+    //   setQuiz(qs)
+      setQuiz(generateChords(numQs.current))
       launchQuiz(true)
   }
 

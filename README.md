@@ -44,11 +44,11 @@ LD To Do:
 -key down focus //done
 -turn right answers green //done
 -add bootstrap //done
--border radius as size variable
--size of stave proportional to vh
--switch to shards red
+-border radius as size variable //done
+-size of stave proportional to vh //done
+-switch to shards red //done
 
 
 Things:
 -fix accidentals in generator
--stave spacing/zoom
+-stave spacing/zoom //done

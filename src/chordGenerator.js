@@ -157,7 +157,8 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
       "answers": [inversion],
       "choices": [ // TODO: populate choices, include 7ths
           "root",
-          "63",
+          `6
+          3`,
           "64"
       ]
     }

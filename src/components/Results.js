@@ -33,7 +33,7 @@ export default function Results({ data, progress }) {
 
   data.results.map( chord => {
     chord.questions.map( question => {
-      if (question.text.indexOf('pitches') !== -1) {
+      if (question.text.indexOf('letter') !== -1) {
         question.answers.map( answer => {
             noteNames.attempts.push(answer.tries.length)
             noteNames.times.push(answer.elapsedTime)
