@@ -62,7 +62,40 @@ export default function Quiz (props) {
   function onKeyPressed(e) {
 
     let key = e.key
-    let input = key.toUpperCase() //add function here for mapping keyboard input
+    let input
+
+    switch (key) {
+      case 'a':
+      case 'b':
+      case 'c':
+      case 'd':
+      case 'e':
+      case 'f':
+      case 'g':
+          input = key.toUpperCase()
+          for (var i = 0; i < currentQ.choices.length; i++) {
+            if (currentQ.choices[i].indexOf(input) >= 0) {
+              input = currentQ.choices[i]
+            }
+          }
+          break
+      case 'j':
+          input = currentQ.choices[0]
+          break
+      case 'k':
+          input = currentQ.choices[1]
+          break
+      case 'l':
+          input = currentQ.choices[2]
+          break
+      case ';':
+          input = currentQ.choices[3]
+          break
+      default:
+          input = null
+          break
+    }
+
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
     nextInput(input)
     checkInput(input)
@@ -162,28 +195,20 @@ export default function Quiz (props) {
   },[])
 
   let calculateBorderRadius = () => {
-    if (size.width > 1000) {
+    if (size.width > 500) {
       if (size.width > size.height) {
-        return (`3%/${(size.width/size.height)*3}%`)
+        return (`2rem`)
       }
       else {
-        return(`${(size.width/size.height)*3}%/3%`)
-      }
-    }
-    else if (size.width < 1000 && size.width > 500) {
-      if (size.width > size.height) {
-        return (`7%/${(size.width/size.height)*4}%`)
-      }
-      else {
-        return(`${(size.width/size.height)*4}%/7%`)
+        return(`2rem`)
       }
     }
     else {
       if (size.width > size.height) {
-        return (`7%/${(size.height/size.width)*3}%`)
+        return (`1rem`)
       }
       else {
-        return(`${(size.height/size.width)*3}%/7%`)
+        return(`1rem`)
       }
     }
   }
