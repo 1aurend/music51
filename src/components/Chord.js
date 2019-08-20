@@ -43,14 +43,14 @@ export default function Chord(props) {
     if (props.size >= 500) {
       staveSize.svgWidth = '500px'
       staveSize.svgHeight = '250px'
-      staveSize.viewBoxWidth = 400
-      staveSize.viewBoxHeight = 200
+      staveSize.viewBoxWidth = 250
+      staveSize.viewBoxHeight = 125
     }
     else {
       staveSize.svgWidth = '300px'
       staveSize.svgHeight = '150px'
-      staveSize.viewBoxWidth = 200
-      staveSize.viewBoxHeight = 100
+      staveSize.viewBoxWidth = 250
+      staveSize.viewBoxHeight = 125
     }
 
 
@@ -68,7 +68,7 @@ export default function Chord(props) {
 
     let context = renderer.getContext()
 
-    context.setViewBox(-10,0,staveSize.viewBoxWidth,staveSize.viewBoxHeight)
+    context.setViewBox(0,0,staveSize.viewBoxWidth,staveSize.viewBoxHeight)
 
     let stave = new VF.Stave(0, 0, 250)
 

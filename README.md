@@ -47,6 +47,7 @@ LD To Do:
 -border radius as size variable //done
 -size of stave proportional to vh //done
 -switch to shards red //done
+-shrink font size for mobile
 
 
 Things:
