@@ -7,29 +7,31 @@ export default function Chord(props) {
   const container = useRef(document.createElement('container'))
   const [loading, done] = useState(true)
 
-  let formattedNotes = []
-  let accidentals = []
-    for (var i = 0; i < props.notes.length; i++) {
-      formattedNotes.push(props.notes[i].letter + '/' + props.notes[i].octave)
-      if (props.notes[i].accidental) {
-        accidentals.push({note: i, accidental: props.notes[i].accidental})
-      }}
-
-    console.log(accidentals);
-    console.log(formattedNotes);
-
-  let colors = []
-    for (var i = 0; i < props.colors.length; i++) {
-      for (var j = 0; j < props.notes.length; j++) {
-        let noteName = props.notes[j].letter
-        if (props.colors[i] === noteName) {
-          colors.push({key: j, color: '#17c671'})
-        }
-      }
-    }
-
 
   useEffect(() => {
+
+    let formattedNotes = []
+    let accidentals = []
+      for (var i = 0; i < props.notes.length; i++) {
+        formattedNotes.push(props.notes[i].letter + '/' + props.notes[i].octave)
+        if (props.notes[i].accidental) {
+          accidentals.push({note: i, accidental: props.notes[i].accidental})
+        }}
+
+      // console.log(accidentals);
+      // console.log(formattedNotes);
+
+    let colors = []
+      for (var i = 0; i < props.colors.length; i++) {
+        for (var j = 0; j < props.notes.length; j++) {
+          console.log(props.colors[i])
+          console.log(props.notes[j].letter)
+          if (props.colors[i] === props.notes[j].letter) {
+            console.log('here')
+            colors.push({key: j, color: '#17c671'})
+          }
+        }
+      }
 
     let staveSize = {
       svgWidth: '',
