@@ -11,12 +11,9 @@ export default function Chord(props) {
   let accidentals = []
     for (var i = 0; i < props.notes.length; i++) {
       formattedNotes.push(props.notes[i].letter + '/' + props.notes[i].octave)
-      if (props.notes[i].accidental !== "n") {
+      if (props.notes[i].accidental) {
         accidentals.push({note: i, accidental: props.notes[i].accidental})
-      }
-      else if (props.notes[i].accidental === "BB") {
-        accidentals.push({note: i, accidental: "bb"})
-    }}
+      }}
 
     console.log(accidentals);
     console.log(formattedNotes);
