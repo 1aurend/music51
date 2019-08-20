@@ -68,7 +68,7 @@ export default function Chord(props) {
 
     context.setViewBox(-10,0,staveSize.viewBoxWidth,staveSize.viewBoxHeight)
 
-    let stave = new VF.Stave(0, 0, 180)
+    let stave = new VF.Stave(0, 0, 250)
 
     stave.addClef(props.clef).addTimeSignature("4/4")
 

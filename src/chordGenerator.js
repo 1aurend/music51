@@ -43,20 +43,59 @@ function staffAdjust(chord){
   for(var i=0; i<chord.notes.length; i++){
 
     // bass clef upper limit is F4
-    if(chord.clef === "bass" && (octaveOrientedLetters.indexOf((chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 4) || chord.notes[i].octave === 5)){
-      adjust = -1
-      console.log('bass upper limit!');
-      console.log('letter: ' + chord.notes[i].letter);
-      console.log('octave: ' + chord.notes[i].octave);
-      break
+    // if(chord.clef === "bass" && (octaveOrientedLetters.indexOf((chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 4) || chord.notes[i].octave === 5)){
+    //   adjust = -1
+    //   console.log('bass upper limit!');
+    //   console.log('letter: ' + chord.notes[i].letter);
+    //   console.log('octave: ' + chord.notes[i].octave);
+    //   break
+    // }
+    if (chord.clef === 'bass') {
+      console.log('bass=true');
+      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+        console.log('1st condition true');
+        if (chord.notes[i].octave >= 4) {
+          console.log('2nd condition true');
+          console.log('letter index: '+octaveOrientedLetters.indexOf((chord.notes[i].letter)));
+          console.log('F index: '+octaveOrientedLetters.indexOf("F"));
+          adjust = -1
+          console.log('bass upper limit!');
+          console.log('letter: ' + chord.notes[i].letter);
+          console.log('octave: ' + chord.notes[i].octave);
+          break
+        }
+      }
+      else if (chord.notes[i].octave === 5) {
+        console.log('other condition true');
+        adjust = -1
+        console.log('bass upper limit!');
+        console.log('letter: ' + chord.notes[i].letter);
+        console.log('octave: ' + chord.notes[i].octave);
+        break
+      }
     }
     // bass clef lower limit is B1
-    if(chord.clef === "bass" && octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B") && chord.notes[i].octave <= 1){
-      adjust = 1
-      console.log('bass lower limit!');
-      console.log('letter: ' + chord.notes[i].letter);
-      console.log('octave: ' + chord.notes[i].octave);
-      break
+    // if(chord.clef === "bass" && octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B") && chord.notes[i].octave <= 1){
+    //   adjust = 1
+    //   console.log('bass lower limit!');
+    //   console.log('letter: ' + chord.notes[i].letter);
+    //   console.log('octave: ' + chord.notes[i].octave);
+    //   break
+    // }
+    if (chord.clef === 'bass') {
+      console.log('bass=true');
+      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B")) {
+        console.log('1st condition true');
+        if (chord.notes[i].octave <= 1) {
+          console.log('2nd condition true');
+          console.log('letter index: '+octaveOrientedLetters.indexOf((chord.notes[i].letter)));
+          adjust = 1
+          console.log('bass lower limit!');
+          console.log('letter: ' + chord.notes[i].letter);
+          console.log('octave: ' + chord.notes[i].octave);
+          break
+        }
+      }
     }
     // treble clef upper limit is F6
     if (chord.clef === 'treble') {
@@ -101,7 +140,7 @@ function staffAdjust(chord){
       console.log('treble=true');
       if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
         console.log('1st condition true');
-        if (chord.notes[i].octave >= 3) {
+        if (chord.notes[i].octave <= 3) {
           console.log('2nd condition true');
           console.log('letter index: '+octaveOrientedLetters.indexOf((chord.notes[i].letter)));
           adjust = 1
@@ -137,7 +176,7 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
   let rootLetter = letters[subsets.B.indexOf(rootSyllable)]
     // console.log(rootLetter+rootAccidental+" "+newStructure);
 
-  // find the equivalent IP based on the accidental's offset from the "natural" root syllable
+  // find the equivalent IP bassd on the accidental's offset from the "natural" root syllable
   let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf("n")) // the distance from natural!
     // console.log(offset + " from natural")
   let rootIp = ip[(ip.indexOf(rootSyllable)+offset)%12]
@@ -224,11 +263,11 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
     // translate the template ip to a relative note in the class
     let newNote = (ip.indexOf(triads[newStructure].structure[i].ip) - ip.indexOf(newRoot) + 12)%12
       // console.log(classes[newClass][newNote])
-    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
+    // get the syllable "position" from the reference subset bassd on tensionMod7 value in the class
     let noteSyllable = subsets.B[((subsets.B.indexOf(rootSyllable) + classes[newClass][newNote].tensionMod7 -1)%7)]
       // console.log(noteSyllable)
 
-    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    // find the equivalent IP bassd on the rootIp and tensionMod12 value in the class
     let noteIp = ip[(ip.indexOf(rootIp) + classes[newClass][newNote].tensionMod12 -1)%12]
       // console.log("IP: " + noteIp)
     // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
@@ -276,15 +315,6 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
 
   }
 
-  // adjusts the ordered answer for inversion
-  if(inversion === "63"){
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-  }
-  if(inversion === "64"){
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-  }
-
   // shuffles the root note choices so they're not always in root position haha
   shuffle(chord.questions[1].choices)
 
@@ -292,24 +322,36 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
   chord = staffAdjust(chord);
   // console.log("chord adjust: " + adjust); // outta scope now
 
+  if (inversion !== 'root') {
+    return handleInversion(chord, inversion)
+  }
+  else {
+    return(chord)
+  }
+
+}
+
+function handleInversion(chord, inversion) {
+
+  // adjusts the ordered answer for inversion
   // inverts the chord. slicker would be to also reorder chord.notes, but not necessary.
   if(inversion === "63"){
+    chord.questions[0].answers.push(chord.questions[0].answers.shift());
     chord.notes[0].octave += 1
     chord.notes.push(chord.notes.shift());
   }
   if(inversion === "64"){
+    chord.questions[0].answers.push(chord.questions[0].answers.shift());
+    chord.questions[0].answers.push(chord.questions[0].answers.shift());
     chord.notes[0].octave += 1
     chord.notes[1].octave += 1
     chord.notes.push(chord.notes.shift());
     chord.notes.push(chord.notes.shift());
   }
 
-  // adjusts the inverted chord so it's within staff limits
-  chord = staffAdjust(chord);
-  // console.log("inversion adjust: " + adjust); // outta scope now
-
-  // console.log(JSON.stringify(chord, null, 3));
-  return(chord)
+// adjusts the inverted chord so it's within staff limits
+  let finalChord = staffAdjust(chord)
+  return(finalChord)
 }
 
 
