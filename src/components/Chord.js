@@ -41,8 +41,8 @@ export default function Chord(props) {
     if (props.size >= 500) {
       staveSize.svgWidth = '500px'
       staveSize.svgHeight = '250px'
-      staveSize.viewBoxWidth = 200
-      staveSize.viewBoxHeight = 100
+      staveSize.viewBoxWidth = 400
+      staveSize.viewBoxHeight = 200
     }
     else {
       staveSize.svgWidth = '300px'
@@ -72,7 +72,7 @@ export default function Chord(props) {
 
     stave.addClef(props.clef).addTimeSignature("4/4")
 
-    stave.addModifier(new Vex.Flow.KeySignature('F'))
+    stave.addModifier(new Vex.Flow.KeySignature('Cb'))
 
     stave.setContext(context).draw()
 

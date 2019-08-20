@@ -38,32 +38,87 @@ function shuffle (array) {
 // this assumes a structure will only exceed ONE of those limits, not both.
 // also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
 function staffAdjust(chord){
-  let adjust
+  let adjust = 0
 
   for(var i=0; i<chord.notes.length; i++){
-    adjust = 0
 
     // bass clef upper limit is F4
-    if(chord.clef === "bass" && octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 4 || chord.notes[i].octave === 5){
-      adjust -= 1
+    if(chord.clef === "bass" && (octaveOrientedLetters.indexOf((chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 4) || chord.notes[i].octave === 5)){
+      adjust = -1
+      console.log('bass upper limit!');
+      console.log('letter: ' + chord.notes[i].letter);
+      console.log('octave: ' + chord.notes[i].octave);
+      break
     }
     // bass clef lower limit is B1
     if(chord.clef === "bass" && octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B") && chord.notes[i].octave <= 1){
-      adjust += 1
+      adjust = 1
+      console.log('bass lower limit!');
+      console.log('letter: ' + chord.notes[i].letter);
+      console.log('octave: ' + chord.notes[i].octave);
+      break
     }
     // treble clef upper limit is F6
-    if(chord.clef === "treble" && octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 6 || chord.notes[i].octave === 6){
-      adjust -= 1
+    if (chord.clef === 'treble') {
+      console.log('treble=true');
+      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+        console.log('1st condition true');
+        if (chord.notes[i].octave >= 6) {
+          console.log('2nd condition true');
+          console.log('letter index: '+octaveOrientedLetters.indexOf((chord.notes[i].letter)));
+          console.log('F index: '+octaveOrientedLetters.indexOf("F"));
+          adjust = -1
+          console.log('treble upper limit!');
+          console.log('letter: ' + chord.notes[i].letter);
+          console.log('octave: ' + chord.notes[i].octave);
+          break
+        }
+      }
+      else if (chord.notes[i].octave === 6) {
+        console.log('other condition true');
+        adjust = -1
+        console.log('treble upper limit!');
+        console.log('letter: ' + chord.notes[i].letter);
+        console.log('octave: ' + chord.notes[i].octave);
+        break
+      }
     }
+    // if(chord.clef === "treble" && octaveOrientedLetters.indexOf((chord.notes[i].letter) > octaveOrientedLetters.indexOf("F") && chord.notes[i].octave >= 6) || chord.notes[i].octave === 6){
+    //   adjust -= 1
+    //   console.log('treble upper limit!');
+    //   console.log('letter: ' + chord.notes[i].letter);
+    //   console.log('octave: ' + chord.notes[i].octave);
+    // }
     // treble clef lower limit is G3
-    if(chord.clef === "treble" && octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G") && chord.notes[i].octave <= 3){
-      adjust += 1
+    // if(chord.clef === "treble" && octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G") && chord.notes[i].octave <= 3){
+    //   adjust = 1
+    //   console.log('treble lower limit!');
+    //   console.log('letter: ' + chord.notes[i].letter);
+    //   console.log('octave: ' + chord.notes[i].octave);
+    //   break
+    // }
+    if (chord.clef === 'treble') {
+      console.log('treble=true');
+      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
+        console.log('1st condition true');
+        if (chord.notes[i].octave >= 3) {
+          console.log('2nd condition true');
+          console.log('letter index: '+octaveOrientedLetters.indexOf((chord.notes[i].letter)));
+          adjust = 1
+          console.log('treble lower limit!');
+          console.log('letter: ' + chord.notes[i].letter);
+          console.log('octave: ' + chord.notes[i].octave);
+          break
+        }
+      }
     }
   }
   // apply the adjust to each note
   for(var j=0; j<chord.notes.length; j++){
     chord.notes[j].octave += adjust
   }
+
+  console.log("adjust: " +adjust);
 
   // console.log(JSON.stringify(chord, null, 4));
   return(chord)
@@ -99,12 +154,13 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
   if(clef === "treble"){
     clefOctave = Math.floor(Math.random() * 4) + 3 // range of 4 octaves starting from octave 3
   }
-  // console.log(clefOctave)
+  console.log('clefOctave: '+clefOctave)
 
-  let startingOctave = triads[newStructure].structure[0].octave// this takes the first note of the template structure, which works fine when the template is root position triads. better would be to loop through the structure and find the lowest octave number, or the lowest octave number that's also template[newStructure].anchor
+  // this effectively zeroes everything out
+  // let startingOctave = triads[newStructure].structure[0].octave // this takes the first note of the template structure, which works fine when the template is root position triads. better would be to loop through the structure and find the lowest octave number, or the lowest octave number that's also template[newStructure].anchor
 
-  let noteOctave = startingOctave // reset it outside the note loop
-  let lastOctaveIndex = startingOctave // this is so the octave "if" statement doesn't carry across chords. otherwise if octaveIndex of the first note of the new chord is less than the last note of the previous chord, the new chord will start an octive higher.
+  // let noteOctave = startingOctave // reset it outside the note loop
+  // let lastOctaveIndex = startingOctave // this is so the octave "if" statement doesn't carry across chords. otherwise if octaveIndex of the first note of the new chord is less than the last note of the previous chord, the new chord will start an octive higher.
 
   let inversion = randomchoice(inversions);
   // console.log(inversion);
@@ -195,13 +251,16 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
     // octave adjustments:
     // will this also work for template structures bigger than an octave?
     let octaveIndex = octaveOrientedLetters.indexOf(noteLetter)
+    let octave = clefOctave
     // var lastOctaveIndex // just declaring it so i can use it the first time
-    if(octaveIndex < lastOctaveIndex){
-      noteOctave += 1;
+    if(chord.notes.length > 0 && octaveIndex < octaveOrientedLetters.indexOf(chord.notes[chord.notes.length-1].letter)){
+      octave += 1;
+      clefOctave +=1 // sets the default octave up for the next note
     }
-    lastOctaveIndex = octaveIndex
+    // lastOctaveIndex = octaveIndex
     // here's the only safe place to add clefOctave. if you add it to startingOctave outside this loop, it does things like give you chords that start on octave 4 in bass clef.
-    let octave = noteOctave+clefOctave
+    // let octave = noteOctave+clefOctave
+    // let octave = clefOctave
     // console.log(octave)
 
     let note = {}
@@ -210,16 +269,18 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
     note.octave = octave
     chord.notes.push(note);
 
+    console.log("note: " + JSON.stringify(note));
+
     chord.questions[0].answers.push(noteLetter);
     chord.questions[1].choices.push(noteLetter+accidental);
 
   }
 
   // adjusts the ordered answer for inversion
-  if(inversion === 63){
+  if(inversion === "63"){
     chord.questions[0].answers.push(chord.questions[0].answers.shift());
   }
-  if(inversion === 64){
+  if(inversion === "64"){
     chord.questions[0].answers.push(chord.questions[0].answers.shift());
     chord.questions[0].answers.push(chord.questions[0].answers.shift());
   }
@@ -229,20 +290,23 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
 
   // adjusts the chord so it's within staff limits
   chord = staffAdjust(chord);
-  // console.log("chord adjust: " + adjust);
+  // console.log("chord adjust: " + adjust); // outta scope now
 
   // inverts the chord. slicker would be to also reorder chord.notes, but not necessary.
   if(inversion === "63"){
     chord.notes[0].octave += 1
+    chord.notes.push(chord.notes.shift());
   }
   if(inversion === "64"){
     chord.notes[0].octave += 1
     chord.notes[1].octave += 1
+    chord.notes.push(chord.notes.shift());
+    chord.notes.push(chord.notes.shift());
   }
 
   // adjusts the inverted chord so it's within staff limits
   chord = staffAdjust(chord);
-  // console.log("inversion adjust: " + adjust);
+  // console.log("inversion adjust: " + adjust); // outta scope now
 
   // console.log(JSON.stringify(chord, null, 3));
   return(chord)

@@ -44,7 +44,8 @@ const octaveOrientedLetters = ['C','D','E','F','G','A','B'];
 const rootAccidentals = ["b", "n", "#"];
 const accidentals = ["bb", "b", "n", "#", "##"];
 
-const clefs = ["bass","treble"];
+// const clefs = ["bass","treble"];
+const clefs = ["treble"];
 const inversions = ["root","63","64"]; // was "root_pos","1st_inv","2nd_inv"
 
 
