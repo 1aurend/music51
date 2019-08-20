@@ -12,7 +12,7 @@ import {
 
 export default function Options({checked, onChange, onCheck}) {
 
-  console.log(JSON.stringify(checked));
+  // console.log(JSON.stringify(checked));
 
     return (
       <>

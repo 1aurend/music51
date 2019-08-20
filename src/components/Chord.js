@@ -118,7 +118,7 @@ export default function Chord(props) {
 
     done(false)
 
-  }, [props.notes, props.colors, loading])
+  }, [props.notes, props.colors, loading, props.size])
 
 
   return (

@@ -8,7 +8,8 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "shards-react": "^1.0.3"
+    "shards-react": "^1.0.3",
+    "victory": "^32.3.6"
   },
   "scripts": {
     "start": "react-scripts start",

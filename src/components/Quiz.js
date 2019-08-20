@@ -1,30 +1,25 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import Chord from './Chord'
 import Choice from './Choice'
 import Results from './Results'
-import QuizContainer from './QuizContainer'
 import {
   Container,
   Row,
   Col,
-  Button,
 } from 'shards-react'
+import { Size } from './Context'
 
 
 export default function Quiz (props) {
 
+  const size = useContext(Size)
+  let borderRadius = size > 500 ? '2rem' : '1rem'
   const [currentQ, nextQ] = useState(props.data[0].questions[0])
   const [endOfQ, doneQ] = useState(false)
-  const [reset, startOver] = useState(false)
   const [noteColors, addColor] = useState([])
   const [incorrectTry, turnRed] = useState(false)
   const [currentInput, nextInput] = useState(null)
-  const [size, setSize] = useState({
-                                    width: window.innerWidth,
-                                    height: window.innerHeight
-                                  })
   const currentChord = useRef(props.data[0])
-  const [progress, showProgress] = useState(false)
 
   const sessionData = useRef(
     {
@@ -102,7 +97,7 @@ export default function Quiz (props) {
   }
 
   function checkInput(input) {
-    if (input === currentQ.answers[subQ.current.answers.length]) {
+    if (currentQ.answers[subQ.current.answers.length].indexOf(input) >= 0) {
 
       answer.current.endTime = Date.now()
       answer.current.elapsedTime = (answer.current.endTime-answer.current.startTime)/1000
@@ -118,7 +113,7 @@ export default function Quiz (props) {
         addColor([...noteColors, input])
         turnRed(false)
         chord.current.questions.push(subQ.current)
-        console.log('next Q: ' + chord.current.questions.length);
+        // console.log('next Q: ' + chord.current.questions.length);
         doneQ(true)
       }
       else {
@@ -176,7 +171,7 @@ export default function Quiz (props) {
             doneQ(false)
           }
           else {
-            console.log(JSON.stringify(sessionData.current, null, 4));
+            // console.log(JSON.stringify(sessionData.current, null, 4));
             doneQ(false)
           }
         }
@@ -185,40 +180,6 @@ export default function Quiz (props) {
 
   }, [endOfQ, props.data])
 
-
-  useEffect(() => {
-    const handleResize = () => setSize({width: window.innerWidth, height: window.innerHeight})
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-  }
-  },[])
-
-  let calculateBorderRadius = () => {
-    if (size.width > 500) {
-      if (size.width > size.height) {
-        return (`2rem`)
-      }
-      else {
-        return(`2rem`)
-      }
-    }
-    else {
-      if (size.width > size.height) {
-        return (`1rem`)
-      }
-      else {
-        return(`1rem`)
-      }
-    }
-  }
-  const borderRadius = calculateBorderRadius().toString()
-  console.log(borderRadius);
-
-
-  if (reset) {
-    return <QuizContainer /> //this is hacky...circular prop passing... figure out how often we want to fetch new data and where to really store it
-  }
 
   if (sessionData.current.results.length < props.data.length) {
       return (
@@ -248,21 +209,7 @@ export default function Quiz (props) {
   }
   else if (sessionData.current.results.length === props.data.length) {
       return (
-        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
-          <Row noGutters style={{paddingTop: '5%'}}></Row>
-          <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-            <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
-                <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                  <Col sm='12' lg='8'><Results data={sessionData.current} progress={progress}/></Col>
-                </Row>
-                <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-                  <Button style={{marginRight: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Keep Going</Button>
-                  <Button style={{marginLeft: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
-                </Row>
-              </Col>
-            </Row>
-        </Container>
+        <Results data={sessionData.current} />
     )
   }
 

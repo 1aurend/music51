@@ -1,8 +1,23 @@
-import React from 'react'
-import { Row } from 'shards-react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Progress, Size } from './Context'
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+} from 'shards-react'
+import Start from './Start'
 
 
-export default function Results({ data, progress }) {
+export default function Results({ data }) {
+
+  const [progress, updateProgress] = useContext(Progress)
+  const size = useContext(Size)
+  let borderRadius = size > 500 ? '2rem' : '1rem'
+  const [reset, startOver] = useState(false)
+  const [progressView, showProgress] = useState(false)
+
+
 
   console.log(JSON.stringify(data, null, 4));
 
@@ -30,6 +45,10 @@ export default function Results({ data, progress }) {
     meanAttempts: null,
     meanTime: null,
   }
+  let overall = {
+    attempts: null,
+    time: null
+  }
 
   data.results.map( chord => {
     chord.questions.map( question => {
@@ -37,27 +56,34 @@ export default function Results({ data, progress }) {
         question.answers.map( answer => {
             noteNames.attempts.push(answer.tries.length)
             noteNames.times.push(answer.elapsedTime)
+            return null
         })
       }
       else if (question.text.indexOf('root') !== -1) {
         question.answers.map( answer => {
             roots.attempts.push(answer.tries.length)
             roots.times.push(answer.elapsedTime)
+            return null
         })
       }
       else if (question.text.indexOf('quality') !== -1) {
         question.answers.map( answer => {
             quality.attempts.push(answer.tries.length)
             quality.times.push(answer.elapsedTime)
+            return null
         })
       }
       else if (question.text.indexOf('inversion') !== -1) {
         question.answers.map( answer => {
             inversions.attempts.push(answer.tries.length)
             inversions.times.push(answer.elapsedTime)
+            return null
         })
       }
-    })})
+      return null
+    })
+    return null
+  })
 
 
   const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
@@ -73,15 +99,60 @@ export default function Results({ data, progress }) {
   quality.meanTime = round(mean(quality.times),4)
   inversions.meanAttempts = round(mean(inversions.attempts),4)
   inversions.meanTime = round(mean(inversions.times),4)
+  overall.attempts = (noteNames.meanAttempts+roots.meanAttempts+quality.meanAttempts+inversions.meanAttempts)/4
+  overall.time = (noteNames.meanTime+roots.meanTime+quality.meanTime+inversions.meanTime)/4
 
-  return (
-    <>
-      <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3>Your Results:</h3></Row>
-      <Row><p><strong>Note Names: </strong>You averaged <strong>{noteNames.meanAttempts}</strong> attempts and <strong>{noteNames.meanTime}</strong> seconds per question.</p></Row>
-      <Row><p><strong>Root Notes: </strong>You averaged <strong>{roots.meanAttempts}</strong> attempts and <strong>{roots.meanTime}</strong> seconds per question.</p></Row>
-      <Row><p><strong>Chord Quality: </strong>You averaged <strong>{quality.meanAttempts}</strong> attempts and <strong>{quality.meanTime}</strong> seconds per question.</p></Row>
-      <Row><p><strong>Inversions: </strong>You averaged <strong>{inversions.meanAttempts}</strong> attempts and <strong>{inversions.meanTime}</strong> seconds per question.</p></Row>
-    </>
-  )
+
+
+  useEffect(() => {
+    let tally = {
+      noteNames: [...progress.noteNames, noteNames.meanAttempts],
+      roots: [...progress.roots, roots.meanAttempts],
+      quality: [...progress.quality, quality.meanAttempts],
+      inversions: [...progress.inversions, inversions.meanAttempts],
+      overall: [...progress.overall, overall.attempts]
+    }
+
+    updateProgress(tally)
+    console.log('here is progress: ' + JSON.stringify(tally));
+  }, [])
+
+
+  if (reset) {
+    return <Start title={{headline: 'Welcome Back!', subtitle: 'Choose your settings for the next set.'}}/>
+  }
+  else if (progressView) {
+    return <h2>you clicked show progress!</h2>
+  }
+  else {
+    return (
+      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
+        <Row noGutters style={{paddingTop: '5%'}}></Row>
+        <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
+          <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
+              <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
+                <Col sm='12' lg='8'>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3>Your Results:</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Note Names: </strong>You averaged <strong>{noteNames.meanAttempts}</strong> attempts and <strong>{noteNames.meanTime}</strong> seconds per question.</p></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Root Notes: </strong>You averaged <strong>{roots.meanAttempts}</strong> attempts and <strong>{roots.meanTime}</strong> seconds per question.</p></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Chord Quality: </strong>You averaged <strong>{quality.meanAttempts}</strong> attempts and <strong>{quality.meanTime}</strong> seconds per question.</p></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Inversions: </strong>You averaged <strong>{inversions.meanAttempts}</strong> attempts and <strong>{inversions.meanTime}</strong> seconds per question.</p></Row>
+              </Col>
+              </Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
+                <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Keep Going</Button>
+                </Col>
+                <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+      </Container>
+    )
+  }
+
 
 }

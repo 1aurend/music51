@@ -38,7 +38,7 @@ function QuizContainer(props) {
   else {
     console.log(quizData);
     return (
-      <Start data={quizData} />
+      <Start data={quizData} progress={null} />
     )
   }
 

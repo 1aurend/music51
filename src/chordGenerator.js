@@ -65,7 +65,7 @@ function staffAdjust(chord){
     chord.notes[j].octave += adjust
   }
 
-  console.log(JSON.stringify(chord, null, 4));
+  // console.log(JSON.stringify(chord, null, 4));
   return(chord)
 }
 
@@ -157,8 +157,7 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
       "answers": [inversion],
       "choices": [ // TODO: populate choices, include 7ths
           "root",
-          `6
-          3`,
+          "63",
           "64"
       ]
     }
@@ -245,7 +244,7 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
   chord = staffAdjust(chord);
   // console.log("inversion adjust: " + adjust);
 
-  console.log(JSON.stringify(chord, null, 3));
+  // console.log(JSON.stringify(chord, null, 3));
   return(chord)
 }
 
@@ -256,5 +255,6 @@ export default (numQs) => {
   for (var i = 0; i < numQs; i++) {
     chords.push(randomChord(triads, subsets, rootAccidentals, accidentals, ip))
   }
+  console.log('here is chords: ' + JSON.stringify(chords, null, 4));
   return chords
 }

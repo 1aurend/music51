@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import Options from './Options.js'
 import Go from './Go.js'
 import Quiz from './Quiz'
@@ -9,11 +9,16 @@ import {
   Button,
 } from 'shards-react'
 import generateChords from '../chordGenerator'
+import { Size } from './Context'
 
 
-export default function Start(props) {
 
-  const numQs = useRef(1) //needs to be set to 10?
+
+export default function Start({title}) {
+
+  const size = useContext(Size)
+  let borderRadius = size > 500 ? '2rem' : '1rem'
+  const numQs = useRef(10)
   const [ready, launchQuiz] = useState(false)
   const userId = useRef('somebody')
   const sessionId = useRef(Date.now())
@@ -22,20 +27,8 @@ export default function Start(props) {
     chordTypes: {triads:true, sevenths:true},
     roots: {common:true, any:false}
   })
-  const [size, setSize] = useState({
-                                    width: window.innerWidth,
-                                    height: window.innerHeight
-                                  })
-
 
   let generateQuiz = (e) => {
-
-    // let qs = []
-    // for (var i = 0; i < numQs.current; i++) {
-    //   qs.push(props.data[i])
-    // }
-    //   // qs = [...qs, generateChords()]
-    //   setQuiz(qs)
       setQuiz(generateChords(numQs.current))
       launchQuiz(true)
   }
@@ -64,28 +57,6 @@ export default function Start(props) {
 
   console.log(JSON.stringify(options, null, 4));
 
-  let calculateBorderRadius = () => {
-    if (size.width > 500) {
-      if (size.width > size.height) {
-        return (`2rem`)
-      }
-      else {
-        return(`2rem`)
-      }
-    }
-    else {
-      if (size.width > size.height) {
-        return (`1rem`)
-      }
-      else {
-        return(`1rem`)
-      }
-    }
-  }
-  const borderRadius = calculateBorderRadius().toString()
-  console.log(borderRadius);
-
-
 
   if (!ready) {
     return (
@@ -93,8 +64,8 @@ export default function Start(props) {
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={{textAlign: 'center'}}>Music 51</h1></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={{margin: 'auto', textAlign: 'center'}}>Chord Identification</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={{textAlign: 'center'}}>{title.headline}</h1></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={{margin: 'auto', textAlign: 'center'}}>{title.subtitle}</h2></Row>
             <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck}/>
           </Col>
         </Row>
@@ -106,7 +77,7 @@ export default function Start(props) {
   }
   else if (ready) {
     return (
-      <Quiz data={quiz} userId={userId.current} sessionId={sessionId.current} />
+        <Quiz data={quiz} userId={userId.current} sessionId={sessionId.current} />
     )
   }
 
