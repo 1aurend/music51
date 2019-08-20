@@ -83,7 +83,7 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
     // console.log(rootLetter+rootAccidental+" "+newStructure);
 
   // find the equivalent IP based on the accidental's offset from the "natural" root syllable
-  let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf("N")) // the distance from natural!
+  let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf("n")) // the distance from natural!
     // console.log(offset + " from natural")
   let rootIp = ip[(ip.indexOf(rootSyllable)+offset)%12]
     // console.log("IP: " + rootIp)
@@ -186,7 +186,7 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
 
     // incredibly lazy, temporary way to put this in keySignature == "C"
     // this doesn't affect rootAccidental. which begs a larger philosophical question of whether the chord or the keySignature should be generated first. hint: not the chord.
-    if(accidental === "N") accidental = ""
+    if(accidental === "n") accidental = ""
 
     // translate the syllable "position" to a letter
     let noteLetter = letters[subsets.B.indexOf(noteSyllable)]

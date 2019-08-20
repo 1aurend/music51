@@ -11,22 +11,12 @@ export default function Chord(props) {
   let accidentals = []
     for (var i = 0; i < props.notes.length; i++) {
       formattedNotes.push(props.notes[i].letter + '/' + props.notes[i].octave)
-      if (props.notes[i].accidental === "B") {
-        accidentals.push({note: i, accidental: "b"})
+      if (props.notes[i].accidental !== "n") {
+        accidentals.push({note: i, accidental: props.notes[i].accidental})
       }
       else if (props.notes[i].accidental === "BB") {
         accidentals.push({note: i, accidental: "bb"})
-      }
-      else if (props.notes[i].accidental === "#") {
-        accidentals.push({note: i, accidental: "#"})
-      }
-      else if (props.notes[i].accidental === "##") {
-        accidentals.push({note: i, accidental: "##"})
-      }
-      else {
-        accidentals.push({note: i, accidental: "n"})
-      }
-    }
+    }}
 
     console.log(accidentals);
     console.log(formattedNotes);
@@ -83,9 +73,9 @@ export default function Chord(props) {
 
     let stave = new VF.Stave(0, 0, 180)
 
-    stave.addClef(props.clef).addTimeSignature("4/4").addKeySignature("C")
+    stave.addClef(props.clef).addTimeSignature("4/4")
 
-    stave.addModifier(new Vex.Flow.KeySignature('C'))
+    stave.addModifier(new Vex.Flow.KeySignature('F'))
 
     stave.setContext(context).draw()
 
