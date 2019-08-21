@@ -8,11 +8,21 @@ export const Size = React.createContext()
 export default function Context() {
 
   const [progress, updateProgress] = useState({
-          noteNames: [],
-          roots: [],
-          quality: [],
-          inversions: [],
-          overall: []
+          attempts: {
+            noteNames: [],
+            roots: [],
+            quality: [],
+            inversions: [],
+            overall: []
+          },
+          times: {
+            noteNames: [],
+            roots: [],
+            quality: [],
+            inversions: [],
+            overall: []
+          },
+          roundCount: 1
         })
 
   const [size, setSize] = useState({

@@ -21,11 +21,14 @@ import {
 
 export default function ProgressChart() {
 
-  const progress = useContext(Progress)
+  const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
   let borderRadius = size > 500 ? '2rem' : '1rem'
   const [reset, startOver] = useState(false)
   const [done, finished] = useState(false)
+
+  let attempts = progress.attempts
+  let times = progress.times
 
 
   //add effect to clear progress history on done=true
@@ -70,23 +73,24 @@ export default function ProgressChart() {
                       />
                     <VictoryGroup offset={20}
                       colorScale={"heatmap"}>
-                      <VictoryGroup data={[{x: 1, y: 3},{x: 2, y: 4}, {x: 3, y: 1.5}]}>
+                      <VictoryGroup data={attempts.noteNames}>
                         <VictoryLine/>
-                        <VictoryScatter labelComponent={<VictoryLabel dy={20}/>} labels={(d) => d.y} style={{ labels: { fontSize: '9', fontWeight: '700', padding: 1 } }}/>
+                        <VictoryScatter/>
+                        {/*labelComponent={<VictoryLabel dy={20}/>} labels={(d) => d.y} style={{ labels: { fontSize: '9', fontWeight: '700', padding: 1 } }}*/}
                       </VictoryGroup>
-                      <VictoryGroup data={[{x: 1, y: 4}, {x: 2, y: 2}]}>
+                      <VictoryGroup data={attempts.roots}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={[{x: 1, y: 5},{x: 2, y: 4}, {x: 3, y: 1}]}>
+                      <VictoryGroup data={attempts.quality}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={[{x: 1, y: 3},{x: 2, y: 4.5}, {x: 3, y: 1.5}]}>
+                      <VictoryGroup data={attempts.inversions}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={[{x: 1, y: 2},{x: 2, y: 1}, {x: 3, y: 1}]}>
+                      <VictoryGroup data={attempts.overall}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
@@ -109,23 +113,23 @@ export default function ProgressChart() {
                     />
                   <VictoryGroup offset={20}
                     colorScale={"heatmap"}>
-                    <VictoryGroup data={[{x: 1, y: 3},{x: 2, y: 4}, {x: 3, y: 1.5}]}>
+                    <VictoryGroup data={times.noteNames}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={[{x: 1, y: 4}, {x: 2, y: 2}]}>
+                    <VictoryGroup data={times.roots}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={[{x: 1, y: 5},{x: 2, y: 4}, {x: 3, y: 1}]}>
+                    <VictoryGroup data={times.quality}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={[{x: 1, y: 3},{x: 2, y: 4.5}, {x: 3, y: 1.5}]}>
+                    <VictoryGroup data={times.inversions}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={[{x: 1, y: 2},{x: 2, y: 1}, {x: 3, y: 1}]}>
+                    <VictoryGroup data={times.overall}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>

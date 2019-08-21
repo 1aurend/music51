@@ -107,11 +107,21 @@ export default function Results({ data }) {
 
   useEffect(() => {
     let tally = {
-      noteNames: [...progress.noteNames, noteNames.meanAttempts],
-      roots: [...progress.roots, roots.meanAttempts],
-      quality: [...progress.quality, quality.meanAttempts],
-      inversions: [...progress.inversions, inversions.meanAttempts],
-      overall: [...progress.overall, overall.attempts]
+        attempts: {
+          noteNames: [...progress.attempts.noteNames, {x: progress.roundCount, y: noteNames.meanAttempts}],
+          roots: [...progress.attempts.roots, {x: progress.roundCount, y: roots.meanAttempts}],
+          quality: [...progress.attempts.quality, {x: progress.roundCount, y: quality.meanAttempts}],
+          inversions: [...progress.attempts.inversions, {x: progress.roundCount, y: inversions.meanAttempts}],
+          overall: [...progress.attempts.overall, {x: progress.roundCount, y: overall.attempts}],
+      },
+        times: {
+          noteNames: [...progress.times.noteNames, {x: progress.roundCount, y: noteNames.meanTime}],
+          roots: [...progress.times.roots, {x: progress.roundCount, y: roots.meanTime}],
+          quality: [...progress.times.quality, {x: progress.roundCount, y: quality.meanTime}],
+          inversions: [...progress.times.inversions, {x: progress.roundCount, y: inversions.meanTime}],
+          overall: [...progress.times.overall, {x: progress.roundCount, y: overall.time}],
+      },
+        roundCount: ++progress.roundCount
     }
 
     updateProgress(tally)
