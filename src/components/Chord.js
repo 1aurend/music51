@@ -81,7 +81,7 @@ export default function Chord(props) {
 
     if (props.notes.length > 0) {
 
-      let notes = [new VF.StaveNote({clef: 'treble', keys: formattedNotes, duration: "w", align_center: true})]
+      let notes = [new VF.StaveNote({clef: props.clef, keys: formattedNotes, duration: "w", align_center: true})]
 
       if (accidentals.length > 0) {
         for (var i = 0; i < accidentals.length; i++) {
