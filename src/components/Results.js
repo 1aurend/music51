@@ -15,7 +15,7 @@ export default function Results({ data }) {
   const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
   let borderRadius = size > 500 ? '2rem' : '1rem'
-  const [reset, startOver] = useState(false)
+  const [reset, newRound] = useState(false)
   const [progressView, showProgress] = useState(false)
 
 
@@ -153,7 +153,7 @@ export default function Results({ data }) {
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {startOver(true)}}>Keep Going</Button>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Keep Going</Button>
                 </Col>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                   <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
