@@ -7,6 +7,7 @@ import {
   Button,
 } from 'shards-react'
 import Start from './Start'
+import ProgressChart from './Progress'
 
 
 export default function Results({ data }) {
@@ -122,7 +123,7 @@ export default function Results({ data }) {
     return <Start title={{headline: 'Welcome Back!', subtitle: 'Choose your settings for the next set.'}}/>
   }
   else if (progressView) {
-    return <h2>you clicked show progress!</h2>
+    return <ProgressChart />
   }
   else {
     return (

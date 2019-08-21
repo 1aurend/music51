@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Start from './Start'
+import ProgressChart from './Progress'
 
 export const Progress = React.createContext()
 export const Size = React.createContext()
