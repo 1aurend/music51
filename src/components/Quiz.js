@@ -50,7 +50,6 @@ export default function Quiz (props) {
   function handleClick(e, input) {
 
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'click'}]
-    nextInput(input)
     checkInput(input)
   }
 
@@ -92,7 +91,6 @@ export default function Quiz (props) {
     }
 
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
-    nextInput(input)
     checkInput(input)
   }
 
@@ -103,6 +101,7 @@ export default function Quiz (props) {
     console.log('here is input: ' + input);
 
     if (!endOfQ) {
+      nextInput(input)
       if (currentQ.answers[subQ.current.answers.length].includes(input)) {
 
       answer.current.endTime = Date.now()
