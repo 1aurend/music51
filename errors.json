@@ -1,0 +1,164 @@
+here is chords: [
+    {
+        "clef": "bass",
+        "keySignature": "C",
+        "notes": [
+            {
+                "letter": "E",
+                "accidental": "bb",
+                "octave": 2
+            },
+            {
+                "letter": "G",
+                "accidental": "b",
+                "octave": 2
+            },
+            {
+                "letter": "C",
+                "accidental": "b",
+                "octave": 3
+            }
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the letter positions from lowest to highest.",
+                "answers": [
+                    "E",
+                    "G",
+                    "C"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "What's the root note?",
+                "answers": [
+                    "Cb"
+                ],
+                "choices": [
+                    "Gb",
+                    "Cb",
+                    "Ebb"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "What's the chord quality?",
+                "answers": [
+                    "m"
+                ],
+                "choices": [
+                    "M",
+                    "m",
+                    "o",
+                    "+"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "What's the inversion?",
+                "answers": [
+                    "63"
+                ],
+                "choices": [
+                    "root",
+                    "63",
+                    "64"
+                ]
+            }
+        ]
+    }
+]
+
+
+here is chords: [
+    {
+        "clef": "bass",
+        "keySignature": "C",
+        "notes": [
+            {
+                "letter": "D",
+                "accidental": "b",
+                "octave": 3
+            },
+            {
+                "letter": "G",
+                "accidental": "b",
+                "octave": 3
+            },
+            {
+                "letter": "B",
+                "accidental": "bb",
+                "octave": 3
+            }
+        ],
+        "questions": [
+            {
+                "type": "Note Names",
+                "questionText": "Name the letter positions from lowest to highest.",
+                "answers": [
+                    "D",
+                    "G",
+                    "B"
+                ],
+                "ordered": true,
+                "choices": [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                ]
+            },
+            {
+                "type": "Root",
+                "questionText": "What's the root note?",
+                "answers": [
+                    "Gb"
+                ],
+                "choices": [
+                    "Gb",
+                    "Bbb",
+                    "Db"
+                ]
+            },
+            {
+                "type": "Chord Quality",
+                "questionText": "What's the chord quality?",
+                "answers": [
+                    "m"
+                ],
+                "choices": [
+                    "M",
+                    "m",
+                    "o",
+                    "+"
+                ]
+            },
+            {
+                "type": "Inversions",
+                "questionText": "What's the inversion?",
+                "answers": [
+                    "64"
+                ],
+                "choices": [
+                    "root",
+                    "63",
+                    "64"
+                ]
+            }
+        ]
+    }
+]

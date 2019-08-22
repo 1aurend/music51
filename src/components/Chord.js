@@ -24,10 +24,9 @@ export default function Chord(props) {
     let colors = []
       for (var i = 0; i < props.colors.length; i++) {
         for (var j = 0; j < props.notes.length; j++) {
-          console.log(props.colors[i])
-          console.log(props.notes[j].letter)
+          // console.log(props.colors[i])
+          // console.log(props.notes[j].letter)
           if (props.colors[i].indexOf(props.notes[j].letter) >= 0 ) {
-            console.log('here')
             colors.push({key: j, color: '#17c671'})
           }
         }

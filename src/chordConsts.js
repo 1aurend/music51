@@ -13,6 +13,11 @@ const triads = {
   {"class":"AD","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"M","octave":0},{"ip":"P","octave":0}]}
 }
 
+// const triads = {
+//   "m": // was Minor_Triad
+//   {"class":"dor","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"N","octave":0},{"ip":"S","octave":0}]},
+// }
+
 
 // the contexts that will determine grammar for those chord structures:
 // ("quality" and "incidental" are unused)
@@ -42,10 +47,12 @@ const octaveOrientedLetters = ['C','D','E','F','G','A','B'];
 
 
 const rootAccidentals = ["b", "n", "#"];
+// const rootAccidentals = ["b"];
+
 const accidentals = ["bb", "b", "n", "#", "##"];
 
 const clefs = ["bass","treble"];
-// const clefs = ["treble"];
+// const clefs = ["bass"];
 const inversions = ["root","63","64"]; // was "root_pos","1st_inv","2nd_inv"
 
 

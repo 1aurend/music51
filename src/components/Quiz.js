@@ -47,7 +47,7 @@ export default function Quiz (props) {
   })
 
 
-  function handleClick(input) {
+  function handleClick(e, input) {
 
     answer.current.tries = [...answer.current.tries, {'input': input, type: 'click'}]
     nextInput(input)
@@ -97,7 +97,13 @@ export default function Quiz (props) {
   }
 
   function checkInput(input) {
-    if (currentQ.answers[subQ.current.answers.length].indexOf(input) >= 0) {
+    console.log('here is currentQ.answers: ' + currentQ.answers);
+    console.log('here is subQ.current.answers.length: ' + subQ.current.answers.length);
+    console.log('here is subQ.current.answers ' + JSON.stringify(subQ.current.answers));
+    console.log('here is input: ' + input);
+
+    if (!endOfQ) {
+      if (currentQ.answers[subQ.current.answers.length].includes(input)) {
 
       answer.current.endTime = Date.now()
       answer.current.elapsedTime = (answer.current.endTime-answer.current.startTime)/1000
@@ -123,7 +129,7 @@ export default function Quiz (props) {
     }
     else {
       turnRed(true)
-    }
+    }}
   }
 
   useEffect(() => {
@@ -198,7 +204,7 @@ export default function Quiz (props) {
                   <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}}>
                   {currentQ.choices.map(choice => {
                     return (
-                    <Choice onClick={() => handleClick(choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
+                    <Choice onClick={(e) => handleClick(e, choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
                   </Row>
                 </Col>
             </Row>

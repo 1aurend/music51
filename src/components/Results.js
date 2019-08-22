@@ -20,7 +20,7 @@ export default function Results({ data }) {
 
 
 
-  console.log(JSON.stringify(data, null, 4));
+  // console.log(JSON.stringify(data, null, 4));
 
   let noteNames = {
     attempts: [],
