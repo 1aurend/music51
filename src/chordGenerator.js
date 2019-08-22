@@ -1,5 +1,6 @@
 import {
-  triads,
+  templateTriads,
+  templateSevenths,
   classes,
   ip,
   subsets,
@@ -8,10 +9,13 @@ import {
   rootAccidentals,
   accidentals,
   clefs,
-  inversions
+  triadInversions,
+  seventhInversions
 } from './chordConsts'
 
-
+// TODO:
+const template = templateSevenths // aggregate triads and sevenths into template
+const inversions = triadInversions // aggregate triadInversions and seventhInversions into inversions
 
 // a function to choose something random:
 function randomchoice(array){
@@ -165,11 +169,11 @@ function staffAdjust(chord){
 
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
+function randomChord(template, subsets, rootAccidentals, accidentals, ip){
   // choose a random structure, root, and accidental
-  let newStructure = randomchoice(Object.keys(triads));
-  let newClass = triads[newStructure].class
-  let newRoot = triads[newStructure].anchor
+  let newStructure = randomchoice(Object.keys(template));
+  let newClass = template[newStructure].class
+  let newRoot = template[newStructure].anchor
   let rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
   let rootAccidental = randomchoice(rootAccidentals);
   // translate the syllable "position" to a letter
@@ -259,9 +263,9 @@ function randomChord(triads, subsets, rootAccidentals, accidentals, ip){
   ]
 
   // build the structure with correct spellings
-  for(var i=0; i<triads[newStructure].structure.length; i++){
+  for(var i=0; i<template[newStructure].structure.length; i++){
     // translate the template ip to a relative note in the class
-    let newNote = (ip.indexOf(triads[newStructure].structure[i].ip) - ip.indexOf(newRoot) + 12)%12
+    let newNote = (ip.indexOf(template[newStructure].structure[i].ip) - ip.indexOf(newRoot) + 12)%12
       // console.log(classes[newClass][newNote])
     // get the syllable "position" from the reference subset bassd on tensionMod7 value in the class
     let noteSyllable = subsets.B[((subsets.B.indexOf(rootSyllable) + classes[newClass][newNote].tensionMod7 -1)%7)]
@@ -359,7 +363,7 @@ function handleInversion(chord, inversion) {
 export default (numQs) => {
   let chords = []
   for (var i = 0; i < numQs; i++) {
-    chords.push(randomChord(triads, subsets, rootAccidentals, accidentals, ip))
+    chords.push(randomChord(template, subsets, rootAccidentals, accidentals, ip))
   }
   console.log('here is chords: ' + JSON.stringify(chords, null, 4));
   return chords
