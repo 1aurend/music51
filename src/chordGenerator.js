@@ -364,10 +364,11 @@ function handleInversion(chord, inversion) {
 
 
 
-export default (numQs) => {
+export default (numQs, options) => {
+  console.log(JSON.stringify(options));
   let chords = []
   for (var i = 0; i < numQs; i++) {
-    chords.push(randomChord(template, subsets, rootAccidentals, accidentals, ip))
+    chords.push(randomChord(template, subsets, rootAccidentals, accidentals, ip, options))
   }
   console.log('here is chords: ' + JSON.stringify(chords, null, 4));
   return chords

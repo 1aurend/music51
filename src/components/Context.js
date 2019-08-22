@@ -41,7 +41,7 @@ export default function Context() {
   return (
     <Size.Provider value={size}>
       <Progress.Provider value={[progress, updateProgress]}>
-        <Start title={{headline: 'Music 51', subtitle: 'Chord Identification', text: 'We recommend 10 chords with a goal of less than 2 seconds per question, but you can enter a different number of chords here for a longer or shorter session:'}}/>
+        <Start title={{headline: 'Music 51', subtitle: 'Chord Crusher', text: 'We recommend 10 chords with a goal of less than 2 seconds per question, but you can enter a different number of chords here for a longer or shorter session:'}}/>
       </Progress.Provider>
     </Size.Provider>
   )

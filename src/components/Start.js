@@ -31,7 +31,7 @@ export default function Start({title}) {
   })
 
   let generateQuiz = (e) => {
-      setQuiz(generateChords(numQs.current))
+      setQuiz(generateChords(numQs.current, options))
       launchQuiz(true)
   }
 
