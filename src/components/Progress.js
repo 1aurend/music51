@@ -92,7 +92,8 @@ export default function ProgressChart() {
 
   const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
-  let borderRadius = size > 500 ? '2rem' : '1rem'
+  let borderRadius = size.width > 500 ? '2rem' : '1rem'
+  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
   const [reset, newRound] = useState(false)
   const [done, finished] = useState(false)
 
@@ -108,7 +109,7 @@ export default function ProgressChart() {
 
 
   if (reset) {
-    return <Start title={{headline: 'Welcome Back!', subtitle: 'Choose your settings for the next set.'}}/>
+    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}}/>
   }
   else if (done) {
     return <Start title={{headline: 'Music 51', subtitle: 'Chord Identification'}}/>
@@ -119,7 +120,7 @@ export default function ProgressChart() {
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
         <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb'}}>
-          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Your Progress:</h2></Row>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
               <p style={{marginBottom: 10}}><strong>Time: </strong>You improved by <strong>{accuracy.time}</strong> seconds per question or <strong>{`${accuracy.percentTime}%`}</strong> between your first and last rounds.</p>

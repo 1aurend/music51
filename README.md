@@ -40,7 +40,7 @@ Backburner:
 
 LD To Do:
 -fix menu options //done
--add chord generator
+-add chord generator //done
 -key down focus //done
 -turn right answers green //done
 -add bootstrap //done
@@ -57,6 +57,7 @@ Things:
 8/22 LD ToDo:
 -shrink font size for mobile
 -rework progress object
+-make red an array for consistency with green?
 
 
 8/22 LD + DF:
@@ -65,3 +66,7 @@ Things:
 -KP handwriting for title?
 -what to emphasize in the progress graphs?
 -options to generator
+-text of choices to match individual chords
+-skip?
+-set number of rounds?
+-text on various screens

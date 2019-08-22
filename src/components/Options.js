@@ -10,13 +10,13 @@ import {
 
 
 
-export default function Options({checked, onChange, onCheck}) {
+export default function Options({checked, onChange, onCheck, text}) {
 
   // console.log(JSON.stringify(checked));
 
     return (
       <>
-        <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><p>We recommend 10 chords with a goal of less than 2 seconds per question, but you can enter a different number of chords here for a longer or shorter session:</p></Row>
+        <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><p>{text}</p></Row>
         <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
           <Col sm='2' lg='2'><FormInput onChange={onChange} type="text" placeholder="10"/></Col>
         </Row>

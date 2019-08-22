@@ -14,7 +14,9 @@ export default function Results({ data }) {
 
   const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
-  let borderRadius = size > 500 ? '2rem' : '1rem'
+  let borderRadius = size.width > 500 ? '2rem' : '1rem'
+  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
+  let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2em'} : {textAlign: 'center', fontSize: '1.5em'}
   const [reset, newRound] = useState(false)
   const [progressView, showProgress] = useState(false)
 
@@ -130,7 +132,7 @@ export default function Results({ data }) {
 
 
   if (reset) {
-    return <Start title={{headline: 'Welcome Back!', subtitle: 'Choose your settings for the next set.'}}/>
+    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}}/>
   }
   else if (progressView) {
     return <ProgressChart />
@@ -141,10 +143,10 @@ export default function Results({ data }) {
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={{textAlign: 'center'}}>Session Complete!</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Session Complete!</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
                 <Col sm='12' lg='8'>
-                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3>Your Results:</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>Your Results:</h3></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Note Names: </strong>You averaged <strong>{noteNames.meanAttempts}</strong> attempts and <strong>{noteNames.meanTime}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Root Notes: </strong>You averaged <strong>{roots.meanAttempts}</strong> attempts and <strong>{roots.meanTime}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Chord Quality: </strong>You averaged <strong>{quality.meanAttempts}</strong> attempts and <strong>{quality.meanTime}</strong> seconds per question.</p></Row>
