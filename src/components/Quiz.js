@@ -17,7 +17,8 @@ export default function Quiz (props) {
   const [currentQ, nextQ] = useState(props.data[0].questions[0])
   const [endOfQ, doneQ] = useState(false)
   const [noteColors, addColor] = useState([])
-  const [incorrectTry, turnRed] = useState(false)
+  const [red, turnRed] = useState(false)
+  const [green, turnGreen] = useState([])
   const [currentInput, nextInput] = useState(null)
   const currentChord = useRef(props.data[0])
 
@@ -117,6 +118,7 @@ export default function Quiz (props) {
       if (subQ.current.answers.length === currentQ.answers.length) {
         addColor([...noteColors, input])
         turnRed(false)
+        turnGreen([...green, input])
         chord.current.questions.push(subQ.current)
         // console.log('next Q: ' + chord.current.questions.length);
         doneQ(true)
@@ -124,6 +126,7 @@ export default function Quiz (props) {
       else {
         addColor([...noteColors, input])
         turnRed(false)
+        turnGreen([...green, input])
       }
     }
     else {
@@ -137,6 +140,7 @@ export default function Quiz (props) {
       setTimeout(() => {
         addColor([])
         turnRed(false)
+        turnGreen([])
         nextInput(null)
         if (chord.current.questions.length < currentChord.current.questions.length) {
           subQ.current = {
@@ -203,7 +207,7 @@ export default function Quiz (props) {
                   <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}}>
                   {currentQ.choices.map(choice => {
                     return (
-                    <Choice onClick={(e) => handleClick(e, choice)} choice={choice} key={choice} input={currentInput} red={incorrectTry} />)})}
+                    <Choice onClick={(e) => handleClick(e, choice)} choice={choice} key={choice} input={currentInput} red={red} green={green} />)})}
                   </Row>
                 </Col>
             </Row>

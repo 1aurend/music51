@@ -47,9 +47,21 @@ LD To Do:
 -border radius as size variable //done
 -size of stave proportional to vh //done
 -switch to shards red //done
--shrink font size for mobile
 
 
 Things:
--fix accidentals in generator
+-fix accidentals in generator //done
 -stave spacing/zoom //done
+
+
+8/22 LD ToDo:
+-shrink font size for mobile
+-rework progress object
+
+
+8/22 LD + DF:
+-inversion symbols
+-flat/sharp symbols
+-KP handwriting for title?
+-what to emphasize in the progress graphs?
+-options to generator
