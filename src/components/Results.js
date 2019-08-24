@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Progress, Size } from './Context'
+import { Session, Size, Progress } from './Context'
 import {
   Container,
   Row,
@@ -10,8 +10,9 @@ import Start from './Start'
 import ProgressChart from './Progress'
 
 
-export default function Results({ data }) {
+export default function Results() {
 
+  const [session, updateSession] = useContext(Session)
   const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
@@ -20,6 +21,8 @@ export default function Results({ data }) {
   const [reset, newRound] = useState(false)
   const [progressView, showProgress] = useState(false)
 
+  let thisRound = session.rounds[session.rounds.length-1]
+  console.log('thisRound: ' + JSON.stringify(thisRound));
 
 
   // console.log(JSON.stringify(data, null, 4));
@@ -53,7 +56,7 @@ export default function Results({ data }) {
     time: null
   }
 
-  data.results.map( chord => {
+  thisRound.map( chord => {
     chord.questions.map( question => {
       if (question.text.indexOf('letter') !== -1) {
         question.answers.map( answer => {
@@ -128,6 +131,7 @@ export default function Results({ data }) {
 
     updateProgress(tally)
     console.log('here is progress: ' + JSON.stringify(tally));
+    return 'tallied'
   }, [])
 
 
@@ -155,10 +159,10 @@ export default function Results({ data }) {
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Keep Going</Button>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => newRound(true)}>Keep Going</Button>
                 </Col>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => showProgress(true)}>Check My Progress</Button>
                 </Col>
               </Row>
             </Col>

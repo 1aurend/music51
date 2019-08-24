@@ -15,7 +15,7 @@ export default function Choice({ choice, input, red, green, onClick }) {
         style = {...style, backgroundColor: '#17c671'}
       }
 
-    console.log('green ' + green);
+    // console.log('green ' + green);
 
 
   return (

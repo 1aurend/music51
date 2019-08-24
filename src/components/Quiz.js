@@ -7,12 +7,13 @@ import {
   Row,
   Col,
 } from 'shards-react'
-import { Size } from './Context'
+import { Size, Session } from './Context'
 
 
 export default function Quiz (props) {
 
   const size = useContext(Size)
+  const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
   const [currentQ, nextQ] = useState(props.data[0].questions[0])
@@ -22,14 +23,10 @@ export default function Quiz (props) {
   const [green, turnGreen] = useState([])
   const [currentInput, nextInput] = useState(null)
   const currentChord = useRef(props.data[0])
-  console.log(size);
 
-  const sessionData = useRef(
-    {
-      userId: props.userId,
-      sessionId: props.sessionId,
-      results: []
-    })
+  console.log('here is session: ' + JSON.stringify(session));
+
+  const roundData = useRef([])
 
   const chord = useRef({
     chord: props.data[0].notes, //placeholder until DF gives me a unique id
@@ -98,10 +95,10 @@ export default function Quiz (props) {
   }
 
   function checkInput(input) {
-    console.log('here is currentQ.answers: ' + currentQ.answers);
-    console.log('here is subQ.current.answers.length: ' + subQ.current.answers.length);
-    console.log('here is subQ.current.answers ' + JSON.stringify(subQ.current.answers));
-    console.log('here is input: ' + input);
+    // console.log('here is currentQ.answers: ' + currentQ.answers);
+    // console.log('here is subQ.current.answers.length: ' + subQ.current.answers.length);
+    // console.log('here is subQ.current.answers ' + JSON.stringify(subQ.current.answers));
+    // console.log('here is input: ' + input);
 
     if (!endOfQ) {
       nextInput(input)
@@ -111,7 +108,7 @@ export default function Quiz (props) {
       answer.current.elapsedTime = (answer.current.endTime-answer.current.startTime)/1000
       subQ.current.answers.push(answer.current)
       answer.current = {
-        answer: props.data[sessionData.current.results.length].questions[chord.current.questions.length].answers[subQ.current.answers.length],
+        answer: props.data[roundData.current.length].questions[chord.current.questions.length].answers[subQ.current.answers.length],
         tries: [],
         startTime: Date.now(),
         endTime: '',
@@ -146,11 +143,11 @@ export default function Quiz (props) {
         nextInput(null)
         if (chord.current.questions.length < currentChord.current.questions.length) {
           subQ.current = {
-            text: props.data[sessionData.current.results.length].questions[chord.current.questions.length].questionText,
+            text: props.data[roundData.current.length].questions[chord.current.questions.length].questionText,
             answers: []
           }
           answer.current = {
-            answer: props.data[sessionData.current.results.length].questions[chord.current.questions.length].answers[0],
+            answer: props.data[roundData.current.length].questions[chord.current.questions.length].answers[0],
             tries: [],
             startTime: Date.now(),
             endTime: '',
@@ -160,29 +157,31 @@ export default function Quiz (props) {
           doneQ(false)
         }
         else {
-          sessionData.current.results= [...sessionData.current.results, chord.current]
-          if (sessionData.current.results.length < props.data.length) {
+          roundData.current= [...roundData.current, chord.current]
+          if (roundData.current.length < props.data.length) {
             chord.current = {
-              chord: props.data[sessionData.current.results.length].notes,
+              chord: props.data[roundData.current.length].notes,
               questions: []
             }
             answer.current = {
-              answer: props.data[sessionData.current.results.length].questions[0].answers[0],
+              answer: props.data[roundData.current.length].questions[0].answers[0],
               tries: [],
               startTime: Date.now(),
               endTime: '',
               elapsedTime: '',
             }
             subQ.current = {
-              text: props.data[sessionData.current.results.length].questions[0].questionText,
+              text: props.data[roundData.current.length].questions[0].questionText,
               answers: []
             }
-            currentChord.current = props.data[sessionData.current.results.length]
+            currentChord.current = props.data[roundData.current.length]
             nextQ(currentChord.current.questions[0])
             doneQ(false)
           }
           else {
-            // console.log(JSON.stringify(sessionData.current, null, 4));
+            console.log(JSON.stringify(roundData.current, null, 4));
+            let rounds = [...session.rounds, roundData.current]
+            updateSession({...session, rounds: rounds})
             doneQ(false)
           }
         }
@@ -192,7 +191,7 @@ export default function Quiz (props) {
   }, [endOfQ, props.data])
 
 
-  if (sessionData.current.results.length < props.data.length) {
+  if (roundData.current.length < props.data.length) {
       return (
         <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
           <Row noGutters style={{paddingTop: '5%'}}></Row>
@@ -218,9 +217,9 @@ export default function Quiz (props) {
 
       )
   }
-  else if (sessionData.current.results.length === props.data.length) {
+  else if (roundData.current.length === props.data.length) {
       return (
-        <Results data={sessionData.current} />
+        <Results />
     )
   }
 

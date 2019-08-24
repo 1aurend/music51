@@ -14,6 +14,7 @@ export default function Options({checked, onChange, onCheck, text}) {
 
   // console.log(JSON.stringify(checked));
 
+  //where should text live?
     return (
       <>
         <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><p>{text}</p></Row>
