@@ -24,7 +24,7 @@ const templateSevenths = {
   {"class":"dor","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"N","octave":0},{"ip":"S","octave":0},{"ip":"K","octave":0}]},
 
   "ø7":
-  {"class":"AD","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"N","octave":0},{"ip":"V","octave":0},{"ip":"K","octave":0}]},
+  {"class":"dm","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"N","octave":0},{"ip":"V","octave":0},{"ip":"K","octave":0}]},
 
   "o7":
   {"class":"dim","anchor":"D","structure":[{"ip":"D","octave":0},{"ip":"N","octave":0},{"ip":"V","octave":0},{"ip":"L","octave":0}]}
