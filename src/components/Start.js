@@ -6,7 +6,6 @@ import {
   Container,
   Row,
   Col,
-  Button,
 } from 'shards-react'
 import generateChords from '../chordGenerator'
 import { Size } from './Context'
@@ -22,8 +21,6 @@ export default function Start({title}) {
   let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
   const numQs = useRef(10)
   const [ready, launchQuiz] = useState(false)
-  const userId = useRef('somebody')
-  const sessionId = useRef(Date.now())
   const [quiz, setQuiz] = useState([])
   const [options, updateOptions] = useState({
     chordTypes: {triads:true, sevenths:true},
@@ -43,12 +40,32 @@ export default function Start({title}) {
     switch (type) {
       case 'chord':
           prev = options.chordTypes
-          next = {...prev, [option]: !prev[option]}
-          updateOptions({...options, chordTypes: next })
+          switch (prev[option]) {
+            case false:
+              console.log('case false');
+                next = {...prev, [option]: !prev[option]}
+                updateOptions({...options, chordTypes: next })
+                break
+            case true:
+              console.log('case true');
+                if (prev.triads === prev.sevenths) {
+                  console.log('same');
+                  next = {...prev, [option]: !prev[option]}
+                  updateOptions({...options, chordTypes: next })
+                }
+                else {
+                  console.log('different');
+                  next = {triads:!prev.triads, sevenths:!prev.sevenths}
+                  console.log('here is next: ' + JSON.stringify(next));
+                  updateOptions({...options, chordTypes: next })
+                }
+                break
+            default: alert('something went wrong selecting options')
+          }
           break
       case 'root':
           prev = options.roots
-          next = {...prev, [option]: !prev[option]}
+          next = {common: !prev.common, any: !prev.any}
           updateOptions({...options, roots: next })
           break
       default: alert('something went wrong selecting options')
@@ -68,7 +85,7 @@ export default function Start({title}) {
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={fontStyle}>{title.headline}</h1></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={subtitleStyle}>{title.subtitle}</h2></Row>
-            <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} text={title.text}/>
+            <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} text={'just testing'}/>
           </Col>
         </Row>
         <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
@@ -79,7 +96,7 @@ export default function Start({title}) {
   }
   else if (ready) {
     return (
-        <Quiz data={quiz} userId={userId.current} sessionId={sessionId.current} />
+        <Quiz data={quiz} />
     )
   }
 

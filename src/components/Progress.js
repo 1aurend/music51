@@ -78,9 +78,9 @@ function chartMath(attempts, times) {
   let timeChange = times.overall[0].y-times.overall[times.overall.length-1].y
   let accuracy = {
     attempts: round(attChange, 2),
-    percentAtt: round(((attChange/attempts.overall[0].y)*100),2),
+    percentAtt: round(((attChange/attempts.overall[0].y)*100),0),
     time: round(timeChange, 2),
-    percentTime: round(((timeChange/times.overall[0].y)*100),2)
+    percentTime: round(((timeChange/times.overall[0].y)*100),0)
   }
 
   return( { chartParams, accuracy } )
@@ -129,7 +129,7 @@ export default function ProgressChart() {
               <p style={{marginBottom: 0}}><strong>Accuracy: </strong>You improved by <strong>{accuracy.attempts}</strong> attempts per question or <strong>{`${accuracy.percentAtt}%`}</strong> between your first and last rounds.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
-                <VictoryChart height={200} width={600} domainPadding={{x: 0}}
+                <VictoryChart height={200} width={600} domainPadding={{x: 0}} domain={{y: [6, 0]}}
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryLegend x={50} y={0}
                     orientation="horizontal"
@@ -140,7 +140,7 @@ export default function ProgressChart() {
                       { name: "Roots"},
                       { name: "Chord Quality"},
                       { name: "Inversions"},
-                      { name: "Overall"}
+                      { name: "Average"}
                     ]}
                     colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}
                   />
@@ -150,7 +150,7 @@ export default function ProgressChart() {
                     />
                     <VictoryAxis dependentAxis
                       label={'# Attempts'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                      domain={{y: [1, chartParams.domainMaxYAtt]}} tickFormat={(t) => round(t, 2)}
+                      domain={{y: [6, 0]}} tickFormat={(t) => round(t, 2)}
                       />
                     <VictoryGroup offset={20}
                       colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
@@ -217,7 +217,10 @@ export default function ProgressChart() {
             </Col>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Keep Going</Button>
+                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Round Stats</Button>
+              </Col>
+              <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Next Round</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {

@@ -173,7 +173,7 @@ function staffAdjust(chord){
 
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(template, subsets, rootAccidentals, accidentals, ip){
+function randomChord(template, subsets, rootAccidentals, accidentals, ip, options){
   // choose a random structure, root, and accidental
   let newStructure = randomchoice(Object.keys(template));
   let newClass = template[newStructure].class

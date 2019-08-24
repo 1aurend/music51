@@ -1,11 +1,45 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import Start from './Start'
-import ProgressChart from './Progress'
 
-export const Progress = React.createContext()
-export const Size = React.createContext()
+export const Session = createContext()
+export const Progress = createContext()
+export const Size = createContext()
 
 export default function Context() {
+
+  const [session, updateSession] = useState({
+        user: 'someday user id will go here',
+        sessionId: Date.now(),
+        settings: {
+          numChords: 0,
+          types: [],
+          roots: ''
+        },
+        means: {
+          noteNames: {
+            attempts: [],
+            times: []
+          },
+          roots: {
+            attempts: [],
+            times: []
+          },
+          quality: {
+            attempts: [],
+            times: []
+          },
+          inversions: {
+            attempts: [],
+            times: []
+          },
+          average: {
+            attempts: [],
+            times: []
+          }
+        },
+        rounds: []
+}
+  )
 
   const [progress, updateProgress] = useState({
           attempts: {
@@ -40,9 +74,9 @@ export default function Context() {
 
   return (
     <Size.Provider value={size}>
-      <Progress.Provider value={[progress, updateProgress]}>
-        <Start title={{headline: 'Music 51', subtitle: 'Chord Crusher', text: 'We recommend 10 chords with a goal of less than 2 seconds per question, but you can enter a different number of chords here for a longer or shorter session:'}}/>
-      </Progress.Provider>
+      <Session.Provider value={[session, updateSession]}>
+        <Start title={{headline: 'Chord Crusher', subtitle: 'Music 51'}}/>
+      </Session.Provider>
     </Size.Provider>
   )
 }

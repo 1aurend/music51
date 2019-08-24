@@ -94,14 +94,14 @@ export default function Results({ data }) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
-  noteNames.meanAttempts = round(mean(noteNames.attempts),4)
-  noteNames.meanTime = round(mean(noteNames.times),4)
-  roots.meanAttempts = round(mean(roots.attempts),4)
-  roots.meanTime = round(mean(roots.times),4)
-  quality.meanAttempts = round(mean(quality.attempts),4)
-  quality.meanTime = round(mean(quality.times),4)
-  inversions.meanAttempts = round(mean(inversions.attempts),4)
-  inversions.meanTime = round(mean(inversions.times),4)
+  noteNames.meanAttempts = round(mean(noteNames.attempts),2)
+  noteNames.meanTime = round(mean(noteNames.times),2)
+  roots.meanAttempts = round(mean(roots.attempts),2)
+  roots.meanTime = round(mean(roots.times),2)
+  quality.meanAttempts = round(mean(quality.attempts),2)
+  quality.meanTime = round(mean(quality.times),2)
+  inversions.meanAttempts = round(mean(inversions.attempts),2)
+  inversions.meanTime = round(mean(inversions.times),2)
   overall.attempts = (noteNames.meanAttempts+roots.meanAttempts+quality.meanAttempts+inversions.meanAttempts)/4
   overall.time = (noteNames.meanTime+roots.meanTime+quality.meanTime+inversions.meanTime)/4
 
