@@ -159,6 +159,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   }
 
   // apply option for common root notes
+  if((options.roots.common == true) && (options.roots.any == false)){
     let modeNote
 
     // set the mode note based on chord type
@@ -182,6 +183,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
         rootAccidental = keySignatures[keySignature].notes[i].accidental
       }
     }
+  }
 
   // translate the syllable "position" to a letter
   let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
@@ -219,6 +221,14 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   chord.clef = clef
   chord.keySignature = vexSig // from Flow.keySignature.keySpecs (vexflow /tables.js)
   chord.notes = [];
+
+  // only show natural in rootAccidental if it's an alteration from the key sig
+  if ((rootAccidental == "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == rootSyllable})].accidental != 'n')){
+    rootAccidental = "♮";
+  }
+  else if (rootAccidental == "n") {
+    rootAccidental = "";
+  }
 
   chord.questions = [
     {
@@ -295,16 +305,21 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
     // push notes into questions before adjusting accidentals for key sig
     chord.questions[0].answers.push(noteLetter);
+
+    // only show natural in question choices if it's an alteration from the key sig
     if(accidental != "n"){
       chord.questions[1].choices.push(noteLetter+accidental);
     }
-    else{
+    else if ((accidental == "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental != 'n')){
+      chord.questions[1].choices.push(noteLetter+"♮");
+    }
+    else {
       chord.questions[1].choices.push(noteLetter);
     }
 
-    // adjust accidentals for key sig
+    // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
     if(accidental == keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental){
-      accidental = ""
+      accidental = "";
     }
 
     // push notes into the chord object
