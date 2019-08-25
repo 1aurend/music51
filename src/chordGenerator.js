@@ -280,10 +280,6 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     let accidental = accidentals[(2 + accidentalVal)%5]
       // console.log(accidental)
 
-    // incredibly lazy, temporary way to put this in keySignature == "C"
-    // this doesn't affect rootAccidental. which begs a larger philosophical question of whether the chord or the keySignature should be generated first. hint: not the chord.
-    // if(accidental === "n") accidental = ""
-
     // translate the syllable "position" to a letter
     let noteLetter = letters[subsets.B.indexOf(noteSyllable)]
       // console.log(noteLetter+accidental)
@@ -297,17 +293,26 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       clefOctave +=1 // sets the default octave up for the next note
     }
 
-    // push all this good stuff into the chord object
+    // push notes into questions before adjusting accidentals for key sig
+    chord.questions[0].answers.push(noteLetter);
+    if(accidental != "n"){
+      chord.questions[1].choices.push(noteLetter+accidental);
+    }
+    else{
+      chord.questions[1].choices.push(noteLetter);
+    }
+  
+    // adjust accidentals for key sig
+    if(accidental == keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental){
+      accidental = ""
+    }
+
+    // push notes into the chord object
     let note = {}
     note.letter = noteLetter
     note.accidental = accidental
     note.octave = octave
     chord.notes.push(note);
-
-      // console.log("note: " + JSON.stringify(note));
-
-    chord.questions[0].answers.push(noteLetter);
-    chord.questions[1].choices.push(noteLetter+accidental);
 
   }
 
