@@ -4,6 +4,7 @@ import {
   classes,
   ip,
   subsets,
+  keySignatures,
   letters,
   octaveOrientedLetters,
   rootAccidentals,
@@ -98,7 +99,7 @@ function staffAdjust(chord){
 }
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(options, templateTriads, templateSevenths, subsets, rootAccidentals, accidentals, ip, triadInversions, seventhInversions){
+function randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions){
 
   let template
   let inversions
@@ -128,18 +129,62 @@ function randomChord(options, templateTriads, templateSevenths, subsets, rootAcc
   }
   // console.log('chord type is: '+chordType);
 
-  // options for common or any root notes
+  // choose a random key keySignature
+  let keySignature = randomchoice(Object.keys(keySignatures));
+  let vexSig = keySignatures[keySignature].vexSig;
+    console.log('key signature is: '+ vexSig)
 
-
-  // choose a random structure, root, and accidental
+  // choose a random chord type
   let newStructure = randomchoice(Object.keys(template));
   let newClass = template[newStructure].class
   let newRoot = template[newStructure].anchor
-  let rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
-  let rootAccidental = randomchoice(rootAccidentals);
+
+  let rootSyllable
+  let rootAccidental
+
+  // apply option for any root notes
+  if((options.roots.common == false) && (options.roots.any == true)){
+
+    rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
+    rootAccidental = randomchoice(rootAccidentals);
+
+    // adjust 'o7' chords where the o7th would be a triple flat
+    if ((newStructure == 'o7') && (rootSyllable == 'D' || rootSyllable == 'F') && (rootAccidental == "b")){
+      rootAccidental = 'n'
+    }
+    // adjust '+' chords where the +5th would be a triple sharp
+    if ((newStructure == '+') && (rootSyllable == 'T') && (rootAccidental == "#")){
+      rootAccidental = 'n'
+    }
+  }
+
+  // apply option for common root notes
+    let modeNote
+
+    // set the mode note based on chord type
+    if(newStructure == 'M' || newStructure == '+' || newStructure == 'M7'){
+      modeNote = 'Maj'
+    }
+    if(newStructure == 'm' || newStructure == 'm7'){
+      modeNote = 'min'
+    }
+    if(newStructure == 'o' || newStructure == 'ø7' || newStructure == 'o7'){
+      modeNote = 'loc'
+    }
+    if(newStructure == '7'){
+      modeNote = randomchoice(["Dom","phr"])
+    }
+
+    // set root syllable and accidental based on the mode note
+    for(i=0; i<keySignatures[keySignature].notes.length; i++){
+      if(keySignatures[keySignature].notes[i].mode == modeNote){
+        rootSyllable = keySignatures[keySignature].notes[i].refIP
+        rootAccidental = keySignatures[keySignature].notes[i].accidental
+      }
+    }
 
   // translate the syllable "position" to a letter
-  let rootLetter = letters[subsets.B.indexOf(rootSyllable)]
+  let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
     // console.log(rootLetter+rootAccidental+" "+newStructure);
 
   // find the equivalent IP based on the accidental's offset from the "natural" root syllable
@@ -237,7 +282,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, rootAcc
 
     // incredibly lazy, temporary way to put this in keySignature == "C"
     // this doesn't affect rootAccidental. which begs a larger philosophical question of whether the chord or the keySignature should be generated first. hint: not the chord.
-    if(accidental === "n") accidental = ""
+    // if(accidental === "n") accidental = ""
 
     // translate the syllable "position" to a letter
     let noteLetter = letters[subsets.B.indexOf(noteSyllable)]
@@ -319,7 +364,7 @@ export default (numQs, options) => {
   console.log(JSON.stringify(options));
   let chords = []
   for (var i = 0; i < numQs; i++) {
-    chords.push(randomChord(options, templateTriads, templateSevenths, subsets, rootAccidentals, accidentals, ip, triadInversions, seventhInversions))
+    chords.push(randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions))
   }
   console.log(JSON.stringify(chords, null, 4));
   return chords
