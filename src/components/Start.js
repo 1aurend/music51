@@ -8,7 +8,7 @@ import {
   Col,
 } from 'shards-react'
 import generateChords from '../chordGenerator'
-import { Size } from './Context'
+import { Size, Session } from './Context'
 
 
 
@@ -16,6 +16,7 @@ import { Size } from './Context'
 export default function Start({title}) {
 
   const size = useContext(Size)
+  const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '3em'} : {textAlign: 'center', fontSize: '2.5em'}
   let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
@@ -28,7 +29,26 @@ export default function Start({title}) {
   })
 
   let generateQuiz = (e) => {
+
       setQuiz(generateChords(numQs.current, options))
+
+      let types
+      if (options.chordTypes.triads && options.chordTypes.sevenths) {
+        types = ['triads', 'sevenths']
+      }
+      else if (options.chordTypes.triads && !options.chordTypes.sevenths) {
+        types = ['triads']
+      }
+      else if (!options.chordTypes.triads && options.chordTypes.sevenths) {
+        types = ['sevenths']
+      }
+      let settings = {
+        numChords: numQs.current,
+        types: types,
+        roots: options.roots.common ? 'common' : 'any'
+      }
+      updateSession({...session, settings: settings })
+
       launchQuiz(true)
   }
 

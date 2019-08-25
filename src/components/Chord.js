@@ -73,7 +73,7 @@ export default function Chord(props) {
 
     stave.addClef(props.clef).addTimeSignature("4/4")
 
-    stave.addModifier(new Vex.Flow.KeySignature('Cb'))
+    stave.addModifier(new Vex.Flow.KeySignature(props.keySig))
 
     stave.setContext(context).draw()
 

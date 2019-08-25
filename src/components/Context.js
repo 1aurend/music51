@@ -8,7 +8,7 @@ export const Size = createContext()
 export default function Context() {
 
   const [session, updateSession] = useState({
-        user: 'someday user id will go here',
+        user: 'anonymous for now',
         sessionId: Date.now(),
         settings: {
           numChords: 0,

@@ -217,7 +217,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   // chord.type = newStructure
   // chord.inversion = inversion
   chord.clef = clef
-  chord.keySignature = "C" // from Flow.keySignature.keySpecs (vexflow /tables.js)
+  chord.keySignature = vexSig // from Flow.keySignature.keySpecs (vexflow /tables.js)
   chord.notes = [];
 
   chord.questions = [
@@ -301,7 +301,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     else{
       chord.questions[1].choices.push(noteLetter);
     }
-  
+
     // adjust accidentals for key sig
     if(accidental == keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental){
       accidental = ""
