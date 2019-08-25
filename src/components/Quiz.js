@@ -24,7 +24,6 @@ export default function Quiz (props) {
   const [currentInput, nextInput] = useState(null)
   const currentChord = useRef(props.data[0])
 
-  console.log('here is session: ' + JSON.stringify(session));
 
   const roundData = useRef([])
 
@@ -180,15 +179,16 @@ export default function Quiz (props) {
           }
           else {
             console.log(JSON.stringify(roundData.current, null, 4));
-            let rounds = [...session.rounds, roundData.current]
-            updateSession({...session, rounds: rounds})
-            doneQ(false)
+            let update = {...session.rounds, [session.roundCount]: roundData.current}
+            updateSession({...session, rounds: update})
+            console.log(session);
+            // doneQ(false)
           }
         }
       }, 1000)
     }
 
-  }, [endOfQ, props.data])
+  }, [endOfQ])
 
 
   if (roundData.current.length < props.data.length) {
@@ -219,7 +219,7 @@ export default function Quiz (props) {
   }
   else if (roundData.current.length === props.data.length) {
       return (
-        <Results />
+        <Results data={roundData.current}/>
     )
   }
 

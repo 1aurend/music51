@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Progress, Size } from './Context'
+import { Session, Size } from './Context'
 import {
   Container,
   Row,
@@ -23,7 +23,7 @@ function round(value, decimals) {
 return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
-function chartMath(attempts, times) {
+function chartMath(noteNames, roots, quality, inversions, average, attempts, times) {
 
   //question: move structuring of progress data in here so we have a clean progress object for later? that would simplify these domain max calculations
 
@@ -90,7 +90,7 @@ function chartMath(attempts, times) {
 
 export default function ProgressChart() {
 
-  const [progress, updateProgress] = useContext(Progress)
+  const [session, updateSession] = useContext(Session)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
@@ -98,12 +98,14 @@ export default function ProgressChart() {
   const [done, finished] = useState(false)
 
 
-  let attempts = progress.attempts
-  let times = progress.times
+  let noteNames = session.means.noteNames
+  let roots = session.means.roots
+  let quality = session.means.quality
+  let inversions = session.means.inversions
+  let average = session.means.average
+  let attempts
+  let times
 
-
-  // TODO: add variables to adjust chart axes based on progress data
-  // TODO: calculate percent improvements
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
 
 
@@ -115,7 +117,7 @@ export default function ProgressChart() {
     return <Start title={{headline: 'Music 51', subtitle: 'Chord Identification'}}/>
   }
   else {
-  let { chartParams, accuracy } = chartMath(attempts, times)
+  let { chartParams, accuracy } = chartMath(noteNames, roots, quality, inversions, average)
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
@@ -146,7 +148,7 @@ export default function ProgressChart() {
                   />
                   <VictoryAxis
                     style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                    domain={{x: [1, progress.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
+                    domain={{x: [1, session.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
                     />
                     <VictoryAxis dependentAxis
                       label={'# Attempts'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
@@ -183,7 +185,7 @@ export default function ProgressChart() {
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryAxis
                   style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                  domain={{x: [1, progress.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
+                  domain={{x: [1, session.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
                   />
                   <VictoryAxis dependentAxis
                     label={'Time (secs)'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
@@ -225,7 +227,7 @@ export default function ProgressChart() {
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
                   finished(true)
-                  updateProgress({
+                  updateSession({
                           attempts: {
                             noteNames: [],
                             roots: [],

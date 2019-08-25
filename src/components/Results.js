@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Session, Size, Progress } from './Context'
+import { Session, Size } from './Context'
 import {
   Container,
   Row,
@@ -10,10 +10,9 @@ import Start from './Start'
 import ProgressChart from './Progress'
 
 
-export default function Results() {
+export default function Results({ data }) {
 
   const [session, updateSession] = useContext(Session)
-  const [progress, updateProgress] = useContext(Progress)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
@@ -21,11 +20,9 @@ export default function Results() {
   const [reset, newRound] = useState(false)
   const [progressView, showProgress] = useState(false)
 
-  let thisRound = session.rounds[session.rounds.length-1]
-  console.log('thisRound: ' + JSON.stringify(thisRound));
 
 
-  // console.log(JSON.stringify(data, null, 4));
+  console.log(session);
 
   let noteNames = {
     attempts: [],
@@ -56,7 +53,7 @@ export default function Results() {
     time: null
   }
 
-  thisRound.map( chord => {
+  data.map( chord => {
     chord.questions.map( question => {
       if (question.text.indexOf('letter') !== -1) {
         question.answers.map( answer => {
@@ -111,27 +108,32 @@ export default function Results() {
 
 
   useEffect(() => {
+    let means = session.means
     let tally = {
-        attempts: {
-          noteNames: [...progress.attempts.noteNames, {x: progress.roundCount, y: noteNames.meanAttempts}],
-          roots: [...progress.attempts.roots, {x: progress.roundCount, y: roots.meanAttempts}],
-          quality: [...progress.attempts.quality, {x: progress.roundCount, y: quality.meanAttempts}],
-          inversions: [...progress.attempts.inversions, {x: progress.roundCount, y: inversions.meanAttempts}],
-          overall: [...progress.attempts.overall, {x: progress.roundCount, y: overall.attempts}],
-      },
-        times: {
-          noteNames: [...progress.times.noteNames, {x: progress.roundCount, y: noteNames.meanTime}],
-          roots: [...progress.times.roots, {x: progress.roundCount, y: roots.meanTime}],
-          quality: [...progress.times.quality, {x: progress.roundCount, y: quality.meanTime}],
-          inversions: [...progress.times.inversions, {x: progress.roundCount, y: inversions.meanTime}],
-          overall: [...progress.times.overall, {x: progress.roundCount, y: overall.time}],
-      },
-        roundCount: ++progress.roundCount
+        noteNames: {
+          attempts: [...means.noteNames.attempts, noteNames.meanAttempts],
+          times: [...means.noteNames.times, noteNames.meanTime]
+        },
+        roots: {
+          attempts: [...means.roots.attempts, roots.meanAttempts],
+          times: [...means.roots.times, roots.meanTime]
+        },
+        quality: {
+          attempts: [...means.quality.attempts, quality.meanAttempts],
+          times: [...means.quality.times, quality.meanTime]
+        },
+        inversions: {
+          attempts: [...means.inversions.attempts, inversions.meanAttempts],
+          times: [...means.inversions.times, inversions.meanTime]
+        },
+        average: {
+          attempts: [...means.average.attempts, overall.attempts],
+          times: [...means.average.times, overall.time]
+        }
     }
 
-    updateProgress(tally)
+    updateSession({...session, means: tally, roundCount: session.roundCount+1})
     console.log('here is progress: ' + JSON.stringify(tally));
-    return 'tallied'
   }, [])
 
 
@@ -159,10 +161,10 @@ export default function Results() {
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => newRound(true)}>Keep Going</Button>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Keep Going</Button>
                 </Col>
                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => showProgress(true)}>Check My Progress</Button>
+                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
                 </Col>
               </Row>
             </Col>

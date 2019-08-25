@@ -37,7 +37,8 @@ export default function Context() {
             times: []
           }
         },
-        rounds: []
+        rounds: {},
+        roundCount: 1
 }
   )
 
