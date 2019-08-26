@@ -106,23 +106,23 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   let chordType
 
   // apply options for triad or seventh
-  if((options.chordTypes.triads == true) && (options.chordTypes.sevenths == false)){
+  if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === false)){
     template = templateTriads
     inversions = triadInversions
     chordType = 'triad'
   }
-  if((options.chordTypes.triads == false) && (options.chordTypes.sevenths == true)){
+  if((options.chordTypes.triads === false) && (options.chordTypes.sevenths === true)){
     template = templateSevenths
     inversions = seventhInversions
     chordType = 'seventh'
   }
-  if((options.chordTypes.triads == true) && (options.chordTypes.sevenths == true)){
+  if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === true)){
     template = randomchoice([templateTriads,templateSevenths])
-    if(template == templateTriads){
+    if(template === templateTriads){
       inversions = triadInversions
       chordType = 'triad'
     }
-    if(template == templateSevenths){
+    if(template === templateSevenths){
       inversions = seventhInversions
       chordType = 'seventh'
     }
@@ -143,42 +143,42 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   let rootAccidental
 
   // apply option for any root notes
-  if((options.roots.common == false) && (options.roots.any == true)){
+  if((options.roots.common === false) && (options.roots.any === true)){
 
     rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
     rootAccidental = randomchoice(rootAccidentals);
 
     // adjust 'o7' chords where the o7th would be a triple flat
-    if ((newStructure == 'o7') && (rootSyllable == 'D' || rootSyllable == 'F') && (rootAccidental == "b")){
+    if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === "b")){
       rootAccidental = 'n'
     }
     // adjust '+' chords where the +5th would be a triple sharp
-    if ((newStructure == '+') && (rootSyllable == 'T') && (rootAccidental == "#")){
+    if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === "#")){
       rootAccidental = 'n'
     }
   }
 
   // apply option for common root notes
-  if((options.roots.common == true) && (options.roots.any == false)){
+  if((options.roots.common === true) && (options.roots.any === false)){
     let modeNote
 
     // set the mode note based on chord type
-    if(newStructure == 'M' || newStructure == '+' || newStructure == 'M7'){
+    if(newStructure === 'M' || newStructure === '+' || newStructure === 'M7'){
       modeNote = 'Maj'
     }
-    if(newStructure == 'm' || newStructure == 'm7'){
+    if(newStructure === 'm' || newStructure === 'm7'){
       modeNote = 'min'
     }
-    if(newStructure == 'o' || newStructure == 'ø7' || newStructure == 'o7'){
+    if(newStructure === 'o' || newStructure === 'ø7' || newStructure === 'o7'){
       modeNote = 'loc'
     }
-    if(newStructure == '7'){
+    if(newStructure === '7'){
       modeNote = randomchoice(["Dom","phr"])
     }
 
     // set root syllable and accidental based on the mode note
-    for(i=0; i<keySignatures[keySignature].notes.length; i++){
-      if(keySignatures[keySignature].notes[i].mode == modeNote){
+    for(var i=0; i<keySignatures[keySignature].notes.length; i++){
+      if(keySignatures[keySignature].notes[i].mode === modeNote){
         rootSyllable = keySignatures[keySignature].notes[i].refIP
         rootAccidental = keySignatures[keySignature].notes[i].accidental
       }
@@ -223,10 +223,10 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   chord.notes = [];
 
   // only show natural in rootAccidental if it's an alteration from the key sig
-  if ((rootAccidental == "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == rootSyllable})].accidental != 'n')){
+  if ((rootAccidental === "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === rootSyllable})].accidental != 'n')){
     rootAccidental = "♮";
   }
-  else if (rootAccidental == "n") {
+  else if (rootAccidental === "n") {
     rootAccidental = "";
   }
 
@@ -310,7 +310,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     if(accidental != "n"){
       chord.questions[1].choices.push(noteLetter+accidental);
     }
-    else if ((accidental == "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental != 'n')){
+    else if ((accidental === "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != 'n')){
       chord.questions[1].choices.push(noteLetter+"♮");
     }
     else {
@@ -318,7 +318,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     }
 
     // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
-    if(accidental == keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP == noteSyllable})].accidental){
+    if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
       accidental = "";
     }
 
