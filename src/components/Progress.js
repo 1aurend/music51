@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Session, Size } from './Context'
+import { Means, Size } from './Context'
 import {
   Container,
   Row,
@@ -19,7 +19,7 @@ import {
 
 
 
-function round(value, decimals) {
+function rounded(value, decimals) {
 return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
@@ -81,10 +81,10 @@ function chartMath(noteNames, roots, quality, inversions, average) {
   let attChange = average.attempts[0]-average.attempts[average.attempts.length-1]
   let timeChange = average.times[0]-average.times[average.times.length-1]
   let progress = {
-    numAtt: round(attChange, 2),
-    percentAtt: round(((attChange/average.attempts[0])*100),0),
-    secs: round(timeChange, 2),
-    percentTime: round(((timeChange/average.times[0])*100),0)
+    numAtt: rounded(attChange, 2),
+    percentAtt: rounded(((attChange/average.attempts[0])*100),0),
+    secs: rounded(timeChange, 2),
+    percentTime: rounded(((timeChange/average.times[0])*100),0)
   }
 
   return( { chartParams, progress } )
@@ -92,9 +92,9 @@ function chartMath(noteNames, roots, quality, inversions, average) {
 }
 
 
-export default function ProgressChart() {
+export default function ProgressChart({ round }) {
 
-  const [session, updateSession] = useContext(Session)
+  const [means, updateMeans] = useContext(Means)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
@@ -102,20 +102,19 @@ export default function ProgressChart() {
   const [done, finished] = useState(false)
 
 
-  let noteNames = session.means.noteNames
-  let roots = session.means.roots
-  let quality = session.means.quality
-  let inversions = session.means.inversions
-  let average = session.means.average
+  let noteNames = means.noteNames
+  let roots = means.roots
+  let quality = means.quality
+  let inversions = means.inversions
+  let average = means.average
 
-  console.log(noteNames);
 
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
 
 
 
   if (reset) {
-    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}}/>
+    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}} round={round+1}/>
   }
   else if (done) {
     return <Start title={{headline: 'Music 51', subtitle: 'Chord Identification'}}/>
@@ -156,7 +155,7 @@ export default function ProgressChart() {
                     />
                     <VictoryAxis dependentAxis
                       label={'# Attempts'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                      domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => round(t, 2)}
+                      domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => rounded(t, 2)}
                       />
                     <VictoryGroup offset={20}
                       colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
@@ -193,7 +192,7 @@ export default function ProgressChart() {
                   />
                   <VictoryAxis dependentAxis
                     label={'Time (secs)'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                    domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => round(t, 2)}
+                    domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => rounded(t, 2)}
                     />
                   <VictoryGroup offset={20}
                     colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
@@ -226,12 +225,13 @@ export default function ProgressChart() {
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Round Stats</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Next Round</Button>
+                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
+                  newRound(true)
+                }}>Next Round</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
                   finished(true)
-                  updateSession()
                 }}>End Session</Button>
               </Col>
             </Row>

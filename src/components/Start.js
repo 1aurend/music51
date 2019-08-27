@@ -13,7 +13,7 @@ import { Size, Session } from './Context'
 
 
 
-export default function Start({title}) {
+export default function Start({ title, round }) {
 
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
@@ -45,7 +45,8 @@ export default function Start({title}) {
       let settings = {
         numChords: numQs.current,
         types: types,
-        roots: options.roots.common ? 'common' : 'any'
+        roots: options.roots.common ? 'common' : 'any',
+        options: options
       }
       updateSession({...session, settings: settings })
 
@@ -116,7 +117,7 @@ export default function Start({title}) {
   }
   else if (ready) {
     return (
-        <Quiz data={quiz} />
+        <Quiz data={quiz} round={round}/>
     )
   }
 

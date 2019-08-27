@@ -2,6 +2,9 @@ import React, { createContext, useState, useEffect } from 'react'
 import Start from './Start'
 
 export const Session = createContext()
+export const Means = createContext()
+export const Rounds = createContext()
+export const Count = createContext()
 export const Progress = createContext()
 export const Size = createContext()
 
@@ -13,9 +16,11 @@ export default function Context() {
         settings: {
           numChords: 0,
           types: [],
-          roots: ''
-        },
-        means: {
+          roots: '',
+          options: {}
+        }
+      })
+  const [means, updateMeans] = useState({
           noteNames: {
             attempts: [],
             times: []
@@ -36,34 +41,14 @@ export default function Context() {
             attempts: [],
             times: []
           }
-        },
-        rounds: {},
-        roundCount: 1
-}
-  )
-
-  const [progress, updateProgress] = useState({
-          attempts: {
-            noteNames: [],
-            roots: [],
-            quality: [],
-            inversions: [],
-            overall: []
-          },
-          times: {
-            noteNames: [],
-            roots: [],
-            quality: [],
-            inversions: [],
-            overall: []
-          },
-          roundCount: 1
         })
-
+  const [rounds, updateRounds] = useState({})
+  const [count, increment] = useState(1)
   const [size, setSize] = useState({
                                     width: window.innerWidth,
                                     height: window.innerHeight
                                   })
+
 
   useEffect(() => {
     const handleResize = () => setSize({width: window.innerWidth, height: window.innerHeight})
@@ -73,10 +58,17 @@ export default function Context() {
   }
   },[])
 
+
   return (
     <Size.Provider value={size}>
       <Session.Provider value={[session, updateSession]}>
-        <Start title={{headline: 'Chord Crusher', subtitle: 'Music 51'}}/>
+        <Means.Provider value={[means, updateMeans]}>
+          <Rounds.Provider value={[rounds, updateRounds]}>
+            <Count.Provider value={[count, increment]}>
+                  <Start title={{headline: 'Chord Crusher', subtitle: 'Music 51'}} round={1}/>
+            </Count.Provider>
+          </Rounds.Provider>
+        </Means.Provider>
       </Session.Provider>
     </Size.Provider>
   )
