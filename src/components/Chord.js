@@ -31,6 +31,18 @@ export default function Chord(props) {
             accidentals.push({note: i, accidental: '##'})
           }
         }}
+    let keySig
+        if (props.keySig.length === 1) {
+          keySig = props.keySig
+        }
+        else if (props.keySig.length === 2) {
+          if (props.keySig.charAt(1) === '♯') {
+            keySig = props.keySig.charAt(0)+'#'
+          }
+          if (props.keySig.charAt(1) === '♭') {
+            keySig = props.keySig.charAt(0)+'b'
+          }
+        }
 
       // console.log(accidentals);
       // console.log(formattedNotes);
@@ -87,7 +99,7 @@ export default function Chord(props) {
 
     stave.addClef(props.clef).addTimeSignature("4/4")
 
-    stave.addModifier(new Vex.Flow.KeySignature(props.keySig))
+    stave.addModifier(new Vex.Flow.KeySignature(keySig))
 
     stave.setContext(context).draw()
 
