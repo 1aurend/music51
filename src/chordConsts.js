@@ -101,7 +101,7 @@ const accidentals = ["𝄫", "♭", "♮", "♯", "𝄪"];
 const clefs = ["bass","treble"];
 
 const triadInversions = ["root","63","64"];
-const seventhInversions = ["7","65","43","42"];
+const seventhInversions = ["root","65","43","42"];
 
 export {
   templateTriads,

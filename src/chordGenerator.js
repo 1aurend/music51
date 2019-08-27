@@ -230,6 +230,14 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     rootAccidental = "";
   }
 
+  // aggregate options for chord quality question
+  let qualityOptions = []
+  Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
+
+  // aggregate options for inversions question
+  let inversionOptions = []
+  inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
+
   chord.questions = [
     {
       "type": "Note Names",
@@ -255,14 +263,14 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     {
       "type": "Chord Quality",
       "questionText": "What's the chord quality?",
-      "answers": [newStructure],
-      "choices": Object.keys(template)
+      "answers": [rootLetter + rootAccidental + newStructure],
+      "choices": qualityOptions
     },
     {
       "type": "Inversions",
       "questionText": "What's the inversion?",
-      "answers": [inversion],
-      "choices": inversions
+      "answers": [rootLetter + rootAccidental + newStructure + " " + inversion],
+      "choices": inversionOptions
     }
   ]
 
