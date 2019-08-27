@@ -149,12 +149,12 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     rootAccidental = randomchoice(rootAccidentals);
 
     // adjust 'o7' chords where the o7th would be a triple flat
-    if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === "b")){
-      rootAccidental = 'n'
+    if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
+      rootAccidental = '♮'
     }
     // adjust '+' chords where the +5th would be a triple sharp
-    if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === "#")){
-      rootAccidental = 'n'
+    if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === '♯')){
+      rootAccidental = '♮'
     }
   }
 
@@ -190,7 +190,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     // console.log(rootLetter+rootAccidental+" "+newStructure);
 
   // find the equivalent IP based on the accidental's offset from the "natural" root syllable
-  let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf("n")) // the distance from natural!
+  let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf('♮')) // the distance from natural!
     // console.log(offset + " from natural")
   let rootIp = ip[(ip.indexOf(rootSyllable)+offset)%12]
     // console.log("IP: " + rootIp)
@@ -223,10 +223,10 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   chord.notes = [];
 
   // only show natural in rootAccidental if it's an alteration from the key sig
-  if ((rootAccidental === "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === rootSyllable})].accidental != 'n')){
-    rootAccidental = "♮";
+  if ((rootAccidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === rootSyllable})].accidental != '♮')){
+    rootAccidental = '♮';
   }
-  else if (rootAccidental === "n") {
+  else if (rootAccidental === '♮') {
     rootAccidental = "";
   }
 
@@ -307,11 +307,11 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     chord.questions[0].answers.push(noteLetter);
 
     // only show natural in question choices if it's an alteration from the key sig
-    if(accidental != "n"){
+    if(accidental != '♮'){
       chord.questions[1].choices.push(noteLetter+accidental);
     }
-    else if ((accidental === "n") && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != 'n')){
-      chord.questions[1].choices.push(noteLetter+"♮");
+    else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
+      chord.questions[1].choices.push(noteLetter+'♮');
     }
     else {
       chord.questions[1].choices.push(noteLetter);
