@@ -15,7 +15,21 @@ export default function Chord(props) {
       for (var i = 0; i < props.notes.length; i++) {
         formattedNotes.push(props.notes[i].letter + '/' + props.notes[i].octave)
         if (props.notes[i].accidental) {
-          accidentals.push({note: i, accidental: props.notes[i].accidental})
+          if (props.notes[i].accidental === '♮') {
+            accidentals.push({note: i, accidental: 'n'})
+          }
+          else if (props.notes[i].accidental === '♭') {
+            accidentals.push({note: i, accidental: 'b'})
+          }
+          else if (props.notes[i].accidental === '𝄫') {
+            accidentals.push({note: i, accidental: 'bb'})
+          }
+          else if (props.notes[i].accidental === '♯') {
+            accidentals.push({note: i, accidental: '#'})
+          }
+          else if (props.notes[i].accidental === '𝄪') {
+            accidentals.push({note: i, accidental: '##'})
+          }
         }}
 
       // console.log(accidentals);

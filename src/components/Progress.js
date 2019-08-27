@@ -17,6 +17,7 @@ import {
   VictoryLegend,
   VictoryLabel
 } from 'victory'
+import generateChords from '../chordGenerator'
 
 
 
