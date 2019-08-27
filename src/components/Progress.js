@@ -7,6 +7,7 @@ import {
   Button,
 } from 'shards-react'
 import Start from './Start'
+import Context from './Context'
 import {
   VictoryChart,
   VictoryGroup,
@@ -117,7 +118,7 @@ export default function ProgressChart({ round }) {
     return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}} round={round+1}/>
   }
   else if (done) {
-    return <Start title={{headline: 'Music 51', subtitle: 'Chord Identification'}}/>
+    return <Context />
   }
   else {
   let { chartParams, progress } = chartMath(noteNames, roots, quality, inversions, average)

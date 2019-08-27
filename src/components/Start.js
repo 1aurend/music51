@@ -20,7 +20,7 @@ export default function Start({ title, round }) {
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '3em'} : {textAlign: 'center', fontSize: '2.5em'}
   let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
-  const numQs = useRef(10)
+  const numQs = useRef(5)
   const [ready, launchQuiz] = useState(false)
   const [quiz, setQuiz] = useState([])
   const [options, updateOptions] = useState({
@@ -106,7 +106,9 @@ export default function Start({ title, round }) {
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={fontStyle}>{title.headline}</h1></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={subtitleStyle}>{title.subtitle}</h2></Row>
-            <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} text={'just testing'}/>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '2%'}}><p style={{ marginBottom: '0'}}>You're going to do multiple rounds. See if you can improve your average on each round.</p></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><p style={{ marginBottom: '0'}}>You can set rounds from 5-25 chords.</p></Row>
+            <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} text={'just testing some more'}/>
           </Col>
         </Row>
         <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
