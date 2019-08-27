@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Session, Size } from './Context'
+import { Means, Size } from './Context'
 import {
   Container,
   Row,
@@ -19,78 +19,82 @@ import {
 
 
 
-function round(value, decimals) {
+function rounded(value, decimals) {
 return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
-function chartMath(noteNames, roots, quality, inversions, average, attempts, times) {
+function chartMath(noteNames, roots, quality, inversions, average) {
 
   //question: move structuring of progress data in here so we have a clean progress object for later? that would simplify these domain max calculations
 
   let chartParams = {
     domainMaxYAtt: 0,
     domainMaxYTime: 0,
-    rounds: []
+    labelsX: [],
+    data: {
+      attempts: {
+        noteNames: [],
+        roots: [],
+        quality: [],
+        inversions: [],
+        average: []
+      },
+      times: {
+        noteNames: [],
+        roots: [],
+        quality: [],
+        inversions: [],
+        average: []
+      }
+    }
   }
 
-  for (var i = 0; i < attempts.noteNames.length; i++) {
-    chartParams.rounds.push(i+1)
+
+  for (var i = 0; i < noteNames.attempts.length; i++) {
+    chartParams.labelsX.push(i+1)
   }
 
-  let atts = []
-  let ts = []
 
-  for (var i = 0; i < attempts.noteNames.length; i++) {
-    atts.push(attempts.noteNames[i].y)
-  }
-  for (var i = 0; i < attempts.roots.length; i++) {
-    atts.push(attempts.roots[i].y)
-  }
-  for (var i = 0; i < attempts.quality.length; i++) {
-    atts.push(attempts.quality[i].y)
-  }
-  for (var i = 0; i < attempts.inversions.length; i++) {
-    atts.push(attempts.inversions[i].y)
-  }
-  for (var i = 0; i < attempts.overall.length; i++) {
-    atts.push(attempts.overall[i].y)
-  }
+  let atts = noteNames.attempts.concat(roots.attempts, quality.attempts, inversions.attempts, average.attempts)
   chartParams.domainMaxYAtt = Math.max(...atts)
-
-  for (var i = 0; i < times.noteNames.length; i++) {
-    ts.push(times.noteNames[i].y)
-  }
-  for (var i = 0; i < times.roots.length; i++) {
-    ts.push(times.roots[i].y)
-  }
-  for (var i = 0; i < times.quality.length; i++) {
-    ts.push(times.quality[i].y)
-  }
-  for (var i = 0; i < times.inversions.length; i++) {
-    ts.push(times.inversions[i].y)
-  }
-  for (var i = 0; i < times.overall.length; i++) {
-    ts.push(times.overall[i].y)
-  }
+  let ts = noteNames.times.concat(roots.times, quality.times, inversions.times, average.times)
   chartParams.domainMaxYTime = Math.max(...ts)
 
-  let attChange = attempts.overall[0].y-attempts.overall[attempts.overall.length-1].y
-  let timeChange = times.overall[0].y-times.overall[times.overall.length-1].y
-  let accuracy = {
-    attempts: round(attChange, 2),
-    percentAtt: round(((attChange/attempts.overall[0].y)*100),0),
-    time: round(timeChange, 2),
-    percentTime: round(((timeChange/times.overall[0].y)*100),0)
+
+  for (var j = 0; j < noteNames.attempts.length; j++) {
+    chartParams.data.attempts.noteNames.push({x: j+1, y: noteNames.attempts[j]})
+    chartParams.data.attempts.roots.push({x: j+1, y: roots.attempts[j]})
+    chartParams.data.attempts.quality.push({x: j+1, y: quality.attempts[j]})
+    chartParams.data.attempts.inversions.push({x: j+1, y: inversions.attempts[j]})
+    chartParams.data.attempts.average.push({x: j+1, y: average.attempts[j]})
+  }
+  for (var k = 0; k < noteNames.times.length; k++) {
+    chartParams.data.times.noteNames.push({x: k+1, y: noteNames.times[k]})
+    chartParams.data.times.roots.push({x: k+1, y: roots.times[k]})
+    chartParams.data.times.quality.push({x: k+1, y: quality.times[k]})
+    chartParams.data.times.inversions.push({x: k+1, y: inversions.times[k]})
+    chartParams.data.times.average.push({x: k+1, y: average.times[k]})
+  }
+  console.log('data.attempts.noteNames: ' + JSON.stringify(chartParams.data.attempts.noteNames));
+
+
+  let attChange = average.attempts[0]-average.attempts[average.attempts.length-1]
+  let timeChange = average.times[0]-average.times[average.times.length-1]
+  let progress = {
+    numAtt: rounded(attChange, 2),
+    percentAtt: rounded(((attChange/average.attempts[0])*100),0),
+    secs: rounded(timeChange, 2),
+    percentTime: rounded(((timeChange/average.times[0])*100),0)
   }
 
-  return( { chartParams, accuracy } )
+  return( { chartParams, progress } )
 
 }
 
 
-export default function ProgressChart() {
+export default function ProgressChart({ round }) {
 
-  const [session, updateSession] = useContext(Session)
+  const [means, updateMeans] = useContext(Means)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
@@ -98,26 +102,25 @@ export default function ProgressChart() {
   const [done, finished] = useState(false)
 
 
-  let noteNames = session.means.noteNames
-  let roots = session.means.roots
-  let quality = session.means.quality
-  let inversions = session.means.inversions
-  let average = session.means.average
-  let attempts
-  let times
+  let noteNames = means.noteNames
+  let roots = means.roots
+  let quality = means.quality
+  let inversions = means.inversions
+  let average = means.average
+
 
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
 
 
 
   if (reset) {
-    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}}/>
+    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}} round={round+1}/>
   }
   else if (done) {
     return <Start title={{headline: 'Music 51', subtitle: 'Chord Identification'}}/>
   }
   else {
-  let { chartParams, accuracy } = chartMath(noteNames, roots, quality, inversions, average)
+  let { chartParams, progress } = chartMath(noteNames, roots, quality, inversions, average)
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
@@ -125,13 +128,13 @@ export default function ProgressChart() {
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 10}}><strong>Time: </strong>You improved by <strong>{accuracy.time}</strong> seconds per question or <strong>{`${accuracy.percentTime}%`}</strong> between your first and last rounds.</p>
+              <p style={{marginBottom: 10}}><strong>Time: </strong>You improved by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong> between your first and last rounds.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 0}}><strong>Accuracy: </strong>You improved by <strong>{accuracy.attempts}</strong> attempts per question or <strong>{`${accuracy.percentAtt}%`}</strong> between your first and last rounds.</p>
+              <p style={{marginBottom: 0}}><strong>Accuracy: </strong>You improved by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong> between your first and last rounds.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
-                <VictoryChart height={200} width={600} domainPadding={{x: 0}} domain={{y: [6, 0]}}
+                <VictoryChart height={200} width={600} domainPadding={{x: 0}} domain={{y: [6, 0]}} //this is doing something!!
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryLegend x={50} y={0}
                     orientation="horizontal"
@@ -148,32 +151,32 @@ export default function ProgressChart() {
                   />
                   <VictoryAxis
                     style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                    domain={{x: [1, session.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
+                     tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`}
                     />
                     <VictoryAxis dependentAxis
                       label={'# Attempts'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                      domain={{y: [6, 0]}} tickFormat={(t) => round(t, 2)}
+                      domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => rounded(t, 2)}
                       />
                     <VictoryGroup offset={20}
                       colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
-                      <VictoryGroup data={attempts.noteNames}>
+                      <VictoryGroup data={chartParams.data.attempts.noteNames}>
                         <VictoryLine/>
                         <VictoryScatter/>
                         {/*labelComponent={<VictoryLabel dy={20}/>} labels={(d) => d.y} style={{ labels: { fontSize: '9', fontWeight: '700', padding: 1 } }}*/}
                       </VictoryGroup>
-                      <VictoryGroup data={attempts.roots}>
+                      <VictoryGroup data={chartParams.data.attempts.roots}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={attempts.quality}>
+                      <VictoryGroup data={chartParams.data.attempts.quality}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={attempts.inversions}>
+                      <VictoryGroup data={chartParams.data.attempts.inversions}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
-                      <VictoryGroup data={attempts.overall}>
+                      <VictoryGroup data={chartParams.data.attempts.average}>
                         <VictoryLine/>
                         <VictoryScatter/>
                       </VictoryGroup>
@@ -185,31 +188,31 @@ export default function ProgressChart() {
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryAxis
                   style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                  domain={{x: [1, session.roundCount-1]}} tickValues={chartParams.rounds} tickFormat={(t) => `${Math.round(t)}`}
+                  tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`}
                   />
                   <VictoryAxis dependentAxis
                     label={'Time (secs)'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                    domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => round(t, 2)}
+                    domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => rounded(t, 2)}
                     />
                   <VictoryGroup offset={20}
                     colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
-                    <VictoryGroup data={times.noteNames}>
+                    <VictoryGroup data={chartParams.data.times.noteNames}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={times.roots}>
+                    <VictoryGroup data={chartParams.data.times.roots}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={times.quality}>
+                    <VictoryGroup data={chartParams.data.times.quality}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={times.inversions}>
+                    <VictoryGroup data={chartParams.data.times.inversions}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
-                    <VictoryGroup data={times.overall}>
+                    <VictoryGroup data={chartParams.data.times.average}>
                       <VictoryLine/>
                       <VictoryScatter/>
                     </VictoryGroup>
@@ -222,28 +225,13 @@ export default function ProgressChart() {
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Round Stats</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Next Round</Button>
+                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
+                  newRound(true)
+                }}>Next Round</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
                   finished(true)
-                  updateSession({
-                          attempts: {
-                            noteNames: [],
-                            roots: [],
-                            quality: [],
-                            inversions: [],
-                            overall: []
-                          },
-                          times: {
-                            noteNames: [],
-                            roots: [],
-                            quality: [],
-                            inversions: [],
-                            overall: []
-                          },
-                          roundCount: 1
-                        })
                 }}>End Session</Button>
               </Col>
             </Row>
