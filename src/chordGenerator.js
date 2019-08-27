@@ -341,6 +341,11 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   if (inversion !== 'root' && inversion !== '7') {
     return handleInversion(chord, inversion)
   }
+  // so root position 7ths don't exceed upper staff limits
+  else if (chordType === 'seventh' && inversion === '7') {
+    let finalChord = staffAdjust(chord)
+    return finalChord
+  }
   else {
     return(chord)
   }
