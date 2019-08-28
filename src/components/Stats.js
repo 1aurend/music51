@@ -15,7 +15,6 @@ import generateChords from '../chordGenerator'
 export default function RoundStats({ data, round }) {
 
   const [means, updateMeans] = useContext(Means)
-  const [count, increment] = useContext(Count)
   const [session, updateSession] = useContext(Session)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
@@ -26,16 +25,28 @@ export default function RoundStats({ data, round }) {
 
 
   let nextRound = () => {
-    increment(count+1)
     setQuiz(generateChords(session.settings.numChords, session.settings.options))
   }
+
+  let headline = round === 1 ? 'First Round Complete!' : `Round ${round} Stats`
+  let subtitle = round === 1 ? `Here's Your Benchmark:` : ''
+  let navButtons = round === 1 ? (<Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                                    <Button style={{margin: '5%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
+                                </Col>) :
+                                (<><Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                                    <Button style={{margin: '5%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
+                                </Col>
+                                <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Back to Progress</Button>
+                                </Col></>)
+  let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 
 
   if (quiz) {
     return <Quiz data={quiz} round={round+1}/>
   }
   else if (progressView) {
-    return <ProgressChart />
+    return <ProgressChart round={round}/>
   }
   else {
     return (
@@ -43,23 +54,19 @@ export default function RoundStats({ data, round }) {
         <Row noGutters style={{paddingTop: '5%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Session Complete!</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>{headline}</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
                 <Col sm='12' lg='8'>
-                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>Your Results:</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{subtitle}</h3></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Note Names: </strong>You averaged <strong>{means.noteNames.attempts[means.noteNames.attempts.length-1]}</strong> attempts and <strong>{means.noteNames.times[means.noteNames.times.length-1]}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Root Notes: </strong>You averaged <strong>{means.roots.attempts[means.roots.attempts.length-1]}</strong> attempts and <strong>{means.roots.times[means.roots.times.length-1]}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Chord Quality: </strong>You averaged <strong>{means.quality.attempts[means.quality.attempts.length-1]}</strong> attempts and <strong>{means.quality.times[means.quality.times.length-1]}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Inversions: </strong>You averaged <strong>{means.inversions.attempts[means.inversions.attempts.length-1]}</strong> attempts and <strong>{means.inversions.times[means.inversions.times.length-1]}</strong> seconds per question.</p></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{closing}</h3></Row>
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-                <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
-                </Col>
-                <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Check My Progress</Button>
-                </Col>
+                  {navButtons}
               </Row>
             </Col>
           </Row>

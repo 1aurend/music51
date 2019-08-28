@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Means, Size } from './Context'
+import { Means, Size, Session } from './Context'
 import {
   Container,
   Row,
@@ -18,6 +18,8 @@ import {
   VictoryLabel
 } from 'victory'
 import generateChords from '../chordGenerator'
+import RoundStats from './Stats'
+import Quiz from './Quiz'
 
 
 
@@ -83,13 +85,15 @@ function chartMath(noteNames, roots, quality, inversions, average) {
   let attChange = average.attempts[0]-average.attempts[average.attempts.length-1]
   let timeChange = average.times[0]-average.times[average.times.length-1]
   let progress = {
-    numAtt: rounded(attChange, 2),
-    percentAtt: rounded(((attChange/average.attempts[0])*100),0),
-    secs: rounded(timeChange, 2),
-    percentTime: rounded(((timeChange/average.times[0])*100),0)
+    numAtt: rounded(attChange, 2) >= 0 ? rounded(attChange, 2) : -rounded(attChange, 2),
+    percentAtt: rounded(((attChange/average.attempts[0])*100),0) >= 0 ? rounded(((attChange/average.attempts[0])*100),0) : -rounded(((attChange/average.attempts[0])*100),0),
+    secs: rounded(timeChange, 2) >= 0 ? rounded(timeChange, 2) : -rounded(timeChange, 2),
+    percentTime: rounded(((timeChange/average.times[0])*100),0) >= 0 ? rounded(((timeChange/average.times[0])*100),0) : -rounded(((timeChange/average.times[0])*100),0)
   }
+  let verbA = rounded(attChange, 2) >= 0 ? 'increased' : 'decreased'
+  let verbT = rounded(timeChange, 2) >= 0 ? 'decreased' : 'increased'
 
-  return( { chartParams, progress } )
+  return( { chartParams, progress, verbA, verbT } )
 
 }
 
@@ -98,10 +102,12 @@ export default function ProgressChart({ round }) {
 
   const [means, updateMeans] = useContext(Means)
   const size = useContext(Size)
+  const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
-  const [reset, newRound] = useState(false)
+  const [quiz, setQuiz] = useState(false)
   const [done, finished] = useState(false)
+  const [stats, viewStats] = useState(false)
 
 
   let noteNames = means.noteNames
@@ -113,30 +119,38 @@ export default function ProgressChart({ round }) {
 
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
 
+  let nextRound = () => {
+    setQuiz(generateChords(session.settings.numChords, session.settings.options))
+  }
 
 
-  if (reset) {
-    return <Start title={{headline: 'Welcome Back!', subtitle: '', text: 'Choose your settings for the next round:'}} round={round+1}/>
+
+  if (quiz) {
+    return <Quiz data={quiz} round={round+1}/>
   }
   else if (done) {
     return <Context />
   }
+  else if (stats) {
+    return <RoundStats round={round} data={null} />
+  }
   else {
-  let { chartParams, progress } = chartMath(noteNames, roots, quality, inversions, average)
+    let { chartParams, progress, verbA, verbT } = chartMath(noteNames, roots, quality, inversions, average)
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
         <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb'}}>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Round {round} Complete!</h2></Row>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 10}}><strong>Time: </strong>You improved by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong> between your first and last rounds.</p>
+              <p style={{marginBottom: 10}}><strong>Time: </strong>Your overall time {verbT} by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 0}}><strong>Accuracy: </strong>You improved by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong> between your first and last rounds.</p>
+              <p style={{marginBottom: 0}}><strong>Accuracy: </strong>Your overall accuracy {verbA} by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
-                <VictoryChart height={200} width={600} domainPadding={{x: 0}} domain={{y: [6, 0]}} //this is doing something!!
+                <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryLegend x={50} y={0}
                     orientation="horizontal"
@@ -224,11 +238,11 @@ export default function ProgressChart({ round }) {
             </Col>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {newRound(true)}}>Round Stats</Button>
+                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {viewStats(true)}}>Round Stats</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                 <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
-                  newRound(true)
+                  nextRound()
                 }}>Next Round</Button>
               </Col>
               <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
