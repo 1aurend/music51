@@ -56,33 +56,76 @@ export default function Quiz ({ data, round }) {
 
     let key = e.key
     let input
+    console.log(key);
 
     switch (key) {
       case 'a':
       case 'b':
       case 'c':
-      case 'd':
       case 'e':
       case 'f':
       case 'g':
-          input = key.toUpperCase()
+          key = key.toUpperCase()
           for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf(input) >= 0) {
+            if (currentQ.choices[i].indexOf(key) >= 0) {
               input = currentQ.choices[i]
             }
           }
           break
-      case 'j':
+      case 'd':
+          switch (currentQ.questionText) {
+            case 'Name the letter positions from lowest to highest.':
+              console.log('letter names question');
+              key = key.toUpperCase()
+              for (var i = 0; i < currentQ.choices.length; i++) {
+                if (currentQ.choices[i].indexOf(key) >= 0) {
+                  input = currentQ.choices[i]
+                }
+              }
+              break
+            case`What's the chord quality?`:
+              console.log('quality question');
+              if (currentChord.current.notes.length === 4) {
+                input = currentQ.choices[4]
+              }
+              else {
+                input = currentQ.choices[2]
+              }
+              break
+            default:
+              input = null
+              break
+          }
+          break
+      case 'M':
+      case 'm':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+          for (var i = 0; i < currentQ.choices.length; i++) {
+            if (currentQ.choices[i].indexOf(key) >= 0) {
+              input = currentQ.choices[i]
+            }
+          }
+          break
+      case '7':
+      case 'r':
           input = currentQ.choices[0]
           break
-      case 'k':
-          input = currentQ.choices[1]
+      case 'A':
+          for (var i = 0; i < currentQ.choices.length; i++) {
+            if (currentQ.choices[i].indexOf('+') >= 0) {
+              input = currentQ.choices[i]
+            }
+          }
           break
-      case 'l':
-          input = currentQ.choices[2]
-          break
-      case ';':
-          input = currentQ.choices[3]
+      case 'h':
+          for (var i = 0; i < currentQ.choices.length; i++) {
+            if (currentQ.choices[i].indexOf('ø') >= 0) {
+              input = currentQ.choices[i]
+            }
+          }
           break
       default:
           input = null
@@ -94,10 +137,6 @@ export default function Quiz ({ data, round }) {
   }
 
   function checkInput(input) {
-    // console.log('here is currentQ.answers: ' + currentQ.answers);
-    // console.log('here is subQ.current.answers.length: ' + subQ.current.answers.length);
-    // console.log('here is subQ.current.answers ' + JSON.stringify(subQ.current.answers));
-    // console.log('here is input: ' + input);
 
     if (!endOfQ) {
       nextInput(input)
