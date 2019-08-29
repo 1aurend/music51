@@ -62,7 +62,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Root Notes: </strong>You averaged <strong>{means.roots.attempts[means.roots.attempts.length-1]}</strong> attempts and <strong>{means.roots.times[means.roots.times.length-1]}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Chord Quality: </strong>You averaged <strong>{means.quality.attempts[means.quality.attempts.length-1]}</strong> attempts and <strong>{means.quality.times[means.quality.times.length-1]}</strong> seconds per question.</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><strong>Inversions: </strong>You averaged <strong>{means.inversions.attempts[means.inversions.attempts.length-1]}</strong> attempts and <strong>{means.inversions.times[means.inversions.times.length-1]}</strong> seconds per question.</p></Row>
-                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{closing}</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center'}}><h3 style={subtitleStyle}>{closing}</h3></Row>
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
