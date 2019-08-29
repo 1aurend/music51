@@ -1,29 +1,34 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Means, Rounds } from './Context'
+import { Means } from './Context'
 
 
 export default function SessionMatrix({ round }) {
 
   const [means, udpateMeans] = useContext(Means)
-  const [rounds, updateRounds] = useContext(Rounds)
   const [bestRound, setBest] = useState(null)
-  let bestKey
+  const [ready, done] = useState(false)
 
   //need rounds.1 and rounds[round] and best
 
   useEffect(() => {
-    bestKey = means.average.indexOf(Math.min(...means.average))
-    setBest(rounds[bestKey])
-  }, [])
+    let best = Math.min(...means.average.times)
+    console.log(best);
+    let bestIndex = means.average.times.indexOf(best)
+    console.log(bestIndex);
+    setBest(bestIndex)
+  }, [means.average.times])
 
 
-  if (bestRound) {
+  if (bestRound >= 0) {
     return (
       <>
-      <p>Benchmark: 1</p>
-      <p>Last: {round}</p>
-      <p>Best: {bestKey}</p>
+      <p>Benchmark: {means.average.times[0]}</p>
+      <p>Last: {means.average.times[round-1]}</p>
+      <p>Best: {means.average.times[bestRound]}</p>
       </>
     )
+  }
+  else {
+    return <h2>Loading...</h2>
   }
 }

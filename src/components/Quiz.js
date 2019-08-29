@@ -75,7 +75,7 @@ export default function Quiz ({ data, round }) {
       case 'd':
           switch (currentQ.questionText) {
             case 'Name the letter positions from lowest to highest.':
-              console.log('letter names question');
+            case `What's the root note?`:
               key = key.toUpperCase()
               for (var i = 0; i < currentQ.choices.length; i++) {
                 if (currentQ.choices[i].indexOf(key) >= 0) {
@@ -84,7 +84,6 @@ export default function Quiz ({ data, round }) {
               }
               break
             case`What's the chord quality?`:
-              console.log('quality question');
               if (currentChord.current.notes.length === 4) {
                 input = currentQ.choices[4]
               }

@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Means } from './Context'
 import RoundStats from './Stats'
-import ProgressChart from './Progress'
+import ChartData from './ChartData'
+import { Container, Row } from 'shards-react'
 
 
 
@@ -11,6 +12,7 @@ export default function Tally({ data, round }) {
   console.log(round);
 
   const [means, updateMeans] = useContext(Means)
+  const tally = useRef()
 
   let noteNames = {
     attempts: [],
@@ -96,7 +98,7 @@ export default function Tally({ data, round }) {
 
 
     useEffect(() => {
-        let tally = {
+        tally.current = {
             noteNames: {
               attempts: [...means.noteNames.attempts, noteNames.meanAttempts],
               times: [...means.noteNames.times, noteNames.meanTime]
@@ -119,7 +121,7 @@ export default function Tally({ data, round }) {
             }
         }
 
-        updateMeans(tally)
+        updateMeans(tally.current)
         console.log('here is progress: ' + JSON.stringify(tally));
     }, [])
 
@@ -127,7 +129,17 @@ export default function Tally({ data, round }) {
   if (round === 1) {
     return <RoundStats round={round}/> //need to add some props here so benchmark language displays?
   }
+  else if (tally.current) {
+    return <ChartData round={round} data={tally.current}/>
+  }
   else {
-    return <ProgressChart round={round}/>
+    return (
+      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
+        <Row noGutters style={{paddingTop: '5%'}}></Row>
+        <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
+            <h2 style={{color: '#17c671'}}>Calculating your progress...</h2>
+        </Row>
+    </Container>
+    )
   }
 }

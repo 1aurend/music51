@@ -65,7 +65,7 @@ export default function Context() {
         <Means.Provider value={[means, updateMeans]}>
           <Rounds.Provider value={[rounds, updateRounds]}>
             <Count.Provider value={[count, increment]}>
-                  <Start title={{headline: 'Chord Crusher', subtitle: 'Music 51'}} round={1}/>
+                  <Start title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'Music 51'}} round={1}/>
             </Count.Provider>
           </Rounds.Provider>
         </Means.Provider>

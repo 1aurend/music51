@@ -12,7 +12,7 @@ import ProgressChart from './Progress'
 import generateChords from '../chordGenerator'
 
 
-export default function RoundStats({ data, round }) {
+export default function RoundStats({ round, chartParams, progress, verbA, verbT }) {
 
   const [means, updateMeans] = useContext(Means)
   const [session, updateSession] = useContext(Session)
@@ -46,7 +46,7 @@ export default function RoundStats({ data, round }) {
     return <Quiz data={quiz} round={round+1}/>
   }
   else if (progressView) {
-    return <ProgressChart round={round}/>
+    return <ProgressChart round={round} chartParams={chartParams} progress={progress} verbA={verbA} verbT={verbT}/>
   }
   else {
     return (
