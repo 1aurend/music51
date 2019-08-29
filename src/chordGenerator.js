@@ -129,11 +129,6 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   }
   // console.log('chord type is: '+chordType);
 
-  // choose a random key keySignature
-  let keySignature = randomchoice(Object.keys(keySignatures));
-  let vexSig = keySignatures[keySignature].vexSig;
-    console.log('key signature is: '+ vexSig)
-
   // choose a random chord type
   let newStructure = randomchoice(Object.keys(template));
   let newClass = template[newStructure].class
@@ -142,9 +137,12 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   let rootSyllable
   let rootAccidental
 
+  let keySignature
+
   // apply option for any root notes
   if((options.roots.common === false) && (options.roots.any === true)){
 
+    keySignature = randomchoice(Object.keys(keySignatures));
     rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
     rootAccidental = randomchoice(rootAccidentals);
 
@@ -160,6 +158,8 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   // apply option for common root notes
   if((options.roots.common === true) && (options.roots.any === false)){
+    keySignature = randomchoice(Object.keys(keySignatures).slice(3, 12));
+
     let modeNote
 
     // set the mode note based on chord type
@@ -184,6 +184,10 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       }
     }
   }
+
+  // translate to vexSig
+  let vexSig = keySignatures[keySignature].vexSig;
+    console.log('key signature is: '+ vexSig)
 
   // translate the syllable "position" to a letter
   let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
