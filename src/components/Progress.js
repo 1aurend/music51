@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import {Size, Session } from './Context'
 import {
   Container,
@@ -6,8 +6,6 @@ import {
   Col,
   Button,
 } from 'shards-react'
-import Start from './Start'
-import Context from './Context'
 import {
   VictoryChart,
   VictoryGroup,
@@ -15,7 +13,6 @@ import {
   VictoryScatter,
   VictoryAxis,
   VictoryLegend,
-  VictoryLabel
 } from 'victory'
 import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
@@ -38,6 +35,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
   const [quiz, setQuiz] = useState(false)
   const [done, finished] = useState(false)
   const [stats, viewStats] = useState(false)
+  let vTColor = verbT === 'decreased' ? {color: '#17c671'} : null
+  let vAColor = verbA === 'decreased' ? {color: '#17c671'} : null
 
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
 
@@ -65,11 +64,11 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Round {round} Complete!</h2></Row>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
-            <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 10}}><strong>Time: </strong>Your overall time <strong>{verbT}</strong> by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong>.</p>
-            </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 0}}><strong>Accuracy: </strong>Your overall accuracy <strong>{verbA}</strong> by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong>.</p>
+              <p style={{marginBottom: 0}}><strong>Attempts: </strong>Your overall accuracy <span style={vAColor}><strong>{verbA}</strong></span> by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong>.</p>
+            </Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
+              <p style={{marginBottom: 10}}><strong>Time: </strong>Your total attempt count <span style={vTColor}><strong>{verbT}</strong></span> by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}

@@ -18,9 +18,9 @@ export default function Start({ title, round }) {
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
-  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '3em'} : {textAlign: 'center', fontSize: '2.5em'}
-  let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
-  let betaStyle = size.width > 500 ? {textAlign: 'center', fontSize: '1.5em'} : {textAlign: 'center', fontSize: '1em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '3em'} : {textAlign: 'center', fontSize: '2.5em'}
+  let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2em'} : {textAlign: 'center', fontSize: '2em'}
+  let betaStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {textAlign: 'center', fontSize: '1em'}
   const numQs = useRef(5)
   const [ready, launchQuiz] = useState(false)
   const [quiz, setQuiz] = useState([])
@@ -106,8 +106,8 @@ export default function Start({ title, round }) {
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={fontStyle}>{title.headline}</h1></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={subtitleStyle}>{title.subtitle}</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={betaStyle}>{title.beta}</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={subtitleStyle}>{title.subtitle}</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '10%', marginRight: '10%', marginTop: '2%', marginBottom: '2%'}}><p style={{ marginBottom: '0', textAlign: 'left'}}><strong>Instructions: </strong>In a session of Chord Crusher, you'll complete multiple rounds; see if you can improve your time and accuracy on each round. You can set rounds from 5-25 chords in length. For each chord, there are four questions that aggregate to name the chord, quality, and inversion. If this is your first time, try 5 chords per round. After that, choose as many as you want!</p></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><p style={{ marginBottom: '0'}}></p></Row>
             <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} text={'just testing some more'}/>
