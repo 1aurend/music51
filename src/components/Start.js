@@ -20,7 +20,7 @@ export default function Start({ title, round }) {
   let borderRadius = size.width > 500 ? '1rem' : '1rem'
   let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '3em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'}
   let subtitleStyle = size.width > 500 ? {fontFamily: "'Overpass Mono', monospace", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Overpass Mono', monospace", textAlign: 'center', fontSize: '2em'}
-  let betaStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {textAlign: 'center', fontSize: '1em'}
+  let betaStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1em'}
   const numQs = useRef(5)
   const [ready, launchQuiz] = useState(false)
   const [quiz, setQuiz] = useState([])

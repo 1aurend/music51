@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 777 348.8" style="enable-background:new 0 0 777 348.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#17C671;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#0B8746;}
+</style>
+<g>
+	<g>
+		<rect x="-1035.5" y="298.3" class="st0" width="494.6" height="25.3"/>
+		<polygon class="st0" points="-540.9,25.3 -540.9,0 -1035.5,0 -1035.5,25.3 -1047.7,25.3 -1060.8,25.3 -1060.8,298.3 
+			-1047.7,298.3 -1035.5,298.3 -515.7,298.3 -515.7,25.3 		"/>
+	</g>
+	<g>
+		<path class="st1" d="M-950.7,236.8v-25h100v-25h-100v-25h-25v-50h25v-25h150v125h-25v25H-950.7z M-925.7,161.8h75v-50h-75V161.8z"
+			/>
+		<path class="st1" d="M-750.7,211.8v-25h-25v-75h25v-25h125v25h25v75h-25v25H-750.7z M-725.7,186.8h75v-75h-75V186.8z"/>
+	</g>
+	<g>
+		<rect x="-1035.5" y="323.5" class="st2" width="494.6" height="25.3"/>
+		<polyline class="st2" points="-1060.8,298.3 -1060.8,323.5 -1035.5,323.5 -1035.5,298.3 		"/>
+		<polyline class="st2" points="-540.9,298.3 -540.9,323.5 -515.7,323.5 -515.7,298.3 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<rect x="25.3" y="298.3" class="st0" width="726.2" height="25.3"/>
+		<polygon class="st0" points="751.5,25.3 751.5,0 25.3,0 25.3,25.3 13,25.3 0,25.3 0,298.3 13,298.3 25.3,298.3 776.8,298.3 
+			776.8,25.3 		"/>
+	</g>
+	<g>
+		<rect x="25.3" y="323.5" class="st2" width="726.2" height="25.3"/>
+		<polyline class="st2" points="0,298.3 0,323.5 25.3,323.5 25.3,298.3 		"/>
+		<polyline class="st2" points="751.5,298.3 751.5,323.5 776.8,323.5 776.8,298.3 		"/>
+	</g>
+	<g>
+		<path class="st1" d="M171,244.4v-25h100v-25H171v-25h-25v-50h25v-25h150v125h-25v25H171z M196,169.4h75v-50h-75V169.4z"/>
+		<path class="st1" d="M371,219.4v-25h-25v-75h25v-25h125v25h25v75h-25v25H371z M396,194.4h75v-75h-75V194.4z"/>
+		<path class="st1" d="M556,169.4v-125h75v75h-25v50H556z M556,219.4v-25h50v25H556z"/>
+	</g>
+</g>
+</svg>

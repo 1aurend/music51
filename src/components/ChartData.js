@@ -48,18 +48,18 @@ async function chartMath(noteNames, roots, quality, inversions, average) {
 
 
   for (var j = 0; j < noteNames.attempts.length; j++) {
-    chartParams.data.attempts.noteNames.push({x: j+1, y: noteNames.attempts[j]})
-    chartParams.data.attempts.roots.push({x: j+1, y: roots.attempts[j]})
-    chartParams.data.attempts.quality.push({x: j+1, y: quality.attempts[j]})
-    chartParams.data.attempts.inversions.push({x: j+1, y: inversions.attempts[j]})
-    chartParams.data.attempts.average.push({x: j+1, y: average.attempts[j]})
+    chartParams.data.attempts.noteNames.push({x: j+1, y: noteNames.attempts[j], symbol: "square", size: 5})
+    chartParams.data.attempts.roots.push({x: j+1, y: roots.attempts[j], symbol: "square", size: 5})
+    chartParams.data.attempts.quality.push({x: j+1, y: quality.attempts[j], symbol: "square", size: 5})
+    chartParams.data.attempts.inversions.push({x: j+1, y: inversions.attempts[j], symbol: "square", size: 5})
+    chartParams.data.attempts.average.push({x: j+1, y: average.attempts[j], symbol: "square", size: 5})
   }
   for (var k = 0; k < noteNames.times.length; k++) {
-    chartParams.data.times.noteNames.push({x: k+1, y: noteNames.times[k]})
-    chartParams.data.times.roots.push({x: k+1, y: roots.times[k]})
-    chartParams.data.times.quality.push({x: k+1, y: quality.times[k]})
-    chartParams.data.times.inversions.push({x: k+1, y: inversions.times[k]})
-    chartParams.data.times.average.push({x: k+1, y: average.times[k]})
+    chartParams.data.times.noteNames.push({x: k+1, y: noteNames.times[k], symbol: "square", size: 5})
+    chartParams.data.times.roots.push({x: k+1, y: roots.times[k], symbol: "square", size: 5})
+    chartParams.data.times.quality.push({x: k+1, y: quality.times[k], symbol: "square", size: 5})
+    chartParams.data.times.inversions.push({x: k+1, y: inversions.times[k], symbol: "square", size: 5})
+    chartParams.data.times.average.push({x: k+1, y: average.times[k], symbol: "square", size: 5})
   }
 
   let attChange = average.attempts[0]-average.attempts[average.attempts.length-1]

@@ -135,7 +135,7 @@ export default function Tally({ data, round }) {
   else {
     return (
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
-        <Row noGutters style={{paddingTop: '5%'}}></Row>
+        <Row noGutters style={{paddingTop: '30%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
             <h2 style={{color: '#17c671', fontFamily: "'Press Start 2P', cursive"}}>Calculating your progress...</h2>
         </Row>

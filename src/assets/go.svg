@@ -1,0 +1,24 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 545.1 348.8" style="enable-background:new 0 0 545.1 348.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#17C671;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#0B8746;}
+</style>
+<g>
+	<g>
+		<rect x="25.3" y="298.3" class="st0" width="494.6" height="25.3"/>
+		<polygon class="st0" points="519.8,25.3 519.8,0 25.3,0 25.3,25.3 13,25.3 0,25.3 0,298.3 13,298.3 25.3,298.3 545.1,298.3
+			545.1,25.3 		"/>
+	</g>
+	<g>
+		<path class="st1" d="M110,236.8v-25h100v-25H110v-25H85v-50h25v-25h150v125h-25v25H110z M135,161.8h75v-50h-75V161.8z"/>
+		<path class="st1" d="M310,211.8v-25h-25v-75h25v-25h125v25h25v75h-25v25H310z M335,186.8h75v-75h-75V186.8z"/>
+	</g>
+	<g>
+		<rect x="25.3" y="323.5" class="st2" width="494.6" height="25.3"/>
+		<polyline class="st2" points="0,298.3 0,323.5 25.3,323.5 25.3,298.3 		"/>
+		<polyline class="st2" points="519.8,298.3 519.8,323.5 545.1,323.5 545.1,298.3 		"/>
+	</g>
+</g>
+</svg>
