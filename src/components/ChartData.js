@@ -70,7 +70,7 @@ async function chartMath(noteNames, roots, quality, inversions, average) {
     secs: rounded(timeChange, 2) >= 0 ? rounded(timeChange, 2) : -rounded(timeChange, 2),
     percentTime: rounded(((timeChange/average.times[0])*100),0) >= 0 ? rounded(((timeChange/average.times[0])*100),0) : -rounded(((timeChange/average.times[0])*100),0)
   }
-  let verbA = rounded(attChange, 2) >= 0 ? 'increased' : 'decreased'
+  let verbA = rounded(attChange, 2) >= 0 ? 'decreased' : 'increased'
   let verbT = rounded(timeChange, 2) >= 0 ? 'decreased' : 'increased'
 
   console.log(chartParams);

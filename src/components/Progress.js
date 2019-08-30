@@ -64,11 +64,11 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Round {round} Complete!</h2></Row>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 0}}><strong>Attempts: </strong>Your overall accuracy <span style={vAColor}><strong>{verbA}</strong></span> by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong>.</p>
-            </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 10}}><strong>Time: </strong>Your total attempt count <span style={vTColor}><strong>{verbT}</strong></span> by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong>.</p>
+              <p style={{marginBottom: 0}}><strong>Attempts: </strong>Your total attempt count <span style={vAColor}><strong>{verbA}</strong></span> by <strong>{progress.numAtt}</strong> attempts per question or <strong>{`${progress.percentAtt}%`}</strong>.</p>
+            </Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+              <p style={{marginBottom: 10}}><strong>Time: </strong>Your overall time <span style={vTColor}><strong>{verbT}</strong></span> by <strong>{progress.secs}</strong> seconds per question or <strong>{`${progress.percentTime}%`}</strong>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
@@ -87,8 +87,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                     colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}
                   />
                   <VictoryAxis
-                    style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                     tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`}
+                    style={{axisLabel: {fontSize: 15, padding: 18}, tickLabels: {fontSize: 15, padding: 5}}}
+                     tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'Rounds'}
                     />
                     <VictoryAxis dependentAxis
                       label={'# Attempts'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
@@ -124,8 +124,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
                 <VictoryAxis
-                  style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
-                  tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`}
+                  style={{axisLabel: {fontSize: 15, padding: 18}, tickLabels: {fontSize: 15, padding: 5}}}
+                  tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'Rounds'}
                   />
                   <VictoryAxis dependentAxis
                     label={'Time (secs)'} style={{axisLabel: {fontSize: 15, padding: 30}, tickLabels: {fontSize: 15, padding: 5}}}
