@@ -12,8 +12,8 @@ export default function SessionMatrix({ round }) {
   const [reset, startOver] = useState(false)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
-  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
-  let subtitleStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2em'} : {textAlign: 'center', fontSize: '1.5em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
+  let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'}
 
 
 

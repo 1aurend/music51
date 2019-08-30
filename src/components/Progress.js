@@ -31,7 +31,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
-  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
   const [quiz, setQuiz] = useState(false)
   const [done, finished] = useState(false)
   const [stats, viewStats] = useState(false)
@@ -110,7 +110,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                         <VictoryScatter/>
                       </VictoryGroup>
                       <VictoryGroup data={chartParams.data.attempts.inversions}>
-                        <VictoryLine/>
+                        <VictoryLine style={{ data: {strokeWeight: '6px'}}}/>
                         <VictoryScatter/>
                       </VictoryGroup>
                       <VictoryGroup data={chartParams.data.attempts.average}>
@@ -120,9 +120,9 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                     </VictoryGroup>
                 </VictoryChart>
                 </Row>
-                <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+                <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop:'-50'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
-                style={{parent: {maxHeight: '40%'}}}>
+                style={{parent: {maxHeight: '100%'}}}>
                 <VictoryAxis
                   style={{axisLabel: {fontSize: 15, padding: 18}, tickLabels: {fontSize: 15, padding: 5}}}
                   tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'Rounds'}

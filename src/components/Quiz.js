@@ -14,8 +14,8 @@ export default function Quiz ({ data, round }) {
 
   const size = useContext(Size)
   const [rounds, updateRounds] = useContext(Rounds)
-  let borderRadius = size.width > 500 ? '2rem' : '1rem'
-  let fontStyle = size.width > 500 ? {textAlign: 'center', fontSize: '2.5em'} : {textAlign: 'center', fontSize: '2em'}
+  let borderRadius = size.width > 500 ? '1rem' : '1rem'
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [endOfQ, doneQ] = useState(false)
   const [noteColors, addColor] = useState([])
@@ -232,7 +232,7 @@ export default function Quiz ({ data, round }) {
           <Row noGutters style={{paddingTop: '5%'}}></Row>
           <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
             <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>{currentQ.questionText}</h2></Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '7%', marginRight: '7%', marginTop: '5%'}}><h2 style={fontStyle}>{currentQ.questionText}</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%', marginTop: '3%'}}>
                 <Chord notes={currentChord.current.notes} octaves={currentChord.current.octaves} clef={currentChord.current.clef} keySig={currentChord.current.keySignature} colors={noteColors} size={size.width} />
               </Row>
