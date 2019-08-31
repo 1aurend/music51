@@ -15,7 +15,7 @@ export default function Quiz ({ data, round }) {
   const size = useContext(Size)
   const [rounds, updateRounds] = useContext(Rounds)
   let borderRadius = size.width > 500 ? '1rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.25em', lineHeight: '1.25'}
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [endOfQ, doneQ] = useState(false)
   const [noteColors, addColor] = useState([])
@@ -100,7 +100,6 @@ export default function Quiz ({ data, round }) {
       case 'm':
       case '2':
       case '3':
-      case '4':
       case '5':
           for (var i = 0; i < currentQ.choices.length; i++) {
             if (currentQ.choices[i].indexOf(key) >= 0) {
@@ -108,6 +107,13 @@ export default function Quiz ({ data, round }) {
             }
           }
           break
+      case '4':
+          for (var i = 0; i < currentQ.choices.length; i++) {
+            if (currentQ.choices[i].indexOf('64') >= 0) {
+              input = currentQ.choices[i]
+            }
+          }
+      break
       case '7':
       case 'r':
           input = currentQ.choices[0]
@@ -131,7 +137,11 @@ export default function Quiz ({ data, round }) {
           break
     }
 
-    answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
+    //fix this whole thing so only available choices count against you?
+    if (input !== null) {
+      answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
+    }
+    console.log(answer.current.tries);
     checkInput(input)
   }
 
@@ -139,7 +149,10 @@ export default function Quiz ({ data, round }) {
 
     if (!endOfQ) {
       nextInput(input)
-      if (currentQ.answers[subQ.current.answers.length].includes(input)) {
+      if (input === null) {
+        console.log('null input')
+      }
+      else if (currentQ.answers[subQ.current.answers.length].includes(input)) {
 
       answer.current.endTime = Date.now()
       answer.current.elapsedTime = (answer.current.endTime-answer.current.startTime)/1000

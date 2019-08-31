@@ -19,7 +19,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
   let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
-  let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'}
+  let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.25em', lineHeight: '1.25em'}
   const [quiz, setQuiz] = useState(false)
   const [progressView, showProgress] = useState(false)
 
@@ -37,7 +37,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
                                     <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
                                 </Col>
                                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                                  <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={(e) => {showProgress(true)}}>Back to Progress</Button>
+                                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Back to Progress</Button>
                                 </Col></>)
   let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 

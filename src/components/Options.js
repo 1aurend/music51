@@ -10,14 +10,14 @@ import {
 
 
 
-export default function Options({checked, onChange, onCheck, text}) {
+export default function Options({checked, onChange, onCheck, text, size}) {
 
   // console.log(JSON.stringify(checked));
 
-  //where should text live?
-    return (
-      <>
+  let inputSize = size >= 500 ? '10vw' : '20vw'
 
+  return (
+      <>
         {/*<Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
 
         </Row>*/}
@@ -25,7 +25,7 @@ export default function Options({checked, onChange, onCheck, text}) {
             <Col lg='4' sm='12'>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%'}}>CHORDS/ROUND</h4></Row>
               <Row style={{display: 'flex', justifyContent: 'center'}}>
-              <FormInput onChange={onChange} type="text" placeholder="5" style={{maxWidth: '10vw', fontFamily: "'Overpass Mono', monospace"}}/>
+              <FormInput onChange={onChange} type="text" placeholder="5" style={{maxWidth: inputSize, fontFamily: "'Overpass Mono', monospace"}}/>
               </Row>
             </Col>
               <Col sm='12' lg='4'><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%', textAlign: 'center'}}>CHORD TYPES</h4>

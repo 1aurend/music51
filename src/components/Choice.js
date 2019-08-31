@@ -17,7 +17,6 @@ export default function Choice({ choice, input, red, green, onClick }) {
       }
 
     let keystroke = ''
-    console.log(choice);
     switch (choice) {
       case "A":
       case "A♭":
@@ -72,38 +71,41 @@ export default function Choice({ choice, input, red, green, onClick }) {
         break
     }
 
+    if (choice.includes("63") || choice.includes("43")) {
+      keystroke = "3"
+    }
+    else if (choice.includes("64")) {
+      keystroke = "4"
+    }
+    else if (choice.includes("65")) {
+      keystroke = "5"
+    }
+    else if (choice.includes("42")) {
+      keystroke = "2"
+    }
+    else if (choice.includes("root")) {
+      keystroke = "r"
+    }
+    else if (choice.includes("M")) {
+      keystroke = "M"
+    }
+    else if (choice.includes("m")) {
+      keystroke = "m"
+    }
+    else if (choice.includes("o") && choice !== 'root') {
+      keystroke = "d"
+    }
+    else if (choice.includes("ø")) {
+      keystroke = "h"
+    }
+    else if (choice.includes("+")) {
+      keystroke = "A"
+    }
+    else if (choice.includes("7")) {
+      keystroke = "7"
+    }
 
-    // case choice.includes("M"):
-    //   keystroke = "M"
-    //   break
-    // case choice.includes("m"):
-    //   keystroke = "m"
-    //   break
-    // case choice.includes("o"):
-    //   keystroke = "d"
-    //   break
-    // case choice.includes("ø") :
-    //   keystroke = "h"
-    //   break
-    // case choice.includes("+"):
-    //   keystroke = "A"
-    //   break
-    // case choice.includes("63"):
-    // case choice.includes("43"):
-    //   keystroke = "3"
-    //   break
-    // case choice.includes("64"):
-    //   keystroke = "4"
-    //   break
-    // case choice.includes("65"):
-    //   keystroke = "5"
-    //   break
-    // case choice.includes("42"):
-    //   keystroke = "2"
-    //   break
-    // case choice.includes("root"):
-    //   keystroke = "r"
-    //   break
+
 
     if (choice.includes('6') || choice.includes('4')) {
       inversion = <span style={{postion: 'absolute'}}><sup style={{display:'inline-block', position:'relative', left:'0px', top:'-13px'}}>{choice.charAt(choice.length-2)}</sup><sub style={{position:'relative', left:'-14px', top:'10px'}}>{choice.charAt(choice.length-1)}</sub></span>
@@ -112,7 +114,7 @@ export default function Choice({ choice, input, red, green, onClick }) {
 
 
   return (
-    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '10px', color: '#17c671', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
+    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '10px', color: '#898a8d', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
   )
 
 }
