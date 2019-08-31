@@ -33,11 +33,11 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
   let navButtons = round === 1 ? (<Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
                                     <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
                                 </Col>) :
-                                (<><Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
+                                (<><Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
                                     <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={e => nextRound()}>Next Round</Button>
                                 </Col>
                                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                                  <Button style={{margin: '5%'}} theme='success' onClick={(e) => {showProgress(true)}}>Back to Progress</Button>
+                                  <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={(e) => {showProgress(true)}}>Back to Progress</Button>
                                 </Col></>)
   let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 
