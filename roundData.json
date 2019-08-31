@@ -1,0 +1,136 @@
+[
+    {
+        "chord": [
+            {
+                "letter": "B",
+                "accidental": "bb",
+                "octave": 2
+            },
+            {
+                "letter": "D",
+                "accidental": "bb",
+                "octave": 3
+            },
+            {
+                "letter": "F",
+                "accidental": "bb",
+                "octave": 3
+            },
+            {
+                "letter": "G",
+                "accidental": "b",
+                "octave": 3
+            }
+        ],
+        "questions": [
+            {
+                "text": "Name the letter positions from lowest to highest.",
+                "answers": [
+                    {
+                        "answer": "B",
+                        "tries": [
+                            {
+                                "input": "B",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699967804,
+                        "endTime": 1566699973914,
+                        "elapsedTime": 6.11
+                    },
+                    {
+                        "answer": "D",
+                        "tries": [
+                            {
+                                "input": "D",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699973914,
+                        "endTime": 1566699974979,
+                        "elapsedTime": 1.065
+                    },
+                    {
+                        "answer": "F",
+                        "tries": [
+                            {
+                                "input": "F",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699974979,
+                        "endTime": 1566699975684,
+                        "elapsedTime": 0.705
+                    },
+                    {
+                        "answer": "G",
+                        "tries": [
+                            {
+                                "input": "G",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699975684,
+                        "endTime": 1566699977153,
+                        "elapsedTime": 1.469
+                    }
+                ]
+            },
+            {
+                "text": "What's the root note?",
+                "answers": [
+                    {
+                        "answer": "Gb",
+                        "tries": [
+                            {
+                                "input": "Gb",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699978177,
+                        "endTime": 1566699979611,
+                        "elapsedTime": 1.434
+                    }
+                ]
+            },
+            {
+                "text": "What's the chord quality?",
+                "answers": [
+                    {
+                        "answer": "o7",
+                        "tries": [
+                            {
+                                "input": "ø7",
+                                "type": "click"
+                            },
+                            {
+                                "input": "o7",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699980638,
+                        "endTime": 1566699983127,
+                        "elapsedTime": 2.489
+                    }
+                ]
+            },
+            {
+                "text": "What's the inversion?",
+                "answers": [
+                    {
+                        "answer": "65",
+                        "tries": [
+                            {
+                                "input": "65",
+                                "type": "click"
+                            }
+                        ],
+                        "startTime": 1566699984156,
+                        "endTime": 1566699986695,
+                        "elapsedTime": 2.539
+                    }
+                ]
+            }
+        ]
+    }
+]

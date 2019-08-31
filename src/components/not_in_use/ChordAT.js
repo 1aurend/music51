@@ -1,32 +1,54 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Col, Row } from 'shards-react'
 
 
-function Chord(props) {
+export default function Chord(props) {
 
   const container = useRef(document.createElement('container'))
   const [loading, done] = useState(true)
 
   let formattedNotes = []
   let accidentals = []
-    for (var i = 0; i < props.notes.length; i++) {
-      formattedNotes.push(props.notes[i] + '/' + props.octaves[i])
-      if (props.notes[i].length > 1) {
-        accidentals.push({note: i, accidental: props.notes[i].slice(1)})
-      }
+  for (var i = 0; i < props.notes.length; i++) {
+    formattedNotes.push(props.notes[i] + '/' + props.octaves[i])
+    if (props.notes[i].length > 1) {
+      accidentals.push({note: i, accidental: props.notes[i].slice(1)})
     }
+  }
 
   let colors = []
     for (var i = 0; i < props.colors.length; i++) {
       for (var j = 0; j < props.notes.length; j++) {
         let noteName = props.notes[j].length === 1 ? props.notes[j] : props.notes[j].slice(0,-1)
         if (props.colors[i] === noteName) {
-          colors.push({key: j, color: 'chartreuse'})
+          colors.push({key: j, color: '#17c671'})
         }
       }
     }
 
 
   useEffect(() => {
+
+    let staveSize = {
+      svgWidth: '',
+      svgHeight: '',
+      viewBoxWidth: 0,
+      viewBoxHeight: 0,
+    }
+
+    if (props.size >= 500) {
+      staveSize.svgWidth = '500px'
+      staveSize.svgHeight = '250px'
+      staveSize.viewBoxWidth = 200
+      staveSize.viewBoxHeight = 100
+    }
+    else {
+      staveSize.svgWidth = '300px'
+      staveSize.svgHeight = '150px'
+      staveSize.viewBoxWidth = 200
+      staveSize.viewBoxHeight = 100
+    }
+
 
     let Vex = require('vexflow')
 
@@ -38,15 +60,17 @@ function Chord(props) {
 
     let renderer = new VF.Renderer(container.current, VF.Renderer.Backends.SVG);
 
-    renderer.resize('1000px', '500px')
+    renderer.resize(staveSize.svgWidth, staveSize.svgHeight)
 
     let context = renderer.getContext()
 
-    context.setViewBox(300,150,400,200)
+    context.setViewBox(-10,0,staveSize.viewBoxWidth,staveSize.viewBoxHeight)
 
-    let stave = new VF.Stave(400, 200, 200)
+    let stave = new VF.Stave(0, 0, 180)
 
     stave.addClef(props.clef).addTimeSignature("4/4")
+
+    stave.addModifier(new VF.KeySignature('C'))
 
     stave.setContext(context).draw()
 
@@ -70,7 +94,7 @@ function Chord(props) {
       let voice = new VF.Voice({num_beats: 4,  beat_value: 4});
       voice.addTickables(notes);
 
-      let formatter = new VF.Formatter().joinVoices([voice]).format([voice], 200);
+      let formatter = new VF.Formatter().joinVoices([voice]).format([voice], 100);
 
       voice.draw(context, stave);
   }
@@ -79,14 +103,14 @@ function Chord(props) {
 
     done(false)
 
-  }, [props.notes, props.colors, loading])
+  }, [props.notes, props.colors, loading, props.size])
 
 
   return (
     <div ref={container} style={{
       display: "block",
       alignItems: 'center',
-      padding: 10,
+      // padding: 10,
       width: '100%',
       height: '100%',
   }}>
@@ -94,5 +118,3 @@ function Chord(props) {
 )
 
 }
-
-export default Chord

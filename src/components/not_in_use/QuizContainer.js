@@ -13,7 +13,7 @@ function QuizContainer(props) {
 
     const config = {
         method: 'post',
-        url:'http://localhost:4000',
+        url:'/api/loadquiz',
         data: {numQs: 16},
         type: 'application/json',
     }
@@ -33,12 +33,12 @@ function QuizContainer(props) {
   }, [])
 
   if (!quizData) {
-    return <div><h2>Loading...</h2></div>
+    return <div style={{height: '100vh', backgroundColor: 'black'}}><h2>Loading...</h2></div>
   }
   else {
     console.log(quizData);
     return (
-      <Start data={quizData} />
+      <Start data={quizData} progress={null} />
     )
   }
 

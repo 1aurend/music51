@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react'
-import { sidebar, sidebarh4 } from './quizStyles'
+import React from 'react'
 
 
-function SideBar(props) {
+export default function SideBar(props) {
 
   let answersSideBarText
 
@@ -23,5 +22,3 @@ function SideBar(props) {
   )
 
 }
-
-export default SideBar

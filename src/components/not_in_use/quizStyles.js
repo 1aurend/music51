@@ -12,12 +12,13 @@ let question = {
   gridRow: 2,
   border: '5px solid black',
   margin: '50px',
+  background: 'rgba(255, 255, 255, 0.6)'
 }
 
 let questionh2 = {
   marginTop: 'auto',
   textAlign: 'center',
-  paddingTop: '200px',
+  paddingTop: '100px',
 }
 
 let questionh3 = {
@@ -65,6 +66,8 @@ let startinputs = {
 let selector = {
   gridColumn: 3,
   margin: 'auto',
+  textAlign: 'center',
+  paddingBottom: '50px'
 }
 
 let select = {
@@ -74,10 +77,11 @@ let select = {
 
 let go = {
   gridColumn: 3,
-  margin: 'auto',
+  marginTop: 0,
+  marginLeft: 'auto',
+  marginRight: 'auto',
   display: 'block',
   cursor: 'pointer',
-  backgroundColor: 'none',
 }
 
 let sidebar = {
