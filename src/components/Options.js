@@ -24,7 +24,7 @@ export default function Options({checked, onChange, onCheck, text, size}) {
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%', marginBottom: '5%'}}>
             <Col lg='4' sm='12'>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%'}}>CHORDS/ROUND</h4></Row>
-              <Row style={{display: 'flex', justifyContent: 'center'}}>
+              <Row style={{display: 'flex', justifyContent: 'center', paddingBottom: '2%'}}>
               <FormInput onChange={onChange} type="text" placeholder="5" style={{maxWidth: inputSize, fontFamily: "'Overpass Mono', monospace"}}/>
               </Row>
             </Col>

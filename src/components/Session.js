@@ -82,7 +82,7 @@ export default function SessionMatrix({ round }) {
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
 
     return (
-      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh', fontFamily: "'Overpass Mono', monospace"}}>
+      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
@@ -276,7 +276,7 @@ export default function SessionMatrix({ round }) {
                               <td>{accurate.roots.att}</td>
                             </tr>
                             <tr>
-                              <td>Quality</td>
+                              <td>Qual</td>
                               <td>{rounded(means.quality.attempts[0],2)}</td>
                               <td>{rounded(means.quality.attempts[round-1],2)}</td>
                               <td>{accurate.quality.att}</td>
@@ -288,7 +288,7 @@ export default function SessionMatrix({ round }) {
                               <td>{accurate.inversions.att}</td>
                             </tr>
                             <tr>
-                              <td>Overall</td>
+                              <td>Total</td>
                               <td>{rounded(means.average.attempts[0],2)}</td>
                               <td>{rounded(means.average.attempts[round-1],2)}</td>
                               <td>{accurate.average.att}</td>
@@ -327,31 +327,31 @@ export default function SessionMatrix({ round }) {
                             <td>Names</td>
                             <td>{rounded(means.noteNames.times[0], 2)}</td>
                             <td>{rounded(means.noteNames.times[round-1],2)}</td>
-                            <td>{accurate.noteNames.att}</td>
+                            <td>{fast.noteNames.time}</td>
                           </tr>
                           <tr>
                             <td>Roots</td>
                             <td>{rounded(means.roots.times[0],2)}</td>
                             <td>{rounded(means.roots.times[round-1],2)}</td>
-                            <td>{accurate.roots.time}</td>
+                            <td>{fast.roots.time}</td>
                           </tr>
                           <tr>
-                            <td>Quality</td>
+                            <td>Qual</td>
                             <td>{rounded(means.quality.times[0],2)}</td>
                             <td>{rounded(means.quality.times[round-1],2)}</td>
-                            <td>{accurate.quality.time}</td>
+                            <td>{fast.quality.time}</td>
                           </tr>
                           <tr>
                             <td>Inv</td>
                             <td>{rounded(means.inversions.times[0],2)}</td>
                             <td>{rounded(means.inversions.times[round-1],2)}</td>
-                            <td>{accurate.inversions.time}</td>
+                            <td>{fast.inversions.time}</td>
                           </tr>
                           <tr>
-                            <td>Overall</td>
+                            <td>Total</td>
                             <td>{rounded(means.average.times[0],2)}</td>
                             <td>{rounded(means.average.times[round-1],2)}</td>
-                            <td>{accurate.average.time}</td>
+                            <td>{fast.average.time}</td>
                           </tr>
                           </tbody>
                         </table>

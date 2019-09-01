@@ -50,12 +50,12 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
   }
   else {
     return (
-      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
+      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>{headline}</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%', fontFamily: "'Overpass Mono', monospace"}}>
-                <Col sm='12' lg='8'>
+                <Col sm='12' lg='10' style={{marginLeft: '5%'}}>
                   <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{subtitle}</h3></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>NOTE NAMES: </span>{means.noteNames.attempts[means.noteNames.attempts.length-1]} attempts and {means.noteNames.times[means.noteNames.times.length-1]} seconds per question</p></Row>
                   <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>ROOT NOTES: </span>{means.roots.attempts[means.roots.attempts.length-1]} attempts and {means.roots.times[means.roots.times.length-1]} seconds per question</p></Row>

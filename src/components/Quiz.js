@@ -241,7 +241,7 @@ export default function Quiz ({ data, round }) {
 
   if (roundData.current.length < data.length) {
       return (
-        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh'}}>
+        <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
           <Row noGutters style={{paddingTop: '5%'}}></Row>
           <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
             <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
