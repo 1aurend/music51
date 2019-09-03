@@ -11,6 +11,7 @@ import Quiz from './Quiz'
 import ProgressChart from './Progress'
 import generateChords from '../chordGenerator'
 import nextRoundSvg from '../assets/exportnextround.svg'
+import backSvg from '../assets/backarrows.svg'
 
 
 export default function RoundStats({ round, chartParams, progress, verbA, verbT }) {
@@ -38,11 +39,13 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
                                 </Col>) :
                                 (<><Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
                                     <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', marginTop: '2%'}} onClick={(e) => {
-                                      nextRound()
-                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                                      showProgress(true)
+                                    }}><img src={backSvg} alt='next round' style={{width: '10rem'}}></img></button>
                                 </Col>
                                 <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
-                                    <Button style={{marginRight: '5%', marginLeft: '5%', marginTop: '2%'}} theme='success' onClick={e => showProgress(true)}>Back to Progress</Button>
+                                    <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', marginTop: '2%'}} onClick={(e) => {
+                                      nextRound()
+                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
                                 </Col></>)
   let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 
