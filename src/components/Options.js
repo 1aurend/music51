@@ -28,11 +28,11 @@ export default function Options({checked, onChange, onCheck, text, size}) {
               <FormInput onChange={onChange} type="text" placeholder="5" style={{maxWidth: inputSize, fontFamily: "'Overpass Mono', monospace"}}/>
               </Row>
             </Col>
-              <Col sm='12' lg='4'><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%', textAlign: 'center'}}>CHORD TYPES</h4>
+              <Col sm='12' lg='4'><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%', textAlign: 'center', marginTop: '2%'}}>CHORD TYPES</h4>
                   <Row style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '25%'}}><FormCheckbox toggle checked={checked.chordTypes.triads} onChange={(e) => onCheck(e, 'chord', 'triads')}><span style={{fontFamily: "'Overpass Mono', monospace"}}>Triads</span></FormCheckbox></Row>
                   <Row style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '25%'}}><FormCheckbox toggle checked={checked.chordTypes.sevenths} onChange={e => onCheck(e, 'chord', 'sevenths')}><span style={{fontFamily: "'Overpass Mono', monospace"}}>7ths</span></FormCheckbox></Row>
               </Col>
-              <Col sm='12' lg='4'><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%', textAlign: 'center'}}>ROOT NOTES</h4>
+              <Col sm='12' lg='4'><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '1%', textAlign: 'center', marginTop: '2%'}}>ROOT NOTES</h4>
                   <Row style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '25%'}}><FormCheckbox toggle checked={checked.roots.common} onChange={e => onCheck(e, 'root', 'common')}><span style={{fontFamily: "'Overpass Mono', monospace"}}>Common</span></FormCheckbox></Row>
                   <Row style={{display: 'flex', justifyContent: 'flex-start', marginLeft: '25%'}}><FormCheckbox toggle checked={checked.roots.any} onChange={e => onCheck(e, 'root', 'any')}><span style={{fontFamily: "'Overpass Mono', monospace"}}>Any</span></FormCheckbox></Row>
               </Col>

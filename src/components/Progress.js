@@ -18,9 +18,9 @@ import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
 import SessionMatrix from './Session'
-import nextRoundSvg from '../assets/exportnextround.svg'
-import endSessionSvg from '../assets/endsessionred.svg'
-import roundStatsSvg from '../assets/exportroundstats.svg'
+import nextRoundSvg from '../assets/svgs-nextround.svg'
+import endSessionSvg from '../assets/svgs-endsessionred.svg'
+import roundStatsSvg from '../assets/svgs-roundstats.svg'
 
 
 
@@ -34,7 +34,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
   let borderRadius = size.width > 500 ? '2rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
   let subheadStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1em'}
   const [quiz, setQuiz] = useState(false)
   const [done, finished] = useState(false)
@@ -66,7 +66,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
         <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb'}}>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Round {round} Complete!</h2></Row>
-          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={subheadStyle}>Your Progress:</h2></Row>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%'}}><h2 style={subheadStyle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '3%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}>
               <p style={{marginBottom: 0}}><span style={{fontWeight: '600'}}>ATTEMPTS: </span>Your total attempt count <span style={vAColor}>{verbA}</span> by <span style={{fontWeight: '600'}}>{progress.numAtt}</span> attempts per question or <span style={{fontWeight: '600'}}>{`${progress.percentAtt}%`}</span>.</p>
@@ -77,7 +77,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
-                <VictoryLegend x={75} y={0}
+                <VictoryLegend x={80} y={0}
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
@@ -162,17 +162,17 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
             </Row>
             </Col>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+              <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
                 <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {viewStats(true)}}><img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}></img></button>
               </Col>
-              <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+              <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
                 <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {
                   nextRound()
                 }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-                <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+                <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
                   <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {
                     finished(true)
                   }}><img src={endSessionSvg} alt='end session' style={{width: '15rem'}}></img></button>

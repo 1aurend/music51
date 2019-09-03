@@ -114,7 +114,7 @@ export default function Choice({ choice, input, red, green, onClick }) {
 
 
   return (
-    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '13px', color: '#898a8d', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
+    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '14px', color: '#898a8d', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
   )
 
 }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Means, Size } from './Context'
 import { Container, Row, Col, Button, Card, CardHeader, CardBody } from 'shards-react'
 import Context from './Context'
-import startOverSvg from '../assets/exportstartover.svg'
+import startOverSvg from '../assets/svgs-startover.svg'
 
 
 function rounded(value, decimals) {
@@ -18,7 +18,7 @@ export default function SessionMatrix({ round }) {
   const [reset, startOver] = useState(false)
   const size = useContext(Size)
   let borderRadius = size.width > 500 ? '1rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'}
+  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
   let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'}
 
 
@@ -78,7 +78,7 @@ export default function SessionMatrix({ round }) {
   if (reset) {
     return <Context />
   }
-  else if (accurate && size.width >= 500) {
+  else if (accurate && size.width >= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
 
@@ -86,17 +86,17 @@ export default function SessionMatrix({ round }) {
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
-              <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
+            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-                <p style={{marginBottom: 10}}>{greeting}</p>
+                <p style={{marginBottom: '4%'}}>{greeting}</p>
               </Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
                 <Col sm='12' lg='10'>
                 <Row>
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>ATTEMPTS</h6>
+                        <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>ATTEMPTS</h5>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -157,7 +157,7 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>TIMES</h6>
+                        <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>TIMES</h5>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -215,7 +215,7 @@ export default function SessionMatrix({ round }) {
                   </Col>
                 </Row>
               </Col>
-              </Row>
+            </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
                   <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
                     startOver(true)
@@ -226,7 +226,7 @@ export default function SessionMatrix({ round }) {
       </Container>
     )
   }
-  else if (accurate && size.width <= 500) {
+  else if (accurate && size.width <= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
 
@@ -234,17 +234,17 @@ export default function SessionMatrix({ round }) {
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh', fontFamily: "'Overpass Mono', monospace"}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
-              <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
+            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-                <p style={{marginBottom: 10}}>{greeting}</p>
+                <p style={{marginBottom: '4%'}}>{greeting}</p>
               </Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
                 <Col sm='12' lg='10'>
                 <Row>
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>ATTEMPTS</h6>
+                        <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>ATTEMPTS</h5>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -304,7 +304,7 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>TIMES</h6>
+                        <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>TIMES</h5>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -361,7 +361,7 @@ export default function SessionMatrix({ round }) {
                   </Col>
                 </Row>
               </Col>
-              </Row>
+            </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
                 <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
                   startOver(true)
