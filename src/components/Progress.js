@@ -18,6 +18,9 @@ import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
 import SessionMatrix from './Session'
+import nextRoundSvg from '../assets/exportnextround.svg'
+import endSessionSvg from '../assets/endsessionred.svg'
+import roundStatsSvg from '../assets/exportroundstats.svg'
 
 
 
@@ -74,25 +77,25 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
-                <VictoryLegend x={50} y={0}
+                <VictoryLegend x={75} y={0}
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
                     data={[
-                      { name: "Note Names", labels: {fontSize: 12, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "Roots", labels: {fontSize: 12, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "Chord Quality", labels: {fontSize: 12, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "Inversions", labels: {fontSize: 12, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "Average", labels: {fontSize: 12, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
+                      { name: "NOTE NAMES", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
+                      { name: "ROOTS", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
+                      { name: "CHORD QUALITY", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
+                      { name: "INVERSIONS", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
+                      { name: "AVERAGE", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
                     ]}
                     colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}
                   />
                   <VictoryAxis
-                    style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 13, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
-                     tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'Rounds'}
+                    style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+                     tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'ROUNDS'}
                     />
                     <VictoryAxis dependentAxis
-                      label={'# Attempts'} style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 13, padding: 30}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+                      label={'# ATTEMPTS'} style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 30}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
                       domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => rounded(t, 2)}
                       />
                     <VictoryGroup offset={20}
@@ -125,11 +128,11 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '100%'}}}>
                 <VictoryAxis
-                  style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 13, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
-                  tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'Rounds'}
+                  style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+                  tickValues={chartParams.labelsX} tickFormat={(t) => `${Math.round(t)}`} label={'ROUNDS'}
                   />
                   <VictoryAxis dependentAxis
-                    label={'Time (secs)'} style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 13, padding: 30}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+                    label={'TIME (secs)'} style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 30}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
                     domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => rounded(t, 2)}
                     />
                   <VictoryGroup offset={20}
@@ -158,20 +161,22 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
               </VictoryChart>
             </Row>
             </Col>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
-              <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {viewStats(true)}}>Round Stats</Button>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+              <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {viewStats(true)}}><img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}></img></button>
               </Col>
-              <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
+              <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {
                   nextRound()
-                }}>Next Round</Button>
+                }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
               </Col>
-              <Col sm='8' lg='3' style={{display: 'flex', justifyContent: 'center'}}>
-                <Button style={{margin: '5%'}} theme='success' onClick={(e) => {
-                  finished(true)
-                }}>End Session</Button>
-              </Col>
+              </Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
+                <Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
+                  <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {
+                    finished(true)
+                  }}><img src={endSessionSvg} alt='end session' style={{width: '15rem'}}></img></button>
+                </Col>
             </Row>
           </Col>
         </Row>

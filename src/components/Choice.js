@@ -23,49 +23,49 @@ export default function Choice({ choice, input, red, green, onClick }) {
       case "A𝄫":
       case "A♯":
       case "A𝄪":
-        keystroke = "A"
+        keystroke = "a"
         break
       case "B":
       case "B♭":
       case "B𝄫":
       case "B♯":
       case "B𝄪":
-        keystroke = "B"
+        keystroke = "b"
         break
       case "C":
       case "C♭":
       case "C𝄫":
       case "C♯":
       case "C𝄪":
-        keystroke = "C"
+        keystroke = "c"
         break
       case "D":
       case "D♭":
       case "D𝄫":
       case "D♯":
       case "D𝄪":
-        keystroke = "D"
+        keystroke = "d"
         break
       case "E":
       case "E♭":
       case "E𝄫":
       case "E♯":
       case "E𝄪":
-        keystroke = "E"
+        keystroke = "e"
         break
       case "F":
       case "F♭":
       case "F𝄫":
       case "F♯":
       case "F𝄪":
-        keystroke = "F"
+        keystroke = "f"
         break
       case "G":
       case "G♭":
       case "G𝄫":
       case "G♯":
       case "G𝄪":
-        keystroke = "G"
+        keystroke = "g"
         break
       default:
         break
@@ -114,7 +114,7 @@ export default function Choice({ choice, input, red, green, onClick }) {
 
 
   return (
-    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '10px', color: '#898a8d', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
+    <Button theme="light" style={style} onClick={onClick}>{choice}{inversion}<p style={{fontSize: '13px', color: '#898a8d', marginBottom: '0', marginTop: '2'}}>[{keystroke}]</p></Button>
   )
 
 }

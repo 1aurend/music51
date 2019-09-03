@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Means, Size } from './Context'
 import { Container, Row, Col, Button, Card, CardHeader, CardBody } from 'shards-react'
 import Context from './Context'
+import startOverSvg from '../assets/exportstartover.svg'
 
 
 function rounded(value, decimals) {
@@ -95,35 +96,35 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>Attempts</h6>
+                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>ATTEMPTS</h6>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
                           <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                Round
+                                ROUND
                               </th>
                               <th scope="col" className="border-0">
-                                Names
+                                NAMES
                               </th>
                               <th scope="col" className="border-0">
-                                Roots
+                                ROOTS
                               </th>
                               <th scope="col" className="border-0">
-                                Quality
+                                QUALITY
                               </th>
                               <th scope="col" className="border-0">
-                                Inversions
+                                INVERSIONS
                               </th>
                               <th scope="col" className="border-0">
-                                Overall
+                                TOTAL
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>1st</td>
+                              <td>1ST</td>
                               <td>{rounded(means.noteNames.attempts[0], 2)}</td>
                               <td>{rounded(means.roots.attempts[0],2)}</td>
                               <td>{rounded(means.quality.attempts[0],2)}</td>
@@ -131,7 +132,7 @@ export default function SessionMatrix({ round }) {
                               <td>{rounded(means.average.attempts[0],2)}</td>
                             </tr>
                             <tr>
-                              <td>Last</td>
+                              <td>LAST</td>
                               <td>{rounded(means.noteNames.attempts[round-1],2)}</td>
                               <td>{rounded(means.roots.attempts[round-1],2)}</td>
                               <td>{rounded(means.quality.attempts[round-1],2)}</td>
@@ -139,7 +140,7 @@ export default function SessionMatrix({ round }) {
                               <td>{rounded(means.average.attempts[round-1],2)}</td>
                             </tr>
                             <tr>
-                              <td>Best</td>
+                              <td>BEST</td>
                               <td>{accurate.noteNames.att}</td>
                               <td>{accurate.roots.att}</td>
                               <td>{accurate.quality.att}</td>
@@ -156,35 +157,35 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>Times</h6>
+                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>TIMES</h6>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
                           <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                Round
+                                ROUND
                               </th>
                               <th scope="col" className="border-0">
-                                Names
+                                NAMES
                               </th>
                               <th scope="col" className="border-0">
-                                Roots
+                                ROOTS
                               </th>
                               <th scope="col" className="border-0">
-                                Quality
+                                QUALITY
                               </th>
                               <th scope="col" className="border-0">
-                                Inversions
+                                INVERSIONS
                               </th>
                               <th scope="col" className="border-0">
-                                Overall
+                                TOTAL
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>1st</td>
+                              <td>1ST</td>
                               <td>{rounded(means.noteNames.times[0],2)}</td>
                               <td>{rounded(means.roots.times[0],2)}</td>
                               <td>{rounded(means.quality.times[0],2)}</td>
@@ -192,7 +193,7 @@ export default function SessionMatrix({ round }) {
                               <td>{rounded(means.average.times[0],2)}</td>
                             </tr>
                             <tr>
-                              <td>Last</td>
+                              <td>LAST</td>
                               <td>{rounded(means.noteNames.times[round-1],2)}</td>
                               <td>{rounded(means.roots.times[round-1],2)}</td>
                               <td>{rounded(means.quality.times[round-1],2)}</td>
@@ -200,7 +201,7 @@ export default function SessionMatrix({ round }) {
                               <td>{rounded(means.average.times[round-1],2)}</td>
                             </tr>
                             <tr>
-                              <td>Best</td>
+                              <td>BEST</td>
                               <td>{fast.noteNames.time}</td>
                               <td>{fast.roots.time}</td>
                               <td>{fast.quality.time}</td>
@@ -216,9 +217,9 @@ export default function SessionMatrix({ round }) {
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                  <Button theme='success' onClick={(e) => {
+                  <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
                     startOver(true)
-                  }}>Start Over</Button>
+                  }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></button>
               </Row>
             </Col>
           </Row>
@@ -243,7 +244,7 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>Attempts</h6>
+                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>ATTEMPTS</h6>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -252,43 +253,43 @@ export default function SessionMatrix({ round }) {
                               <th scope="col" className="border-0">
                               </th>
                               <th scope="col" className="border-0">
-                                1st
+                                1ST
                               </th>
                               <th scope="col" className="border-0">
-                                Last
+                                LAST
                               </th>
                               <th scope="col" className="border-0">
-                                Best
+                                BEST
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>Names</td>
+                              <td>NAMES</td>
                               <td>{rounded(means.noteNames.attempts[0], 2)}</td>
                               <td>{rounded(means.noteNames.attempts[round-1],2)}</td>
                               <td>{accurate.noteNames.att}</td>
                             </tr>
                             <tr>
-                              <td>Roots</td>
+                              <td>ROOTS</td>
                               <td>{rounded(means.roots.attempts[0],2)}</td>
                               <td>{rounded(means.roots.attempts[round-1],2)}</td>
                               <td>{accurate.roots.att}</td>
                             </tr>
                             <tr>
-                              <td>Qual</td>
+                              <td>QUAL</td>
                               <td>{rounded(means.quality.attempts[0],2)}</td>
                               <td>{rounded(means.quality.attempts[round-1],2)}</td>
                               <td>{accurate.quality.att}</td>
                             </tr>
                             <tr>
-                              <td>Inv</td>
+                              <td>INV</td>
                               <td>{rounded(means.inversions.attempts[0],2)}</td>
                               <td>{rounded(means.inversions.attempts[round-1],2)}</td>
                               <td>{accurate.inversions.att}</td>
                             </tr>
                             <tr>
-                              <td>Total</td>
+                              <td>TOTAL</td>
                               <td>{rounded(means.average.attempts[0],2)}</td>
                               <td>{rounded(means.average.attempts[round-1],2)}</td>
                               <td>{accurate.average.att}</td>
@@ -303,7 +304,7 @@ export default function SessionMatrix({ round }) {
                   <Col>
                     <Card small className="mb-4">
                       <CardHeader className="border-bottom">
-                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '600'}}>Times</h6>
+                        <h6 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>TIMES</h6>
                       </CardHeader>
                       <CardBody className="p-0 pb-3">
                         <table className="table mb-0">
@@ -312,43 +313,43 @@ export default function SessionMatrix({ round }) {
                             <th scope="col" className="border-0">
                             </th>
                             <th scope="col" className="border-0">
-                              1st
+                              1ST
                             </th>
                             <th scope="col" className="border-0">
-                              Last
+                              LAST
                             </th>
                             <th scope="col" className="border-0">
-                              Best
+                              BEST
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Names</td>
+                            <td>NAMES</td>
                             <td>{rounded(means.noteNames.times[0], 2)}</td>
                             <td>{rounded(means.noteNames.times[round-1],2)}</td>
                             <td>{fast.noteNames.time}</td>
                           </tr>
                           <tr>
-                            <td>Roots</td>
+                            <td>ROOTS</td>
                             <td>{rounded(means.roots.times[0],2)}</td>
                             <td>{rounded(means.roots.times[round-1],2)}</td>
                             <td>{fast.roots.time}</td>
                           </tr>
                           <tr>
-                            <td>Qual</td>
+                            <td>QUAL</td>
                             <td>{rounded(means.quality.times[0],2)}</td>
                             <td>{rounded(means.quality.times[round-1],2)}</td>
                             <td>{fast.quality.time}</td>
                           </tr>
                           <tr>
-                            <td>Inv</td>
+                            <td>INV</td>
                             <td>{rounded(means.inversions.times[0],2)}</td>
                             <td>{rounded(means.inversions.times[round-1],2)}</td>
                             <td>{fast.inversions.time}</td>
                           </tr>
                           <tr>
-                            <td>Total</td>
+                            <td>TOTAL</td>
                             <td>{rounded(means.average.times[0],2)}</td>
                             <td>{rounded(means.average.times[round-1],2)}</td>
                             <td>{fast.average.time}</td>
@@ -362,9 +363,9 @@ export default function SessionMatrix({ round }) {
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                  <Button theme='success' onClick={(e) => {
-                    startOver(true)
-                  }}>Start Over</Button>
+                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
+                  startOver(true)
+                }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></button>
               </Row>
             </Col>
           </Row>
