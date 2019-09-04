@@ -9,7 +9,7 @@ export default function Go(props) {
 
   return (
     <>
-      <Button onClick={props.onClick} style={{display: 'block', cursor: 'pointer', backgroundColor: 'black', border: 'none'}}><img src={goSvg} alt='go' style={{width: '8rem'}}></img></Button>
+      <Button theme="light" onClick={props.onClick} style={{display: 'block', cursor: 'pointer', backgroundColor: 'black', border: 'none', padding: '0'}}><img src={goSvg} alt='go' style={{width: '8rem'}}></img></Button>
     </>
   )
 

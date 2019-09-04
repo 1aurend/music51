@@ -19,7 +19,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
   const [means, updateMeans] = useContext(Means)
   const [session, updateSession] = useContext(Session)
   const size = useContext(Size)
-  let borderRadius = size.width > 500 ? '2rem' : '1rem'
+  let borderRadius = size.width > 500 ? '1rem' : '1rem'
   let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
   let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.25em', lineHeight: '1.25em'}
   const [quiz, setQuiz] = useState(false)
@@ -33,19 +33,19 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
   let headline = round === 1 ? 'First Round Complete!' : `Round ${round} Stats`
   let subtitle = round === 1 ? `Here's Your Benchmark:` : ''
   let navButtons = round === 1 ? (<Col sm='8' lg='4' style={{display: 'flex', justifyContent: 'center'}}>
-                                    <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}} onClick={(e) => {
+                                    <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', marginBottom: '5%', padding: '0'}} onClick={(e) => {
                                       nextRound()
-                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></Button>
                                 </Col>) :
                                 (<><Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
-                                    <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%'}} onClick={(e) => {
+                                    <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', padding: '0'}} onClick={(e) => {
                                       showProgress(true)
-                                    }}><img src={backSvg} alt='next round' style={{width: '10rem'}}></img></button>
+                                    }}><img src={backSvg} alt='next round' style={{width: '10rem'}}></img></Button>
                                 </Col>
                                 <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
-                                    <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%'}} onClick={(e) => {
+                                    <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', padding: '0'}} onClick={(e) => {
                                       nextRound()
-                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                                    }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></Button>
                                 </Col></>)
   let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 

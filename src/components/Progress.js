@@ -33,7 +33,7 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
 
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
-  let borderRadius = size.width > 500 ? '2rem' : '1rem'
+  let borderRadius = size.width > 500 ? '1rem' : '1rem'
   let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
   let subheadStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1em'}
   const [quiz, setQuiz] = useState(false)
@@ -163,19 +163,19 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
             </Col>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
               <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
-                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {viewStats(true)}}><img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}></img></button>
+                <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {viewStats(true)}}><img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}></img></Button>
               </Col>
               <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
-                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%'}} onClick={(e) => {
+                <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {
                   nextRound()
-                }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                }}><img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}></img></Button>
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>
                 <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center'}}>
-                  <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {
+                  <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', margin: '5%', padding: '0'}} onClick={(e) => {
                     finished(true)
-                  }}><img src={endSessionSvg} alt='end session' style={{width: '15rem'}}></img></button>
+                  }}><img src={endSessionSvg} alt='end session' style={{width: '15rem'}}></img></Button>
                 </Col>
             </Row>
           </Col>

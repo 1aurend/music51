@@ -217,9 +217,9 @@ export default function SessionMatrix({ round }) {
               </Col>
             </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                  <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
+                  <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', padding: '0'}} onClick={(e) => {
                     startOver(true)
-                  }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                  }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></Button>
               </Row>
             </Col>
           </Row>
@@ -363,9 +363,9 @@ export default function SessionMatrix({ round }) {
               </Col>
             </Row>
               <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-                <button style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none'}} onClick={(e) => {
+                <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', padding: '0'}} onClick={(e) => {
                   startOver(true)
-                }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></button>
+                }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></Button>
               </Row>
             </Col>
           </Row>
