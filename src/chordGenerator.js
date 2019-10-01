@@ -608,8 +608,7 @@ export default (numQs, options) => {
     chords.push(randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions))
   }
   console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
-  addKeystrokes(chords)
-  return chords
+  return addKeystrokes(chords)
 }
 
 // console.log(chalk.magenta(JSON.stringify(argv, null, 3)));

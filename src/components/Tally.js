@@ -26,19 +26,21 @@ export default function Tally({ data, round }) {
                       }}
     return null
   })
+  console.log("here is roundMeans: " + JSON.stringify(roundMeans, null, 3));
 
 
     data.map( chord => {
       chord.questions.map( question => {
           question.answers.map( answer => {
               roundMeans[question.type].attempts.push(answer.tries.length)
-              roundMeans[question.type].attempts.push(answer.elapsedTime)
+              roundMeans[question.type].times.push(answer.elapsedTime)
               return null
             })
         return null
       })
       return null
     })
+    console.log("here is roundMeans after first map: " + JSON.stringify(roundMeans, null, 3));
 
 
     const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
@@ -51,12 +53,16 @@ export default function Tally({ data, round }) {
     let attemptsToAverage = []
     qTypes.map( type => {
       roundMeans[type].meanAttempts = rounded(mean(roundMeans[type].attempts),2)
-      attemptsToAverage.push(roundMeans[type])
+      attemptsToAverage.push(roundMeans[type].meanAttempts)
       roundMeans[type].meanTime = rounded(mean(roundMeans[type].times),2)
-      timesToAverage.push(roundMeans[type])
+      timesToAverage.push(roundMeans[type].meanTime)
+      return null
     })
     let averageAttempts = rounded(mean(attemptsToAverage),2)
     let averageTime = rounded(mean(timesToAverage),2)
+    console.log("here is roundMeans after second map: " + JSON.stringify(roundMeans, null, 3));
+    console.log('averageAttempts: ' + averageAttempts);
+    console.log('averageTime: ' + averageTime);
 
 
 
@@ -65,11 +71,12 @@ export default function Tally({ data, round }) {
         qTypes.map( type => {
           tally.current = {...tally.current,
             [type]: {
-              attempts: [...means[type].attempts, [type].meanAttempts],
-              times: [...means[type].times, [type].meanTime]
+              attempts: [...means[type].attempts, roundMeans[type].meanAttempts],
+              times: [...means[type].times, roundMeans[type].meanTime]
             }}
             return null
         })
+        console.log('here is tally after map: ' + JSON.stringify(tally.current, null, 3));
 
         if (round === 1) {
           tally.current = {...tally.current,
@@ -90,7 +97,7 @@ export default function Tally({ data, round }) {
 
         updateMeans(tally.current)
         done(false)
-        console.log('this is the current tally of averages:' + JSON.stringify(tally));
+        console.log('this is the current tally of averages:' + JSON.stringify(tally.current));
     }, [])
 
 
@@ -105,8 +112,8 @@ export default function Tally({ data, round }) {
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
         <Row style={{paddingTop: '25%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}></Row>
         <Col sm='12' lg='12'>
-          <Row style={{display: 'flex', justifyContent: 'center'}}>
-              <h2 style={{color: '#17c671', fontFamily: "'Press Start 2P', cursive"}}>Calculating your progress...</h2>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '50%', marginRight: '50%'}} noGutters>
+              <h2 style={{color: '#17c671', fontFamily: "'Press Start 2P', cursive"}}>Calculating your stats...</h2>
           </Row>
         </Col>
     </Container>
