@@ -26,7 +26,7 @@ export default function Tally({ data, round }) {
                       }}
     return null
   })
-  console.log("here is roundMeans: " + JSON.stringify(roundMeans, null, 3));
+  // console.log("here is roundMeans: " + JSON.stringify(roundMeans, null, 3));
 
 
     data.map( chord => {
@@ -40,7 +40,7 @@ export default function Tally({ data, round }) {
       })
       return null
     })
-    console.log("here is roundMeans after first map: " + JSON.stringify(roundMeans, null, 3));
+    // console.log("here is roundMeans after first map: " + JSON.stringify(roundMeans, null, 3));
 
 
     const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
@@ -60,9 +60,9 @@ export default function Tally({ data, round }) {
     })
     let averageAttempts = rounded(mean(attemptsToAverage),2)
     let averageTime = rounded(mean(timesToAverage),2)
-    console.log("here is roundMeans after second map: " + JSON.stringify(roundMeans, null, 3));
-    console.log('averageAttempts: ' + averageAttempts);
-    console.log('averageTime: ' + averageTime);
+    // console.log("here is roundMeans after second map: " + JSON.stringify(roundMeans, null, 3));
+    // console.log('averageAttempts: ' + averageAttempts);
+    // console.log('averageTime: ' + averageTime);
 
 
 
@@ -76,11 +76,11 @@ export default function Tally({ data, round }) {
             }}
             return null
         })
-        console.log('here is tally after map: ' + JSON.stringify(tally.current, null, 3));
+        // console.log('here is tally after map: ' + JSON.stringify(tally.current, null, 3));
 
         if (round === 1) {
           tally.current = {...tally.current,
-              average: {
+              Overall: {
                 attempts: [averageAttempts],
                 times: [averageTime]
               }
@@ -88,9 +88,9 @@ export default function Tally({ data, round }) {
         }
         else {
           tally.current = {...tally.current,
-              average: {
-                attempts: [...means.average.attempts, averageAttempts],
-                times: [...means.average.times, averageTime]
+              Overall: {
+                attempts: [...means.Overall.attempts, averageAttempts],
+                times: [...means.Overall.times, averageTime]
               }
           }
         }

@@ -49,6 +49,11 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
                                 </Col></>)
   let closing = round === 1 ? 'Try to beat these numbers in the next round!' : ''
 
+  let qTypes = Object.keys(means)
+  let statLines = qTypes.map( type => {
+    return <Row key={type} style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>{type.toUpperCase()}: </span>{means[type].attempts[means[type].attempts.length-1]} attempts and {means[type].times[means[type].times.length-1]} seconds per question</p></Row>
+  })
+
 
   if (quiz) {
     return <Quiz data={quiz} round={round+1}/>
@@ -65,10 +70,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%', marginBottom: '2%', fontFamily: "'Overpass Mono', monospace"}}>
                 <Col sm='12' lg='10'>
                   <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{subtitle}</h3></Row>
-                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>NOTE NAMES: </span>{means.noteNames.attempts[means.noteNames.attempts.length-1]} attempts and {means.noteNames.times[means.noteNames.times.length-1]} seconds per question</p></Row>
-                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>ROOT NOTES: </span>{means.roots.attempts[means.roots.attempts.length-1]} attempts and {means.roots.times[means.roots.times.length-1]} seconds per question</p></Row>
-                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>CHORD QUALITY: </span>{means.quality.attempts[means.quality.attempts.length-1]} attempts and {means.quality.times[means.quality.times.length-1]} seconds per question.</p></Row>
-                  <Row style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>INVERSIONS: </span>{means.inversions.attempts[means.inversions.attempts.length-1]} attempts and {means.inversions.times[means.inversions.times.length-1]} seconds per question.</p></Row>
+                    {statLines}
                   <Row style={{display: 'flex', justifyContent: 'center'}}><h3 style={subtitleStyle}>{closing}</h3></Row>
               </Col>
               </Row>

@@ -4,11 +4,11 @@ function addKeystrokes(chords) {
 
 
   let questionTypes = {
-    NAMES: `NoteNames`,
-    ROOT: `Root`,
-    DEGREE: `Degree`,
-    QUALITY: `ChordQuality`,
-    NUMERAL: `RomanNumerals`,
+    NAMES: `Names`,
+    ROOT: `Roots`,
+    DEGREE: `Degrees`,
+    QUALITY: `Quality`,
+    NUMERAL: `Numerals`,
     INVERSION: `Inversions`
   }
 
