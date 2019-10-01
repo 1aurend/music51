@@ -58,86 +58,173 @@ export default function Quiz ({ data, round }) {
     let input
     console.log(key);
 
-    switch (key) {
-      case 'a':
-      case 'b':
-      case 'c':
-      case 'e':
-      case 'f':
-      case 'g':
-          key = key.toUpperCase()
-          for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf(key) >= 0) {
-              input = currentQ.choices[i]
-            }
-          }
-          break
-      case 'd':
-          switch (currentQ.questionText) {
-            case 'Name the letter positions from lowest to highest.':
-            case `What's the root note?`:
-              key = key.toUpperCase()
-              for (var i = 0; i < currentQ.choices.length; i++) {
-                if (currentQ.choices[i].indexOf(key) >= 0) {
-                  input = currentQ.choices[i]
+    let questionStrings = {
+      NAMES: `Name the letter positions from lowest to highest.`,
+      ROOT: `What's the root note?`,
+      DEGREE: {
+        MAJOR: `In a major key, what degree is this chord built on?`,
+        MINOR: `In a minor key, what degree is this chord built on?`,
+      },
+      QUALITY: "What's the chord's quality?",
+      NUMERAL: `Which roman numeral describes this chord?`,
+      INVERSION: `What's the inversion?`
+    }
+
+
+
+    switch(currentQ.questionText) {
+
+      case questionStrings.NAMES:
+      case questionStrings.ROOT:
+          switch (key) {
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+            case 'g':
+                key = key.toUpperCase()
+                for (var i = 0; i < currentQ.choices.length; i++) {
+                  if (currentQ.choices[i].indexOf(key) >= 0) {
+                    input = currentQ.choices[i]
+                  }
                 }
-              }
+                break
+            default:
+              input = null
               break
-            case`What's the chord quality?`:
-              if (currentChord.current.notes.length === 4) {
-                input = currentQ.choices[4]
-              }
-              else {
-                input = currentQ.choices[2]
-              }
+            }
+            break
+
+      case questionStrings.DEGREE.MAJOR:
+      case questionStrings.DEGREE.MINOR:
+          switch (key) {
+              case '1':
+              case '2':
+              case '3':
+              case '4':
+              case '5':
+              case '6':
+              case '7':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf(key) >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+          default:
+            input = null
+            break
+                }
+                break
+
+      case questionStrings.QUALITY:
+          switch (key) {
+              case 'm':
+              case 'M':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf(key) >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+              case 'A':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf('+') >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+              case 'h':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf('ø') >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+              case 'd':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf('o') >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+            default:
+              input = null
               break
+                }
+                break
+
+        case questionStrings.NUMERAL:
+            switch (key) {
+                case '7':
+                case 'M':
+                    input = currentQ.choices[0]
+                    break
+                case 'm':
+                    input = currentQ.choices[1]
+                    break
+                case 'A':
+                    for (var i = 0; i < currentQ.choices.length; i++) {
+                      if (currentQ.choices[i].indexOf('+') >= 0) {
+                        input = currentQ.choices[i]
+                      }
+                    }
+                    break
+                case 'h':
+                    for (var i = 0; i < currentQ.choices.length; i++) {
+                      if (currentQ.choices[i].indexOf('ø') >= 0) {
+                        input = currentQ.choices[i]
+                      }
+                    }
+                    break
+                case 'd':
+                    for (var i = 0; i < currentQ.choices.length; i++) {
+                      if (currentQ.choices[i].indexOf('o') >= 0) {
+                        input = currentQ.choices[i]
+                      }
+                    }
+                    break
+              default:
+                input = null
+                break
+                  }
+                  break
+
+      case questionStrings.INVERSION:
+          switch (key) {
+              case '2':
+              case '3':
+              case '5':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf(key) >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+              case '4':
+                  for (var i = 0; i < currentQ.choices.length; i++) {
+                    if (currentQ.choices[i].indexOf('64') >= 0) {
+                      input = currentQ.choices[i]
+                    }
+                  }
+                  break
+              case '7':
+              case 'r':
+                  input = currentQ.choices[0]
+                  break
+              default:
+                input = null
+                break
+            }
+            break
+
             default:
               input = null
               break
           }
-          break
-      case 'M':
-      case 'm':
-      case '2':
-      case '3':
-      case '5':
-          for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf(key) >= 0) {
-              input = currentQ.choices[i]
-            }
-          }
-          break
-      case '4':
-          for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf('64') >= 0) {
-              input = currentQ.choices[i]
-            }
-          }
-      break
-      case '7':
-      case 'r':
-          input = currentQ.choices[0]
-          break
-      case 'A':
-          for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf('+') >= 0) {
-              input = currentQ.choices[i]
-            }
-          }
-          break
-      case 'h':
-          for (var i = 0; i < currentQ.choices.length; i++) {
-            if (currentQ.choices[i].indexOf('ø') >= 0) {
-              input = currentQ.choices[i]
-            }
-          }
-          break
-      default:
-          input = null
-          break
-    }
-
-    //fix this whole thing so only available choices count against you?
+          
     if (input !== null) {
       answer.current.tries = [...answer.current.tries, {'input': input, type: 'keypress'}]
     }

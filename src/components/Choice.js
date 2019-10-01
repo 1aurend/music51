@@ -67,6 +67,27 @@ export default function Choice({ choice, input, red, green, onClick }) {
       case "G𝄪":
         keystroke = "g"
         break
+      case "1^":
+        keystroke = "1"
+        break
+      case "2^":
+        keystroke = "2"
+        break
+      case "3^":
+        keystroke = "3"
+        break
+      case "4^":
+        keystroke = "4"
+        break
+      case "5^":
+        keystroke = "5"
+        break
+      case "6^":
+        keystroke = "6"
+        break
+      case "7^":
+        keystroke = "7"
+        break
       default:
         break
     }
@@ -86,17 +107,14 @@ export default function Choice({ choice, input, red, green, onClick }) {
     else if (choice.includes("root")) {
       keystroke = "r"
     }
-    else if (choice.includes("M")) {
-      keystroke = "M"
-    }
-    else if (choice.includes("m")) {
-      keystroke = "m"
-    }
     else if (choice.includes("o") && choice !== 'root') {
       keystroke = "d"
     }
     else if (choice.includes("ø")) {
       keystroke = "h"
+    }
+    else if (choice.includes("M")) {
+      keystroke = "M"
     }
     else if (choice.includes("+")) {
       keystroke = "A"
@@ -104,10 +122,16 @@ export default function Choice({ choice, input, red, green, onClick }) {
     else if (choice.includes("7")) {
       keystroke = "7"
     }
+    else if (choice.includes("m")) {
+      keystroke = "m"
+    }
 
 
 
-    if (choice.includes('6') || choice.includes('4')) {
+    if (choice.includes('^')) {
+      choice = <span style={{postion: 'absolute'}}>{choice.charAt(0)}<sup style={{display:'inline-block', position:'relative', left:'-10px', top:'-13px'}}>^</sup></span>
+    }
+    else if (choice.includes('6') || choice.includes('4')) {
       inversion = <span style={{postion: 'absolute'}}><sup style={{display:'inline-block', position:'relative', left:'0px', top:'-13px'}}>{choice.charAt(choice.length-2)}</sup><sub style={{position:'relative', left:'-14px', top:'10px'}}>{choice.charAt(choice.length-1)}</sub></span>
       choice = choice.slice(0,-2)
     }
