@@ -8,7 +8,7 @@ import {
   Col,
 } from 'shards-react'
 import generateChords from '../chordGenerator'
-import { Size, Session } from './Context'
+import { Size, Session, Means } from './Context'
 
 
 
@@ -17,6 +17,7 @@ export default function Start({ title, round }) {
 
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
+  const [means, updateMeans] = useContext(Means)
   let borderRadius = size.width > 500 ? '1rem' : '1rem'
   let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '3em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'}
   let subtitleStyle = size.width > 500 ? {fontFamily: "'Overpass Mono', monospace", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Overpass Mono', monospace", textAlign: 'center', fontSize: '2em'}
@@ -29,27 +30,39 @@ export default function Start({ title, round }) {
     roots: {common:true, any:false}
   })
 
-  let generateQuiz = (e) => {
+  let generateQuiz = async (e) => {
 
-      setQuiz(generateChords(numQs.current, options))
+      let data = await generateChords(numQs.current, options)
 
-      let types
+      setQuiz(data)
+
+      let chordTypes
       if (options.chordTypes.triads && options.chordTypes.sevenths) {
-        types = ['triads', 'sevenths']
+        chordTypes= ['triads', 'sevenths']
       }
       else if (options.chordTypes.triads && !options.chordTypes.sevenths) {
-        types = ['triads']
+        chordTypes= ['triads']
       }
       else if (!options.chordTypes.triads && options.chordTypes.sevenths) {
-        types = ['sevenths']
+        chordTypes= ['sevenths']
       }
       let settings = {
         numChords: numQs.current,
-        types: types,
+        chordTypes: chordTypes,
         roots: options.roots.common ? 'common' : 'any',
         options: options
       }
       updateSession({...session, settings: settings })
+
+      let questionTypes = {}
+      data[0].questions.map(question => {
+        questionTypes = {...questionTypes, [question.type]: {
+                            attempts: [],
+                            times: []
+                          }}
+        return null
+      })
+      updateMeans(questionTypes)
 
       launchQuiz(true)
   }

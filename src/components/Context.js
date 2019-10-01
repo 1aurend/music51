@@ -20,28 +20,7 @@ export default function Context() {
           options: {}
         }
       })
-  const [means, updateMeans] = useState({
-          noteNames: {
-            attempts: [],
-            times: []
-          },
-          roots: {
-            attempts: [],
-            times: []
-          },
-          quality: {
-            attempts: [],
-            times: []
-          },
-          inversions: {
-            attempts: [],
-            times: []
-          },
-          average: {
-            attempts: [],
-            times: []
-          }
-        })
+  const [means, updateMeans] = useState({})
   const [rounds, updateRounds] = useState({})
   const [count, increment] = useState(1)
   const [size, setSize] = useState({
