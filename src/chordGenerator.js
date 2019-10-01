@@ -428,7 +428,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   chord.questions = [
     {
-      "type": "Note Names",
+      "type": "NoteNames",
       "questionText": "Name the letter positions from lowest to highest.",
       "answers": [], // will populate in the loop
       "ordered": true,
@@ -463,13 +463,13 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       ]
     },
     {
-      "type": "Chord Quality",
+      "type": "ChordQuality",
       "questionText": "What's the chord's quality?",
       "answers": [rootLetter + rootAccidental + newStructure],
       "choices": qualityOptions
     },
     {
-      "type": "Roman Numerals",
+      "type": "RomanNumerals",
       "questionText": "Which roman numeral describes this chord?",
       "answers": [roman + romanQuality],
       "choices": romanOptions

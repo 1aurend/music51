@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Means } from './Context'
 import RoundStats from './Stats'
 import ChartData from './ChartData'
@@ -12,124 +12,92 @@ export default function Tally({ data, round }) {
   console.log(round);
 
   const [means, updateMeans] = useContext(Means)
+  const [calculating, done] = useState(true)
   const tally = useRef()
+  console.log(JSON.stringify(means));
 
-  let noteNames = {
-    attempts: [],
-    times: [],
-    meanAttempts: null,
-    meanTime: null,
-  }
-  let roots = {
-    attempts: [],
-    times: [],
-    meanAttempts: null,
-    meanTime: null,
-  }
-  let quality = {
-    attempts: [],
-    times: [],
-    meanAttempts: null,
-    meanTime: null,
-  }
-  let inversions = {
-    attempts: [],
-    times: [],
-    meanAttempts: null,
-    meanTime: null,
-  }
-  let overall = {
-    attempts: null,
-    time: null
-  }
+  let roundMeans = {}
+  data[0].questions.map(question => {
+    roundMeans = {...roundMeans, [question.type]: {
+                        attempts: [],
+                        times: [],
+                        meanAttempts: null,
+                        meanTime: null,
+                      }}
+    return null
+  })
+
 
     data.map( chord => {
       chord.questions.map( question => {
-        if (question.text.indexOf('letter') !== -1) {
           question.answers.map( answer => {
-              noteNames.attempts.push(answer.tries.length)
-              noteNames.times.push(answer.elapsedTime)
+              roundMeans[question.type].attempts.push(answer.tries.length)
+              roundMeans[question.type].attempts.push(answer.elapsedTime)
               return null
-          })
-        }
-        else if (question.text.indexOf('root') !== -1) {
-          question.answers.map( answer => {
-              roots.attempts.push(answer.tries.length)
-              roots.times.push(answer.elapsedTime)
-              return null
-          })
-        }
-        else if (question.text.indexOf('quality') !== -1) {
-          question.answers.map( answer => {
-              quality.attempts.push(answer.tries.length)
-              quality.times.push(answer.elapsedTime)
-              return null
-          })
-        }
-        else if (question.text.indexOf('inversion') !== -1) {
-          question.answers.map( answer => {
-              inversions.attempts.push(answer.tries.length)
-              inversions.times.push(answer.elapsedTime)
-              return null
-          })
-        }
+            })
         return null
       })
       return null
     })
 
 
-        const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
-        function rounded(value, decimals) {
-        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-      }
+    const mean = arr => arr.reduce((a,b) => a + b, 0) / arr.length
+    function rounded(value, decimals) {
+      return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+    }
 
-      noteNames.meanAttempts = rounded(mean(noteNames.attempts),2)
-      noteNames.meanTime = rounded(mean(noteNames.times),2)
-      roots.meanAttempts = rounded(mean(roots.attempts),2)
-      roots.meanTime = rounded(mean(roots.times),2)
-      quality.meanAttempts = rounded(mean(quality.attempts),2)
-      quality.meanTime = rounded(mean(quality.times),2)
-      inversions.meanAttempts = rounded(mean(inversions.attempts),2)
-      inversions.meanTime = rounded(mean(inversions.times),2)
-      overall.attempts = (noteNames.meanAttempts+roots.meanAttempts+quality.meanAttempts+inversions.meanAttempts)/4
-      overall.time = (noteNames.meanTime+roots.meanTime+quality.meanTime+inversions.meanTime)/4
+    let qTypes = Object.keys(roundMeans)
+    let timesToAverage = []
+    let attemptsToAverage = []
+    qTypes.map( type => {
+      roundMeans[type].meanAttempts = rounded(mean(roundMeans[type].attempts),2)
+      attemptsToAverage.push(roundMeans[type])
+      roundMeans[type].meanTime = rounded(mean(roundMeans[type].times),2)
+      timesToAverage.push(roundMeans[type])
+    })
+    let averageAttempts = rounded(mean(attemptsToAverage),2)
+    let averageTime = rounded(mean(timesToAverage),2)
 
 
 
     useEffect(() => {
-        tally.current = {
-            noteNames: {
-              attempts: [...means.noteNames.attempts, noteNames.meanAttempts],
-              times: [...means.noteNames.times, noteNames.meanTime]
-            },
-            roots: {
-              attempts: [...means.roots.attempts, roots.meanAttempts],
-              times: [...means.roots.times, roots.meanTime]
-            },
-            quality: {
-              attempts: [...means.quality.attempts, quality.meanAttempts],
-              times: [...means.quality.times, quality.meanTime]
-            },
-            inversions: {
-              attempts: [...means.inversions.attempts, inversions.meanAttempts],
-              times: [...means.inversions.times, inversions.meanTime]
-            },
-            average: {
-              attempts: [...means.average.attempts, overall.attempts],
-              times: [...means.average.times, overall.time]
-            }
+
+        qTypes.map( type => {
+          tally.current = {...tally.current,
+            [type]: {
+              attempts: [...means[type].attempts, [type].meanAttempts],
+              times: [...means[type].times, [type].meanTime]
+            }}
+            return null
+        })
+
+        if (round === 1) {
+          tally.current = {...tally.current,
+              average: {
+                attempts: [averageAttempts],
+                times: [averageTime]
+              }
+          }
+        }
+        else {
+          tally.current = {...tally.current,
+              average: {
+                attempts: [...means.average.attempts, averageAttempts],
+                times: [...means.average.times, averageTime]
+              }
+          }
         }
 
         updateMeans(tally.current)
-        console.log('here is progress: ' + JSON.stringify(tally));
+        done(false)
+        console.log('this is the current tally of averages:' + JSON.stringify(tally));
     }, [])
 
 
-  if (round === 1) {
-    return <RoundStats round={round}/> //need to add some props here so benchmark language displays?
+  if (!calculating && round === 1) {
+    return <RoundStats round={round}/>
   }
-  else if (tally.current) {
+  else if (!calculating) {
     return <ChartData round={round} data={tally.current}/>
   }
   else {

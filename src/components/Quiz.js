@@ -33,7 +33,7 @@ export default function Quiz ({ data, round }) {
   })
 
   const subQ = useRef({
-    text: data[0].questions[0].questionText,
+    type: data[0].questions[0].type,
     answers: []
   })
 
@@ -119,7 +119,7 @@ export default function Quiz ({ data, round }) {
         nextInput(null)
         if (chord.current.questions.length < currentChord.current.questions.length) {
           subQ.current = {
-            text: data[roundData.current.length].questions[chord.current.questions.length].questionText,
+            type: data[roundData.current.length].questions[chord.current.questions.length].type,
             answers: []
           }
           answer.current = {
@@ -147,7 +147,7 @@ export default function Quiz ({ data, round }) {
               elapsedTime: '',
             }
             subQ.current = {
-              text: data[roundData.current.length].questions[0].questionText,
+              type: data[roundData.current.length].questions[0].type,
               answers: []
             }
             currentChord.current = data[roundData.current.length]
