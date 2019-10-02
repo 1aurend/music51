@@ -29,7 +29,7 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
-export default function ProgressChart({ round, chartParams, progress, verbA, verbT }) {
+export default function ProgressChart({ round, chartParams, qTypes, progress, verbA, verbT }) {
 
   const size = useContext(Size)
   const [session, updateSession] = useContext(Session)
@@ -43,6 +43,31 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
   let vAColor = verbA === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
 
   // Question: should we not display graphs on moblile? too small to read? or how to scale?
+
+
+  let chartLinesAtt = qTypes.map( type => {
+    return (
+      <VictoryGroup data={chartParams.data.attempts[type]}>
+        <VictoryLine/>
+        <VictoryScatter/>
+      </VictoryGroup>
+    )
+  })
+
+  let chartLinesTs = qTypes.map( type => {
+    return (
+      <VictoryGroup data={chartParams.data.times[type]}>
+        <VictoryLine/>
+        <VictoryScatter/>
+      </VictoryGroup>
+    )
+  })
+
+  let chartLegendData = []
+  qTypes.map( type =>
+    chartLegendData.push({ name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}})
+  )
+
 
   let nextRound = () => {
     setQuiz(generateChords(session.settings.numChords, session.settings.options))
@@ -81,14 +106,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
-                    data={[
-                      { name: "NOTE NAMES", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "ROOTS", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "CHORD QUALITY", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "INVERSIONS", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}},
-                      { name: "AVERAGE", labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
-                    ]}
-                    colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}
+                    data={chartLegendData}
+                    colorScale={['#b7b8bc', '#a0a1a4', '#79a6d2', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}
                   />
                   <VictoryAxis
                     style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
@@ -99,28 +118,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                       domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => rounded(t, 2)}
                       />
                     <VictoryGroup offset={20}
-                      colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
-                      <VictoryGroup data={chartParams.data.attempts.noteNames}>
-                        <VictoryLine/>
-                        <VictoryScatter style={{data: {symbol: 'square'}}}/>
-                        {/*labelComponent={<VictoryLabel dy={20}/>} labels={(d) => d.y} style={{ labels: { fontSize: '9', fontWeight: '700', padding: 1 } }}*/}
-                      </VictoryGroup>
-                      <VictoryGroup data={chartParams.data.attempts.roots}>
-                        <VictoryLine/>
-                        <VictoryScatter/>
-                      </VictoryGroup>
-                      <VictoryGroup data={chartParams.data.attempts.quality}>
-                        <VictoryLine/>
-                        <VictoryScatter/>
-                      </VictoryGroup>
-                      <VictoryGroup data={chartParams.data.attempts.inversions}>
-                        <VictoryLine style={{ data: {strokeWeight: '6px'}}}/>
-                        <VictoryScatter/>
-                      </VictoryGroup>
-                      <VictoryGroup data={chartParams.data.attempts.average}>
-                        <VictoryLine/>
-                        <VictoryScatter/>
-                      </VictoryGroup>
+                      colorScale={['#b7b8bc', '#a0a1a4', '#79a6d2', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}>
+                        {chartLinesAtt}
                     </VictoryGroup>
                 </VictoryChart>
                 </Row>
@@ -136,27 +135,8 @@ export default function ProgressChart({ round, chartParams, progress, verbA, ver
                     domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => rounded(t, 2)}
                     />
                   <VictoryGroup offset={20}
-                    colorScale={['#b7b8bc', '#a0a1a4', '#898a8d', '#5b5c5e', '#17c671']}>
-                    <VictoryGroup data={chartParams.data.times.noteNames}>
-                      <VictoryLine/>
-                      <VictoryScatter/>
-                    </VictoryGroup>
-                    <VictoryGroup data={chartParams.data.times.roots}>
-                      <VictoryLine/>
-                      <VictoryScatter/>
-                    </VictoryGroup>
-                    <VictoryGroup data={chartParams.data.times.quality}>
-                      <VictoryLine/>
-                      <VictoryScatter/>
-                    </VictoryGroup>
-                    <VictoryGroup data={chartParams.data.times.inversions}>
-                      <VictoryLine/>
-                      <VictoryScatter/>
-                    </VictoryGroup>
-                    <VictoryGroup data={chartParams.data.times.average}>
-                      <VictoryLine/>
-                      <VictoryScatter/>
-                    </VictoryGroup>
+                    colorScale={['#b7b8bc', '#a0a1a4', '#79a6d2', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}>
+                      {chartLinesTs}
                   </VictoryGroup>
               </VictoryChart>
             </Row>

@@ -103,7 +103,7 @@ export default function ChartData({ round, data }) {
 
 
   if (ready) {
-      return <ProgressChart round={round} chartParams={chartParams.current} progress={progress.current} verbA={verbA.current} verbT={verbT.current}/>
+      return <ProgressChart round={round} chartParams={chartParams.current} qTypes={qTypes} progress={progress.current} verbA={verbA.current} verbT={verbT.current}/>
   }
   else {
     return (
