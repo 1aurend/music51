@@ -47,7 +47,7 @@ async function chartMath(data, qTypes) {
   qTypes.map(type => {
     let dataPoints = []
     for (var k = 0; k < data[type].times.length; k++) {
-      dataPoints.push({x: k+1, y: data[type].attempts[k], symbol: "square", size: 5})
+      dataPoints.push({x: k+1, y: data[type].times[k], symbol: "square", size: 5})
     }
     chartParams.data.times = {...chartParams.data.times, [type]: dataPoints}
   })
