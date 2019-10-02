@@ -99,9 +99,9 @@ export default function Start({ title, round }) {
           }
           break
       case 'root':
-          prev = options.roots
-          next = {common: !prev.common, any: !prev.any}
-          updateOptions({...options, roots: next })
+          // prev = options.roots
+          // next = {common: !prev.common, any: !prev.any}
+          // updateOptions({...options, roots: next })
           break
       default: alert('something went wrong selecting options')
 
@@ -115,10 +115,11 @@ export default function Start({ title, round }) {
   if (!ready) {
     return (
       <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
-        <Row noGutters style={{paddingTop: '5%'}}></Row>
+        <Row noGutters style={{paddingTop: '3%'}}></Row>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={fontStyle}>{title.headline}</h1></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={betaStyle}>Roman Numerals Mode</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={betaStyle}>{title.beta}</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '2%'}}><h2 style={subtitleStyle}>{title.subtitle}</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '0'}}>INSTRUCTIONS</h4></Row>

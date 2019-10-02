@@ -18,6 +18,7 @@ import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
 import SessionMatrix from './Session'
+import Context from './Context'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import endSessionSvg from '../assets/svgs-endsessionred.svg'
 import roundStatsSvg from '../assets/svgs-roundstats.svg'
@@ -79,7 +80,8 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
     return <Quiz data={quiz} round={round+1}/>
   }
   else if (done) {
-    return <SessionMatrix round={round} />
+    {/*return <SessionMatrix round={round} />*/}
+    return <Context />
   }
   else if (stats) {
     return <RoundStats round={round} chartParams={chartParams} progress={progress} verbA={verbA} verbT={verbT} />
@@ -102,7 +104,7 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
-                <VictoryLegend x={47} y={0}
+                <VictoryLegend x={45} y={0}
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }

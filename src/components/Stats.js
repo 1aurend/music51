@@ -59,7 +59,7 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
     return <Quiz data={quiz} round={round+1}/>
   }
   else if (progressView) {
-    return <ProgressChart round={round} chartParams={chartParams} progress={progress} verbA={verbA} verbT={verbT}/>
+    return <ProgressChart round={round} chartParams={chartParams} qTypes={qTypes} progress={progress} verbA={verbA} verbT={verbT}/>
   }
   else {
     return (
