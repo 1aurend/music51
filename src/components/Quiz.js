@@ -78,7 +78,7 @@ export default function Quiz ({ data, round }) {
       if (input === null) {
         console.log('null input')
       }
-      else if (currentQ.answers[subQ.current.answers.length].includes(input)) {
+      else if (currentQ.answers[subQ.current.answers.length] === input) {
 
       answer.current.endTime = Date.now()
       answer.current.elapsedTime = (answer.current.endTime-answer.current.startTime)/1000
