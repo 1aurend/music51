@@ -55,6 +55,30 @@ export default function SessionMatrix({ round, qTypes }) {
   else if (accurate && size.width >= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
+    let headers = qTypes.map( type => {
+                          return <th scope="col" className="border-0">
+                            {type.toUpperCase()}
+                          </th>
+                      })
+    let firstRoundAtt = qTypes.map( type => {
+      return <td>{rounded(means[type].attempts[0], 2)}</td>
+    })
+    let lastRoundAtt = qTypes.map( type => {
+      return <td>{rounded(means[type].attempts[round-1], 2)}</td>
+    })
+    let bestRoundAtt = qTypes.map( type => {
+      return <td>{accurate[type].att}</td>
+    })
+    let firstRoundT = qTypes.map( type => {
+      return <td>{rounded(means[type].times[0], 2)}</td>
+    })
+    let lastRoundT = qTypes.map( type => {
+      return <td>{rounded(means[type].times[round-1], 2)}</td>
+    })
+    let bestRoundT = qTypes.map( type => {
+      return <td>{fast[type].time}</td>
+    })
+
 
     return (
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
@@ -77,49 +101,22 @@ export default function SessionMatrix({ round, qTypes }) {
                           <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                ROUND
                               </th>
-                              <th scope="col" className="border-0">
-                                NAMES
-                              </th>
-                              <th scope="col" className="border-0">
-                                ROOTS
-                              </th>
-                              <th scope="col" className="border-0">
-                                QUALITY
-                              </th>
-                              <th scope="col" className="border-0">
-                                INVERSIONS
-                              </th>
-                              <th scope="col" className="border-0">
-                                TOTAL
-                              </th>
+                              {headers}
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>1ST</td>
-                              <td>{rounded(means.noteNames.attempts[0], 2)}</td>
-                              <td>{rounded(means.roots.attempts[0],2)}</td>
-                              <td>{rounded(means.quality.attempts[0],2)}</td>
-                              <td>{rounded(means.inversions.attempts[0],2)}</td>
-                              <td>{rounded(means.average.attempts[0],2)}</td>
+                              {firstRoundAtt}
                             </tr>
                             <tr>
                               <td>LAST</td>
-                              <td>{rounded(means.noteNames.attempts[round-1],2)}</td>
-                              <td>{rounded(means.roots.attempts[round-1],2)}</td>
-                              <td>{rounded(means.quality.attempts[round-1],2)}</td>
-                              <td>{rounded(means.inversions.attempts[round-1],2)}</td>
-                              <td>{rounded(means.average.attempts[round-1],2)}</td>
+                              {lastRoundAtt}
                             </tr>
                             <tr>
                               <td>BEST</td>
-                              <td>{accurate.noteNames.att}</td>
-                              <td>{accurate.roots.att}</td>
-                              <td>{accurate.quality.att}</td>
-                              <td>{accurate.inversions.att}</td>
-                              <td>{accurate.average.att}</td>
+                              {bestRoundAtt}
                             </tr>
                           </tbody>
                         </table>
@@ -138,49 +135,22 @@ export default function SessionMatrix({ round, qTypes }) {
                           <thead className="bg-light">
                             <tr>
                               <th scope="col" className="border-0">
-                                ROUND
                               </th>
-                              <th scope="col" className="border-0">
-                                NAMES
-                              </th>
-                              <th scope="col" className="border-0">
-                                ROOTS
-                              </th>
-                              <th scope="col" className="border-0">
-                                QUALITY
-                              </th>
-                              <th scope="col" className="border-0">
-                                INVERSIONS
-                              </th>
-                              <th scope="col" className="border-0">
-                                TOTAL
-                              </th>
+                              {headers}
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>1ST</td>
-                              <td>{rounded(means.noteNames.times[0],2)}</td>
-                              <td>{rounded(means.roots.times[0],2)}</td>
-                              <td>{rounded(means.quality.times[0],2)}</td>
-                              <td>{rounded(means.inversions.times[0],2)}</td>
-                              <td>{rounded(means.average.times[0],2)}</td>
+                              {firstRoundT}
                             </tr>
                             <tr>
                               <td>LAST</td>
-                              <td>{rounded(means.noteNames.times[round-1],2)}</td>
-                              <td>{rounded(means.roots.times[round-1],2)}</td>
-                              <td>{rounded(means.quality.times[round-1],2)}</td>
-                              <td>{rounded(means.inversions.times[round-1],2)}</td>
-                              <td>{rounded(means.average.times[round-1],2)}</td>
+                              {lastRoundT}
                             </tr>
                             <tr>
                               <td>BEST</td>
-                              <td>{fast.noteNames.time}</td>
-                              <td>{fast.roots.time}</td>
-                              <td>{fast.quality.time}</td>
-                              <td>{fast.inversions.time}</td>
-                              <td>{fast.average.time}</td>
+                              {bestRoundT}
                             </tr>
                           </tbody>
                         </table>
@@ -203,6 +173,24 @@ export default function SessionMatrix({ round, qTypes }) {
   else if (accurate && size.width <= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
+
+    let verticalTableAtt = qTypes.map( type => {
+      return <tr>
+              <td>{type[0].toUpperCase()}</td>
+              <td>{rounded(means[type].attempts[0], 2)}</td>
+              <td>{rounded(means[type].attempts[round-1],2)}</td>
+              <td>{accurate[type].att}</td>
+            </tr>
+    })
+    let verticalTableT = qTypes.map( type => {
+      return <tr>
+              <td>{type[0].toUpperCase()}</td>
+              <td>{rounded(means[type].times[0], 2)}</td>
+              <td>{rounded(means[type].times[round-1],2)}</td>
+              <td>{fast[type].time}</td>
+            </tr>
+    })
+
 
     return (
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh', fontFamily: "'Overpass Mono', monospace"}}>
@@ -238,36 +226,7 @@ export default function SessionMatrix({ round, qTypes }) {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>NAMES</td>
-                              <td>{rounded(means.noteNames.attempts[0], 2)}</td>
-                              <td>{rounded(means.noteNames.attempts[round-1],2)}</td>
-                              <td>{accurate.noteNames.att}</td>
-                            </tr>
-                            <tr>
-                              <td>ROOTS</td>
-                              <td>{rounded(means.roots.attempts[0],2)}</td>
-                              <td>{rounded(means.roots.attempts[round-1],2)}</td>
-                              <td>{accurate.roots.att}</td>
-                            </tr>
-                            <tr>
-                              <td>QUAL</td>
-                              <td>{rounded(means.quality.attempts[0],2)}</td>
-                              <td>{rounded(means.quality.attempts[round-1],2)}</td>
-                              <td>{accurate.quality.att}</td>
-                            </tr>
-                            <tr>
-                              <td>INV</td>
-                              <td>{rounded(means.inversions.attempts[0],2)}</td>
-                              <td>{rounded(means.inversions.attempts[round-1],2)}</td>
-                              <td>{accurate.inversions.att}</td>
-                            </tr>
-                            <tr>
-                              <td>TOTAL</td>
-                              <td>{rounded(means.average.attempts[0],2)}</td>
-                              <td>{rounded(means.average.attempts[round-1],2)}</td>
-                              <td>{accurate.average.att}</td>
-                            </tr>
+                            {verticalTableAtt}
                           </tbody>
                         </table>
                       </CardBody>
@@ -298,36 +257,7 @@ export default function SessionMatrix({ round, qTypes }) {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>NAMES</td>
-                            <td>{rounded(means.noteNames.times[0], 2)}</td>
-                            <td>{rounded(means.noteNames.times[round-1],2)}</td>
-                            <td>{fast.noteNames.time}</td>
-                          </tr>
-                          <tr>
-                            <td>ROOTS</td>
-                            <td>{rounded(means.roots.times[0],2)}</td>
-                            <td>{rounded(means.roots.times[round-1],2)}</td>
-                            <td>{fast.roots.time}</td>
-                          </tr>
-                          <tr>
-                            <td>QUAL</td>
-                            <td>{rounded(means.quality.times[0],2)}</td>
-                            <td>{rounded(means.quality.times[round-1],2)}</td>
-                            <td>{fast.quality.time}</td>
-                          </tr>
-                          <tr>
-                            <td>INV</td>
-                            <td>{rounded(means.inversions.times[0],2)}</td>
-                            <td>{rounded(means.inversions.times[round-1],2)}</td>
-                            <td>{fast.inversions.time}</td>
-                          </tr>
-                          <tr>
-                            <td>TOTAL</td>
-                            <td>{rounded(means.average.times[0],2)}</td>
-                            <td>{rounded(means.average.times[round-1],2)}</td>
-                            <td>{fast.average.time}</td>
-                          </tr>
+                          {verticalTableT}
                           </tbody>
                         </table>
                       </CardBody>

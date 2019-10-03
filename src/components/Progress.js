@@ -104,7 +104,7 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
-                <VictoryLegend x={72} y={0}
+                <VictoryLegend x={75} y={0}
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
