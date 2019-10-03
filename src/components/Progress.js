@@ -80,8 +80,8 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
     return <Quiz data={quiz} round={round+1}/>
   }
   else if (done) {
-    {/*return <SessionMatrix round={round} />*/}
-    return <Context />
+    return <SessionMatrix round={round} qTypes={qTypes} />
+    {/*return <Context />*/}
   }
   else if (stats) {
     return <RoundStats round={round} chartParams={chartParams} progress={progress} verbA={verbA} verbT={verbT} />

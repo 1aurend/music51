@@ -10,7 +10,7 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
-export default function SessionMatrix({ round }) {
+export default function SessionMatrix({ round, qTypes }) {
 
   const [means, udpateMeans] = useContext(Means)
   const [fast, setFast] = useState()
@@ -22,55 +22,29 @@ export default function SessionMatrix({ round }) {
   let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'}
 
 
-
   useEffect(() => {
-    let fastest = {
-          noteNames: {
-            round: means.noteNames.times.indexOf(Math.min(...means.noteNames.times)),
-            time: rounded(Math.min(...means.noteNames.times), 2),
-          },
-          roots: {
-            round: means.roots.times.indexOf(Math.min(...means.roots.times)),
-            time: rounded(Math.min(...means.roots.times), 2),
-          },
-          quality: {
-            round: means.quality.times.indexOf(Math.min(...means.quality.times)),
-            time: rounded(Math.min(...means.quality.times), 2),
-          },
-          inversions: {
-            round: means.inversions.times.indexOf(Math.min(...means.inversions.times)),
-            time: rounded(Math.min(...means.inversions.times), 2),
-          },
-          average: {
-            round: means.average.times.indexOf(Math.min(...means.average.times)),
-            time: rounded(Math.min(...means.average.times), 2),
-          }
-    }
-    let mostAcc = {
-          noteNames: {
-            round: means.noteNames.attempts.lastIndexOf(Math.min(...means.noteNames.attempts)),
-            att: rounded(Math.min(...means.noteNames.attempts), 2),
-          },
-          roots: {
-            round: means.roots.attempts.lastIndexOf(Math.min(...means.roots.attempts)),
-            att: rounded(Math.min(...means.roots.attempts), 2),
-          },
-          quality: {
-            round: means.quality.attempts.lastIndexOf(Math.min(...means.quality.attempts)),
-            att: rounded(Math.min(...means.quality.attempts), 2),
-          },
-          inversions: {
-            round: means.inversions.attempts.lastIndexOf(Math.min(...means.inversions.attempts)),
-            att: rounded(Math.min(...means.inversions.attempts), 2),
-          },
-          average: {
-            round: means.average.attempts.lastIndexOf(Math.min(...means.average.attempts)),
-            att: rounded(Math.min(...means.average.attempts), 2),
-          },
-          perfect: (means.average.attempts.filter(average => average === 1)).length
-    }
+
+    let fastest = {}
+    qTypes.map( type => {
+                  fastest = {...fastest, [type]: {
+                    round: means[type].times.indexOf(Math.min(...means[type].times)),
+                    time: rounded(Math.min(...means[type].times), 2),
+                  }}
+                  return null
+                })
     console.log(fastest);
+    let mostAcc = {}
+    qTypes.map( type => {
+                  mostAcc = {...mostAcc, [type]: {
+                    round: means[type].attempts.lastIndexOf(Math.min(...means[type].attempts)),
+                    att: rounded(Math.min(...means[type].attempts), 2),
+                  }}
+                  return null
+                })
+    mostAcc = {...mostAcc, perfect: (means.Overall.attempts.filter(average => average === 1)).length}
     console.log(mostAcc);
+
+
     setFast(fastest)
     setAcc(mostAcc)
   }, [means])
