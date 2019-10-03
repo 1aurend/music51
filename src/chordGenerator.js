@@ -462,15 +462,15 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
           "7^"
       ]
     },
-    {
-      "type": "Quality",
-      "questionText": "What's the chord's quality?",
-      "answers": [rootLetter + rootAccidental + newStructure],
-      "choices": qualityOptions
-    },
+    // {
+    //   "type": "Quality",
+    //   "questionText": "What's the chord's quality?",
+    //   "answers": [rootLetter + rootAccidental + newStructure],
+    //   "choices": qualityOptions
+    // },
     {
       "type": "Numerals",
-      "questionText": "Which roman numeral describes this chord?",
+      "questionText": "Which roman numeral describes this chord’s degree and quality?",
       "answers": [roman + romanQuality],
       "choices": romanOptions
     },

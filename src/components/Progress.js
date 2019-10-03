@@ -104,12 +104,12 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
                 style={{parent: {maxHeight: '40%'}}}>
-                <VictoryLegend x={45} y={0}
+                <VictoryLegend x={65} y={0}
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
                     data={chartLegendData}
-                    colorScale={['#b7b8bc', '#a0a1a4', '#9fbfdf', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}
+                    colorScale={['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']}
                   />
                   <VictoryAxis
                     style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
@@ -120,7 +120,7 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
                       domain={{y: [0, chartParams.domainMaxYAtt]}} tickFormat={(t) => rounded(t, 2)}
                       />
                     <VictoryGroup offset={20}
-                      colorScale={['#b7b8bc', '#a0a1a4', '#9fbfdf', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}>
+                      colorScale={['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']}>
                         {chartLinesAtt}
                     </VictoryGroup>
                 </VictoryChart>
@@ -137,7 +137,7 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
                     domain={{y: [0, chartParams.domainMaxYTime]}} tickFormat={(t) => rounded(t, 2)}
                     />
                   <VictoryGroup offset={20}
-                    colorScale={['#b7b8bc', '#a0a1a4', '#9fbfdf', '#898a8d', '#6699cc', '#5b5c5e', '#17c671']}>
+                    colorScale={['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']}>
                       {chartLinesTs}
                   </VictoryGroup>
               </VictoryChart>
