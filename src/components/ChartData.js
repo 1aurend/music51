@@ -5,7 +5,7 @@ import {Row, Container, Col} from 'shards-react'
 
 
 
-function rounded(value, decimals) {
+export function rounded(value, decimals) {
 return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
