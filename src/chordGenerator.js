@@ -26,6 +26,8 @@ function randomchoice(array){
 }
 
 // the super cool Fisher-Yates shuffle
+// FIXME: Move to `utils.js` file
+// FIXME: Consider implementing a `shuffled` which returns a new array (and thus does not mutate the original)
 function shuffle (array) {
   var i = 0
     , j = 0
@@ -39,14 +41,34 @@ function shuffle (array) {
   }
 }
 
-// adjusts the whole chord for clef/staff upper limit
 // TODO: make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
+
+// FIXME: Refactor `octaveOrientedLetters` into function `staffSpaces(letterName)` which returns an integer
+// FIXME: Refactor function to take in a `chord` and return an int.
+//        This way, we aren't mutating the `chord`
+//
+// FIXME: Add function `adjustChord(octaves)` whose only responsibility it to iterate over each note in a chord
+//        to transpose it by the given number of `octaves`. It would be best if this returned a _new_ chord, but
+//        in case you are _relying_ on mutation from elsewhere, this may break things.
+//
+// NOTE:  There is quite a bit of potential for accidential mutation here
+//        - `chord` should not be touched inside here
+//        - `adjust` could be _adjusted_ by many things and it feels quite brittle
 function staffAdjust(chord){
   let adjust = 0
 
   for(var i=0; i<chord.notes.length; i++){
 
+    // FIXME: Add function `upperLimit(clef)` which returns { letterName, octave }
+
+    // FIXME: We can get rid of both manual iteration _and_ a level of nesting here:
+    //
+    //        const upper = upperLimit(clef)
+    //        if staffSpaces(chord.notes[i].letter) > staffSpaces(upperLimit.letterName) && chord.notes[i].octave >= upper.octave {
+    //          return ...
+    //        }
+    //      
     // bass clef upper limit is F4
     if (chord.clef === 'bass') {
       if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
@@ -312,7 +334,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     }
   }
 
-  // roman numerals
+  // FIXME: Make functions `bigRomanNumeral(scaleDegree)` and `littleRomanNumeral(scaleDegree)`
   let roman
 
   if(newStructure === 'M' || newStructure === '+' || newStructure === '7' || newStructure === 'M7'){
@@ -326,7 +348,8 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   console.log('quality is ' + newStructure)
   console.log('chord type is ' + chordType)
 
-  // roman numeral question options
+  // FIXME: Refactor into own function `romanNumeralOptions(chordType)`
+  //        which returns an array of strings
   let romanOptions
 
   if(chordType === 'triad'){
@@ -346,7 +369,8 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   ]
   }
 
-  // roman inversion question options
+  // FIXME: Refactor into own function `romanNumeralInversionOptions(chordType)`
+  //        which returns an array of strings
   let romanInversionOptions
 
   // [roman + inversionQuality + " " + inversion]
@@ -368,7 +392,9 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   }
 
 
-  // translate to vexSig
+  // FIXME: Why is this so far away from where it is used.
+  //        Ultimately, this should be moved out into another function which adapts our model
+  //        to the VexFlow model
   let vexSig = keySignatures[keySignature].vexSig;
     // console.log('major key is: '+ vexSig)
 
@@ -482,6 +508,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     }
   ]
 
+  // FIXME: This should be its own function
   // build the structure with correct spellings
   for(var i=0; i<template[newStructure].structure.length; i++){
 
@@ -522,6 +549,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     // push notes into questions before adjusting accidentals for key sig
     chord.questions[0].answers.push(noteLetter);
 
+    // FIXME: This should be its own function
     // only show natural in question choices if it's an alteration from the key sig
     if(accidental != '♮'){
       chord.questions[1].choices.push(noteLetter+accidental);
@@ -538,22 +566,44 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       accidental = "";
     }
 
+    // Question: Is there any difference between defining the `note` inline, à la:
+    //
+    //           let note = {
+    //              letter: noteLetter,
+    //              accidental: accidental,
+    //              octave: octave
+    //           }
+    //
+    // Then, you could tighten it up one more level:
+    //
+    //           chord.notes.push({
+    //              letter: noteLetter,
+    //              accidental: accidental,
+    //              octave: octave
+    //            })
+    //
     // push notes into the chord object
     let note = {}
     note.letter = noteLetter
     note.accidental = accidental
     note.octave = octave
     chord.notes.push(note);
-
   }
 
+  // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
   // shuffles the root note choices so they're not always in root position haha
   shuffle(chord.questions[1].choices)
 
+  // FIXME: IIUC, you are mutating the `chord` within `staffAdjust`.
+  //        Either you could just call `staffAdjust(chord)` (not suggested),
+  //        _or_ implement and use a non-mutating function `constrainToStaff(chord)` which returns a brand new chord
+  //
   // adjusts the chord so it's within staff limits
   chord = staffAdjust(chord);
 
   // check for inversion and invert if necessary
+  // FIXME: We should decouple the concepts of `inversion` and scale degree notation.
+  //        `7` is really a shorthand notation of 
   if (inversion !== 'root' && inversion !== '7') {
     return handleInversion(chord, inversion)
   }
@@ -568,6 +618,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
 }
 
+// FIXME: Consider renaming this to `invert(chord, inversion)` which returns a _new_ chord.
 function handleInversion(chord, inversion) {
 
   // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
@@ -596,7 +647,9 @@ function handleInversion(chord, inversion) {
     chord.questions[0].answers.push(chord.questions[0].answers.shift());
   }
 
-// adjusts the inverted chord so it's within staff limits
+  // adjusts the inverted chord so it's within staff limits
+  // FIXME: This function should not know about `staffAdjust`! Rather, the caller of this function
+  //        should call `constrainToStaff()` (or whatever) on the output of this function.
   let finalChord = staffAdjust(chord)
   return(finalChord)
 }
