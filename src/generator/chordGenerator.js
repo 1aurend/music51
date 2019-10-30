@@ -97,7 +97,7 @@ export function letterNamePosition(letter) {
 // NOTE:  There is quite a bit of potential for accidential mutation here
 //        - `chord` should not be touched inside here
 //        - `adjust` could be _adjusted_ by many things and it feels quite brittle
-function staffAdjust(chord){
+export function staffAdjust(chord){
   let adjust = 0
 
   for(var i=0; i<chord.notes.length; i++){
