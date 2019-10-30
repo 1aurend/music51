@@ -13,12 +13,12 @@ test('chord in range not adjusted', () => {
   expect(staffAdjust(chord)).toEqual(chord)
 })
 
-test('chord not in range broken', () => {
+test('chord below range adjusted up', () => {
   let chord1 = {
     notes: [
       {
         letter: letterNames.C,
-        octave: 12
+        octave: 3
       }
     ],
     clef: 'treble'
@@ -27,7 +27,7 @@ test('chord not in range broken', () => {
     notes: [
       {
         letter: letterNames.C,
-        octave: 12
+        octave: 4
       }
     ],
     clef: 'treble'

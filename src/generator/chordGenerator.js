@@ -98,10 +98,11 @@ export function letterNamePosition(letter) {
 //        - `chord` should not be touched inside here
 //        - `adjust` could be _adjusted_ by many things and it feels quite brittle
 export function staffAdjust(chord){
+  console.log('starting staffAdjust');
   let adjust = 0
 
   for(var i=0; i<chord.notes.length; i++){
-
+    console.log('here is notes.length ' + chord.notes.length);
     // FIXME: Add function `upperLimit(clef)` which returns { letterName, octave }
 
     // FIXME: We can get rid of both manual iteration _and_ a level of nesting here:
@@ -137,8 +138,11 @@ export function staffAdjust(chord){
 
     // treble clef upper limit is F6
     if (chord.clef === 'treble') {
+      console.log('in treble clef!');
       if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+        console.log('in first if');
         if (chord.notes[i].octave >= 6) {
+          console.log('now higher than 6');
           adjust = -1
           break
         }
@@ -151,7 +155,9 @@ export function staffAdjust(chord){
 
     // treble clef lower limit is G3
     if (chord.clef === 'treble') {
+      console.log('in second treble');
       if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
+        console.log('in second first if');
         if (chord.notes[i].octave <= 3) {
           adjust = 1
           break
@@ -161,8 +167,10 @@ export function staffAdjust(chord){
   }
 
   // apply the adjust to each note
+  console.log('here is adjust ' + adjust);
   for(var j=0; j<chord.notes.length; j++){
     chord.notes[j].octave += adjust
+    console.log('here is adjusted octave ' + chord.notes[j].octave);
   }
     // console.log("adjust: " +adjust);
   return(chord)
