@@ -32,7 +32,6 @@ test('chord below range adjusted up', () => {
     ],
     clef: 'treble'
   }
-  const adjustedChord = staffAdjust(chord1)
   console.log(JSON.stringify(chord1, null, 3));
   expect(staffAdjust(chord1)).toEqual(chord2)
 })

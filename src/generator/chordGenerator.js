@@ -113,57 +113,60 @@ export function staffAdjust(chord){
     //        }
     //
     // bass clef upper limit is F4
-    if (chord.clef === 'bass') {
-      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
-        if (chord.notes[i].octave >= 4) {
-          adjust = -1
-          break
-        }
-      }
-      else if (chord.notes[i].octave === 5) {
-        adjust = -1
-        break
-      }
-    }
-
     // bass clef lower limit is B1
-    if (chord.clef === 'bass') {
-      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B")) {
-        if (chord.notes[i].octave <= 1) {
-          adjust = 1
-          break
-        }
-      }
-    }
-
     // treble clef upper limit is F6
-    if (chord.clef === 'treble') {
-      console.log('in treble clef!');
-      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
-        console.log('in first if');
-        if (chord.notes[i].octave >= 6) {
-          console.log('now higher than 6');
-          adjust = -1
-          break
-        }
-      }
-      else if (chord.notes[i].octave === 6) {
-        adjust = -1
+    // treble clef lower limit is G3
+    
+    switch (chord.clef) {
+      case 'treble':
+
+          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+            console.log('in first if');
+            if (chord.notes[i].octave >= 6) {
+              console.log('now higher than 6');
+              adjust = -1
+              break
+            }
+          }
+          else if (chord.notes[i].octave === 6) {
+            adjust = -1
+            break
+          }
+
+          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
+            console.log('in second first if');
+            if (chord.notes[i].octave <= 3) {
+              adjust = 1
+              break
+            }
+          }
+
         break
-      }
+      case 'bass':
+
+          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+            if (chord.notes[i].octave >= 4) {
+              adjust = -1
+              break
+            }
+          }
+          else if (chord.notes[i].octave === 5) {
+            adjust = -1
+            break
+          }
+
+          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B")) {
+            if (chord.notes[i].octave <= 1) {
+              adjust = 1
+              break
+            }
+          }
+
+        break
+      default:
+
     }
 
-    // treble clef lower limit is G3
-    if (chord.clef === 'treble') {
-      console.log('in second treble');
-      if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
-        console.log('in second first if');
-        if (chord.notes[i].octave <= 3) {
-          adjust = 1
-          break
-        }
-      }
-    }
   }
 
   // apply the adjust to each note
