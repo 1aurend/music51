@@ -116,11 +116,11 @@ export function staffAdjust(chord){
     // bass clef lower limit is B1
     // treble clef upper limit is F6
     // treble clef lower limit is G3
-    
+
     switch (chord.clef) {
       case 'treble':
 
-          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(letterNames.F)) {
             console.log('in first if');
             if (chord.notes[i].octave >= 6) {
               console.log('now higher than 6');
@@ -133,7 +133,7 @@ export function staffAdjust(chord){
             break
           }
 
-          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("G")) {
+          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(letterNames.G)) {
             console.log('in second first if');
             if (chord.notes[i].octave <= 3) {
               adjust = 1
@@ -144,7 +144,7 @@ export function staffAdjust(chord){
         break
       case 'bass':
 
-          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
+          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(letterNames.F)) {
             if (chord.notes[i].octave >= 4) {
               adjust = -1
               break
@@ -155,7 +155,7 @@ export function staffAdjust(chord){
             break
           }
 
-          if (octaveOrientedLetters.indexOf(chord.notes[i].letter) < octaveOrientedLetters.indexOf("B")) {
+          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(letterNames.B)) {
             if (chord.notes[i].octave <= 1) {
               adjust = 1
               break
