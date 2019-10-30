@@ -97,33 +97,71 @@ export function letterNamePosition(letter) {
 // NOTE:  There is quite a bit of potential for accidential mutation here
 //        - `chord` should not be touched inside here
 //        - `adjust` could be _adjusted_ by many things and it feels quite brittle
+//
+
+
+
+// FIXME: Add function `upperLimit(clef)` which returns { letterName, octave }
+
+
+// bass clef upper limit is F4
+// bass clef lower limit is B1
+// treble clef upper limit is F6
+// treble clef lower limit is G3
+
+/**
+ * range - returns range of acceptable letter name + octave pairs for a given clef
+ *
+ * @param  {type} clef the clef for which to return acceptable letter name + octave pairs for a given clef
+ * @return {type}      object which contains lower and upper bounds
+ */
+function allowableRange(clef) {
+  switch (clef) {
+    case 'treble':
+      return (
+        {
+          upper: {
+            letter: letterNames.F,
+            octave: 6
+          },
+          lower: {
+            letter: letterNames.G,
+            octave: 3
+          },
+        }
+      )
+    case 'bass':
+      return (
+        {
+          upper: {
+            letter: letterNames.F,
+            octave: 4
+          },
+          lower: {
+            letter: letterNames.B,
+            octave: 1
+          },
+        }
+      )
+    default:
+      throw 'invalid clef'
+  }
+
+}
+
 export function staffAdjust(chord){
-  console.log('starting staffAdjust');
+
+  //TODO: write function that takes in @params staff position, letter name, octave, clef and retuns an int
+  let range = allowableRange(chord.clef)
   let adjust = 0
 
   for(var i=0; i<chord.notes.length; i++){
-    console.log('here is notes.length ' + chord.notes.length);
-    // FIXME: Add function `upperLimit(clef)` which returns { letterName, octave }
-
-    // FIXME: We can get rid of both manual iteration _and_ a level of nesting here:
-    //
-    //        const upper = upperLimit(clef)
-    //        if staffSpaces(chord.notes[i].letter) > staffSpaces(upperLimit.letterName) && chord.notes[i].octave >= upper.octave {
-    //          return ...
-    //        }
-    //
-    // bass clef upper limit is F4
-    // bass clef lower limit is B1
-    // treble clef upper limit is F6
-    // treble clef lower limit is G3
 
     switch (chord.clef) {
       case 'treble':
 
-          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(letterNames.F)) {
-            console.log('in first if');
+          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(range.upper.letter)) {
             if (chord.notes[i].octave >= 6) {
-              console.log('now higher than 6');
               adjust = -1
               break
             }
@@ -133,8 +171,7 @@ export function staffAdjust(chord){
             break
           }
 
-          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(letterNames.G)) {
-            console.log('in second first if');
+          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(range.lower.letter)) {
             if (chord.notes[i].octave <= 3) {
               adjust = 1
               break
@@ -144,7 +181,7 @@ export function staffAdjust(chord){
         break
       case 'bass':
 
-          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(letterNames.F)) {
+          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(range.upper.letter)) {
             if (chord.notes[i].octave >= 4) {
               adjust = -1
               break
@@ -155,7 +192,7 @@ export function staffAdjust(chord){
             break
           }
 
-          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(letterNames.B)) {
+          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(range.lower.letter)) {
             if (chord.notes[i].octave <= 1) {
               adjust = 1
               break
@@ -164,16 +201,15 @@ export function staffAdjust(chord){
 
         break
       default:
+        throw 'invalid clef'
 
     }
 
   }
 
   // apply the adjust to each note
-  console.log('here is adjust ' + adjust);
   for(var j=0; j<chord.notes.length; j++){
     chord.notes[j].octave += adjust
-    console.log('here is adjusted octave ' + chord.notes[j].octave);
   }
     // console.log("adjust: " +adjust);
   return(chord)
