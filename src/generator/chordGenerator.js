@@ -20,8 +20,20 @@ import {
 import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
 
+
+const letterNames = {
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: 'F',
+  G: 'G',
+  A: 'A',
+  B: 'B'
+}
+
+
 // a function to choose something random:
-function randomchoice(array){
+export function randomchoice(array){
    return array[Math.floor(Math.random()*array.length)];
 }
 
@@ -39,6 +51,36 @@ function shuffle (array) {
     array[i] = array[j]
     array[j] = temp
   }
+}
+
+
+/**
+ * letterNamePosition - description
+ *
+ * @param  {type} letter letter names CDEFGAB
+ * @return {type}        int corresponding to position away from C on a staff
+ */
+function letterNamePosition(letter) {
+
+  switch (letter) {
+    case letterNames.C:
+      return 0
+    case letterNames.D:
+      return 1
+    case letterNames.E:
+      return 2
+    case letterNames.F:
+      return 3
+    case letterNames.G:
+      return 4
+    case letterNames.A:
+      return 5
+    case letterNames.B:
+      return 6
+    default:
+      throw 'invalid letter name'
+  }
+
 }
 
 // TODO: make sure this matches with the range set in randomChoice(clefs)
@@ -68,7 +110,7 @@ function staffAdjust(chord){
     //        if staffSpaces(chord.notes[i].letter) > staffSpaces(upperLimit.letterName) && chord.notes[i].octave >= upper.octave {
     //          return ...
     //        }
-    //      
+    //
     // bass clef upper limit is F4
     if (chord.clef === 'bass') {
       if (octaveOrientedLetters.indexOf(chord.notes[i].letter) > octaveOrientedLetters.indexOf("F")) {
@@ -603,7 +645,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   // check for inversion and invert if necessary
   // FIXME: We should decouple the concepts of `inversion` and scale degree notation.
-  //        `7` is really a shorthand notation of 
+  //        `7` is really a shorthand notation of
   if (inversion !== 'root' && inversion !== '7') {
     return handleInversion(chord, inversion)
   }
@@ -654,7 +696,16 @@ function handleInversion(chord, inversion) {
   return(finalChord)
 }
 
-export default (numQs, options) => {
+/**
+ * export default - this is the interface between the generator and chord crusher or any other app; this function is named over in the react app that imports it
+ *
+ * @param  {type} numQs   int; comes from react app, number of questions student has asked for
+ * @param  {type} options comes from react app; student selections
+ *                        {chordTypes: {triads:true, sevenths:true},
+                          roots: {common:true, any:false}}
+ * @return {type}         returns final questions object
+ */
+export default function(numQs, options){
   // console.log(JSON.stringify(options));
   let chords = []
   for (var i = 0; i < numQs; i++) {
