@@ -9,7 +9,7 @@ import {
 import Start from './Start'
 import Quiz from './Quiz'
 import ProgressChart from './Progress'
-import generateChords from '../chordGenerator'
+import generateChords from '../generator/chordGenerator'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import backSvg from '../assets/svgs-backarrows.svg'
 

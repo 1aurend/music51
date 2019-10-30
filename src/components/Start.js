@@ -7,7 +7,7 @@ import {
   Row,
   Col,
 } from 'shards-react'
-import generateChords from '../chordGenerator'
+import generateChords from '../generator/chordGenerator'
 import { Size, Session, Means } from './Context'
 
 
