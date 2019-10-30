@@ -21,7 +21,7 @@ import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
 
 
-const letterNames = {
+export const letterNames = {
   C: 'C',
   D: 'D',
   E: 'E',
@@ -60,7 +60,7 @@ function shuffle (array) {
  * @param  {type} letter letter names CDEFGAB
  * @return {type}        int corresponding to position away from C on a staff
  */
-function letterNamePosition(letter) {
+export function letterNamePosition(letter) {
 
   switch (letter) {
     case letterNames.C:
