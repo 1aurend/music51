@@ -21,7 +21,7 @@ import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
 
 
-export const letterNames = {
+export const LetterName = {
   C: 'C',
   D: 'D',
   E: 'E',
@@ -63,19 +63,19 @@ function shuffle (array) {
 export function letterNamePosition(letter) {
 
   switch (letter) {
-    case letterNames.C:
+    case LetterName.C:
       return 0
-    case letterNames.D:
+    case LetterName.D:
       return 1
-    case letterNames.E:
+    case LetterName.E:
       return 2
-    case letterNames.F:
+    case LetterName.F:
       return 3
-    case letterNames.G:
+    case LetterName.G:
       return 4
-    case letterNames.A:
+    case LetterName.A:
       return 5
-    case letterNames.B:
+    case LetterName.B:
       return 6
     default:
       throw 'invalid letter name'
@@ -121,11 +121,11 @@ function allowableRange(clef) {
       return (
         {
           upper: {
-            letter: letterNames.F,
+            letter: LetterName.F,
             octave: 6
           },
           lower: {
-            letter: letterNames.G,
+            letter: LetterName.G,
             octave: 3
           },
         }
@@ -134,11 +134,11 @@ function allowableRange(clef) {
       return (
         {
           upper: {
-            letter: letterNames.F,
+            letter: LetterName.F,
             octave: 4
           },
           lower: {
-            letter: letterNames.B,
+            letter: LetterName.B,
             octave: 1
           },
         }
