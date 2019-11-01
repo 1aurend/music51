@@ -1,4 +1,5 @@
-import { staffAdjust, LetterName } from '../generator/chordGenerator'
+import { staffAdjust } from '../generator/chordGenerator'
+import { LetterName } from '../generator/LetterName'
 
 test('chord in range not adjusted', () => {
   let chord = {

@@ -19,17 +19,11 @@ import {
 } from './chordConsts'
 import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
+import { LetterName } from './LetterName'
+import { Clef } from './Clef'
 
 
-export const LetterName = {
-  C: 'C',
-  D: 'D',
-  E: 'E',
-  F: 'F',
-  G: 'G',
-  A: 'A',
-  B: 'B'
-}
+
 
 
 // a function to choose something random:
@@ -147,6 +141,31 @@ function allowableRange(clef) {
       throw 'invalid clef'
   }
 
+}
+export function middleCPosition(clef) {
+
+  switch (clef) {
+    case Clef.TREBLE:
+      return -2
+    case Clef.BASS:
+      return 10
+    default:
+      throw 'unsupported clef'
+  }
+
+}
+/**
+ * staffPosition - returns the staff position of a note with a given letter name and octave respective to a clef. A staff position is either a line or a space indexed by distance from bottom line, 0, of a staff. For example, C4 (middle C) in treble clef has a staff position of -2.
+ *
+ * @param  {type} letter Letter name of a note
+ * @param  {type} octave The octave of a note
+ * @param  {type} clef   The context in which the note will be represented
+ * @return {type}        An integer value representing the staff position of the given note, letter name and octave, respective to a clef
+ */
+export function staffPosition(letter, octave, clef) {
+  let octaveDisplacement = octave - 4
+  let distanceFromC = letterNamePosition(letter)
+  return middleCPosition(clef)+(7*octaveDisplacement)+distanceFromC
 }
 
 export function staffAdjust(chord){

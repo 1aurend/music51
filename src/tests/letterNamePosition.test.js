@@ -1,4 +1,5 @@
-import { letterNamePosition, LetterName } from '../generator/chordGenerator'
+import { letterNamePosition } from '../generator/chordGenerator'
+import { LetterName } from '../generator/LetterName'
 
 
 test('verify that C has position 0', () => {
