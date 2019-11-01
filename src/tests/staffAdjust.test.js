@@ -1,10 +1,10 @@
-import { staffAdjust, letterNames } from '../generator/chordGenerator'
+import { staffAdjust, LetterName } from '../generator/chordGenerator'
 
 test('chord in range not adjusted', () => {
   let chord = {
     notes: [
       {
-        letter: letterNames.C,
+        letter: LetterName.C,
         octave: 4
       }
     ],
@@ -17,7 +17,7 @@ test('chord below range adjusted up', () => {
   let chord1 = {
     notes: [
       {
-        letter: letterNames.C,
+        letter: LetterName.C,
         octave: 3
       }
     ],
@@ -26,7 +26,7 @@ test('chord below range adjusted up', () => {
   let chord2 = {
     notes: [
       {
-        letter: letterNames.C,
+        letter: LetterName.C,
         octave: 4
       }
     ],
