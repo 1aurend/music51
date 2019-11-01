@@ -93,12 +93,9 @@ const keySignatures = {
 }
 
 const letters = ["D","E","F","G","A","B","C"];
-const octaveOrientedLetters = ['C','D','E','F','G','A','B'];
-
+const clefs = ["bass","treble"];
 const rootAccidentals = ["♭", "♮", "♯"];
 const accidentals = ["𝄫", "♭", "♮", "♯", "𝄪"];
-
-const clefs = ["bass","treble"];
 
 const triadInversions = ["","63","64"];
 const seventhInversions = ["","65","43","42"];
@@ -117,7 +114,6 @@ export {
   subsets,
   keySignatures,
   letters,
-  octaveOrientedLetters,
   rootAccidentals,
   accidentals,
   clefs,

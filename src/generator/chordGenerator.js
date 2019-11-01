@@ -6,12 +6,9 @@ import {
   subsets,
   keySignatures,
   letters,
-  octaveOrientedLetters,
   rootAccidentals,
   accidentals,
   clefs,
-  triadInversions,
-  seventhInversions,
   majModes,
   minModes,
   bigRoman,
@@ -160,39 +157,196 @@ function octaveTranspose(notes, octaves) {
   })
 }
 
+const ChordTypesOption = {
+  TRIADS: "triads",
+  SEVENTHS: "sevenths",
+  BOTH: "both"
+}
+
+const ChordType = {
+  TRIAD: "triad",
+  SEVENTH: "seventh"
+}
+
+function inversions(chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return ["","63","64"]
+    case ChordType.SEVENTH:
+      return ["","65","43","42"]
+  }
+}
+
+function templates(chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return {
+        "M": {
+          "class":"LD",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D", "octave":0 },
+            {"ip":"M", "octave":0 },
+            {"ip":"S", "octave":0 }
+          ]
+        },
+        "m": {
+          "class":"dor",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D", "octave": 0 },
+            {"ip":"N", "octave": 0 },
+            {"ip":"S", "octave": 0 }
+          ]
+        },
+        "o": {
+          "class":"dim",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D","octave": 0 },
+            {"ip":"N","octave": 0 },
+            {"ip":"V","octave": 0 }
+          ]
+        },
+        "+": {
+          "class":"AD",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D","octave": 0 },
+            {"ip":"M","octave": 0 },
+            {"ip":"P","octave": 0 }
+          ]
+        }
+      }
+    case ChordType.SEVENTH:
+      return {
+        "7": {
+          "class":"LD",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave":0},
+            {"ip":"M","octave":0},
+            {"ip":"S","octave":0},
+            {"ip":"K","octave":0}
+          ]
+        },
+        "M7": {
+          "class":"Lyd",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave":0},
+            {"ip":"M","octave":0},
+            {"ip":"S","octave":0},
+            {"ip":"T","octave":0}
+          ]
+        },
+        "m7": {
+          "class":"dor",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave":0},
+            {"ip":"N","octave":0},
+            {"ip":"S","octave":0},
+            {"ip":"K","octave":0}
+          ]
+        },
+        "ø7": {
+          "class":"dm",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave":0},
+            {"ip":"N","octave":0},
+            {"ip":"V","octave":0},
+            {"ip":"K","octave":0}
+          ]
+        },
+        "o7": {
+          "class":"dim",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave":0},
+            {"ip":"N","octave":0},
+            {"ip":"V","octave":0},
+            {"ip":"L","octave":0}
+          ]
+        }
+    }
+  }
+}
+
+// This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false. 
+function chordTypesOption(chordTypes) {
+  if (chordTypes.triads && chordTypes.sevenths) {
+    return ChordTypesOption.BOTH
+  } else if (chordTypes.triads && !chordTypes.sevenths) {
+    return ChordTypesOption.TRIADS
+  } else if (!chordTypes.triads && chordTypes.sevenths) {
+    return ChordTypesOption.SEVENTHS
+  } else {
+    throw "Invalid chord types selection"
+  }
+}
+
+// return Type of the chord we are constructing
+function chooseChordType(chordTypesOption) {
+  switch (chordTypesOption) {
+    case ChordTypesOption.TRIADS:
+      return ChordType.TRIAD
+    case ChordTypesOption.SEVENTHS:
+      return ChordType.SEVENTH
+    case ChordTypesOption.BOTH:
+      return randomChoice([ChordType.TRIAD, ChordType.SEVENTH])
+    default:
+      throw 'Impossible ChordTypesOption'
+  }
+}
+
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions){
+function randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip) {
+
+  // note count (3,4)
+  // inversion  (0,1,2,(3))
 
   let template
   let inversions
   let chordType
 
-  // apply options for triad or seventh
-  if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === false)){
-    template = templateTriads
-    inversions = triadInversions
-    chordType = 'triad'
+  // Choose whether we need to generate a triad or seventh chord
+  const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
+
+  switch (_chordType) {
+    case ChordType.TRIAD:
+      template = templateTriads
+    case ChordType.SEVENTH:
+      template = templateSevenths
   }
-  if((options.chordTypes.triads === false) && (options.chordTypes.sevenths === true)){
-    template = templateSevenths
-    inversions = seventhInversions
-    chordType = 'seventh'
-  }
-  if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === true)){
-    template = randomchoice([templateTriads,templateSevenths])
-    if(template === templateTriads){
-      inversions = triadInversions
-      chordType = 'triad'
-    }
-    if(template === templateSevenths){
-      inversions = seventhInversions
-      chordType = 'seventh'
-    }
-  }
-  // console.log('chord type is: '+chordType);
+
+  // // apply options for triad or seventh
+  // if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === false)){
+  //   template = templateTriads
+  //   inversions = triadInversions
+  //   chordType = 'triad'
+  // }
+  // if((options.chordTypes.triads === false) && (options.chordTypes.sevenths === true)){
+  //   template = templateSevenths
+  //   inversions = seventhInversions
+  //   chordType = 'seventh'
+  // }
+  // if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === true)){
+  //   template = randomChoice([templateTriads,templateSevenths])
+  //   if(template === templateTriads){
+  //     inversions = triadInversions
+  //     chordType = 'triad'
+  //   }
+  //   if(template === templateSevenths){
+  //     inversions = seventhInversions
+  //     chordType = 'seventh'
+  //   }
+  // }
+  // // console.log('chord type is: '+chordType);
 
   // choose a random chord type
-  let newStructure = randomchoice(Object.keys(template));
+  let newStructure = randomChoice(Object.keys(template));
   let newClass = template[newStructure].class
   let newRoot = template[newStructure].anchor
 
@@ -204,9 +358,9 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   // apply option for any root notes
   if(options.roots.any === true){
 
-    keySignature = randomchoice(Object.keys(keySignatures));
-    rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
-    rootAccidental = randomchoice(rootAccidentals);
+    keySignature = randomChoice(Object.keys(keySignatures));
+    rootSyllable = randomChoice(subsets.B); // B is set implicitly as the "reference" subset
+    rootAccidental = randomChoice(rootAccidentals);
 
     // adjust 'o7' chords where the o7th would be a triple flat
     if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
@@ -226,41 +380,41 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   // apply option for common root notes
   if((options.roots.common === true) && (options.roots.any === false)){
-    keySignature = randomchoice(Object.keys(keySignatures).slice(3, 12));
+    keySignature = randomChoice(Object.keys(keySignatures).slice(3, 12));
 
     // set the key and mode note based on chord type
 
     if(newStructure === 'M'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = ''
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomchoice(['Maj','Lyd','Dom'])
+        modeNote = randomChoice(['Maj','Lyd','Dom'])
       }
       if(key === 'minor'){
-        modeNote = randomchoice(['Maj','phr','Lyd','Dom'])
+        modeNote = randomChoice(['Maj','phr','Lyd','Dom'])
       }
     }
 
     if(newStructure === 'm'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = ''
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomchoice(['dor','phr','min'])
+        modeNote = randomChoice(['dor','phr','min'])
       }
       if(key === 'minor'){
-        modeNote = randomchoice(['min','dor','loc'])
+        modeNote = randomChoice(['min','dor','loc'])
       }
     }
 
     if(newStructure === 'o'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = 'o'
       inversionQuality = 'o'
       // then choose from KP's common occurrences in Major or minor
@@ -268,7 +422,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
         modeNote = 'loc'
       }
       if(key === 'minor'){
-        modeNote = randomchoice(['loc','Dom'])
+        modeNote = randomChoice(['loc','Dom'])
       }
     }
 
@@ -285,7 +439,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
     if(newStructure === '7'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = '7'
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
@@ -304,27 +458,27 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomchoice(['Maj','Lyd'])
+        modeNote = randomChoice(['Maj','Lyd'])
       }
     }
 
     if(newStructure === 'm7'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = '7'
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomchoice(['dor','phr','min'])
+        modeNote = randomChoice(['dor','phr','min'])
       }
       if(key === 'minor'){
-        modeNote = randomchoice(['min','dor'])
+        modeNote = randomChoice(['min','dor'])
       }
     }
 
     if(newStructure === 'ø7'){
       // choose to put it in a Major or minor key
-      key = randomchoice(['Major','minor'])
+      key = randomChoice(['Major','minor'])
       romanQuality = 'ø7'
       inversionQuality = 'ø'
       // then choose from KP's common occurrences in Major or minor
@@ -332,7 +486,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
         modeNote = 'loc'
       }
       if(key === 'minor'){
-        modeNote = randomchoice(['loc','Dom'])
+        modeNote = randomChoice(['loc','Dom'])
       }
     }
 
@@ -444,7 +598,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   // choose the octave of the starting (root) note.
   // TODO: make sure this range matches with the range set in staffAdjust()
-  let clef = randomchoice(clefs)
+  let clef = randomChoice(clefs)
   // console.log(clef + " clef")
   let clefOctave
   if(clef === "bass"){
@@ -456,7 +610,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     // console.log('clefOctave: '+clefOctave)
 
   // choose an inversion
-  let inversion = randomchoice(inversions);
+  let inversion = randomChoice(inversions);
   // console.log(inversion);
 
   // build and begin populating the chord object
@@ -572,9 +726,9 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
     // octave adjustments:
     // TODO: will this also work for template structures bigger than an octave?
-    let octaveIndex = octaveOrientedLetters.indexOf(noteLetter)
+    let octaveIndex = letterNamePosition(noteLetter)
     let octave = clefOctave
-    if(chord.notes.length > 0 && octaveIndex < octaveOrientedLetters.indexOf(chord.notes[chord.notes.length-1].letter)){
+    if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
       octave += 1;
       clefOctave +=1 // sets the default octave up for the next note
     }
@@ -599,55 +753,21 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       accidental = "";
     }
 
-    // Question: Is there any difference between defining the `note` inline, à la:
-    //
-    //           let note = {
-    //              letter: noteLetter,
-    //              accidental: accidental,
-    //              octave: octave
-    //           }
-    //
-    // Then, you could tighten it up one more level:
-    //
-    //           chord.notes.push({
-    //              letter: noteLetter,
-    //              accidental: accidental,
-    //              octave: octave
-    //            })
-    //
-    // push notes into the chord object
-    let note = {}
-    note.letter = noteLetter
-    note.accidental = accidental
-    note.octave = octave
-    chord.notes.push(note);
+    chord.notes.push(
+      {
+        letter: noteLetter,
+        accidental: accidental,
+        octave: octave
+      }
+    )
   }
 
   // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
   // shuffles the root note choices so they're not always in root position haha
   shuffle(chord.questions[1].choices)
-
-  // FIXME: IIUC, you are mutating the `chord` within `staffAdjust`.
-  //        Either you could just call `staffAdjust(chord)` (not suggested),
-  //        _or_ implement and use a non-mutating function `constrainToStaff(chord)` which returns a brand new chord
-  //
-  // adjusts the chord so it's within staff limits
-  chord = staffAdjust(chord)
-
-  // check for inversion and invert if necessary
-  // FIXME: We should decouple the concepts of `inversion` and scale degree notation.
-  //        `7` is really a shorthand notation of
-  if (inversion !== 'root' && inversion !== '7') {
-    return handleInversion(chord, inversion)
-  }
-  // so root position 7ths don't exceed upper staff limits
-  else if (chordType === 'seventh' && inversion === '7') {
-    let finalChord = staffAdjust(chord)
-    return finalChord
-  }
-  else {
-    return chord
-  }
+  const inverted = handleInversion(chord, inversion)
+  const positionedChord = staffAdjust(inverted)
+  return positionedChord
 }
 
 /// TODO: Decouple inversion from amount of notes in chord
@@ -707,7 +827,7 @@ export default function(numQs, options){
 // Utility
 
 // a function to choose something random:
-export function randomchoice(array){
+export function randomChoice(array){
    return array[Math.floor(Math.random()*array.length)];
 }
 
