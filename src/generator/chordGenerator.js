@@ -22,27 +22,6 @@ import chalk from 'chalk'
 import { LetterName } from './LetterName'
 import { Clef } from './Clef'
 
-// a function to choose something random:
-export function randomchoice(array){
-   return array[Math.floor(Math.random()*array.length)];
-}
-
-// the super cool Fisher-Yates shuffle
-// FIXME: Move to `utils.js` file
-// FIXME: Consider implementing a `shuffled` which returns a new array (and thus does not mutate the original)
-function shuffle (array) {
-  var i = 0
-    , j = 0
-    , temp = null
-
-  for (i = array.length - 1; i > 0; i -= 1) {
-    j = Math.floor(Math.random() * (i + 1))
-    temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-}
-
 /**
  * letterNamePosition - description
  *
@@ -653,7 +632,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   //        _or_ implement and use a non-mutating function `constrainToStaff(chord)` which returns a brand new chord
   //
   // adjusts the chord so it's within staff limits
-  chord = staffAdjust(chord);
+  chord = staffAdjust(chord)
 
   // check for inversion and invert if necessary
   // FIXME: We should decouple the concepts of `inversion` and scale degree notation.
@@ -667,45 +646,42 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     return finalChord
   }
   else {
-    return(chord)
+    return chord
   }
-
 }
 
-// FIXME: Consider renaming this to `invert(chord, inversion)` which returns a _new_ chord.
+/// TODO: Decouple inversion from amount of notes in chord
 function handleInversion(chord, inversion) {
 
   // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
-  if((inversion === "63") || (inversion === "65")){
-    chord.notes[0].octave += 1
-    chord.notes.push(chord.notes.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
+  if ((inversion === "63") || (inversion === "65")) {
+    chord.notes = invert(chord.notes, 1)
+    chord.questions[0].answers.rotate(1)
+  } else if ((inversion === "64") || (inversion === "43")) {
+    chord.notes = invert(chord.notes, 2)
+    chord.questions[0].answers.rotate(2)
+  } else if (inversion === "42") {
+    chord.notes = invert(chord.notes, 3)
+    chord.questions[0].answers.rotate(3)
   }
-  if((inversion === "64") || (inversion === "43")){
-    chord.notes[0].octave += 1
-    chord.notes[1].octave += 1
-    chord.notes.push(chord.notes.shift());
-    chord.notes.push(chord.notes.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-  }
-  if(inversion === "42"){
-    chord.notes[0].octave += 1
-    chord.notes[1].octave += 1
-    chord.notes[2].octave += 1
-    chord.notes.push(chord.notes.shift());
-    chord.notes.push(chord.notes.shift());
-    chord.notes.push(chord.notes.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-    chord.questions[0].answers.push(chord.questions[0].answers.shift());
-  }
+  return chord
+}
 
-  // adjusts the inverted chord so it's within staff limits
-  // FIXME: This function should not know about `staffAdjust`! Rather, the caller of this function
-  //        should call `constrainToStaff()` (or whatever) on the output of this function.
-  let finalChord = staffAdjust(chord)
-  return(finalChord)
+/**
+ * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
+ *
+ * @param  {type} chord   Note values to be inverted 
+ * @param  {type} inversion The amount of inversions to perform
+ * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
+ */
+export function invert(chord, inversion) {
+  let notes = [...chord]
+  for (let i = 0; i < inversion; i++) {
+    const head = notes.shift()
+    head.octave += 1
+    notes.push(head)
+  }
+  return notes
 }
 
 /**
@@ -726,3 +702,45 @@ export default function(numQs, options){
   console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
   return addKeystrokes(chords)
 }
+
+
+// Utility
+
+// a function to choose something random:
+export function randomchoice(array){
+   return array[Math.floor(Math.random()*array.length)];
+}
+
+// the super cool Fisher-Yates shuffle
+// FIXME: Move to `utils.js` file
+// FIXME: Consider implementing a `shuffled` which returns a new array (and thus does not mutate the original)
+function shuffle (array) {
+  var i = 0
+    , j = 0
+    , temp = null
+
+  for (i = array.length - 1; i > 0; i -= 1) {
+    j = Math.floor(Math.random() * (i + 1))
+    temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+}
+
+Array.prototype.rotate = (function() {
+    // save references to array functions to make lookup faster
+    var push = Array.prototype.push,
+        splice = Array.prototype.splice;
+
+    return function(count) {
+        var len = this.length >>> 0, // convert to uint
+            count = count >> 0; // convert to int
+
+        // convert count to value in range [0, len)
+        count = ((count % len) + len) % len;
+
+        // use splice.call() instead of this.splice() to make function generic
+        push.apply(this, splice.call(this, 0, count));
+        return this;
+    };
+})();
