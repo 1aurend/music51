@@ -22,10 +22,6 @@ import chalk from 'chalk'
 import { LetterName } from './LetterName'
 import { Clef } from './Clef'
 
-
-
-
-
 // a function to choose something random:
 export function randomchoice(array){
    return array[Math.floor(Math.random()*array.length)];
@@ -47,7 +43,6 @@ function shuffle (array) {
   }
 }
 
-
 /**
  * letterNamePosition - description
  *
@@ -55,7 +50,6 @@ function shuffle (array) {
  * @return {type}        int corresponding to position away from C on a staff
  */
 export function letterNamePosition(letter) {
-
   switch (letter) {
     case LetterName.C:
       return 0
@@ -74,26 +68,17 @@ export function letterNamePosition(letter) {
     default:
       throw 'invalid letter name'
   }
-
 }
 
-// TODO: make sure this matches with the range set in randomChoice(clefs)
+// TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
 
-// FIXME: Refactor `octaveOrientedLetters` into function `staffSpaces(letterName)` which returns an integer
-// FIXME: Refactor function to take in a `chord` and return an int.
-//        This way, we aren't mutating the `chord`
-//
-// FIXME: Add function `adjustChord(octaves)` whose only responsibility it to iterate over each note in a chord
-//        to transpose it by the given number of `octaves`. It would be best if this returned a _new_ chord, but
-//        in case you are _relying_ on mutation from elsewhere, this may break things.
+
 //
 // NOTE:  There is quite a bit of potential for accidential mutation here
 //        - `chord` should not be touched inside here
 //        - `adjust` could be _adjusted_ by many things and it feels quite brittle
 //
-
-
 
 /**
  * range - returns range of acceptable letter name + octave pairs for a given clef
@@ -111,6 +96,10 @@ function allowableRange(clef) {
       throw 'invalid clef'
   }
 }
+
+/*
+* @return {type} The position in the staff of middle c in the context of a given `clef`.
+*/ 
 export function middleCPosition(clef) {
   switch (clef) {
     case Clef.TREBLE:
@@ -135,6 +124,14 @@ export function staffPosition(letter, octave, clef) {
   return middleCPosition(clef)+(7*octaveDisplacement)+distanceFromC
 }
 
+/**
+ * requiredOctaveDisplacement - return the amount of octaves to transpose the chord which is represented graphically at the given `staffPositions` in the allowable `range` of staff positions.
+ *
+ * @param  {type} staffPositions 
+ * @param  {type} range 
+ * @return {type} The amount of octaves to transpose the chord which is represented graphically at the given `staffPositions` in the allowable `range` of staff positions.
+ * @todo This assumes that the octave does span a width greater than that of the given `range`. In this case, we need to decide what to do.
+ */
 export function requiredOctaveDisplacement(staffPositions, range) {
   const maxPosition = Math.max(...staffPositions)
   const minPosition = Math.min(...staffPositions)
@@ -147,17 +144,41 @@ export function requiredOctaveDisplacement(staffPositions, range) {
   }
 }
 
-export function staffAdjust(chord){
+/**
+ * @param {type} chord The chord to adjust so that it stays within the desired bounds.
+*/
+// FIXME: Refactor function to take in a `chord` and return an int.
+//        This way, we aren't mutating the `chord`. It would be best if this 
+//        returned a _new_ chord, but in case you are _relying_ on mutation 
+//        from elsewhere, this may break things.
+export function staffAdjust(chord) {
+
+  // FIXME: We are using `let` instead of `const` here to highlight the fact that we are try to tear ourselves away from the monolithic `chord` object.
   let clef = chord.clef
   const range = allowableRange(clef)
   const staffPositions = chord.notes.map(note => {
     return staffPosition(note.letter, note.octave, clef)
   })
-  const adjust = requiredOctaveDisplacement(staffPositions, range)
-  chord.notes.forEach(note => {
-    note.octave += adjust
-  })
+  const octaveTransposition = requiredOctaveDisplacement(staffPositions, range)
+  const notes = chord.notes
+  chord.notes = octaveTranspose(chord.notes, octaveTransposition)
   return chord
+}
+
+/**
+ * octaveTranspose - return a brand new array of notes, each transposed by the given amount of `octaves`.
+ *
+ * @param  {type} notes   Note values to be transposed 
+ * @param  {type} octaves The amount of octaves by which to transpose notes
+ * @return {type}         a brand new array of notes, each transposed by the given amount of `octaves`
+ */
+function octaveTranspose(notes, octaves) {
+  return notes.map(note => { 
+    return {
+      letter: note.letter,
+      octave: note.octave + octaves
+    }
+  })
 }
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
@@ -424,7 +445,6 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       roman + inversionQuality + '42'
     ]
   }
-
 
   // FIXME: Why is this so far away from where it is used.
   //        Ultimately, this should be moved out into another function which adapts our model
@@ -706,5 +726,3 @@ export default function(numQs, options){
   console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
   return addKeystrokes(chords)
 }
-
-// console.log(chalk.magenta(JSON.stringify(argv, null, 3)));
