@@ -97,9 +97,6 @@ const clefs = ["bass","treble"];
 const rootAccidentals = ["♭", "♮", "♯"];
 const accidentals = ["𝄫", "♭", "♮", "♯", "𝄪"];
 
-const triadInversions = ["","63","64"];
-const seventhInversions = ["","65","43","42"];
-
 const majModes = ['Maj','dor','phr','Lyd','Dom','min','loc']
 const minModes = ['min','loc','Maj','dor','phr','Lyd','Dom']
 
@@ -107,8 +104,6 @@ const bigRoman = ['I','II','III','IV','V','VI','VII']
 const littleRoman = ['i','ii','iii','iv','v','vi','vii']
 
 export {
-  templateTriads,
-  templateSevenths,
   classes,
   ip,
   subsets,
@@ -117,8 +112,6 @@ export {
   rootAccidentals,
   accidentals,
   clefs,
-  triadInversions,
-  seventhInversions,
   majModes,
   minModes,
   bigRoman,

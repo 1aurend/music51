@@ -1,6 +1,4 @@
 import {
-  templateTriads,
-  templateSevenths,
   classes,
   ip,
   subsets,
@@ -184,8 +182,57 @@ function chooseChordType(chordTypesOption) {
   }
 }
 
+// => (Note,Int)
+function makeChord(chordType) {
+  const template = template(chordType)
+  const inversions = inversions(chordType)
+  const structure = randomChoice(Object.keys(template))
+  const _class = template[structure].class
+  const _root = template[structure].anchor
+  // TODO: Finish this please
+}
+
+const RootOption = {
+  ANY: "any",
+  COMMON: "common"
+}
+
+// Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
+function chooseRootAccidental(syllable, structure) {
+  const initialChoice = randomChoice(rootAccidentals)
+  // Filter out Cbo7 and Fbo7, because the seventh is triple flat. Ew!
+  if (structure === "o7" && (syllable === "D" || syllable === "F") && initialChoice === "♭") {
+    return "♮"
+  }
+  // Filter out B♯+
+  if (structure === "+" && syllable === "T" && initialChoice === "♯") {
+    return "♮"
+  }
+}
+
+// => { 
+//  syllable: Syllable, 
+//  accidental: Accidental, 
+//  keySignature: KeySignature 
+// }
+function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure) {
+  // TODO: Inject keySignatures
+  // TODO: Inject subsets
+  // TODO: Inject rootAccidentals
+  switch (rootOption) {
+    case RootOption.ANY:
+      return {
+        "syllable": randomChoice(subsets.B),
+        "accidental": chooseRootAccidental(rootSyllable, structure),
+        "keySignature": randomChoice(Object.keys(keySignatures)) 
+      }
+    case RootOption.COMMON:
+      // TODO
+  }
+}
+
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip) {
+function randomChord(options, subsets, keySignatures, rootAccidentals, accidentals, ip) {
 
   // note count (3,4)
   // inversion  (0,1,2,(3))
@@ -197,36 +244,11 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   // Choose whether we need to generate a triad or seventh chord
   const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
 
-  switch (_chordType) {
-    case ChordType.TRIAD:
-      template = templateTriads
-    case ChordType.SEVENTH:
-      template = templateSevenths
-  }
+  // templates
+  // inversions
 
-  // // apply options for triad or seventh
-  // if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === false)){
-  //   template = templateTriads
-  //   inversions = triadInversions
-  //   chordType = 'triad'
-  // }
-  // if((options.chordTypes.triads === false) && (options.chordTypes.sevenths === true)){
-  //   template = templateSevenths
-  //   inversions = seventhInversions
-  //   chordType = 'seventh'
-  // }
-  // if((options.chordTypes.triads === true) && (options.chordTypes.sevenths === true)){
-  //   template = randomChoice([templateTriads,templateSevenths])
-  //   if(template === templateTriads){
-  //     inversions = triadInversions
-  //     chordType = 'triad'
-  //   }
-  //   if(template === templateSevenths){
-  //     inversions = seventhInversions
-  //     chordType = 'seventh'
-  //   }
-  // }
-  // // console.log('chord type is: '+chordType);
+  let _template = template(_chordType)
+  let _inversions = inversions(_chordType)
 
   // choose a random chord type
   let newStructure = randomChoice(Object.keys(template));
@@ -522,6 +544,18 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   let inversionOptions = []
   inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
 
+
+  // FIXME: Decouple questions from `chord`
+  //        Some dependencies to detangle:
+  //          - `rootLetter`
+  //          - `rootAccidental`
+  //          - `key`
+  //          - `degree`
+  //          - `roman`
+  //          - `romanQuality`
+  //          - `inversion`
+  //          - `inversionQuality`
+  //          - `romanInversionOptions`
   chord.questions = [
     {
       "type": "Names",
@@ -707,7 +741,7 @@ function inversions(chordType) {
   }
 }
 
-function templates(chordType) {
+function template(chordType) {
   switch (chordType) {
     case ChordType.TRIAD:
       return {
