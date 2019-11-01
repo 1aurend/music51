@@ -157,123 +157,6 @@ function octaveTranspose(notes, octaves) {
   })
 }
 
-const ChordTypesOption = {
-  TRIADS: "triads",
-  SEVENTHS: "sevenths",
-  BOTH: "both"
-}
-
-const ChordType = {
-  TRIAD: "triad",
-  SEVENTH: "seventh"
-}
-
-function inversions(chordType) {
-  switch (chordType) {
-    case ChordType.TRIAD:
-      return ["","63","64"]
-    case ChordType.SEVENTH:
-      return ["","65","43","42"]
-  }
-}
-
-function templates(chordType) {
-  switch (chordType) {
-    case ChordType.TRIAD:
-      return {
-        "M": {
-          "class":"LD",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D", "octave":0 },
-            {"ip":"M", "octave":0 },
-            {"ip":"S", "octave":0 }
-          ]
-        },
-        "m": {
-          "class":"dor",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D", "octave": 0 },
-            {"ip":"N", "octave": 0 },
-            {"ip":"S", "octave": 0 }
-          ]
-        },
-        "o": {
-          "class":"dim",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D","octave": 0 },
-            {"ip":"N","octave": 0 },
-            {"ip":"V","octave": 0 }
-          ]
-        },
-        "+": {
-          "class":"AD",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D","octave": 0 },
-            {"ip":"M","octave": 0 },
-            {"ip":"P","octave": 0 }
-          ]
-        }
-      }
-    case ChordType.SEVENTH:
-      return {
-        "7": {
-          "class":"LD",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave":0},
-            {"ip":"M","octave":0},
-            {"ip":"S","octave":0},
-            {"ip":"K","octave":0}
-          ]
-        },
-        "M7": {
-          "class":"Lyd",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave":0},
-            {"ip":"M","octave":0},
-            {"ip":"S","octave":0},
-            {"ip":"T","octave":0}
-          ]
-        },
-        "m7": {
-          "class":"dor",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave":0},
-            {"ip":"N","octave":0},
-            {"ip":"S","octave":0},
-            {"ip":"K","octave":0}
-          ]
-        },
-        "ø7": {
-          "class":"dm",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave":0},
-            {"ip":"N","octave":0},
-            {"ip":"V","octave":0},
-            {"ip":"K","octave":0}
-          ]
-        },
-        "o7": {
-          "class":"dim",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave":0},
-            {"ip":"N","octave":0},
-            {"ip":"V","octave":0},
-            {"ip":"L","octave":0}
-          ]
-        }
-    }
-  }
-}
-
 // This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false. 
 function chordTypesOption(chordTypes) {
   if (chordTypes.triads && chordTypes.sevenths) {
@@ -802,6 +685,123 @@ export function invert(chord, inversion) {
     notes.push(head)
   }
   return notes
+}
+
+const ChordTypesOption = {
+  TRIADS: "triads",
+  SEVENTHS: "sevenths",
+  BOTH: "both"
+}
+
+const ChordType = {
+  TRIAD: "triad",
+  SEVENTH: "seventh"
+}
+
+function inversions(chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return ["","63","64"]
+    case ChordType.SEVENTH:
+      return ["","65","43","42"]
+  }
+}
+
+function templates(chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return {
+        "M": {
+          "class":"LD",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D", "octave": 0 },
+            {"ip":"M", "octave": 0 },
+            {"ip":"S", "octave": 0 }
+          ]
+        },
+        "m": {
+          "class":"dor",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D", "octave": 0 },
+            {"ip":"N", "octave": 0 },
+            {"ip":"S", "octave": 0 }
+          ]
+        },
+        "o": {
+          "class":"dim",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D","octave": 0 },
+            {"ip":"N","octave": 0 },
+            {"ip":"V","octave": 0 }
+          ]
+        },
+        "+": {
+          "class":"AD",
+          "anchor":"D",
+          "structure":[
+            {"ip":"D","octave": 0 },
+            {"ip":"M","octave": 0 },
+            {"ip":"P","octave": 0 }
+          ]
+        }
+      }
+    case ChordType.SEVENTH:
+      return {
+        "7": {
+          "class":"LD",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave": 0 },
+            {"ip":"M","octave": 0 },
+            {"ip":"S","octave": 0 },
+            {"ip":"K","octave": 0 }
+          ]
+        },
+        "M7": {
+          "class":"Lyd",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave": 0 },
+            {"ip":"M","octave": 0 },
+            {"ip":"S","octave": 0 },
+            {"ip":"T","octave": 0 }
+          ]
+        },
+        "m7": {
+          "class":"dor",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave": 0 },
+            {"ip":"N","octave": 0 },
+            {"ip":"S","octave": 0 },
+            {"ip":"K","octave": 0 }
+          ]
+        },
+        "ø7": {
+          "class":"dm",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave": 0 },
+            {"ip":"N","octave": 0 },
+            {"ip":"V","octave": 0 },
+            {"ip":"K","octave": 0 }
+          ]
+        },
+        "o7": {
+          "class":"dim",
+          "anchor":"D",
+          "structure": [
+            {"ip":"D","octave": 0 },
+            {"ip":"N","octave": 0 },
+            {"ip":"V","octave": 0 },
+            {"ip":"L","octave": 0 }
+          ]
+        }
+    }
+  }
 }
 
 /**
