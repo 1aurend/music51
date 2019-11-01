@@ -95,14 +95,6 @@ export function letterNamePosition(letter) {
 
 
 
-// FIXME: Add function `upperLimit(clef)` which returns { letterName, octave }
-
-
-// bass clef upper limit is F4
-// bass clef lower limit is B1
-// treble clef upper limit is F6
-// treble clef lower limit is G3
-
 /**
  * range - returns range of acceptable letter name + octave pairs for a given clef
  *
@@ -112,38 +104,14 @@ export function letterNamePosition(letter) {
 function allowableRange(clef) {
   switch (clef) {
     case 'treble':
-      return (
-        {
-          upper: {
-            letter: LetterName.F,
-            octave: 6
-          },
-          lower: {
-            letter: LetterName.G,
-            octave: 3
-          },
-        }
-      )
+      return {upper: 15, /*F6*/ lower: -5, /*G3*/}
     case 'bass':
-      return (
-        {
-          upper: {
-            letter: LetterName.F,
-            octave: 4
-          },
-          lower: {
-            letter: LetterName.B,
-            octave: 1
-          },
-        }
-      )
+      return {upper: 13, /*F4*/ lower: -5, /*B1*/}
     default:
       throw 'invalid clef'
   }
-
 }
 export function middleCPosition(clef) {
-
   switch (clef) {
     case Clef.TREBLE:
       return -2
@@ -152,7 +120,6 @@ export function middleCPosition(clef) {
     default:
       throw 'unsupported clef'
   }
-
 }
 /**
  * staffPosition - returns the staff position of a note with a given letter name and octave respective to a clef. A staff position is either a line or a space indexed by distance from bottom line, 0, of a staff. For example, C4 (middle C) in treble clef has a staff position of -2.
@@ -163,75 +130,34 @@ export function middleCPosition(clef) {
  * @return {type}        An integer value representing the staff position of the given note, letter name and octave, respective to a clef
  */
 export function staffPosition(letter, octave, clef) {
-  let octaveDisplacement = octave - 4
-  let distanceFromC = letterNamePosition(letter)
+  const octaveDisplacement = octave - 4
+  const distanceFromC = letterNamePosition(letter)
   return middleCPosition(clef)+(7*octaveDisplacement)+distanceFromC
 }
 
+export function requiredOctaveDisplacement(staffPositions, range) {
+  const maxPosition = Math.max(...staffPositions)
+  const minPosition = Math.min(...staffPositions)
+  if ( maxPosition > range.upper ) {
+    return Math.floor((range.upper-maxPosition)/7)
+  } else if ( minPosition < range.lower ) {
+    return Math.floor((range.lower-minPosition)/7)+1
+  } else {
+    return 0
+  }
+}
+
 export function staffAdjust(chord){
-
-  //TODO: write function that takes in @params staff position, letter name, octave, clef and retuns an int
-  let range = allowableRange(chord.clef)
-  let adjust = 0
-
-  for(var i=0; i<chord.notes.length; i++){
-
-    switch (chord.clef) {
-      case 'treble':
-
-          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(range.upper.letter)) {
-            if (chord.notes[i].octave >= 6) {
-              adjust = -1
-              break
-            }
-          }
-          else if (chord.notes[i].octave === 6) {
-            adjust = -1
-            break
-          }
-
-          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(range.lower.letter)) {
-            if (chord.notes[i].octave <= 3) {
-              adjust = 1
-              break
-            }
-          }
-
-        break
-      case 'bass':
-
-          if (letterNamePosition(chord.notes[i].letter) > letterNamePosition(range.upper.letter)) {
-            if (chord.notes[i].octave >= 4) {
-              adjust = -1
-              break
-            }
-          }
-          else if (chord.notes[i].octave === 5) {
-            adjust = -1
-            break
-          }
-
-          if (letterNamePosition(chord.notes[i].letter) < letterNamePosition(range.lower.letter)) {
-            if (chord.notes[i].octave <= 1) {
-              adjust = 1
-              break
-            }
-          }
-
-        break
-      default:
-        throw 'invalid clef'
-
-    }
-
-  }
-
-  // apply the adjust to each note
-  for(var j=0; j<chord.notes.length; j++){
-    chord.notes[j].octave += adjust
-  }
-    // console.log("adjust: " +adjust);
-  return(chord)
+  let clef = chord.clef
+  const range = allowableRange(clef)
+  const staffPositions = chord.notes.map(note => {
+    return staffPosition(note.letter, note.octave, clef)
+  })
+  const adjust = requiredOctaveDisplacement(staffPositions, range)
+  chord.notes.forEach(note => {
+    note.octave += adjust
+  })
+  return chord
 }
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
