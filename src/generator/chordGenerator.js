@@ -1,14 +1,5 @@
 import {
   classes,
-  ip,
-  subsets,
-  keySignatures,
-  letters,
-  rootAccidentals,
-  accidentals,
-  clefs,
-  majModes,
-  minModes,
   bigRoman,
   littleRoman
 } from './chordConsts'
@@ -16,6 +7,10 @@ import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
 import { LetterName } from './LetterName'
 import { Clef } from './Clef'
+import { Accidental } from './Accidental'
+import { IP } from './IP'
+import { Shapes } from './Shapes'
+import { Mode, degree } from './Mode'
 
 /**
  * letterNamePosition - description
@@ -73,7 +68,7 @@ function allowableRange(clef) {
 
 /*
 * @return {type} The position in the staff of middle c in the context of a given `clef`.
-*/ 
+*/
 export function middleCPosition(clef) {
   switch (clef) {
     case Clef.TREBLE:
@@ -101,8 +96,8 @@ export function staffPosition(letter, octave, clef) {
 /**
  * requiredOctaveDisplacement - return the amount of octaves to transpose the chord which is represented graphically at the given `staffPositions` in the allowable `range` of staff positions.
  *
- * @param  {type} staffPositions 
- * @param  {type} range 
+ * @param  {type} staffPositions
+ * @param  {type} range
  * @return {type} The amount of octaves to transpose the chord which is represented graphically at the given `staffPositions` in the allowable `range` of staff positions.
  * @todo This assumes that the octave does span a width greater than that of the given `range`. In this case, we need to decide what to do.
  */
@@ -122,8 +117,8 @@ export function requiredOctaveDisplacement(staffPositions, range) {
  * @param {type} chord The chord to adjust so that it stays within the desired bounds.
 */
 // FIXME: Refactor function to take in a `chord` and return an int.
-//        This way, we aren't mutating the `chord`. It would be best if this 
-//        returned a _new_ chord, but in case you are _relying_ on mutation 
+//        This way, we aren't mutating the `chord`. It would be best if this
+//        returned a _new_ chord, but in case you are _relying_ on mutation
 //        from elsewhere, this may break things.
 export function staffAdjust(chord) {
 
@@ -142,12 +137,12 @@ export function staffAdjust(chord) {
 /**
  * octaveTranspose - return a brand new array of notes, each transposed by the given amount of `octaves`.
  *
- * @param  {type} notes   Note values to be transposed 
+ * @param  {type} notes   Note values to be transposed
  * @param  {type} octaves The amount of octaves by which to transpose notes
  * @return {type}         a brand new array of notes, each transposed by the given amount of `octaves`
  */
 function octaveTranspose(notes, octaves) {
-  return notes.map(note => { 
+  return notes.map(note => {
     return {
       letter: note.letter,
       octave: note.octave + octaves
@@ -155,7 +150,7 @@ function octaveTranspose(notes, octaves) {
   })
 }
 
-// This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false. 
+// This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false.
 function chordTypesOption(chordTypes) {
   if (chordTypes.triads && chordTypes.sevenths) {
     return ChordTypesOption.BOTH
@@ -182,6 +177,64 @@ function chooseChordType(chordTypesOption) {
   }
 }
 
+
+
+const RootOption = {
+  ANY: "any",
+  COMMON: "common"
+}
+
+function chooseRandomAccidental(allowedAccidentals) {
+  return randomChoice(allowedAccidentals)
+}
+
+function constrainAccidental(syllable, structure, initialChoice) {
+  const containsTripleFlat = (
+    initialChoice === Accidental.FLAT &&
+    structure === "o7" &&
+    (syllable === "D" || syllable === "F")
+  )
+  const containsTripleSharp = (
+    initialChoice === Accidental.SHARP &&
+    structure === "+" &&
+    syllable === "T"
+  )
+  if (containsTripleFlat || containsTripleSharp) {
+    return Accidental.NATURAL
+  }
+  return initialChoice
+}
+// Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
+function chooseRootAccidental(syllable, structure, allowedAccidentals) {
+  return constrainAccidental(
+    syllable,
+    structure,
+    chooseRandomAccidental(allowedAccidentals))
+}
+
+// => {
+//  syllable: Syllable,
+//  accidental: Accidental,
+//  keySignature: KeySignature
+// }
+function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure, rootSyllable, keySignatures) {
+  // TODO: Inject keySignatures
+  // TODO: Inject subsets
+  // TODO: Inject rootAccidentals
+  switch (rootOption) {
+    case RootOption.ANY:
+      return {
+        "syllable": randomChoice(subsets.B),
+        "accidental": chooseRootAccidental(rootSyllable, structure),
+        "keySignature": randomChoice(Object.keys(keySignatures))
+      }
+    case RootOption.COMMON:
+      // TODO
+    default:
+
+  }
+}
+
 // => (Note,Int)
 function makeChord(chordType) {
   const template = template(chordType)
@@ -192,47 +245,11 @@ function makeChord(chordType) {
   // TODO: Finish this please
 }
 
-const RootOption = {
-  ANY: "any",
-  COMMON: "common"
-}
-
-// Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
-function chooseRootAccidental(syllable, structure) {
-  const initialChoice = randomChoice(rootAccidentals)
-  // Filter out Cbo7 and Fbo7, because the seventh is triple flat. Ew!
-  if (structure === "o7" && (syllable === "D" || syllable === "F") && initialChoice === "♭") {
-    return "♮"
-  }
-  // Filter out B♯+
-  if (structure === "+" && syllable === "T" && initialChoice === "♯") {
-    return "♮"
-  }
-}
-
-// => { 
-//  syllable: Syllable, 
-//  accidental: Accidental, 
-//  keySignature: KeySignature 
-// }
-function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure) {
-  // TODO: Inject keySignatures
-  // TODO: Inject subsets
-  // TODO: Inject rootAccidentals
-  switch (rootOption) {
-    case RootOption.ANY:
-      return {
-        "syllable": randomChoice(subsets.B),
-        "accidental": chooseRootAccidental(rootSyllable, structure),
-        "keySignature": randomChoice(Object.keys(keySignatures)) 
-      }
-    case RootOption.COMMON:
-      // TODO
-  }
-}
-
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options, subsets, keySignatures, rootAccidentals, accidentals, ip) {
+  // Choose whether we need to generate a triad or seventh chord
+  const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const _chord = makeChord(_chordType)
 
   // note count (3,4)
   // inversion  (0,1,2,(3))
@@ -241,14 +258,6 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
   let inversions
   let chordType
 
-  // Choose whether we need to generate a triad or seventh chord
-  const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
-
-  // templates
-  // inversions
-
-  let _template = template(_chordType)
-  let _inversions = inversions(_chordType)
 
   // choose a random chord type
   let newStructure = randomChoice(Object.keys(template));
@@ -707,7 +716,7 @@ function handleInversion(chord, inversion) {
 /**
  * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
  *
- * @param  {type} chord   Note values to be inverted 
+ * @param  {type} chord   Note values to be inverted
  * @param  {type} inversion The amount of inversions to perform
  * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
  */
