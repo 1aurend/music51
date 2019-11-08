@@ -164,19 +164,20 @@ function chooseRandomAccidental(allowedAccidentals) {
 function constrainAccidental(syllable, structure, initialChoice) {
   const containsTripleFlat = (
     initialChoice === Accidental.FLAT &&
-    structure === "o7" &&
-    (syllable === "D" || syllable === "F")
+    structure === ChordStructure.DIMINISHED_SEVENTH &&
+    (syllable === IndependentPitch.DO || IndependentPitch.FA)
   )
   const containsTripleSharp = (
     initialChoice === Accidental.SHARP &&
-    structure === "+" &&
-    syllable === "T"
+    structure === ChordStructure.AUGMENTED &&
+    syllable === IndependentPitch.TI
   )
   if (containsTripleFlat || containsTripleSharp) {
     return Accidental.NATURAL
   }
   return initialChoice
 }
+
 // Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
 function chooseRootAccidental(syllable, structure, allowedAccidentals) {
   return constrainAccidental(
@@ -210,9 +211,9 @@ function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure, root
 
 // => (Note,Int)
 function makeChord(chordType) {
-  const template = template(chordType)
+  const chordStructures = chordStructures(chordType)
   const inversions = inversions(chordType)
-  const structure = randomChoice(Object.keys(template))
+  const structure = randomChoice(Object.keys(chordStructures))
   const _class = template[structure].class
   const _root = template[structure].anchor
   // TODO: Finish this please

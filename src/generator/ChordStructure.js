@@ -96,19 +96,19 @@ export const ChordStructure = {
 export function chordStructures(chordType) {
   switch (chordType) {
     case ChordType.TRIAD:
-      return [
+      return new Set([
         ChordStructure.MAJOR,
         ChordStructure.MINOR,
         ChordStructure.AUGMENTED,
         ChordStructure.DIMINISHED
-      ]
+      ])
     case ChordType.SEVENTH:
-      return [
+      return new Set([
         ChordStructure.DOMINANT_SEVENTH,
         ChordStructure.MAJOR_SEVENTH,
         ChordStructure.MINOR_SEVENTH,
         ChordStructure.HALF_DIMINISHED_SEVENTH,
         ChordStructure.FULLY_DIMINISHED_SEVENTH
-      ]
+      ])
   }
 }
