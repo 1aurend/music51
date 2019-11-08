@@ -118,10 +118,7 @@ export function staffAdjust(chord) {
  */
 function octaveTranspose(notes, octaves) {
   return notes.map(note => {
-    return {
-      letter: note.letter,
-      octave: note.octave + octaves
-    }
+    return { letter: note.letter, octave: note.octave + octaves }
   })
 }
 
@@ -146,7 +143,7 @@ function chooseChordType(chordTypesOption) {
     case ChordTypesOption.SEVENTHS:
       return ChordType.SEVENTH
     case ChordTypesOption.BOTH:
-      return randomChoice([ChordType.TRIAD, ChordType.SEVENTH])
+      return [ChordType.TRIAD, ChordType.SEVENTH].randomElement()
     default:
       throw 'Impossible ChordTypesOption'
   }
@@ -158,9 +155,10 @@ const RootOption = {
 }
 
 function chooseRandomAccidental(allowedAccidentals) {
-  return randomChoice(allowedAccidentals)
+  return allowedAccidentals.randomElement()
 }
 
+// Constrains accidental only for root pitch
 function constrainAccidental(syllable, structure, initialChoice) {
   const containsTripleFlat = (
     initialChoice === Accidental.FLAT &&
@@ -198,9 +196,9 @@ function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure, root
   switch (rootOption) {
     case RootOption.ANY:
       return {
-        "syllable": randomChoice(subsets.B),
+        "syllable": subsets.B.randomElement(),
         "accidental": chooseRootAccidental(rootSyllable, structure),
-        "keySignature": randomChoice(Object.keys(keySignatures))
+        "keySignature": Object.keys(keySignatures).randomElement()
       }
     case RootOption.COMMON:
       // TODO
@@ -211,11 +209,14 @@ function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure, root
 
 // => (Note,Int)
 function makeChord(chordType) {
-  const chordStructures = chordStructures(chordType)
-  const inversions = inversions(chordType)
-  const structure = randomChoice(Object.keys(chordStructures))
-  const _class = template[structure].class
-  const _root = template[structure].anchor
+  const inversions = inversions(chordType).randomElement()
+  // Set of all of the possible chord structures for the given chord type
+  const possibleChordStructures = chordStructures(chordType) 
+  // Choose one of the possible chord structures for the given chord type
+  const chordStructure = possibleChordStructures.randomElement()
+  // TODO: We need a mode ("mode note" ?)
+  const rootNotes = noteIdentities(chordStructure.mode)
+
   // TODO: Finish this please
 }
 
@@ -225,15 +226,12 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
   const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
   const _chord = makeChord(_chordType)
 
-  // note count (3,4)
-  // inversion  (0,1,2,(3))
-
   let template
   let inversions
   let chordType
 
   // choose a random chord type
-  let newStructure = randomChoice(Object.keys(template));
+  let newStructure = Object.keys(template).randomElement()
   let newClass = template[newStructure].class
   let newRoot = template[newStructure].anchor
 
@@ -244,10 +242,10 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
 
   // apply option for any root notes
   if(options.roots.any === true){
-
-    keySignature = randomChoice(Object.keys(keySignatures));
-    rootSyllable = randomChoice(subsets.B); // B is set implicitly as the "reference" subset
-    rootAccidental = randomChoice(rootAccidentals);
+    keySignature = Object.keys(keySignatures).randomElement()
+     // B is set implicitly as the "reference" subset
+    rootSyllable = subsets.B.randomElement()
+    rootAccidental = rootAccidentals.randomElement()
 
     // adjust 'o7' chords where the o7th would be a triple flat
     if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
@@ -267,41 +265,41 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
 
   // apply option for common root notes
   if((options.roots.common === true) && (options.roots.any === false)){
-    keySignature = randomChoice(Object.keys(keySignatures).slice(3, 12));
+    keySignature = Object.keys(keySignatures).slice(3, 12).randomElement()
 
     // set the key and mode note based on chord type
 
     if(newStructure === 'M'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = ''
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomChoice(['Maj','Lyd','Dom'])
+        modeNote = ['Maj','Lyd','Dom'].randomElement()
       }
       if(key === 'minor'){
-        modeNote = randomChoice(['Maj','phr','Lyd','Dom'])
+        modeNote = ['Maj','phr','Lyd','Dom'].randomElement()
       }
     }
 
     if(newStructure === 'm'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = ''
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomChoice(['dor','phr','min'])
+        modeNote = ['dor','phr','min'].randomElement()
       }
       if(key === 'minor'){
-        modeNote = randomChoice(['min','dor','loc'])
+        modeNote = ['min','dor','loc'].randomElement()
       }
     }
 
     if(newStructure === 'o'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = 'o'
       inversionQuality = 'o'
       // then choose from KP's common occurrences in Major or minor
@@ -309,7 +307,7 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
         modeNote = 'loc'
       }
       if(key === 'minor'){
-        modeNote = randomChoice(['loc','Dom'])
+        modeNote = ['loc','Dom'].randomElement()
       }
     }
 
@@ -326,7 +324,7 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
 
     if(newStructure === '7'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = '7'
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
@@ -345,27 +343,27 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomChoice(['Maj','Lyd'])
+        modeNote = ['Maj','Lyd'].randomElement()
       }
     }
 
     if(newStructure === 'm7'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = '7'
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = randomChoice(['dor','phr','min'])
+        modeNote = ['dor','phr','min'].randomElement()
       }
       if(key === 'minor'){
-        modeNote = randomChoice(['min','dor'])
+        modeNote = ['min','dor'].randomElement()
       }
     }
 
     if(newStructure === 'ø7'){
       // choose to put it in a Major or minor key
-      key = randomChoice(['Major','minor'])
+      key = ['Major','minor'].randomElement()
       romanQuality = 'ø7'
       inversionQuality = 'ø'
       // then choose from KP's common occurrences in Major or minor
@@ -373,7 +371,7 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
         modeNote = 'loc'
       }
       if(key === 'minor'){
-        modeNote = randomChoice(['loc','Dom'])
+        modeNote = ['loc','Dom'].randomElement()
       }
     }
 
@@ -397,7 +395,6 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
     }
 
     console.log('key is ' + key)
-    // console.log('modeNote is ' + modeNote)
     console.log('degree is ' + degree)
 
     // set root syllable and accidental based on the mode note
@@ -466,12 +463,6 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
     ]
   }
 
-  // FIXME: Why is this so far away from where it is used.
-  //        Ultimately, this should be moved out into another function which adapts our model
-  //        to the VexFlow model
-  let vexSig = keySignatures[keySignature].vexSig;
-    // console.log('major key is: '+ vexSig)
-
   // translate the syllable "position" to a letter
   let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
     // console.log(rootLetter+rootAccidental+" "+newStructure);
@@ -485,7 +476,7 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
 
   // choose the octave of the starting (root) note.
   // TODO: make sure this range matches with the range set in staffAdjust()
-  let clef = randomChoice(clefs)
+  let clef = clefs.randomElement()
   // console.log(clef + " clef")
   let clefOctave
   if(clef === "bass"){
@@ -497,8 +488,9 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
     // console.log('clefOctave: '+clefOctave)
 
   // choose an inversion
-  let inversion = randomChoice(inversions);
-  // console.log(inversion);
+  let inversion = inversions.randomElement()
+
+  let vexSig = keySignatures[keySignature].vexSig;
 
   // build and begin populating the chord object
   let chord = {};
@@ -737,9 +729,13 @@ export default function(numQs, options){
 
 // Utility
 
-// a function to choose something random:
-export function randomChoice(array){
-   return array[Math.floor(Math.random()*array.length)];
+Array.prototype.randomElement = function () {
+  return this[Math.floor(Math.random() * this.length)]
+}
+
+Set.prototype.randomElement = function () {
+  const array = Array.from(this.values())
+  return array.randomElement()
 }
 
 // the super cool Fisher-Yates shuffle
