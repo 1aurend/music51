@@ -1,4 +1,18 @@
 export const Mode = {
+  MAJOR: 'Maj',
+  DORIAN: 'dor',
+  PHRYGIAN: 'phr',
+  LYDIAN: 'Lyd',
+  LYDIAN_DOMINANT: "LD",
+  DOMINANT: 'Dom',
+  MINOR: 'min',
+  LOCRIAN: 'loc',
+  DIMINISHED: 'dim',
+  AUGMENTED_DOMINANT: 'AD',
+  DIMINISHED_MINOR: 'dm'
+}
+
+export const ModeSubset = {
   MAJOR: {
     MAJOR: 'Maj',
     DORIAN: 'dor',
@@ -19,16 +33,15 @@ export const Mode = {
   }
 }
 
-
 export function degree(key, modeNote) {
   let order
   switch (key) {
-    case Mode.MAJOR:
-      order = Object.keys(Mode.MAJOR)
+    case ModeSubset.MAJOR:
+      order = Object.keys(ModeSubset.MAJOR)
       console.log(order);
       return order.indexOf(modeNote)+1
-    case Mode.MINOR:
-      order = Object.keys(Mode.MINOR)
+    case ModeSubset.MINOR:
+      order = Object.keys(ModeSubset.MINOR)
       console.log(order);
       return order.indexOf(modeNote)+1
     default:

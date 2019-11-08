@@ -5,45 +5,19 @@ import {
 } from './chordConsts'
 import addKeystrokes from './keystrokes'
 import chalk from 'chalk'
-import { LetterName } from './LetterName'
+import { LetterName, letterNamePosition } from './LetterName'
 import { Clef } from './Clef'
 import { Accidental } from './Accidental'
-import { IP } from './IP'
+import { IndependentPitch } from './IP'
 import { Shapes } from './Shapes'
 import { Mode, degree } from './Mode'
+import { ChordType } from './ChordType'
+import { ChordTypesOption } from './ChordTypesOption'
 
-/**
- * letterNamePosition - description
- *
- * @param  {type} letter letter names CDEFGAB
- * @return {type}        int corresponding to position away from C on a staff
- */
-export function letterNamePosition(letter) {
-  switch (letter) {
-    case LetterName.C:
-      return 0
-    case LetterName.D:
-      return 1
-    case LetterName.E:
-      return 2
-    case LetterName.F:
-      return 3
-    case LetterName.G:
-      return 4
-    case LetterName.A:
-      return 5
-    case LetterName.B:
-      return 6
-    default:
-      throw 'invalid letter name'
-  }
-}
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
 
-
-//
 // NOTE:  There is quite a bit of potential for accidential mutation here
 //        - `chord` should not be touched inside here
 //        - `adjust` could be _adjusted_ by many things and it feels quite brittle
@@ -58,9 +32,9 @@ export function letterNamePosition(letter) {
 function allowableRange(clef) {
   switch (clef) {
     case 'treble':
-      return {upper: 15, /*F6*/ lower: -5, /*G3*/}
+      return { upper: 15, /*F6*/ lower: -5, /*G3*/ }
     case 'bass':
-      return {upper: 13, /*F4*/ lower: -5, /*B1*/}
+      return { upper: 13, /*F4*/ lower: -5, /*B1*/ }
     default:
       throw 'invalid clef'
   }
@@ -79,6 +53,7 @@ export function middleCPosition(clef) {
       throw 'unsupported clef'
   }
 }
+
 /**
  * staffPosition - returns the staff position of a note with a given letter name and octave respective to a clef. A staff position is either a line or a space indexed by distance from bottom line, 0, of a staff. For example, C4 (middle C) in treble clef has a staff position of -2.
  *
@@ -177,8 +152,6 @@ function chooseChordType(chordTypesOption) {
   }
 }
 
-
-
 const RootOption = {
   ANY: "any",
   COMMON: "common"
@@ -257,7 +230,6 @@ function randomChord(options, subsets, keySignatures, rootAccidentals, accidenta
   let template
   let inversions
   let chordType
-
 
   // choose a random chord type
   let newStructure = randomChoice(Object.keys(template));
@@ -730,16 +702,8 @@ export function invert(chord, inversion) {
   return notes
 }
 
-const ChordTypesOption = {
-  TRIADS: "triads",
-  SEVENTHS: "sevenths",
-  BOTH: "both"
-}
 
-const ChordType = {
-  TRIAD: "triad",
-  SEVENTH: "seventh"
-}
+
 
 function inversions(chordType) {
   switch (chordType) {
@@ -747,103 +711,6 @@ function inversions(chordType) {
       return ["","63","64"]
     case ChordType.SEVENTH:
       return ["","65","43","42"]
-  }
-}
-
-function template(chordType) {
-  switch (chordType) {
-    case ChordType.TRIAD:
-      return {
-        "M": {
-          "class":"LD",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D", "octave": 0 },
-            {"ip":"M", "octave": 0 },
-            {"ip":"S", "octave": 0 }
-          ]
-        },
-        "m": {
-          "class":"dor",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D", "octave": 0 },
-            {"ip":"N", "octave": 0 },
-            {"ip":"S", "octave": 0 }
-          ]
-        },
-        "o": {
-          "class":"dim",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D","octave": 0 },
-            {"ip":"N","octave": 0 },
-            {"ip":"V","octave": 0 }
-          ]
-        },
-        "+": {
-          "class":"AD",
-          "anchor":"D",
-          "structure":[
-            {"ip":"D","octave": 0 },
-            {"ip":"M","octave": 0 },
-            {"ip":"P","octave": 0 }
-          ]
-        }
-      }
-    case ChordType.SEVENTH:
-      return {
-        "7": {
-          "class":"LD",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave": 0 },
-            {"ip":"M","octave": 0 },
-            {"ip":"S","octave": 0 },
-            {"ip":"K","octave": 0 }
-          ]
-        },
-        "M7": {
-          "class":"Lyd",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave": 0 },
-            {"ip":"M","octave": 0 },
-            {"ip":"S","octave": 0 },
-            {"ip":"T","octave": 0 }
-          ]
-        },
-        "m7": {
-          "class":"dor",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave": 0 },
-            {"ip":"N","octave": 0 },
-            {"ip":"S","octave": 0 },
-            {"ip":"K","octave": 0 }
-          ]
-        },
-        "ø7": {
-          "class":"dm",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave": 0 },
-            {"ip":"N","octave": 0 },
-            {"ip":"V","octave": 0 },
-            {"ip":"K","octave": 0 }
-          ]
-        },
-        "o7": {
-          "class":"dim",
-          "anchor":"D",
-          "structure": [
-            {"ip":"D","octave": 0 },
-            {"ip":"N","octave": 0 },
-            {"ip":"V","octave": 0 },
-            {"ip":"L","octave": 0 }
-          ]
-        }
-    }
   }
 }
 
