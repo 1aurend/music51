@@ -8,12 +8,12 @@ import chalk from 'chalk'
 import { LetterName, letterNamePosition } from './LetterName'
 import { Clef } from './Clef'
 import { Accidental } from './Accidental'
-import { IndependentPitch } from './IP'
+import { IndependentPitch, IndependentPitchSubsets } from './IP'
 import { Shapes } from './Shapes'
 import { Mode, degree } from './Mode'
 import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
-
+import { chordStructures } from './ChordStructure'
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
@@ -208,26 +208,35 @@ function chooseRootSyllableAccidentalAndKeySignature(
     case RootOption.COMMON:
       // TODO
     default:
-
+      //
   }
 }
 
 // => (Note,Int)
-function makeChord(chordType) {
-  const inversions = inversions(chordType).randomElement()
+export function makeChord(chordType) {
+  const inversion = inversions(chordType).randomElement()
   // Set of all of the possible chord structures for the given chord type
   const possibleChordStructures = chordStructures(chordType) 
   // Choose one of the possible chord structures for the given chord type
   const chordStructure = possibleChordStructures.randomElement()
-  // TODO: We need a mode ("mode note" ?)
-  const rootNotes = noteIdentities(chordStructure.mode)
+  // Choose a random letter name for the root note
+  const rootLetter = Object.keys(LetterName).randomElement()
+  // Choose a random accidental for the root note
+  const rootAccidental = Object.keys(Accidental).randomElement()
+  // Choose random syllable from common independent pitch subsets
+  const rootSyllable = Object.keys(IndependentPitchSubsets.BOTTOM).randomElement()
 
-  // TODO: Finish this please
+  return {
+    rootSyllable: rootSyllable,
+    rootAccidental: rootAccidental,
+    structure: chordStructure,
+    inversion: inversion
+  }
 }
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options) {
-  
+
   // Choose whether we need to generate a triad or seventh chord
   const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
   const _chord = makeChord(_chordType)
@@ -701,9 +710,6 @@ export function invert(chord, inversion) {
   return notes
 }
 
-
-
-
 function inversions(chordType) {
   switch (chordType) {
     case ChordType.TRIAD:
@@ -731,7 +737,6 @@ export default function(numQs, options){
   console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
   return addKeystrokes(chords)
 }
-
 
 // Utility
 
