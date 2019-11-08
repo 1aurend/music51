@@ -189,7 +189,12 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
 //  accidental: Accidental,
 //  keySignature: KeySignature
 // }
-function chooseRootSyllableAccidentalAndKeySignature(rootOption, structure, rootSyllable, keySignatures) {
+function chooseRootSyllableAccidentalAndKeySignature(
+  rootOption, 
+  structure, 
+  rootSyllable, 
+  keySignatures
+) {
   // TODO: Inject keySignatures
   // TODO: Inject subsets
   // TODO: Inject rootAccidentals
@@ -221,7 +226,8 @@ function makeChord(chordType) {
 }
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
-function randomChord(options, subsets, keySignatures, rootAccidentals, accidentals, ip) {
+function randomChord(options) {
+  
   // Choose whether we need to generate a triad or seventh chord
   const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
   const _chord = makeChord(_chordType)
