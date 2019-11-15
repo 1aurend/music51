@@ -377,9 +377,9 @@ function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccidental) {
     roman = littleRoman[degree-1]
   }
 
-  console.log('roman is ' + roman + romanQuality)
-  console.log('quality is ' + chordStructure)
-  console.log('chord type is ' + chordType)
+  // console.log('roman is ' + roman + romanQuality)
+  // console.log('quality is ' + chordStructure)
+  // console.log('chord type is ' + chordType)
 
   return {
     romanNumeral: {
