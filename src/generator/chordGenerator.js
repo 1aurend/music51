@@ -286,14 +286,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement())
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
           modeNote = [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement()
       }
@@ -304,14 +304,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, [Mode.MINOR, Mode.DORIAN, Mode.LOCRIAN].randomElement())
           return {
             mode: scaleDegree,
             degree: degree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
       }
       break
@@ -322,14 +322,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, [Mode.LOCRIAN,Mode. DORIAN].randomElement())
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
       }
       break
@@ -338,7 +338,7 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       return {
         mode: mode,
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, degree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
     case ChordStructure.DOMINANT_SEVENTH:
       switch (mode) {
@@ -347,14 +347,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode, 
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, Mode.PHRYGIAN)
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
       }
     case ChordStructure.MAJOR_SEVENTH:
@@ -362,7 +362,7 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       return {
         mode: mode, 
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, degree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
     case ChordStructure.MINOR_SEVENTH:
       switch (mode) {
@@ -371,14 +371,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode, 
             degree: scaleDegree, 
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, [Mode.MINOR, Mode.DORIAN].randomElement())
           return {
             mode: mode,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
       }
     case ChordStructure.HALF_DIMINISHED_SEVENTH:
@@ -388,14 +388,14 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
           return {
             mode: mode, 
             degree: scaleDegree, 
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
         case Mode.MINOR:
           scaleDegree = degree(mode, [Mode.LOCRIAN, Mode.DORIAN].randomElement())
           return {
             mode: mode, 
             degree: scaleDegree, 
-            romanNumeral: romanNumeral(chordStructure, degree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
       }
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
@@ -403,7 +403,7 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       return {
         mode: mode, 
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, degree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
     default:
       throw new Error("Invalid chord structure")
