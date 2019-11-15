@@ -129,6 +129,7 @@ export function noteIdentities(mode) {
 }
 
 export function degree(mode, modeNote) {
+  console.log("degree incoming mode: " + JSON.stringify(mode) + " and mode note: " + JSON.stringify(modeNote))
   switch (mode) {
     case Mode.MAJOR:
       return Object.values(ModeSubset.MAJOR).indexOf(modeNote)+1
