@@ -8,12 +8,13 @@ import chalk from 'chalk'
 import { LetterName, letterNamePosition } from './LetterName'
 import { Clef } from './Clef'
 import { Accidental } from './Accidental'
-import { IndependentPitch, IndependentPitchSubsets } from './IP'
+import { IndependentPitch, IndependentPitchSubset } from './IP'
 import { Shapes } from './Shapes'
 import { Mode, ModeSubset, degree } from './Mode'
 import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
+import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
@@ -212,6 +213,9 @@ function chooseRootSyllableAccidentalAndKeySignature(
   }
 }
 
+// Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
+// random chord!
+//
 // => (Note,Int)
 export function makeChord(chordType) {
   const inversion = inversions(chordType).randomElement()
@@ -226,6 +230,7 @@ export function makeChord(chordType) {
   // Choose random syllable from common independent pitch subsets
   const rootSyllable = Object.keys(IndependentPitchSubset.BOTTOM).randomElement()
   // Choose random roman numeral context
+  
   const romanNumeralContext = makeRomanNumeralContext(chordStructure)
 
   console.log(romanNumeralContext)
@@ -235,6 +240,18 @@ export function makeChord(chordType) {
     rootAccidental: rootAccidental,
     structure: chordStructure,
     inversion: inversion
+  }
+}
+
+export function romanNumeral(chordStructure, degree) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR:
+    case ChordStructure.AUGMENTED:
+    case ChordStructure.DOMINANT_SEVENTH:
+    case ChordStructure.MAJOR_SEVENTH:
+      return degreeAndQualityToRomanNumeral(degree, true)
+    default:
+      return degreeAndQualityToRomanNumeral(degree, false)
   }
 }
 
@@ -252,11 +269,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = ['Maj','Lyd','Dom'].randomElement()
+        modeNote = [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement()
       }
       if(key === 'minor'){
-        modeNote = ['Maj','phr','Lyd','Dom'].randomElement()
+        modeNote = [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement()
       }
+      break
     case ChordStructure.MINOR:
       // choose to put it in a Major or minor key
       key = ['Major','minor'].randomElement()
@@ -264,11 +282,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = ['dor','phr','min'].randomElement()
+        modeNote = [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement()
       }
       if(key === 'minor'){
-        modeNote = ['min','dor','loc'].randomElement()
+        modeNote = [Mode.MINOR, Mode.DORIAN, Mode.LOCRIAN].randomElement()
       }
+      break
     case ChordStructure.DIMINISHED:
       // choose to put it in a Major or minor key
       key = ['Major','minor'].randomElement()
@@ -276,11 +295,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = 'o'
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = 'loc'
+        modeNote = Mode.LOCRIAN
       }
       if(key === 'minor'){
-        modeNote = ['loc','Dom'].randomElement()
+        modeNote = [Mode.LOCRIAN,Mode.DORIAN].randomElement()
       }
+      break
     case ChordStructure.AUGMENTED:
       // choose to put it in a Major or minor key
       key = 'minor'
@@ -288,8 +308,9 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = '+'
       // then choose from KP's common occurrences in Major or minor
       if(key === 'minor'){
-        modeNote = 'Maj'
+        modeNote = Mode.MAJOR
       }
+      break
     case ChordStructure.DOMINANT_SEVENTH:
       // choose to put it in a Major or minor key
       key = ['Major','minor'].randomElement()
@@ -297,11 +318,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = 'Dom'
+        modeNote = Mode.DOMINANT
       }
       if(key === 'minor'){
-        modeNote = 'phr'
+        modeNote = Mode.PHRYGIAN
       }
+      break
     case ChordStructure.MAJOR_SEVENTH:
       // choose to put it in a Major or minor key
       key = 'Major'
@@ -309,8 +331,9 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = ['Maj','Lyd'].randomElement()
+        modeNote = [Mode.MAJOR,Mode.LYDIAN].randomElement()
       }
+      break
     case ChordStructure.MINOR_SEVENTH:
       // choose to put it in a Major or minor key
       key = ['Major','minor'].randomElement()
@@ -318,11 +341,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = ''
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = ['dor','phr','min'].randomElement()
+        modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
       }
       if(key === 'minor'){
-        modeNote = ['min','dor'].randomElement()
+        modeNote = [Mode.MINOR, Mode.DORIAN].randomElement()
       }
+      break
     case ChordStructure.HALF_DIMINISHED_SEVENTH:
       // choose to put it in a Major or minor key
       key = ['Major','minor'].randomElement()
@@ -330,11 +354,12 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = 'ø'
       // then choose from KP's common occurrences in Major or minor
       if(key === 'Major'){
-        modeNote = 'loc'
+        modeNote = Mode.LOCRIAN
       }
       if(key === 'minor'){
-        modeNote = ['loc','Dom'].randomElement()
+        modeNote = [Mode.LOCRIAN, Mode.DORIAN].randomElement()
       }
+      break
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       // choose to put it in a Major or minor key
       key = 'minor'
@@ -342,18 +367,22 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
       inversionQuality = 'o'
       // then choose from KP's common occurrences in Major or minor
       if(key === 'minor'){
-        modeNote = 'Dom'
+        modeNote = Mode.DORIAN
       }
+      break
     default:
-      throw 'invalid chord structure'
+      throw new Error("Invalid chord structure")
   }
 
   // define the degree of the chord in its key
+
+  console.log("Mode note: " + modeNote)
+
   if(key === 'Major'){
-    degree = (1+ Object.keys(ModeSubset.MAJOR).indexOf(modeNote))
+    degree = (1 + Object.values(ModeSubset.MAJOR).indexOf(modeNote))
   }
   if(key === 'minor'){
-    degree = (1+ Object.keys(ModeSubset.MINOR).minModes.indexOf(modeNote))
+    degree = (1 + Object.values(ModeSubset.MINOR).indexOf(modeNote))
   }
 
   console.log('key is ' + key)
@@ -367,15 +396,10 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
     }
   }
 
-  // FIXME: Make functions `bigRomanNumeral(scaleDegree)` and `littleRomanNumeral(scaleDegree)`
-  let roman
-
-  if(chordStructure === 'M' || chordStructure === '+' || chordStructure === '7' || chordStructure === 'M7'){
-    roman = bigRoman[degree-1]
-  }
-  else{
-    roman = littleRoman[degree-1]
-  }
+  const roman = romanNumeral(chordStructure, degree)
+  console.log("degree: " + degree)
+  console.log("chord structure: " + JSON.stringify(chordStructure))
+  console.log("Roman from chord structure: " + roman)
 
   // console.log('roman is ' + roman + romanQuality)
   // console.log('quality is ' + chordStructure)

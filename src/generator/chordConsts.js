@@ -52,11 +52,6 @@ const classes = {
   [{"tensionMod12":1,"tensionMod7":1,"quality":0,"incidental":0},{"tensionMod12":2,"tensionMod7":2,"quality":-1,"incidental":-1},{"tensionMod12":3,"tensionMod7":2,"quality":1,"incidental":0},{"tensionMod12":4,"tensionMod7":2,"quality":2,"incidental":1},{"tensionMod12":5,"tensionMod7":3,"quality":1,"incidental":0},{"tensionMod12":6,"tensionMod7":4,"quality":0,"incidental":-1},{"tensionMod12":7,"tensionMod7":4,"quality":1,"incidental":0},{"tensionMod12":8,"tensionMod7":5,"quality":0,"incidental":-1},{"tensionMod12":9,"tensionMod7":5,"quality":1,"incidental":0},{"tensionMod12":10,"tensionMod7":7,"quality":-2,"incidental":-1},{"tensionMod12":11,"tensionMod7":7,"quality":-1,"incidental":0},{"tensionMod12":12,"tensionMod7":7,"quality":1,"incidental":1}]
 }
 
-const bigRoman = ['I','II','III','IV','V','VI','VII']
-const littleRoman = ['i','ii','iii','iv','v','vi','vii']
-
 export {
-  classes,
-  bigRoman,
-  littleRoman
+  classes
 }
