@@ -27,7 +27,7 @@ export const IndependentPitch = {
 // Independent Pitch Subsets are potential pools of pitches (represented by `Independent Pitch` values)
 // which sound good together. They act as an interface between the notion of "sounding good" and
 // conventional music contexts.
-export const IndependentPitchSubsets = {
+export const IndependentPitchSubset = {
   // The "top" set of independent pitches.
   TOP: {
     NA: IndependentPitch.NA,

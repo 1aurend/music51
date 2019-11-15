@@ -224,7 +224,7 @@ export function makeChord(chordType) {
   // Choose a random accidental for the root note
   const rootAccidental = Object.keys(Accidental).randomElement()
   // Choose random syllable from common independent pitch subsets
-  const rootSyllable = Object.keys(IndependentPitchSubsets.BOTTOM).randomElement()
+  const rootSyllable = Object.keys(IndependentPitchSubset.BOTTOM).randomElement()
   // Choose random roman numeral context
   const romanNumeralContext = makeRomanNumeralContext(chordStructure)
 
@@ -238,7 +238,7 @@ export function makeChord(chordType) {
   }
 }
 
-function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccidental) {
+export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccidental) {
   let modeNote
   let key
   let degree
