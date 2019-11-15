@@ -270,12 +270,8 @@ export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccide
 
   // FIXME: Consider adding configurability of allowable range of "shapes" and complexity
   const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
-
-  console.log("incoming chord structure: " + JSON.stringify(chordStructure))
-  console.log("allowed modes for chord structure: " + JSON.stringify(allowedModesByChordStructure[chordStructure]))
   const mode = allowedModesByChordStructure[chordStructure].randomElement()
-  console.log("chosen mode: " + JSON.stringify(mode))
-  
+
   let scaleDegree
 
   switch (chordStructure) {
