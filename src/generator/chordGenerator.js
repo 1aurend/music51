@@ -225,6 +225,10 @@ export function makeChord(chordType) {
   const rootAccidental = Object.keys(Accidental).randomElement()
   // Choose random syllable from common independent pitch subsets
   const rootSyllable = Object.keys(IndependentPitchSubsets.BOTTOM).randomElement()
+  // Choose random roman numeral context
+  const romanNumeralContext = makeRomanNumeralContext(chordStructure)
+
+  console.log(romanNumeralContext)
 
   return {
     rootSyllable: rootSyllable,
@@ -234,7 +238,7 @@ export function makeChord(chordType) {
   }
 }
 
-function makeRomanNumeralContext(chordStructure) {
+function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccidental) {
   let modeNote
   let key
   let degree
@@ -346,23 +350,22 @@ function makeRomanNumeralContext(chordStructure) {
 
   // define the degree of the chord in its key
   if(key === 'Major'){
-    degree = (1+ majModes.indexOf(modeNote))
+    degree = (1+ Object.keys(ModeSubset.MAJOR).indexOf(modeNote))
   }
   if(key === 'minor'){
-    degree = (1+ minModes.indexOf(modeNote))
+    degree = (1+ Object.keys(ModeSubset.MINOR).minModes.indexOf(modeNote))
   }
 
   console.log('key is ' + key)
   console.log('degree is ' + degree)
 
   // set root syllable and accidental based on the mode note
-  for(var i=0; i<keySignatures[keySignature].notes.length; i++){
-    if(keySignatures[keySignature].notes[i].mode === modeNote){
-      rootSyllable = keySignatures[keySignature].notes[i].refIP
-      rootAccidental = keySignatures[keySignature].notes[i].accidental
+  for(var i=0; i<Shapes[keySignature].notes.length; i++){
+    if(Shapes[keySignature].notes[i].mode === modeNote){
+      rootSyllable = Shapes[keySignature].notes[i].refIP
+      rootAccidental = Shapes[keySignature].notes[i].accidental
     }
   }
-
 
   // FIXME: Make functions `bigRomanNumeral(scaleDegree)` and `littleRomanNumeral(scaleDegree)`
   let roman
