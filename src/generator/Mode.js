@@ -35,7 +35,7 @@ export const ModeSubset = {
 
 export function noteIdentities(mode) {
   switch (mode) {
-    case Mode.LYDIAN: 
+    case Mode.LYDIAN:
       return [
         {"tensionMod7":1,"quality":0,"incidental":0},
         {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -50,7 +50,7 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":-1},
         {"tensionMod7":7,"quality":1,"incidental":0}
       ]
-    case Mode.LYDIAN_DOMINANT: 
+    case Mode.LYDIAN_DOMINANT:
       return [
         {"tensionMod7":1,"quality":0,"incidental":0},
         {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -65,7 +65,7 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":0},
         {"tensionMod7":7,"quality":1,"incidental":1}
       ]
-    case Mode.DORIAN: 
+    case Mode.DORIAN:
       return [
        {"tensionMod7":1,"quality":0,"incidental":0},
        {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -80,7 +80,7 @@ export function noteIdentities(mode) {
        {"tensionMod7":7,"quality":-1,"incidental":0},
        {"tensionMod7":7,"quality":1,"incidental":1}
       ]
-    case Mode.DIMINISHED_MINOR: 
+    case Mode.DIMINISHED_MINOR:
       return [
         {"tensionMod7":1,"quality":0,"incidental":0},
         {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -95,7 +95,7 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":0},
         {"tensionMod7":7,"quality":1,"incidental":1}
       ]
-    case Mode.DIMINISHED: 
+    case Mode.DIMINISHED:
       return [
         {"tensionMod7":1,"quality":0,"incidental":0},
         {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -110,7 +110,7 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":-1},
         {"tensionMod7":7,"quality":1,"incidental":0}
       ]
-    case Mode.AUGMENTED_DOMINANT: 
+    case Mode.AUGMENTED_DOMINANT:
       return [
         {"tensionMod7":1,"quality":0,"incidental":0},
         {"tensionMod7":2,"quality":-1,"incidental":-1},
@@ -128,18 +128,13 @@ export function noteIdentities(mode) {
     }
 }
 
-export function degree(key, modeNote) {
-  let order
-  switch (key) {
-    case ModeSubset.MAJOR:
-      order = Object.keys(ModeSubset.MAJOR)
-      console.log(order);
-      return order.indexOf(modeNote)+1
-    case ModeSubset.MINOR:
-      order = Object.keys(ModeSubset.MINOR)
-      console.log(order);
-      return order.indexOf(modeNote)+1
+export function degree(mode, modeNote) {
+  switch (mode) {
+    case Mode.MAJOR:
+      return Object.values(ModeSubset.MAJOR).indexOf(modeNote)+1
+    case Mode.MINOR:
+      return Object.values(ModeSubset.MINOR).indexOf(modeNote)+1
     default:
-      throw 'invalid key'
+      throw new Error('invalid key')
   }
 }
