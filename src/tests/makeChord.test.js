@@ -1,8 +1,10 @@
 import { ChordType } from '../generator/ChordType'
 import { ChordStructure } from '../generator/ChordStructure'
-import { makeChord, makeRomanNumeralContext } from '../generator/chordGenerator'
+import { makeChord, randomRomanNumeralContext, allowedModesByChordStructure, concretizeRoot } from '../generator/chordGenerator'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
+import { Mode } from '../generator/Mode'
+
 
 test('triad chord comes out when we generate a triad chord', () => {
   const chord = makeChord(ChordType.TRIAD)
@@ -27,35 +29,25 @@ test('seventh chord comes out when we generate a seventh chord', () => {
   expect(sevenths.has(chord.structure)).toBeTruthy()
 })
 
-// Independent Pitch Subsets are potential pools of pitches (represented by `Independent Pitch` values)
-// which sound good together. They act as an interface between the notion of "sounding good" and
-// conventional music contexts.
-const IndependentPitchSubset = {
-  // The "top" set of independent pitches.
-  TOP: {
-    NA: IndependentPitch.NA,
-    FA: IndependentPitch.FA,
-    VE: IndependentPitch.VE,
-    PE: IndependentPitch.PE,
-    KE: IndependentPitch.KE,
-    TI: IndependentPitch.TI,
-    BA: IndependentPitch.BA,
-  },
-  // The "bottom" set of independent pitches.
-  BOTTOM: {
-    RE: IndependentPitch.RE,
-    MI: IndependentPitch.MI,
-    FA: IndependentPitch.FA,
-    SO: IndependentPitch.SO,
-    LA: IndependentPitch.LA,
-    TI: IndependentPitch.TI,
-    DO: IndependentPitch.DO,
-  }
-}
-
 test('make roman numeral context', () => {
-  const chordStructure = ChordStructure.MAJOR
-  const rootSyllable = IndependentPitchSubset.BOTTOM.FA
-  const rootAccidental = Accidental.NATURAL
-  makeRomanNumeralContext(chordStructure, rootSyllable, rootSyllable)
+  for (var i = 0; i < Object.keys(ChordStructure).length; i++) {
+    const chordStructure = Object.values(ChordStructure)[i]
+    expect(randomRomanNumeralContext(chordStructure)).toBeTruthy()
+  }
+})
+
+test('concretizeRoot returns DO NATURAL for MAJOR mode note in C major', () => {
+  const keySignature = 'B' /*B means bottom shape*/
+  const modeNote = Mode.MAJOR
+  const concretizedRoot = concretizeRoot(keySignature, modeNote)
+  expect(concretizedRoot.independentPitch).toBe(IndependentPitch.DO)
+  expect(concretizedRoot.accidental).toBe(Accidental.NATURAL)
+})
+
+test('concretizeRoot returns XXX FLAT for MAJOR mode note in F major', () => {
+  const keySignature = 'R1' /*B means bottom shape*/
+  const modeNote = Mode.LYDIAN
+  const concretizedRoot = concretizeRoot(keySignature, modeNote)
+  expect(concretizedRoot.independentPitch).toBe(IndependentPitch.TI)
+  expect(concretizedRoot.accidental).toBe(Accidental.FLAT)
 })

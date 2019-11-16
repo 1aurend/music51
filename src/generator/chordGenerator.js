@@ -214,15 +214,17 @@ function chooseRootSyllableAccidentalAndKeySignature(
 //
 // => (Note,Int)
 export function makeChord(chordType) {
-  const inversion = inversions(chordType).randomElement()
   // Set of all of the possible chord structures for the given chord type
+  // Consider moving any vs common root note option to a higher level
   const possibleChordStructures = chordStructures(chordType)
   // Choose one of the possible chord structures for the given chord type
+  // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
   const chordStructure = possibleChordStructures.randomElement()
   // Choose random roman numeral context
-  const romanNumeralContext = makeRomanNumeralContext(chordStructure)
-  
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
   // TODO: Concretize abstract chord (roman numeral context) into spelled key context
+  const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
+  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
 
   // FIXME: Get rid of the following three statements
   // Choose random syllable from common independent pitch subsets
@@ -231,8 +233,10 @@ export function makeChord(chordType) {
   const rootLetter = Object.keys(LetterName).randomElement()
   // Choose a random accidental for the root note
   const rootAccidental = Object.keys(Accidental).randomElement()
-  
+
   console.log(romanNumeralContext)
+  // TODO: put this in the proper place
+  const inversion = inversions(chordType).randomElement()
 
   return {
     rootSyllable: rootSyllable,
@@ -241,6 +245,47 @@ export function makeChord(chordType) {
     inversion: inversion
   }
 }
+
+export function concretizeRoot(keySignature, modeNote) {
+  // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
+  for(var i=0; i<Shapes[keySignature].notes.length; i++){
+    if(Shapes[keySignature].notes[i].mode === modeNote){
+      const rootAccidental = Shapes[keySignature].notes[i].accidental
+      console.log(`rootAccidental: ${rootAccidental}`);
+      const rootSyllable = Shapes[keySignature].notes[i].refIP
+      console.log(`rootSyllable: ${rootSyllable}`);
+      const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
+      const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
+      console.log(`rootLetter: ${rootLetter}`);
+      console.log(`offset: ${offset}`);
+      const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
+      console.log(`rootSyllableIndex ${rootSyllableIndex}`);
+      const rootIPIndex = (rootSyllableIndex+offset)%12
+      console.log(`rootIPIndex ${rootIPIndex}`);
+      const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+      return {
+        independentPitch: rootIP,
+        accidental: rootAccidental,
+        letter: rootLetter
+      }
+    }
+  }
+  throw new Error('modeNote ' + modeNote + ' not found in keySignature ' + keySignature)
+}
+
+// translate the syllable "position" to a letter
+// let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
+  // console.log(rootLetter+rootAccidental+" "+newStructure);
+  // console.log("root letter is " + rootLetter)
+
+// find the equivalent IP based on the accidental's offset from the "natural" root syllable
+ // the distance from natural!
+  // console.log(offset + " from natural")
+// let rootIp = IndependentPitch[(ip.indexOf(rootSyllable)+offset)%12]
+
+
+  // console.log("IP: " + rootIp)
+
 
 export function romanNumeral(chordStructure, degree) {
   switch (chordStructure) {
@@ -266,157 +311,182 @@ const allowedModesByChordStructure = {
   [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
 }
 
-export function makeRomanNumeralContext(chordStructure, rootSyllable, rootAccidental) {
 
+
+export function randomRomanNumeralContext(chordStructure) {
   // FIXME: Consider adding configurability of allowable range of "shapes" and complexity
-  const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
   const mode = allowedModesByChordStructure[chordStructure].randomElement()
-
-  let scaleDegree
-
   switch (chordStructure) {
-    case ChordStructure.MAJOR: 
+    case ChordStructure.MAJOR:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement())
+        case Mode.MAJOR: {
+          const modeNote = [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement())
+        }
+        case Mode.MINOR: {
+          const modeNote = [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
-          modeNote = [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement()
+        }
       }
     case ChordStructure.MINOR:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement())
+        case Mode.MAJOR: {
+          const modeNote = [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, [Mode.MINOR, Mode.DORIAN, Mode.LOCRIAN].randomElement())
+        }
+        case Mode.MINOR: {
+          const modeNote = [Mode.MINOR, Mode.DORIAN, Mode.LOCRIAN].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: scaleDegree,
+            modeNote: modeNote,
             degree: degree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
+        }
       }
-      break
     case ChordStructure.DIMINISHED:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, Mode.LOCRIAN)
+        case Mode.MAJOR: {
+          const modeNote = Mode.LOCRIAN
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, [Mode.LOCRIAN,Mode. DORIAN].randomElement())
+        }
+        case Mode.MINOR: {
+          const modeNote = [Mode.LOCRIAN, Mode.DORIAN].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
+        }
       }
-      break
-    case ChordStructure.AUGMENTED:
-      scaleDegree = degree(mode, Mode.MAJOR)
+    case ChordStructure.AUGMENTED: {
+      const modeNote = Mode.MAJOR
+      const scaleDegree = degree(mode, modeNote)
       return {
         mode: mode,
+        modeNote: modeNote,
         degree: scaleDegree,
         romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
+    }
     case ChordStructure.DOMINANT_SEVENTH:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, Mode.DOMINANT)
-          return {
-            mode: mode, 
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, Mode.PHRYGIAN)
+        case Mode.MAJOR: {
+          const modeNote = Mode.DOMINANT
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
+        }
+        case Mode.MINOR: {
+          const modeNote = Mode.PHRYGIAN
+          const scaleDegree = degree(mode, modeNote)
+          return {
+            mode: mode,
+            modeNote: modeNote,
+            degree: scaleDegree,
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+          }
+        }
       }
-    case ChordStructure.MAJOR_SEVENTH:
-      scaleDegree = degree(mode, [Mode.MAJOR,Mode.LYDIAN].randomElement())
+    case ChordStructure.MAJOR_SEVENTH: {
+      const modeNote = [Mode.MAJOR,Mode.LYDIAN].randomElement()
+      const scaleDegree = degree(mode, modeNote)
       return {
-        mode: mode, 
+        mode: mode,
+        modeNote: modeNote,
         degree: scaleDegree,
         romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
+    }
     case ChordStructure.MINOR_SEVENTH:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement())
-          return {
-            mode: mode, 
-            degree: scaleDegree, 
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, [Mode.MINOR, Mode.DORIAN].randomElement())
+        case Mode.MAJOR: {
+          const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
+            modeNote: modeNote,
             degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
+        }
+        case Mode.MINOR: {
+          const modeNote = [Mode.MINOR, Mode.DORIAN].randomElement()
+          const scaleDegree = degree(mode, modeNote)
+          return {
+            mode: mode,
+            modeNote: modeNote,
+            degree: scaleDegree,
+            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+          }
+        }
       }
     case ChordStructure.HALF_DIMINISHED_SEVENTH:
       switch (mode) {
-        case Mode.MAJOR:
-          scaleDegree = degree(mode, Mode.LOCRIAN)
+        case Mode.MAJOR: {
+          const modeNote = Mode.LOCRIAN
+          const scaleDegree = degree(mode, modeNote)
           return {
-            mode: mode, 
-            degree: scaleDegree, 
+            mode: mode,
+            modeNote: modeNote,
+            degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
-        case Mode.MINOR:
-          scaleDegree = degree(mode, [Mode.LOCRIAN, Mode.DORIAN].randomElement())
+        }
+        case Mode.MINOR: {
+          const modeNote = [Mode.LOCRIAN, Mode.DORIAN].randomElement()
+          const scaleDegree = degree(mode, modeNote)
           return {
-            mode: mode, 
-            degree: scaleDegree, 
+            mode: mode,
+            modeNote: modeNote,
+            degree: scaleDegree,
             romanNumeral: romanNumeral(chordStructure, scaleDegree)
           }
+        }
       }
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
-      scaleDegree = degree(mode, Mode.DORIAN)
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH: {
+      const modeNote = Mode.DORIAN
+      const scaleDegree = degree(mode, modeNote)
       return {
-        mode: mode, 
+        mode: mode,
+        modeNote: modeNote,
         degree: scaleDegree,
         romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
+    }
     default:
       throw new Error("Invalid chord structure")
-  }
-
-  // set root syllable and accidental based on the mode note
-  for(var i=0; i<Shapes[keySignature].notes.length; i++){
-    if(Shapes[keySignature].notes[i].mode === modeNote){
-      rootSyllable = Shapes[keySignature].notes[i].refIP
-      rootAccidental = Shapes[keySignature].notes[i].accidental
-    }
-  }
-  
-  return {
-    mode: mode,
-    degree: degree,
-    romanNumeral: romanNumeral(chordStructure, degree)
   }
 }
 
@@ -501,16 +571,6 @@ function randomChord(options) {
     ]
   }
 
-  // translate the syllable "position" to a letter
-  let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
-    // console.log(rootLetter+rootAccidental+" "+newStructure);
-    // console.log("root letter is " + rootLetter)
-
-  // find the equivalent IP based on the accidental's offset from the "natural" root syllable
-  let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf('♮')) // the distance from natural!
-    // console.log(offset + " from natural")
-  let rootIp = ip[(ip.indexOf(rootSyllable)+offset)%12]
-    // console.log("IP: " + rootIp)
 
   // choose the octave of the starting (root) note.
   // TODO: make sure this range matches with the range set in staffAdjust()
