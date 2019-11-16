@@ -181,6 +181,7 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
     chooseRandomAccidental(allowedAccidentals))
 }
 
+// TODO: Decide if we still need this function. Is this now covered by concretizeRoot? If so, we'll need to deal with chooseRootAccidental above to make sure we're still dealing with the egregious edge cases.
 // => {
 //  syllable: Syllable,
 //  accidental: Accidental,
@@ -222,22 +223,15 @@ export function makeChord(chordType) {
   const chordStructure = possibleChordStructures.randomElement()
   // Choose random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  // TODO: Concretize abstract chord (roman numeral context) into spelled key context
+  // TODO: Concretize abstract chord (roman numeral context) into spelled key context (in progress)
   const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
 
-  // FIXME: Get rid of the following three statements
-  // Choose random syllable from common independent pitch subsets
-  const rootSyllable = Object.keys(IndependentPitchSubset.BOTTOM).randomElement()
-  // Choose a random letter name for the root note
-  const rootLetter = Object.keys(LetterName).randomElement()
-  // Choose a random accidental for the root note
-  const rootAccidental = Object.keys(Accidental).randomElement()
 
-  console.log(romanNumeralContext)
   // TODO: put this in the proper place
   const inversion = inversions(chordType).randomElement()
 
+  // TODO: Fix this return... no longer correct... (11/15)
   return {
     rootSyllable: rootSyllable,
     rootAccidental: rootAccidental,
@@ -246,23 +240,26 @@ export function makeChord(chordType) {
   }
 }
 
+
+/**
+ * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
+ *
+ * @param  {type} keySignature A randomly chosen key signature represented as a shape
+ * @param  {type} modeNote     The mode of the root note
+ * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
+ */
 export function concretizeRoot(keySignature, modeNote) {
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
+  // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
+  // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
   for(var i=0; i<Shapes[keySignature].notes.length; i++){
     if(Shapes[keySignature].notes[i].mode === modeNote){
       const rootAccidental = Shapes[keySignature].notes[i].accidental
-      console.log(`rootAccidental: ${rootAccidental}`);
       const rootSyllable = Shapes[keySignature].notes[i].refIP
-      console.log(`rootSyllable: ${rootSyllable}`);
       const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
       const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-      console.log(`rootLetter: ${rootLetter}`);
-      console.log(`offset: ${offset}`);
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-      console.log(`rootSyllableIndex ${rootSyllableIndex}`);
       const rootIPIndex = (rootSyllableIndex+offset)%12
-      console.log(`rootIPIndex ${rootIPIndex}`);
-      console.log(Object.values(IndependentPitch));
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
       return {
         independentPitch: rootIP,
@@ -274,20 +271,14 @@ export function concretizeRoot(keySignature, modeNote) {
   throw new Error('modeNote ' + modeNote + ' not found in keySignature ' + keySignature)
 }
 
-// translate the syllable "position" to a letter
-// let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
-  // console.log(rootLetter+rootAccidental+" "+newStructure);
-  // console.log("root letter is " + rootLetter)
 
-// find the equivalent IP based on the accidental's offset from the "natural" root syllable
- // the distance from natural!
-  // console.log(offset + " from natural")
-// let rootIp = IndependentPitch[(ip.indexOf(rootSyllable)+offset)%12]
-
-
-  // console.log("IP: " + rootIp)
-
-
+/**
+ * romanNumeral - Returns a roman numeral or romanette of the appropriate number given a chord structure and scale degree.
+ *
+ * @param  {type} chordStructure The type of chord for which to generate a numeral
+ * @param  {type} degree         The scale degree
+ * @return {type}                The roman numeral or romanette for the given configuration of chord type and scale degree.
+ */
 export function romanNumeral(chordStructure, degree) {
   switch (chordStructure) {
     case ChordStructure.MAJOR:
@@ -300,6 +291,7 @@ export function romanNumeral(chordStructure, degree) {
   }
 }
 
+//These are KP's choices. See note in randomRomanNumeralContext re: configurability.
 const allowedModesByChordStructure = {
   [ChordStructure.MAJOR]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.MINOR]: [Mode.MAJOR, Mode.MINOR],
@@ -313,7 +305,12 @@ const allowedModesByChordStructure = {
 }
 
 
-
+/**
+ * randomRomanNumeralContext - Choose a random roman numeral context -- mode, mode note, scale degree, and numeral -- given a chord structure.
+ *
+ * @param  {type} chordStructure The chord structure to create context for.
+ * @return {type}                An object consisting of a mode, a mode note, scale degree, and roman numeral.
+ */
 export function randomRomanNumeralContext(chordStructure) {
   // FIXME: Consider adding configurability of allowable range of "shapes" and complexity
   const mode = allowedModesByChordStructure[chordStructure].randomElement()
@@ -494,61 +491,63 @@ export function randomRomanNumeralContext(chordStructure) {
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options) {
 
-  // Choose whether we need to generate a triad or seventh chord
-  const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
-  const _chord = makeChord(_chordType)
+  //NB: Commeting out things below that I (LD) think we've accounted for in the new functions above. We can decide next time if we're ready to delete.
 
-  let template
-  let inversions
-  let chordType
-
-  // choose a random chord type
-  let newStructure = Object.keys(template).randomElement()
-  let newClass = template[newStructure].class
-  let newRoot = template[newStructure].anchor
-
-  let rootSyllable
-  let rootAccidental
-
-  let keySignature
-
-  // apply option for any root notes
-  if(options.roots.any === true){
-    keySignature = Object.keys(keySignatures).randomElement()
-     // B is set implicitly as the "reference" subset
-    rootSyllable = subsets.B.randomElement()
-    rootAccidental = rootAccidentals.randomElement()
-
-    // adjust 'o7' chords where the o7th would be a triple flat
-    if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
-      rootAccidental = '♮'
-    }
-    // adjust '+' chords where the +5th would be a triple sharp
-    if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === '♯')){
-      rootAccidental = '♮'
-    }
-  }
-
-  // FIXME: Refactor into own function `romanNumeralOptions(chordType)`
-  //        which returns an array of strings
-  let romanOptions
-
-  if(chordType === 'triad'){
-    romanOptions = [
-      roman.toUpperCase(),
-      roman.toLowerCase(),
-      roman.toLowerCase() + 'o',
-      roman.toUpperCase() + '+'
-    ]
-  }
-  if(chordType === 'seventh'){
-    romanOptions = [
-    roman.toUpperCase() + '7',
-    roman.toLowerCase() + '7',
-    roman.toLowerCase() + 'ø7',
-    roman.toLowerCase() + 'o7'
-  ]
-  }
+  // // Choose whether we need to generate a triad or seventh chord
+  // const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  // const _chord = makeChord(_chordType)
+  //
+  // let template
+  // let inversions
+  // let chordType
+  //
+  // // choose a random chord type
+  // let newStructure = Object.keys(template).randomElement()
+  // let newClass = template[newStructure].class
+  // let newRoot = template[newStructure].anchor
+  //
+  // let rootSyllable
+  // let rootAccidental
+  //
+  // let keySignature
+  //
+  // // apply option for any root notes
+  // if(options.roots.any === true){
+  //   keySignature = Object.keys(keySignatures).randomElement()
+  //    // B is set implicitly as the "reference" subset
+  //   rootSyllable = subsets.B.randomElement()
+  //   rootAccidental = rootAccidentals.randomElement()
+  //
+  //   // adjust 'o7' chords where the o7th would be a triple flat
+  //   if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
+  //     rootAccidental = '♮'
+  //   }
+  //   // adjust '+' chords where the +5th would be a triple sharp
+  //   if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === '♯')){
+  //     rootAccidental = '♮'
+  //   }
+  // }
+  //
+  // // FIXME: Refactor into own function `romanNumeralOptions(chordType)`
+  // //        which returns an array of strings
+  // let romanOptions
+  //
+  // if(chordType === 'triad'){
+  //   romanOptions = [
+  //     roman.toUpperCase(),
+  //     roman.toLowerCase(),
+  //     roman.toLowerCase() + 'o',
+  //     roman.toUpperCase() + '+'
+  //   ]
+  // }
+  // if(chordType === 'seventh'){
+  //   romanOptions = [
+  //   roman.toUpperCase() + '7',
+  //   roman.toLowerCase() + '7',
+  //   roman.toLowerCase() + 'ø7',
+  //   roman.toLowerCase() + 'o7'
+  // ]
+  // }
 
   // FIXME: Refactor into own function `romanNumeralInversionOptions(chordType)`
   //        which returns an array of strings
