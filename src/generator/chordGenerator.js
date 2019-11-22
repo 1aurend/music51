@@ -537,7 +537,7 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
     for(var i=0; i<chordStructure.structure.length; i++){
 
       // translate the template ip to a relative note in the class
-      const translatedNoteIP = translateNoteIP(chordStructure.structure[i], rootIP)
+      const translatedNoteIP = translateNoteIPIndex(chordStructure.structure[i], rootIP)
 
       // get the syllable "position" from the reference subset based on tensionMod7 value in the class
       let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][newNote].tensionMod7 -1)%7)]
