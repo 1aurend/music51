@@ -1,5 +1,9 @@
 // Utility
 
+Object.prototype.randomElement = function () {
+  return Object.values(this).randomElement()
+}
+
 Array.prototype.randomElement = function () {
   return this[Math.floor(Math.random() * this.length)]
 }

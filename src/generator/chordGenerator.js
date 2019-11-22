@@ -189,28 +189,28 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
 //  accidental: Accidental,
 //  keySignature: KeySignature
 // }
-function chooseRootSyllableAccidentalAndKeySignature(
-  rootOption,
-  structure,
-  rootSyllable,
-  keySignatures
-) {
-  // TODO: Inject keySignatures
-  // TODO: Inject subsets
-  // TODO: Inject rootAccidentals
-  switch (rootOption) {
-    case RootOption.ANY:
-      return {
-        "syllable": subsets.B.randomElement(),
-        "accidental": chooseRootAccidental(rootSyllable, structure),
-        "keySignature": Object.keys(keySignatures).randomElement()
-      }
-    case RootOption.COMMON:
-      // TODO
-    default:
-      //
-  }
-}
+// function chooseRootSyllableAccidentalAndKeySignature(
+//   rootOption,
+//   structure,
+//   rootSyllable,
+//   keySignatures
+// ) {
+//   // TODO: Inject keySignatures
+//   // TODO: Inject subsets
+//   // TODO: Inject rootAccidentals
+//   switch (rootOption) {
+//     case RootOption.ANY:
+//       return {
+//         "syllable": subsets.B.randomElement(),
+//         "accidental": chooseRootAccidental(rootSyllable, structure),
+//         "keySignature": Object.keys(keySignatures).randomElement()
+//       }
+//     case RootOption.COMMON:
+//       // TODO
+//     default:
+//       //
+//   }
+// }
 
 // Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
@@ -235,9 +235,8 @@ export function makeChord(chordType) {
 
   // TODO: Fix this return... no longer correct... (11/15)
   return {
-    rootSyllable: rootSyllable,
-    rootAccidental: rootAccidental,
     structure: chordStructure,
+    root: concretizedRoot,
     inversion: inversion
   }
 }
@@ -493,99 +492,20 @@ export function randomRomanNumeralContext(chordStructure) {
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options) {
 
-  //NB: Commeting out things below that I (LD) think we've accounted for in the new functions above. We can decide next time if we're ready to delete.
-
-  // // Choose whether we need to generate a triad or seventh chord
-  // const _chordType = chooseChordType(chordTypesOption(options.chordTypes))
-  // const _chord = makeChord(_chordType)
-  //
-  // let template
-  // let inversions
-  // let chordType
-  //
-  // // choose a random chord type
-  // let newStructure = Object.keys(template).randomElement()
-  // let newClass = template[newStructure].class
-  // let newRoot = template[newStructure].anchor
-  //
-  // let rootSyllable
-  // let rootAccidental
-  //
-  // let keySignature
-  //
-  // // apply option for any root notes
-  // if(options.roots.any === true){
-  //   keySignature = Object.keys(keySignatures).randomElement()
-  //    // B is set implicitly as the "reference" subset
-  //   rootSyllable = subsets.B.randomElement()
-  //   rootAccidental = rootAccidentals.randomElement()
-  //
-  //   // adjust 'o7' chords where the o7th would be a triple flat
-  //   if ((newStructure === 'o7') && (rootSyllable === 'D' || rootSyllable === 'F') && (rootAccidental === '♭')){
-  //     rootAccidental = '♮'
-  //   }
-  //   // adjust '+' chords where the +5th would be a triple sharp
-  //   if ((newStructure === '+') && (rootSyllable === 'T') && (rootAccidental === '♯')){
-  //     rootAccidental = '♮'
-  //   }
-  // }
-  //
-  // // FIXME: Refactor into own function `romanNumeralOptions(chordType)`
-  // //        which returns an array of strings
-  // let romanOptions
-  //
-  // if(chordType === 'triad'){
-  //   romanOptions = [
-  //     roman.toUpperCase(),
-  //     roman.toLowerCase(),
-  //     roman.toLowerCase() + 'o',
-  //     roman.toUpperCase() + '+'
-  //   ]
-  // }
-  // if(chordType === 'seventh'){
-  //   romanOptions = [
-  //   roman.toUpperCase() + '7',
-  //   roman.toLowerCase() + '7',
-  //   roman.toLowerCase() + 'ø7',
-  //   roman.toLowerCase() + 'o7'
-  // ]
-  // }
-
-  // FIXME: Refactor into own function `romanNumeralInversionOptions(chordType)`
-  //        which returns an array of strings
-  let romanInversionOptions
-
-  // [roman + inversionQuality + " " + inversion]
-
-  if(chordType === 'triad'){
-    romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '63',
-      roman + inversionQuality + '64'
-    ]
-  }
-  if(chordType === 'seventh'){
-    romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '65',
-      roman + inversionQuality + '43',
-      roman + inversionQuality + '42'
-    ]
-  }
 
 
   // choose the octave of the starting (root) note.
   // TODO: make sure this range matches with the range set in staffAdjust()
-  let clef = clefs.randomElement()
+  let clef = Clef.randomElement()
   // console.log(clef + " clef")
-  let clefOctave
+  let chordOctave
   if(clef === "bass"){
-    clefOctave = Math.floor(Math.random() * 4) + 1 // range of 4 octaves starting from octave 1
+    chordOctave = Math.floor(Math.random() * 4) + 1 // range of 4 octaves starting from octave 1
   }
   if(clef === "treble"){
-    clefOctave = Math.floor(Math.random() * 4) + 3 // range of 4 octaves starting from octave 3
+    chordOctave = Math.floor(Math.random() * 4) + 3 // range of 4 octaves starting from octave 3
   }
-    // console.log('clefOctave: '+clefOctave)
+    // console.log('chordOctave: '+chordOctave)
 
   // choose an inversion
   let inversion = inversions.randomElement()
@@ -619,72 +539,6 @@ function randomChord(options) {
   inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
 
 
-  // FIXME: Decouple questions from `chord`
-  //        Some dependencies to detangle:
-  //          - `rootLetter`
-  //          - `rootAccidental`
-  //          - `key`
-  //          - `degree`
-  //          - `roman`
-  //          - `romanQuality`
-  //          - `inversion`
-  //          - `inversionQuality`
-  //          - `romanInversionOptions`
-  chord.questions = [
-    {
-      "type": "Names",
-      "questionText": "Name the letter positions from lowest to highest.",
-      "answers": [], // will populate in the loop
-      "ordered": true,
-      "choices": [
-          "A",
-          "B",
-          "C",
-          "D",
-          "E",
-          "F",
-          "G"
-      ]
-    },
-    {
-      "type": "Roots",
-      "questionText": "What's the root note?",
-      "answers": [rootLetter+rootAccidental],
-      "choices": [] // will populate in the loop
-    },
-    {
-      "type": "Degrees",
-      "questionText": "In a " + key + " key, what degree is this chord built on?",
-      "answers": [degree + "^"],
-      "choices": [
-          "1^",
-          "2^",
-          "3^",
-          "4^",
-          "5^",
-          "6^",
-          "7^"
-      ]
-    },
-    // {
-    //   "type": "Quality",
-    //   "questionText": "What's the chord's quality?",
-    //   "answers": [rootLetter + rootAccidental + newStructure],
-    //   "choices": qualityOptions
-    // },
-    {
-      "type": "Numerals",
-      "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality],
-      "choices": romanOptions
-    },
-    {
-      "type": "Inversions",
-      "questionText": "What's the inversion?",
-      "answers": [roman + inversionQuality + inversion],
-      "choices": romanInversionOptions
-    }
-  ]
 
   // FIXME: This should be its own function
   // build the structure with correct spellings
@@ -718,10 +572,10 @@ function randomChord(options) {
     // octave adjustments:
     // TODO: will this also work for template structures bigger than an octave?
     let octaveIndex = letterNamePosition(noteLetter)
-    let octave = clefOctave
+    let octave = chordOctave
     if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
       octave += 1;
-      clefOctave +=1 // sets the default octave up for the next note
+      chordOctave +=1 // sets the default octave up for the next note
     }
 
     // push notes into questions before adjusting accidentals for key sig
