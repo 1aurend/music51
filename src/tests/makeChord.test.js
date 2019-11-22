@@ -1,6 +1,12 @@
 import { ChordType } from '../generator/ChordType'
 import { ChordStructure } from '../generator/ChordStructure'
-import { makeChord, randomRomanNumeralContext, allowedModesByChordStructure, concretizeRoot } from '../generator/chordGenerator'
+import {
+  makeChord,
+  randomRomanNumeralContext,
+  allowedModesByChordStructure,
+  concretizeRoot,
+  translateNoteIPIndex
+ } from '../generator/chordGenerator'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
 import { Mode } from '../generator/Mode'
@@ -50,4 +56,16 @@ test('concretizeRoot returns XXX FLAT for MAJOR mode note in F major', () => {
   const concretizedRoot = concretizeRoot(keySignature, modeNote)
   expect(concretizedRoot.independentPitch).toBe(IndependentPitch.TI)
   expect(concretizedRoot.accidental).toBe(Accidental.FLAT)
+})
+
+test('translateNoteIPIndex returns 0', () => {
+  const rootIP = IndependentPitch.DO
+  const componentIP = IndependentPitch.DO
+  expect(translateNoteIPIndex(componentIP, rootIP)).toBe(0)
+})
+
+test('translateNoteIPIndex returns 4', () => {
+  const rootIP = IndependentPitch.DO
+  const componentIP = IndependentPitch.MI
+  expect(translateNoteIPIndex(componentIP, rootIP)).toBe(4)
 })

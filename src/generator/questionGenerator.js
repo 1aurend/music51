@@ -9,7 +9,7 @@
 //          - `inversion`
 //          - `inversionQuality`
 //          - `romanInversionOptions`
-chord.questions = [
+questions = [
   {
     "type": "Names",
     "questionText": "Name the letter positions from lowest to highest.",
@@ -84,4 +84,34 @@ if(chordType === 'seventh'){
     roman + inversionQuality + '43',
     roman + inversionQuality + '42'
   ]
+}
+
+
+// aggregate options for chord quality question
+let qualityOptions = []
+Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
+
+// aggregate options for inversions question
+let inversionOptions = []
+inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
+
+// push notes into questions before adjusting accidentals for key sig
+chord.questions[0].answers.push(noteLetter);
+
+
+// FIXME: This should be its own function
+// only show natural in question choices if it's an alteration from the key sig
+if(accidental != '♮'){
+  chord.questions[1].choices.push(noteLetter+accidental);
+}
+else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
+  chord.questions[1].choices.push(noteLetter+'♮');
+}
+else {
+  chord.questions[1].choices.push(noteLetter);
+}
+
+// adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
+if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
+  accidental = "";
 }

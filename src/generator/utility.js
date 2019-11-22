@@ -13,6 +13,10 @@ Set.prototype.randomElement = function () {
   return array.randomElement()
 }
 
+Number.prototype.mod = function(n) {
+    return ((this%n)+n)%n
+}
+
 Array.prototype.rotate = (function() {
     // save references to array functions to make lookup faster
     var push = Array.prototype.push,

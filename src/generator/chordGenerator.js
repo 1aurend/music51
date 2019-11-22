@@ -230,8 +230,10 @@ export function makeChord(chordType) {
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
 
 
-  // TODO: put this in the proper place
+  // TODO: put these in the right places
   const inversion = inversions(chordType).randomElement()
+  const clef = Clef.randomElement()
+  const initialOctave = chooseInitialOctave(clef)
 
   // TODO: Fix this return... no longer correct... (11/15)
   return {
@@ -265,7 +267,8 @@ export function concretizeRoot(keySignature, modeNote) {
       return {
         independentPitch: rootIP,
         accidental: rootAccidental,
-        letter: rootLetter
+        letter: rootLetter,
+        syllable: rootSyllable
       }
     }
   }
@@ -489,123 +492,99 @@ export function randomRomanNumeralContext(chordStructure) {
   }
 }
 
+function chooseInitialOctave(clef) {
+  switch (clef) {
+    case Clef.BASS:
+      // range of 4 octaves starting from octave 1
+      return Math.floor(Math.random() * 4) + 1
+    case Clef.TREBLE:
+      // range of 4 octaves starting from octave 3
+      return Math.floor(Math.random() * 4) + 3
+    default:
+      throw new Error('invalid clef')
+  }
+}
+
+export function translateNoteIPIndex(componentIP, rootIP) {
+  const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
+  console.log(`untranslatedIndex: ${untranslatedIndex}`);
+  // TODO: audit addition of 12 here
+  const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
+  console.log(`rootIndex: ${rootIndex}`);
+  return (untranslatedIndex-rootIndex).mod(12)
+}
+
+function makeNotes(chordStructure, concretizedRoot, keySignature) {
+
+  const { rootIP, rootLetter, rootAccidental, rootSyllable } = concretizedRoot
+
+  // if(Shapes[keySignature].notes[i].mode === modeNote){
+  //   const rootAccidental = Shapes[keySignature].notes[i].accidental
+  //   const rootSyllable = Shapes[keySignature].notes[i].refIP
+  //   const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
+  //   const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
+  //   const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
+  //   const rootIPIndex = (rootSyllableIndex+offset)%12
+  //   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+  //   return {
+  //     independentPitch: rootIP,
+  //     accidental: rootAccidental,
+  //     letter: rootLetter
+  //   }
+
+    // FIXME: This should be its own function
+    // build the structure with correct spellings
+    for(var i=0; i<chordStructure.structure.length; i++){
+
+      // translate the template ip to a relative note in the class
+      const translatedNoteIP = translateNoteIP(chordStructure.structure[i], rootIP)
+
+      // get the syllable "position" from the reference subset based on tensionMod7 value in the class
+      let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][newNote].tensionMod7 -1)%7)]
+        // console.log(noteSyllable)
+
+      // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+      let noteIp = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIp) + classes[newClass][newNote].tensionMod12 -1)%12]
+
+
+      // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
+      let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIp))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+        // adjusts for IPs on opposite ends of the array, like "D" from "R"
+        // but something about this feels hacky... is there a better way?
+        if(accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal -= Object.values(IndependentPitch).length
+        if(-accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal += Object.values(IndependentPitch).length
+      let accidental = accidentals[(2 + accidentalVal)%5]
+        // console.log(accidental)
+
+      // translate the syllable "position" to a letter
+      let noteLetter = letters[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
+        // console.log(noteLetter+accidental)
+
+      // octave adjustments:
+      // TODO: will this also work for template structures bigger than an octave?
+      let octaveIndex = letterNamePosition(noteLetter)
+      let octave = chordOctave
+      if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
+        octave += 1;
+        chordOctave +=1 // sets the default octave up for the next note
+      }
+
+
+
+      chord.notes.push(
+        {
+          letter: noteLetter,
+          accidental: accidental,
+          octave: octave
+        }
+      )
+    }
+}
+
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options) {
 
 
-
-  // choose the octave of the starting (root) note.
-  // TODO: make sure this range matches with the range set in staffAdjust()
-  let clef = Clef.randomElement()
-  // console.log(clef + " clef")
-  let chordOctave
-  if(clef === "bass"){
-    chordOctave = Math.floor(Math.random() * 4) + 1 // range of 4 octaves starting from octave 1
-  }
-  if(clef === "treble"){
-    chordOctave = Math.floor(Math.random() * 4) + 3 // range of 4 octaves starting from octave 3
-  }
-    // console.log('chordOctave: '+chordOctave)
-
-  // choose an inversion
-  let inversion = inversions.randomElement()
-
-  let vexSig = keySignatures[keySignature].vexSig;
-
-  // build and begin populating the chord object
-  let chord = {};
-  // chord.rootLetter = rootLetter
-  // chord.rootAccidental = rootAccidental
-  // chord.type = newStructure
-  // chord.inversion = inversion
-  chord.clef = clef
-  chord.keySignature = vexSig // from Flow.keySignature.keySpecs (vexflow /tables.js)
-  chord.notes = [];
-
-  // only show natural in rootAccidental if it's an alteration from the key sig
-  if ((rootAccidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === rootSyllable})].accidental != '♮')){
-    rootAccidental = '♮';
-  }
-  else if (rootAccidental === '♮') {
-    rootAccidental = "";
-  }
-
-  // aggregate options for chord quality question
-  let qualityOptions = []
-  Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
-
-  // aggregate options for inversions question
-  let inversionOptions = []
-  inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
-
-
-
-  // FIXME: This should be its own function
-  // build the structure with correct spellings
-  for(var i=0; i<template[newStructure].structure.length; i++){
-
-    // translate the template ip to a relative note in the class
-    let newNote = (ip.indexOf(template[newStructure].structure[i].ip) - ip.indexOf(newRoot) + 12)%12
-      // console.log(classes[newClass][newNote])
-
-    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
-    let noteSyllable = subsets.B[((subsets.B.indexOf(rootSyllable) + classes[newClass][newNote].tensionMod7 -1)%7)]
-      // console.log(noteSyllable)
-
-    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIp = ip[(ip.indexOf(rootIp) + classes[newClass][newNote].tensionMod12 -1)%12]
-      // console.log("IP: " + noteIp)
-
-    // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-    let accidentalVal = (ip.indexOf(noteIp))-(ip.indexOf(noteSyllable))
-      // adjusts for IPs on opposite ends of the array, like "D" from "R"
-      // but something about this feels hacky... is there a better way?
-      if(accidentalVal > ip.length/2)accidentalVal -= ip.length
-      if(-accidentalVal > ip.length/2)accidentalVal += ip.length
-    let accidental = accidentals[(2 + accidentalVal)%5]
-      // console.log(accidental)
-
-    // translate the syllable "position" to a letter
-    let noteLetter = letters[subsets.B.indexOf(noteSyllable)]
-      // console.log(noteLetter+accidental)
-
-    // octave adjustments:
-    // TODO: will this also work for template structures bigger than an octave?
-    let octaveIndex = letterNamePosition(noteLetter)
-    let octave = chordOctave
-    if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
-      octave += 1;
-      chordOctave +=1 // sets the default octave up for the next note
-    }
-
-    // push notes into questions before adjusting accidentals for key sig
-    chord.questions[0].answers.push(noteLetter);
-
-    // FIXME: This should be its own function
-    // only show natural in question choices if it's an alteration from the key sig
-    if(accidental != '♮'){
-      chord.questions[1].choices.push(noteLetter+accidental);
-    }
-    else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
-      chord.questions[1].choices.push(noteLetter+'♮');
-    }
-    else {
-      chord.questions[1].choices.push(noteLetter);
-    }
-
-    // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
-    if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
-      accidental = "";
-    }
-
-    chord.notes.push(
-      {
-        letter: noteLetter,
-        accidental: accidental,
-        octave: octave
-      }
-    )
-  }
 
   // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
   // shuffles the root note choices so they're not always in root position haha
