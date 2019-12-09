@@ -81,25 +81,20 @@ export default function ChartData({ round, data }) {
   const progress = useRef()
   const verbA = useRef()
   const verbT = useRef()
+  const qTypes = Object.keys(data)
 
-  let qTypes = Object.keys(data)
-
+  useEffect(() => {
     async function chartData() {
-      let result = await chartMath(data, qTypes)
-      console.log(result);
+      const result = await chartMath(data, qTypes)
       chartParams.current = result[0]
       progress.current = result[1]
       verbA.current = result[2]
       verbT.current = result[3]
-      console.log(chartParams.current);
-      if (!ready) {
-        calculated(true)
-      }
+      return calculated(true)
     }
+    chartData()
+  }, [data])
 
-    if (!chartParams.current) {
-      chartData()
-    }
 
 
   if (ready) {
