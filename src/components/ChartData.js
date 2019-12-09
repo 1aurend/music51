@@ -24,8 +24,8 @@ async function chartMath(data, qTypes) {
       }
     }
   }
-
-  for (var i = 0; i < data[qTypes[i]].attempts.length; i++) {
+  console.log(data[qTypes[0]]);
+  for (var i = 0; i < data[qTypes[0]].attempts.length; i++) {
     chartParams.labelsX.push(i+1)
   }
 
@@ -81,26 +81,19 @@ export default function ChartData({ round, data }) {
   const progress = useRef()
   const verbA = useRef()
   const verbT = useRef()
+  const qTypes = Object.keys(data)
 
-  let qTypes = Object.keys(data)
-
+  useEffect(() => {
     async function chartData() {
-      let result = await chartMath(data, qTypes)
-      console.log(result);
+      const result = await chartMath(data, qTypes)
       chartParams.current = result[0]
       progress.current = result[1]
       verbA.current = result[2]
       verbT.current = result[3]
-      console.log(chartParams.current);
-      if (!ready) {
-        calculated(true)
-      }
+      return calculated(true)
     }
-
-    if (!chartParams.current) {
-      chartData()
-    }
-
+    chartData()
+  }, [data])
 
   if (ready) {
       return <ProgressChart round={round} chartParams={chartParams.current} qTypes={qTypes} progress={progress.current} verbA={verbA.current} verbT={verbT.current}/>
