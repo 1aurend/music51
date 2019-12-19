@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
+import * as responsiveStyles from './responsiveStyles'
 
 
 export default function useWindowSize() {
@@ -20,7 +21,7 @@ export default function useWindowSize() {
     const inputSize = size >= 500 ? '10vw' : '20vw'
     if (init) {
       return {
-        border: border,
+        border: responsiveStyles.borderRadius,
         mainTitle: title,
         subtitle: subtitle,
         beta: beta,

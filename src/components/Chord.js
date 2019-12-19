@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Col, Row } from 'shards-react'
 
-
+// TODO: rename vexflow; destructure props
 export default function Chord(props) {
 
   const container = useRef(document.createElement('container'))

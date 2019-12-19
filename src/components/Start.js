@@ -8,7 +8,7 @@ import {
   Col,
 } from 'shards-react'
 import generateChords from '../chordGenerator'
-import { Size, Session, Means } from './Context'
+import { Session, Means } from './Context'
 import useWindowSize from '../hooks/useWindowSize'
 
 
