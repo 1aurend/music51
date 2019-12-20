@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Col, Row } from 'shards-react'
+import useWindowSize from '../hooks/useWindowSize'
 
 // TODO: rename vexflow; destructure props
 export default function Chord(props) {
 
   const container = useRef(document.createElement('container'))
   const [loading, done] = useState(true)
+  const staveSize = useWindowSize().staveSize
 
 
   useEffect(() => {
@@ -57,27 +59,6 @@ export default function Chord(props) {
           }
         }
       }
-
-    let staveSize = {
-      svgWidth: '',
-      svgHeight: '',
-      viewBoxWidth: 0,
-      viewBoxHeight: 0,
-    }
-
-    if (props.size >= 500) {
-      staveSize.svgWidth = '500px'
-      staveSize.svgHeight = '250px'
-      staveSize.viewBoxWidth = 250
-      staveSize.viewBoxHeight = 125
-    }
-    else {
-      staveSize.svgWidth = '300px'
-      staveSize.svgHeight = '150px'
-      staveSize.viewBoxWidth = 250
-      staveSize.viewBoxHeight = 125
-    }
-
 
     let Vex = require('vexflow')
 
@@ -132,7 +113,7 @@ export default function Chord(props) {
 
     done(false)
 
-  }, [props.notes, props.colors, loading, props.size])
+  }, [props.notes, props.colors, loading, props.size, staveSize])
 
 
   return (

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Means, Size } from './Context'
+import { Means } from './Context'
 import { Container, Row, Col, Button, Card, CardHeader, CardBody } from 'shards-react'
 import Context from './Context'
 import startOverSvg from '../assets/svgs-startover.svg'
+import useWindowSize from '../hooks/useWindowSize'
 
 
 function rounded(value, decimals) {
@@ -12,14 +13,12 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 
 export default function SessionMatrix({ round, qTypes }) {
 
-  const [means, udpateMeans] = useContext(Means)
+  const means = useContext(Means)[0]
   const [fast, setFast] = useState()
   const [accurate, setAcc] = useState()
   const [reset, startOver] = useState(false)
-  const size = useContext(Size)
-  let borderRadius = size.width > 500 ? '1rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
-  let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'}
+  const sizedStyles = useWindowSize()
+  const { borderRadius, sessionTitle, matrixSize } = sizedStyles
 
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export default function SessionMatrix({ round, qTypes }) {
   if (reset) {
     return <Context />
   }
-  else if (accurate && size.width >= 700) {
+  else if (accurate && matrixSize >= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
     let headers = qTypes.map( type => {
@@ -84,7 +83,7 @@ export default function SessionMatrix({ round, qTypes }) {
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
-            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={sessionTitle}>Session Status</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
                 <p style={{marginBottom: '4%'}}>{greeting}</p>
               </Row>
@@ -170,7 +169,7 @@ export default function SessionMatrix({ round, qTypes }) {
       </Container>
     )
   }
-  else if (accurate && size.width <= 700) {
+  else if (accurate && matrixSize <= 700) {
 
     let greeting = accurate.perfect >= 1 ? `Pefection! You completed ${accurate.perfect} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
 
@@ -196,7 +195,7 @@ export default function SessionMatrix({ round, qTypes }) {
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh', fontFamily: "'Overpass Mono', monospace"}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
-            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={fontStyle}>Session Status</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={sessionTitle}>Session Status</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
                 <p style={{marginBottom: '4%'}}>{greeting}</p>
               </Row>

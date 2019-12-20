@@ -1,27 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Means, Size, Count, Session } from './Context'
+import React, { useContext, useState } from 'react'
+import { Means, Session } from './Context'
 import {
   Container,
   Row,
   Col,
   Button,
 } from 'shards-react'
-import Start from './Start'
 import Quiz from './Quiz'
 import ProgressChart from './Progress'
 import generateChords from '../chordGenerator'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import backSvg from '../assets/svgs-backarrows.svg'
+import useWindowSize from '../hooks/useWindowSize'
 
 
 export default function RoundStats({ round, chartParams, progress, verbA, verbT }) {
 
-  const [means, updateMeans] = useContext(Means)
-  const [session, updateSession] = useContext(Session)
-  const size = useContext(Size)
-  let borderRadius = size.width > 500 ? '1rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
-  let subtitleStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.25em', lineHeight: '1.25em'}
+  const means = useContext(Means)[0]
+  const session = useContext(Session)[0]
+  const sizedStyles = useWindowSize()
+  const { borderRadius, statsTitle, statsSubtitle } = sizedStyles
   const [quiz, setQuiz] = useState(false)
   const [progressView, showProgress] = useState(false)
 
@@ -66,12 +64,12 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
         <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
           <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>{headline}</h2></Row>
+            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={statsTitle}>{headline}</h2></Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%', marginBottom: '2%', fontFamily: "'Overpass Mono', monospace"}}>
                 <Col sm='12' lg='10'>
-                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={subtitleStyle}>{subtitle}</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}><h3 style={statsSubtitle}>{subtitle}</h3></Row>
                     {statLines}
-                  <Row style={{display: 'flex', justifyContent: 'center'}}><h3 style={subtitleStyle}>{closing}</h3></Row>
+                  <Row style={{display: 'flex', justifyContent: 'center'}}><h3 style={statsSubtitle}>{closing}</h3></Row>
               </Col>
               </Row>
               <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%'}}>

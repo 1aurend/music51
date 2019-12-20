@@ -18,10 +18,10 @@ import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
 import SessionMatrix from './Session'
-import Context from './Context'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import endSessionSvg from '../assets/svgs-endsessionred.svg'
 import roundStatsSvg from '../assets/svgs-roundstats.svg'
+import useWindowSize from '../hooks/useWindowSize'
 
 
 
@@ -32,11 +32,9 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 
 export default function ProgressChart({ round, chartParams, qTypes, progress, verbA, verbT }) {
 
-  const size = useContext(Size)
-  const [session, updateSession] = useContext(Session)
-  let borderRadius = size.width > 500 ? '1rem' : '1rem'
-  let fontStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2em', lineHeight: '1.25em'}
-  let subheadStyle = size.width > 500 ? {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1.5em'} : {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '1em'}
+  const sizedStyles = useWindowSize()
+  const { borderRadius, progressTitle, progressSubtitle } = sizedStyles
+  const session = useContext(Session)[0]
   const [quiz, setQuiz] = useState(false)
   const [done, finished] = useState(false)
   const [stats, viewStats] = useState(false)
@@ -92,8 +90,8 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
         <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb'}}>
-          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={fontStyle}>Round {round} Complete!</h2></Row>
-          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%'}}><h2 style={subheadStyle}>Your Progress:</h2></Row>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h2 style={progressTitle}>Round {round} Complete!</h2></Row>
+          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%'}}><h2 style={progressSubtitle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '3%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}>
               <p style={{marginBottom: 0}}><span style={{fontWeight: '600'}}>ATTEMPTS: </span>Your total attempt count <span style={vAColor}>{verbA}</span> by <span style={{fontWeight: '600'}}>{progress.numAtt}</span> attempts per question or <span style={{fontWeight: '600'}}>{`${progress.percentAtt}%`}</span>.</p>
