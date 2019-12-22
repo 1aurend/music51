@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {Size, Session } from './Context'
+import {Session } from './Context'
 import {
   Container,
   Row,
