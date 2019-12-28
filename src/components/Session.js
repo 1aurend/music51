@@ -3,7 +3,7 @@ import { Means } from './Context'
 import { Container, Row, Col, Button, Card, CardHeader, CardBody } from 'shards-react'
 import Context from './Context'
 import startOverSvg from '../assets/svgs-startover.svg'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
 function rounded(value, decimals) {
@@ -17,7 +17,7 @@ export default function SessionMatrix({ round, qTypes }) {
   const [fast, setFast] = useState()
   const [accurate, setAcc] = useState()
   const [reset, startOver] = useState(false)
-  const sizedStyles = useWindowSize()
+  const sizedStyles = useResponsiveStyles()
   const { borderRadius, sessionTitle, matrixSize } = sizedStyles
 
 

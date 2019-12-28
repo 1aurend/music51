@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
 import * as responsiveStyles from './responsiveStyles'
 
 
-export default function useWindowSize() {
+export default function useResponsiveStyles() {
   const [size, setSize] = useState({
                                     width: window.innerWidth,
                                     height: window.innerHeight

@@ -21,7 +21,7 @@ import SessionMatrix from './Session'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import endSessionSvg from '../assets/svgs-endsessionred.svg'
 import roundStatsSvg from '../assets/svgs-roundstats.svg'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
 
@@ -32,7 +32,7 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 
 export default function ProgressChart({ round, chartParams, qTypes, progress, verbA, verbT }) {
 
-  const sizedStyles = useWindowSize()
+  const sizedStyles = useResponsiveStyles()
   const { borderRadius, progressTitle, progressSubtitle } = sizedStyles
   const session = useContext(Session)[0]
   const [quiz, setQuiz] = useState(false)

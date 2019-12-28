@@ -9,14 +9,14 @@ import {
 } from 'shards-react'
 import generateChords from '../chordGenerator'
 import { Session, Means } from './Context'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
 
 
 export default function Start({ title, round }) {
 
-  const sizedStyles = useWindowSize()
+  const sizedStyles = useResponsiveStyles()
   const {borderRadius, chordCrusher, music51, beta, input} = sizedStyles
   const [session, updateSession] = useContext(Session)
   const [means, updateMeans] = useContext(Means)

@@ -8,12 +8,12 @@ import {
   Col,
 } from 'shards-react'
 import { Rounds } from './Context'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
 export default function Quiz ({ data, round }) {
 
-  const sizedStyles = useWindowSize()
+  const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles
   const [rounds, updateRounds] = useContext(Rounds)
   const [currentQ, nextQ] = useState(data[0].questions[0])

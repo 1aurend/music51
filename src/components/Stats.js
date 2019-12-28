@@ -11,14 +11,14 @@ import ProgressChart from './Progress'
 import generateChords from '../chordGenerator'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import backSvg from '../assets/svgs-backarrows.svg'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
 export default function RoundStats({ round, chartParams, progress, verbA, verbT }) {
 
   const means = useContext(Means)[0]
   const session = useContext(Session)[0]
-  const sizedStyles = useWindowSize()
+  const sizedStyles = useResponsiveStyles()
   const { borderRadius, statsTitle, statsSubtitle } = sizedStyles
   const [quiz, setQuiz] = useState(false)
   const [progressView, showProgress] = useState(false)

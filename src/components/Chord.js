@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Col, Row } from 'shards-react'
-import useWindowSize from '../hooks/useWindowSize'
+import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 // TODO: rename vexflow; destructure props
 export default function Chord(props) {
 
   const container = useRef(document.createElement('container'))
   const [loading, done] = useState(true)
-  const staveSize = useWindowSize().staveSize
+  const staveSize = useResponsiveStyles().staveSize
 
 
   useEffect(() => {
