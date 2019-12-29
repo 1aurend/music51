@@ -53,13 +53,16 @@ export default function Start({ title, round }) {
       updateSession({...session, settings: settings })
 
       let questionTypes = {}
-      data[0].questions.map(question => {
+      data[0].questions.forEach(question => {
         questionTypes = {...questionTypes, [question.type]: {
                             attempts: [],
                             times: []
                           }}
-        return null
       })
+      questionTypes = {...questionTypes, Overall: {
+        attempts: [],
+        times: []
+      }}
       updateMeans(questionTypes)
 
       launchQuiz(true)
