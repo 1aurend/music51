@@ -247,7 +247,7 @@ function addKeystrokes(chords) {
   chords[i].questions = questions
 }
 
-console.log(chalk.yellow(JSON.stringify(chords, null, 3)))
+// console.log(chalk.yellow(JSON.stringify(chords, null, 3)))
 return chords
 }
 

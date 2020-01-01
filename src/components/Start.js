@@ -1,39 +1,29 @@
 import React, { useState, useRef, useContext } from 'react'
-import Options from './Options.js'
-import Go from './Go.js'
 import Quiz from './Quiz'
-import {
-  Container,
-  Row,
-  Col,
-} from 'shards-react'
 import generateChords from '../chordGenerator'
 import { Session, Means } from './Context'
-import useResponsiveStyles from '../hooks/useResponsiveStyles'
-
-
+import StartMenu from './views/StartMenu'
 
 
 export default function Start({ title, round }) {
-
-  const sizedStyles = useResponsiveStyles()
-  const {borderRadius, chordCrusher, music51, beta, input} = sizedStyles
   const [session, updateSession] = useContext(Session)
-  const [means, updateMeans] = useContext(Means)
+  const updateMeans = useContext(Means)[1]
   const numQs = useRef(5)
   const [ready, launchQuiz] = useState(false)
-  const [quiz, setQuiz] = useState([])
+  const [quiz, setQuiz] = useState()
   const [options, updateOptions] = useState({
     chordTypes: {triads:true, sevenths:true},
     roots: {common:true, any:false}
   })
 
-  let generateQuiz = async (e) => {
-
-      let data = await generateChords(numQs.current, options)
-
+  // QUESTION: Does this need 'e'? Does it ultimately need to await?
+  const generateQuiz = async (e) => {
+      //name this variable better
+      const data = await generateChords(numQs.current, options)
+      //move this to the end and get rid of ready
       setQuiz(data)
-
+      //this logic seems like it duplicates logic in the revamped generator.
+      // TODO: after we merge, decide whether we'd be pushing this sort of info to a db from here or in the generator, and if from here, grab the options enum and switch over it to get these values
       let chordTypes
       if (options.chordTypes.triads && options.chordTypes.sevenths) {
         chordTypes= ['triads', 'sevenths']
@@ -44,61 +34,66 @@ export default function Start({ title, round }) {
       else if (!options.chordTypes.triads && options.chordTypes.sevenths) {
         chordTypes= ['sevenths']
       }
-      let settings = {
+      // QUESTION: why is options here in addition to roots and chordTypes?
+      const settings = {
         numChords: numQs.current,
         chordTypes: chordTypes,
         roots: options.roots.common ? 'common' : 'any',
         options: options
       }
       updateSession({...session, settings: settings })
-
-      let questionTypes = {}
-      data[0].questions.forEach(question => {
-        questionTypes = {...questionTypes, [question.type]: {
+      //I think this now handles chords with different question types.
+      // QUESTION: Is it useful to construct these empty objects here vs. just saving questionTypes as an array in context?
+      const questionTypes = new Set((data.map( chord => {
+        return chord.questions.map( question => {
+          return question.type
+        })
+      })).flat())
+      let means = {}
+      questionTypes.forEach(question => {
+        means = {...means, [question]: {
                             attempts: [],
                             times: []
                           }}
       })
-      questionTypes = {...questionTypes, Overall: {
+      means = {...means, Overall: {
         attempts: [],
         times: []
       }}
-      updateMeans(questionTypes)
-
+      updateMeans(means)
+      //get rid of this
       launchQuiz(true)
   }
 
-  let onCheck = (e, type, option) => {
-
+  // QUESTION: What about 'e' here?
+  const onCheck = (e, type, option) => {
+    //are these necessary? they do make coping with two layers of object destructuring more parsible, but could easily get away with just next?
     let prev
     let next
 
     switch (type) {
       case 'chord':
           prev = options.chordTypes
+          //there are 3 cases here but really only 2 things we do... is there a better way to organize this? maybe a single if/else?
           switch (prev[option]) {
             case false:
-              console.log('case false');
                 next = {...prev, [option]: !prev[option]}
                 updateOptions({...options, chordTypes: next })
                 break
             case true:
-              console.log('case true');
                 if (prev.triads === prev.sevenths) {
-                  console.log('same');
                   next = {...prev, [option]: !prev[option]}
                   updateOptions({...options, chordTypes: next })
                 }
                 else {
-                  console.log('different');
                   next = {triads:!prev.triads, sevenths:!prev.sevenths}
-                  console.log('here is next: ' + JSON.stringify(next));
                   updateOptions({...options, chordTypes: next })
                 }
                 break
             default: alert('something went wrong selecting options')
           }
           break
+      // QUESTION: This is commented out for roman numerals mode. Eventually we'll need to make a function that determines what mode we're in and whether to allow root options. Do we want to do anything about that now?
       case 'root':
           // prev = options.roots
           // next = {common: !prev.common, any: !prev.any}
@@ -110,35 +105,9 @@ export default function Start({ title, round }) {
 
   }
 
-  // console.log(JSON.stringify(options, null, 4));
-
-
   if (!ready) {
-    return (
-      <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
-        <Row noGutters style={{paddingTop: '3%'}}></Row>
-        <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-          <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}><h1 style={chordCrusher}>{title.headline}</h1></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={beta}>Roman Numerals Mode</h2></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h2 style={beta}>{title.beta}</h2></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '2%'}}><h2 style={music51}>{title.subtitle}</h2></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}><h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '0'}}>INSTRUCTIONS</h4></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}}><p style={{fontFamily: "'Overpass Mono', monospace", marginBottom: '0', textAlign: 'left'}}>In a session of Chord Crusher, you'll complete multiple rounds; see if you can improve your time and accuracy on each round. You can set rounds from 5-25 chords in length. For each chord, there are four questions that aggregate to name the chord, quality, and inversion. If this is your first time, try 5 chords per round. After that, choose as many as you want!</p></Row>
-            <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} size={input}/>
-          </Col>
-        </Row>
-        <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
-            <Go onClick={generateQuiz}/>
-        </Row>
-      </Container>
-    )
+    return <StartMenu title={title} generateQuiz={generateQuiz} numQs={numQs} onCheck={onCheck} options={options} />
+  } else {
+    return <Quiz data={quiz} round={round}/>
   }
-  else if (ready) {
-    return (
-        <Quiz data={quiz} round={round}/>
-    )
-  }
-
-
 }

@@ -66,10 +66,12 @@ export default function Tally({ data, round }) {
   const roundTally = useState(tallyRound(data))[0]
   const [calculating, done] = useState(true)
   const tally = useRef()
+  console.log(means)
 
   useEffect(() => {
     const questionTypes = Object.keys(roundTally)
     questionTypes.forEach( type => {
+      console.log(type)
       tally.current = {...tally.current,
         [type]: {
           attempts: [...means[type].attempts, roundTally[type].attempts],
