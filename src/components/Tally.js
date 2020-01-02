@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Means } from './Context'
 import RoundStats from './Stats'
 import ChartData from './ChartData'
-import Loading from './Loading'
+import Loading from './views/Loading'
 import { mean, rounded } from './utility'
 
 
@@ -29,6 +29,7 @@ export function listTimesByQuestionType(data, questionType) {
   ).flat(2)
 }
 export function tallyRound(data) {
+  //still not sure where the best place is for this. Need to create and hold onto this array somewhere so we don't keep iterating through the data to recreate it. Could be at start as context or here and passed down as a prop?
   const questionTypes = new Set((data.map( chord => {
     return chord.questions.map( question => {
       return question.type
@@ -47,49 +48,57 @@ export function tallyRound(data) {
           obj[item.type] = item.means
             return obj
           } ,{})
-  return calculateOverallMeans(means, questionTypes)
+  return calculateOverallMeans(means, [...questionTypes])
 }
 function calculateOverallMeans(means, questionTypes) {
   const overallAttempts = rounded(mean(
-    [...questionTypes].map(type => {
+    questionTypes.map(type => {
     return means[type].attempts
   })), 2)
   const overallTime = rounded(mean(
-    [...questionTypes].map(type => {
+    questionTypes.map(type => {
     return means[type].time
   })), 2)
-  return {...means, Overall: {
-    attempts: overallAttempts,
-    time: overallTime
-  }}
+  return {
+          roundMeans: {...means, Overall: {
+                  attempts: overallAttempts,
+                  time: overallTime
+                  }},
+          questionTypes: questionTypes
+        }
+}
+export function tallyMeans(means, data) {
+  const { roundMeans, questionTypes } = tallyRound(data)
+  //get rid of mutation here?
+  let tally
+  questionTypes.forEach( type => {
+    //make this a conditional so we don't have to construct the means object back in Start? how does this work if different rounds have different question types?
+    tally = {...tally,
+      [type]: {
+        attempts: [...means[type].attempts, roundMeans[type].attempts],
+        times: [...means[type].times, roundMeans[type].time]
+      }}
+  })
+  return tally
 }
 
 
 export default function Tally({ data, round }) {
   const [means, updateMeans] = useContext(Means)
-  const roundTally = useState(tallyRound(data))[0]
+  const meansTally = useState(tallyMeans(means, data))[0]
   const [calculating, done] = useState(true)
-  const tally = useRef()
 
   // QUESTION: Why am I storing the current version of the means object in a Ref (tally) and passing it down as a prop rather than grabbing it from Context over in ChartData? This should be fixed so we don't need this tally object. It's probably related to how long it takes to paint the screen with the d3 charts... but I don't remember what render errors I was getting that caused me to use tally.
+  // Now that updateMeans uses useCallback this should be a *relatively* easy fix...
   useEffect(() => {
-    const keys = Object.keys(roundTally)
-    keys.forEach( key => {
-      //make this a conditional so we don't have to construct the means object back in Start?
-      tally.current = {...tally.current,
-        [key]: {
-          attempts: [...means[key].attempts, roundTally[key].attempts],
-          times: [...means[key].times, roundTally[key].time]
-        }}
-    })
-    updateMeans(tally.current)
+    updateMeans(meansTally)
     return done(false)
-  }, [roundTally, updateMeans, round, means])
+  }, [meansTally, updateMeans])
 
   if (!calculating && round === 1) {
     return <RoundStats round={round}/>
   } else if (!calculating) {
-    return <ChartData round={round} data={tally.current}/>
+    return <ChartData round={round} data={meansTally}/>
   } else {
     return <Loading />
   }

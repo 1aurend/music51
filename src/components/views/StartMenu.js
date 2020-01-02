@@ -13,6 +13,7 @@ export default function StartMenu({ title, generateQuiz, numQs, onCheck, options
   const sizedStyles = useResponsiveStyles()
   const {borderRadius, chordCrusher, music51, beta, input} = sizedStyles
 
+  // TODO: do something about all these inline styles! At least setup default styles for all text rows...
   return (
     <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row noGutters style={{paddingTop: '3%'}}></Row>

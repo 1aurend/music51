@@ -29,14 +29,15 @@ async function chartMath(data, qTypes) {
     chartParams.labelsX.push(i+1)
   }
 
-
   let atts = []
   qTypes.map( type => {atts = atts.concat(data[type].attempts)})
+  console.log(atts)
   chartParams.domainMaxYAtt = Math.max(...atts)
   let ts = []
   qTypes.map( type => {ts = atts.concat(data[type].times)})
   chartParams.domainMaxYTime = Math.max(...ts)
 
+  //make these nested .map() to get rid of use of spread
   qTypes.map(type => {
     let dataPoints = []
     for (var j = 0; j < data[type].attempts.length; j++) {

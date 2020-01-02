@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useCallback } from 'react'
 import Start from './Start'
 
 export const Session = createContext()
@@ -19,7 +19,8 @@ export default function Context() {
           options: {}
         }
       })
-  const [means, updateMeans] = useState({})
+  const [means, setMeans] = useState({})
+  const updateMeans = useCallback((val) => setMeans(val), [])
   const [rounds, updateRounds] = useState({})
   const [count, increment] = useState(1)
   return (
