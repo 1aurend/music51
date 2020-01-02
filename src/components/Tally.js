@@ -6,29 +6,27 @@ import Loading from './Loading'
 import { mean, rounded } from './utility'
 
 
-export function listAttemptsbyQuestionType(data, questionType) {
+export function listAttemptsByQuestionType(data, questionType) {
   return (data.map( chord => {
-    return chord.questions.map( question => {
-      if (question.type === questionType) {
-        return question.answers.map( answer => {
+    return chord.questions.filter( question => question.type === questionType )
+      .map( question => {
+        return question.answers.map(answer => {
           return answer.tries.length
+          })
         })
-      }
-      return null
     })
-  })).flat(2).filter(val => val !== null)
+  ).flat(2)
 }
-export function listTimesbyQuestionType(data, questionType) {
+export function listTimesByQuestionType(data, questionType) {
   return (data.map( chord => {
-    return chord.questions.map( question => {
-      if (question.type === questionType) {
-        return question.answers.map( answer => {
+    return chord.questions.filter( question => question.type === questionType )
+      .map( question => {
+        return question.answers.map(answer => {
           return answer.elapsedTime
+          })
         })
-      }
-      return null
     })
-  })).flat(2).filter(val => val !== null)
+  ).flat(2)
 }
 export function tallyRound(data) {
   const questionTypes = new Set((data.map( chord => {
@@ -36,13 +34,19 @@ export function tallyRound(data) {
       return question.type
     })
   })).flat())
-  let means = {}
-  questionTypes.forEach(type => {
-    means[type] = {
-      attempts: rounded(mean(listAttemptsbyQuestionType(data, type)),2),
-      time: rounded(mean(listTimesbyQuestionType(data, type)),2)
-    }
-  })
+  const means =
+    [...questionTypes].map(type => {
+      return {
+              type: type,
+              means: {
+                      attempts: rounded(mean(listAttemptsByQuestionType(data, type)),2),
+                      time: rounded(mean(listTimesByQuestionType(data, type)),2)
+                      }
+              }
+    }).reduce((obj, item) => {
+          obj[item.type] = item.means
+            return obj
+          } ,{})
   return calculateOverallMeans(means, questionTypes)
 }
 function calculateOverallMeans(means, questionTypes) {
@@ -66,16 +70,16 @@ export default function Tally({ data, round }) {
   const roundTally = useState(tallyRound(data))[0]
   const [calculating, done] = useState(true)
   const tally = useRef()
-  console.log(means)
 
+  // QUESTION: Why am I storing the current version of the means object in a Ref (tally) and passing it down as a prop rather than grabbing it from Context over in ChartData? This should be fixed so we don't need this tally object. It's probably related to how long it takes to paint the screen with the d3 charts... but I don't remember what render errors I was getting that caused me to use tally.
   useEffect(() => {
-    const questionTypes = Object.keys(roundTally)
-    questionTypes.forEach( type => {
-      console.log(type)
+    const keys = Object.keys(roundTally)
+    keys.forEach( key => {
+      //make this a conditional so we don't have to construct the means object back in Start?
       tally.current = {...tally.current,
-        [type]: {
-          attempts: [...means[type].attempts, roundTally[type].attempts],
-          times: [...means[type].times, roundTally[type].time]
+        [key]: {
+          attempts: [...means[key].attempts, roundTally[key].attempts],
+          times: [...means[key].times, roundTally[key].time]
         }}
     })
     updateMeans(tally.current)

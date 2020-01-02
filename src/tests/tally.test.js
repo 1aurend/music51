@@ -1,6 +1,6 @@
-import { listAttemptsbyQuestionType, listTimesbyQuestionType, tallyRound } from '../components/tally'
+import { listAttemptsByQuestionType, listTimesByQuestionType, tallyRound } from '../components/tally'
 
-test('listAttemptsbyQuestionType returns a single array', () => {
+test('listAttemptsByQuestionType returns a single array', () => {
   const data = [
     {
       questions: [
@@ -37,12 +37,12 @@ test('listAttemptsbyQuestionType returns a single array', () => {
       ]
     }
   ]
-  const attempts = listAttemptsbyQuestionType(data, 'names')
+  const attempts = listAttemptsByQuestionType(data, 'names')
   console.log(attempts)
   expect(attempts.length).toBeGreaterThan(1)
 })
 
-test('listTimesbyQuestionType returns a single array', () => {
+test('listTimesByQuestionType returns a single array', () => {
   const data = [
     {
       questions: [
@@ -81,7 +81,7 @@ test('listTimesbyQuestionType returns a single array', () => {
       ]
     }
   ]
-  const times = listTimesbyQuestionType(data, 'names')
+  const times = listTimesByQuestionType(data, 'names')
   console.log(times)
   expect(times.length).toBeGreaterThan(1)
 })
