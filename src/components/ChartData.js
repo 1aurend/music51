@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import ProgressChart from './Progress'
 import { Means } from './Context'
-import {Row, Container, Col} from 'shards-react'
+import Loading from './views/Loading'
+import { rounded } from './utility'
 
 
-
-function rounded(value, decimals) {
-return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
 
 async function chartMath(data, qTypes) {
 
@@ -53,7 +50,7 @@ async function chartMath(data, qTypes) {
     chartParams.data.times = {...chartParams.data.times, [type]: dataPoints}
   })
 
-
+  console.log(chartParams.data)
   let attChange = chartParams.data.attempts.Overall[0].y-chartParams.data.attempts.Overall[chartParams.data.attempts.Overall.length-1].y
   let timeChange = chartParams.data.times.Overall[0].y-chartParams.data.times.Overall[chartParams.data.times.Overall.length-1].y
   let progress = {
@@ -67,46 +64,44 @@ async function chartMath(data, qTypes) {
 
   console.log(chartParams);
 
-  return([chartParams, progress, verbA, verbT] )
+  return {
+    chartParams: chartParams,
+    progress: progress,
+    verbA: verbA,
+    verbT: verbT
+  }
 
 }
 
 
 
 
-export default function ChartData({ round, data }) {
-
-  // const [means, updateMeans] = useContext(Means)
-  const [ready, calculated] = useState(false)
-  const chartParams = useRef()
-  const progress = useRef()
-  const verbA = useRef()
-  const verbT = useRef()
-  const qTypes = Object.keys(data)
+export default function ChartData({ round, questionTypes }) {
+  const means = useRef(useContext(Means)[0])
+  const [ready, setReady] = useState(false)
+  const [chartData, setData] = useState(null)
 
   useEffect(() => {
-    async function chartData() {
-      const result = await chartMath(data, qTypes)
-      chartParams.current = result[0]
-      progress.current = result[1]
-      verbA.current = result[2]
-      verbT.current = result[3]
-      return calculated(true)
+    let cancel = false
+    if (!cancel) {
+      (async () => {
+        const result = await chartMath(means.current, questionTypes)
+        setData(result)
+      })()
     }
-    chartData()
-  }, [data])
+    return () => {cancel = true}
+  }, [questionTypes])
+
+  useEffect(() => {
+    if (chartData) {
+      setReady(true)
+    }
+  }, [chartData])
 
   if (ready) {
-      return <ProgressChart round={round} chartParams={chartParams.current} qTypes={qTypes} progress={progress.current} verbA={verbA.current} verbT={verbT.current}/>
+      return <ProgressChart round={round} chartData={chartData} qTypes={questionTypes}/>
   }
   else {
-    return (
-      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
-        <Row noGutters style={{paddingTop: '25%'}}></Row>
-        <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '50%', marginRight: '50%'}} noGutters>
-            <h2 style={{color: '#17c671', fontFamily: "'Press Start 2P', cursive"}}>Calculating your progress...</h2>
-        </Row>
-    </Container>
-    )
+    return <Loading />
   }
 }

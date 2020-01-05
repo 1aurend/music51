@@ -28,7 +28,7 @@ export default function Context() {
         <Means.Provider value={[means, updateMeans]}>
           <Rounds.Provider value={[rounds, updateRounds]}>
             <Count.Provider value={[count, increment]}>
-              {/*do headline and round need to start here as props? why are they hardcoded?*/}
+              {/*do headline and round need to start here as props?*/}
               <Start title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
             </Count.Provider>
           </Rounds.Provider>

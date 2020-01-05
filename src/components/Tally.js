@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Means } from './Context'
 import RoundStats from './Stats'
 import ChartData from './ChartData'
@@ -64,41 +64,46 @@ function calculateOverallMeans(means, questionTypes) {
                   attempts: overallAttempts,
                   time: overallTime
                   }},
-          questionTypes: questionTypes
+          questionTypes: [...questionTypes, 'Overall']
         }
 }
 export function tallyMeans(means, data) {
   const { roundMeans, questionTypes } = tallyRound(data)
-  //get rid of mutation here?
+  //left this one for simplicity, but it could be a const structured like means in TallyRound() above
   let tally
   questionTypes.forEach( type => {
-    //make this a conditional so we don't have to construct the means object back in Start? how does this work if different rounds have different question types?
-    tally = {...tally,
+    tally = means[type] ? {...tally,
       [type]: {
         attempts: [...means[type].attempts, roundMeans[type].attempts],
         times: [...means[type].times, roundMeans[type].time]
-      }}
+      }} :
+      {...tally,
+        [type]: {
+          attempts: [roundMeans[type].attempts],
+          times: [roundMeans[type].time]
+        }}
   })
-  return tally
+  return {tally: tally, questionTypes: questionTypes}
 }
 
 
 export default function Tally({ data, round }) {
-  const [means, updateMeans] = useContext(Means)
-  const meansTally = useState(tallyMeans(means, data))[0]
-  const [calculating, done] = useState(true)
+  const updateMeans = useContext(Means)[1]
+  const means = useRef(useContext(Means)[0])
+  const [questionTypes, setQTypes] = useState(null)
 
-  // QUESTION: Why am I storing the current version of the means object in a Ref (tally) and passing it down as a prop rather than grabbing it from Context over in ChartData? This should be fixed so we don't need this tally object. It's probably related to how long it takes to paint the screen with the d3 charts... but I don't remember what render errors I was getting that caused me to use tally.
-  // Now that updateMeans uses useCallback this should be a *relatively* easy fix...
   useEffect(() => {
-    updateMeans(meansTally)
-    return done(false)
-  }, [meansTally, updateMeans])
+    (async () => {
+      const result = await tallyMeans(means.current, data)
+      updateMeans(result.tally)
+      setQTypes(result.questionTypes)
+    })()
+  }, [data, updateMeans])
 
-  if (!calculating && round === 1) {
+  if (questionTypes && round === 1) {
     return <RoundStats round={round}/>
-  } else if (!calculating) {
-    return <ChartData round={round} data={meansTally}/>
+  } else if (questionTypes) {
+    return <ChartData round={round} questionTypes={questionTypes} />
   } else {
     return <Loading />
   }

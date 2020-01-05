@@ -30,8 +30,9 @@ return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
-export default function ProgressChart({ round, chartParams, qTypes, progress, verbA, verbT }) {
+export default function ProgressChart({ round, chartData, qTypes }) {
 
+  const { chartParams, verbA, verbT, progress } = chartData
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, progressTitle, progressSubtitle } = sizedStyles
   const session = useContext(Session)[0]
@@ -62,13 +63,14 @@ export default function ProgressChart({ round, chartParams, qTypes, progress, ve
     )
   })
 
+  //why is this here? shouldn't it be in ChartData?
   let chartLegendData = []
   qTypes.map( type =>
     chartLegendData.push({ name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}})
   )
 
 
-  let nextRound = () => {
+  const nextRound = () => {
     setQuiz(generateChords(session.settings.numChords, session.settings.options))
   }
 
