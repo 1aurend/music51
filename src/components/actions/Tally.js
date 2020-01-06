@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import { Means } from './Context'
-import RoundStats from './Stats'
+import { Means } from '../Context'
+import RoundStats from '../Stats'
 import ChartData from './ChartData'
-import Loading from './views/Loading'
-import { mean, rounded } from './utility'
+import Loading from '../views/Loading'
+import { mean, rounded } from '../utility'
 
 
 export function listAttemptsByQuestionType(data, questionType) {
@@ -93,11 +93,15 @@ export default function Tally({ data, round }) {
   const [questionTypes, setQTypes] = useState(null)
 
   useEffect(() => {
+    let ignore = false
     (async () => {
       const result = await tallyMeans(means.current, data)
-      updateMeans(result.tally)
-      setQTypes(result.questionTypes)
+      if (!ignore) {
+        updateMeans(result.tally)
+        setQTypes(result.questionTypes)
+      }
     })()
+    return () => {ignore = true}
   }, [data, updateMeans])
 
   if (questionTypes && round === 1) {

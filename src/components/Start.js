@@ -42,26 +42,6 @@ export default function Start({ title, round }) {
         options: options
       }
       updateSession({...session, settings: settings })
-      //I think this now handles chords with different question types.
-      // QUESTION: Is it useful to construct these empty objects here vs. just saving questionTypes as an array in context?
-      const questionTypes = new Set((data.map( chord => {
-        return chord.questions.map( question => {
-          return question.type
-        })
-      })).flat())
-      let means = {}
-      questionTypes.forEach(question => {
-        means = {...means, [question]: {
-                            attempts: [],
-                            times: []
-                          }}
-      })
-      means = {...means, Overall: {
-        attempts: [],
-        times: []
-      }}
-      updateMeans(means)
-      //get rid of this
       launchQuiz(true)
   }
 

@@ -9,6 +9,7 @@ export const Progress = createContext()
 export const Size = createContext()
 
 export default function Context() {
+  //wrap updateSession in useCallback?
   const [session, updateSession] = useState({
         user: 'anonymous for now',
         sessionId: Date.now(),
@@ -23,6 +24,7 @@ export default function Context() {
   const updateMeans = useCallback((val) => setMeans(val), [])
   const [rounds, updateRounds] = useState({})
   const [count, increment] = useState(1)
+  // TODO: read more about passing arrays to a provider. does this create a new array each time as is the case for objects?
   return (
       <Session.Provider value={[session, updateSession]}>
         <Means.Provider value={[means, updateMeans]}>

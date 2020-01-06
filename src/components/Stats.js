@@ -14,7 +14,7 @@ import backSvg from '../assets/svgs-backarrows.svg'
 import useResponsiveStyles from '../hooks/useResponsiveStyles'
 
 
-export default function RoundStats({ round, chartParams, progress, verbA, verbT }) {
+export default function RoundStats({ round, chartData }) {
 
   const means = useContext(Means)[0]
   const session = useContext(Session)[0]
@@ -54,10 +54,10 @@ export default function RoundStats({ round, chartParams, progress, verbA, verbT 
 
 
   if (quiz) {
-    return <Quiz data={quiz} round={round+1}/>
+    return <Quiz data={quiz} round={round+1} />
   }
   else if (progressView) {
-    return <ProgressChart round={round} chartParams={chartParams} qTypes={qTypes} progress={progress} verbA={verbA} verbT={verbT}/>
+    return <ProgressChart round={round} chartData={chartData} qTypes={qTypes} />
   }
   else {
     return (

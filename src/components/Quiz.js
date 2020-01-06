@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react'
-import Tally from './Tally'
+import Tally from './actions/Tally'
 import { Rounds } from './Context'
 import QuizQuestion from './views/QuizQuestion'
 
