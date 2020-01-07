@@ -93,7 +93,7 @@ export default function Tally({ data, round }) {
   const [questionTypes, setQTypes] = useState(null)
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
     (async () => {
       const result = await tallyMeans(means.current, data)
       if (!ignore) {

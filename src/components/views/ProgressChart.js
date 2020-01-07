@@ -6,13 +6,13 @@ import {
   Button,
 } from 'shards-react'
 import {
-  VictoryChart,
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
   VictoryAxis,
   VictoryLegend,
 } from 'victory'
+import VictoryChart from './withMemoVictoryChart'
 import nextRoundSvg from '../../assets/svgs-nextround.svg'
 import endSessionSvg from '../../assets/svgs-endsessionred.svg'
 import roundStatsSvg from '../../assets/svgs-roundstats.svg'
@@ -22,17 +22,21 @@ import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ProgressChart({ chartData, qTypes, round, finished, viewStats, nextRound }) {
-  const { chartParams, verbA, verbT, progress } = chartData
+  const chartParams = chartData.chartData
+  const timesSummary = chartData.progressSummary.times
+  const attemptsSummary = chartData.progressSummary.attempts
+  const verbT = timesSummary.verb
+  const verbA = attemptsSummary.verb
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, progressTitle, progressSubtitle } = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
 
-  //why is this here? shouldn't it be in ChartData?
-  let chartLegendData = []
-  qTypes.map( type =>
-    chartLegendData.push({ name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}})
-  )
+  // //why is this here? shouldn't it be in ChartData?
+  // let chartLegendData = []
+  // qTypes.map( type =>
+  //   chartLegendData.push({ name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}})
+  // )
 
   let chartLinesAtt = qTypes.map( type => {
     return (
@@ -59,10 +63,10 @@ function ProgressChart({ chartData, qTypes, round, finished, viewStats, nextRoun
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%'}}><h2 style={progressSubtitle}>Your Progress:</h2></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginTop: '3%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}>
-              <p style={{marginBottom: 0}}><span style={{fontWeight: '600'}}>ATTEMPTS: </span>Your total attempt count <span style={vAColor}>{verbA}</span> by <span style={{fontWeight: '600'}}>{progress.numAtt}</span> attempts per question or <span style={{fontWeight: '600'}}>{`${progress.percentAtt}%`}</span>.</p>
+              <p style={{marginBottom: 0}}><span style={{fontWeight: '600'}}>ATTEMPTS: </span>Your total attempt count <span style={vAColor}>{verbA}</span> by <span style={{fontWeight: '600'}}>{attemptsSummary.num}</span> attempts per question or <span style={{fontWeight: '600'}}>{`${attemptsSummary.percent}%`}</span>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: 10}}><span style={{fontWeight: '600'}}>TIME: </span>Your overall time <span style={vTColor}>{verbT}</span> by <span style={{fontWeight: '600'}}>{progress.secs}</span> seconds per question or <span style={{fontWeight: '600'}}>{`${progress.percentTime}%`}</span>.</p>
+              <p style={{marginBottom: 10}}><span style={{fontWeight: '600'}}>TIME: </span>Your overall time <span style={vTColor}>{verbT}</span> by <span style={{fontWeight: '600'}}>{timesSummary.num}</span> seconds per question or <span style={{fontWeight: '600'}}>{`${timesSummary.percent}%`}</span>.</p>
             </Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '5%'}}>
                 <VictoryChart height={200} width={600} domainPadding={{x: 0}}
@@ -71,7 +75,7 @@ function ProgressChart({ chartData, qTypes, round, finished, viewStats, nextRoun
                     orientation="horizontal"
                     gutter={20}
                     style={{ border: { stroke: "black" }} }
-                    data={chartLegendData}
+                    data={chartData.legend}
                     colorScale={['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']}
                   />
                   <VictoryAxis

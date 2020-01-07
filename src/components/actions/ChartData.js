@@ -61,7 +61,7 @@ export default function ChartData({ round, questionTypes }) {
   const [chartData, setData] = useState(null)
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
     (async () => {
       const result = await getChartData(means.current, questionTypes, round)
       if (!ignore) setData(result)
