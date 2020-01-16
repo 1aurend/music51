@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import ProgressMenu from '../Progress'
+import ProgressMenu from '../ProgressMenu'
 import { Means } from '../Context'
 import Loading from '../views/Loading'
 import { rounded } from '../utility'

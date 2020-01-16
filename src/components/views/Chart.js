@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   VictoryGroup,
   VictoryLine,
@@ -10,24 +10,27 @@ import {
 import { rounded } from '../utility'
 
 
-export default function ProgressChart(props) {
+function ProgressChart(props) {
   const { showLegend, chartData, qTypes, metric } = props
   const data = chartData.chartData.data[metric]
   const domainMaxY = metric === 'attempts' ? chartData.chartData.domainMaxYAtt : chartData.chartData.domainMaxYTime
   const yLabel = metric === 'attempts' ? '# ATTEMPTS' : 'TIME (secs)'
   const labelsX = chartData.chartData.labelsX
   const colorScale = ['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']
-  const chartLines = qTypes.map( type => {
-    return (
-      <VictoryGroup
-        data={data[type]}
-        key={type}
-        >
-        <VictoryLine/>
-        <VictoryScatter/>
-      </VictoryGroup>
-    )
-  })
+  //not sure useMemo helps here because data will always be different because object identity??
+  const chartLines = useMemo(() => {
+    return qTypes.map( type => {
+      return (
+        <VictoryGroup
+          data={data[type]}
+          key={type}
+          >
+          <VictoryLine/>
+          <VictoryScatter/>
+        </VictoryGroup>
+      )
+    })
+  }, [qTypes, data])
   return (
     <VictoryChart height={200} width={600} domainPadding={{x: 0}} style={{parent: {maxHeight: '40%'}}}>
       {showLegend && <VictoryLegend x={75} y={0}
@@ -58,3 +61,5 @@ export default function ProgressChart(props) {
     </VictoryChart>
   )
 }
+
+export default React.memo(ProgressChart)

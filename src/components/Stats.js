@@ -7,7 +7,7 @@ import {
   Button,
 } from 'shards-react'
 import Quiz from './Quiz'
-import ProgressChart from './Progress'
+import ProgressMenu from './ProgressMenu'
 import generateChords from '../chordGenerator'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import backSvg from '../assets/svgs-backarrows.svg'
@@ -57,7 +57,7 @@ export default function RoundStats({ round, chartData }) {
     return <Quiz data={quiz} round={round+1} />
   }
   else if (progressView) {
-    return <ProgressChart round={round} chartData={chartData} qTypes={qTypes} />
+    return <ProgressMenu round={round} chartData={chartData} qTypes={qTypes} />
   }
   else {
     return (
