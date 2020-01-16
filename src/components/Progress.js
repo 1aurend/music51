@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Session } from './Context'
-import ProgressChart from './views/ProgressChart'
+import ChartLayout from './views/ChartLayout'
 import generateChords from '../chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
@@ -24,6 +24,6 @@ export default function ProgressMenu({ round, chartData, qTypes }) {
   } else if (stats) {
     return <RoundStats round={round} chartData={chartData} qTypes={qTypes} />
   } else {
-    return <ProgressChart chartData={chartData} qTypes={qTypes} round={round} finished={finished} viewStats={viewStats} nextRound={nextRound} />
+    return <ChartLayout chartData={chartData} qTypes={qTypes} round={round} finished={finished} viewStats={viewStats} nextRound={nextRound} />
   }
 }

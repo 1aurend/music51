@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import ProgressChart from '../Progress'
+import ProgressMenu from '../Progress'
 import { Means } from '../Context'
 import Loading from '../views/Loading'
 import { rounded } from '../utility'
 
 
 export function findYMax(data, qTypes, param) {
-  return Math.max(...qTypes.map( type => {
+  return Math.max(...(qTypes.map( type => {
     return data[type][param]
-  }))
+  })).flat())
 }
 export function getDataPoints(data, qTypes, param) {
   return qTypes.map(type => {
@@ -70,7 +70,7 @@ export default function ChartData({ round, questionTypes }) {
   }, [questionTypes, round])
 
   if (chartData) {
-    return <ProgressChart round={round} chartData={chartData} qTypes={questionTypes} />
+    return <ProgressMenu round={round} chartData={chartData} qTypes={questionTypes} />
   } else {
     return <Loading />
   }
