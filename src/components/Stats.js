@@ -6,8 +6,8 @@ import {
   Col,
   Button,
 } from 'shards-react'
-import Quiz from './Quiz'
-import ProgressMenu from './ProgressMenu'
+import Quiz from './logic/Quiz'
+import ProgressMenu from './logic/ProgressMenu'
 import generateChords from '../chordGenerator'
 import nextRoundSvg from '../assets/svgs-nextround.svg'
 import backSvg from '../assets/svgs-backarrows.svg'

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { Session } from './Context'
-import ChartLayout from './views/ChartLayout'
-import generateChords from '../chordGenerator'
-import RoundStats from './Stats'
+import { Session } from '../Context'
+import ChartLayout from '../views/ChartLayout'
+import generateChords from '../../chordGenerator'
+import RoundStats from '../Stats'
 import Quiz from './Quiz'
-import SessionMatrix from './Session'
+import SessionMatrix from '../Session'
 
 
 export default function ProgressMenu({ round, chartData, qTypes }) {

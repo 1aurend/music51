@@ -1,5 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react'
-import Start from './Start'
+import StartMenu from './logic/StartMenu'
 
 export const Session = createContext()
 export const Means = createContext()
@@ -31,7 +31,7 @@ export default function Context() {
           <Rounds.Provider value={[rounds, updateRounds]}>
             <Count.Provider value={[count, increment]}>
               {/*do headline and round need to start here as props?*/}
-              <Start title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
+              <StartMenu title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
             </Count.Provider>
           </Rounds.Provider>
         </Means.Provider>

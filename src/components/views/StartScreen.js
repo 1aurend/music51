@@ -26,7 +26,7 @@ const StyledCenterPane = styled(Col)`
   background-color: #e5e6eb;
 `
 
-export default function StartMenu({ title, generateQuiz, numQs, onCheck, options }) {
+export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
   const {chordCrusher, music51, beta, input} = sizedStyles
   return (

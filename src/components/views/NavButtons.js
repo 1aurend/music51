@@ -53,7 +53,7 @@ export default function NavButtons({ viewStats, nextRound, finished }) {
       </StyledRow>
       <StyledRow marginBottom='5%'>
         <StyledCol sm='8' lg='5'>
-      ]   <StyledSvgButton
+         <StyledSvgButton
             theme="dark"
             onClick={() => {finished(true)}}
             >

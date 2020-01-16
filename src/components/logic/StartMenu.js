@@ -1,8 +1,8 @@
 import React, { useState, useRef, useContext } from 'react'
 import Quiz from './Quiz'
-import generateChords from '../chordGenerator'
-import { Session } from './Context'
-import StartMenu from './views/StartMenu'
+import generateChords from '../../chordGenerator'
+import { Session } from '../Context'
+import StartScreen from '../views/StartScreen'
 
 
 export default function Start({ title, round }) {
@@ -86,7 +86,7 @@ export default function Start({ title, round }) {
   }
 
   if (!ready) {
-    return <StartMenu title={title} generateQuiz={generateQuiz} numQs={numQs} onCheck={onCheck} options={options} />
+    return <StartScreen title={title} generateQuiz={generateQuiz} numQs={numQs} onCheck={onCheck} options={options} />
   } else {
     return <Quiz data={quiz} round={round}/>
   }
