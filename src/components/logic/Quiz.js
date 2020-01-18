@@ -123,7 +123,7 @@ export default function Quiz ({ data, round }) {
           currentChord.current = data[roundData.current.length]
           nextQ(currentChord.current.questions[0])
         } else {
-          updateRounds({...rounds, [round]: roundData.current})
+          updateRounds({...rounds, [round]: roundData.current}) //this should become a dispatch eventually
         }
       }
     }, 1000)
