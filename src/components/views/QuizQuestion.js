@@ -13,7 +13,17 @@ import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles
-  const { chord, question, noteColors, red, green, handleClick, onKeyPressed, currentInput } = props
+  const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
+  const noteColors = (() => {
+    return colors.map(input => {
+      if (input.color === 'green') {
+        return input.input
+      }
+      return null
+    }).filter( val => val !== null )
+  })()
+  const red = colors[colors.length-1]?.color === 'red' ? true : false
+  const green = noteColors
 
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
@@ -31,7 +41,7 @@ export default function QuizQuestion(props) {
               <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}}>
               {question.choices.map(choice => {
                 return (
-                <Choice onClick={(e) => handleClick(e, choice.choice)} choice={choice.choice} key={choice.key} keystroke={choice.key} input={currentInput} red={red} green={green} />)})}
+                <Choice onClick={(e) => handleClick(choice.choice)} choice={choice.choice} key={choice.key} keystroke={choice.key} input={currentInput} red={red} green={green} />)})}
               </Row>
             </Col>
         </Row>

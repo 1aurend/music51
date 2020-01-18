@@ -5,15 +5,15 @@ Components are now organized into three folders:
 
 1. Views
 
-  Anything that deals with layouts, svgs, css, etc.
+  * Anything that deals with layouts, svgs, css, etc.
 
 2. Logic
 
-  Anything with state, handles user input, etc.
+  * Anything with state, handles user input, etc.
 
 3. Actions
 
-  Things in here probably shouldn't be components at all. These components perform actions that make most sense as actions in a reducer updating the global session state. Moving to this sort of architecture is a longer term project.
+  * Things in here probably shouldn't be components at all. These components perform actions that make most sense as actions in a reducer updating the global session state. Moving to this sort of architecture is a longer term project.
 
 Uncategorized components are ones I have not yet refactored. (This isn't to say that all the filed ones are finished.)
 
