@@ -20,7 +20,6 @@ export default function SessionMatrix({ round, qTypes }) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, sessionTitle, matrixSize } = sizedStyles
 
-
   useEffect(() => {
 
     let fastest = {}

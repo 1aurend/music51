@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Container,
   Row,
@@ -29,6 +29,11 @@ const StyledCenterPane = styled(Col)`
 export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
   const {chordCrusher, music51, beta, input} = sizedStyles
+
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  },[])
+
   return (
     <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row noGutters style={{paddingTop: '3%'}}></Row>

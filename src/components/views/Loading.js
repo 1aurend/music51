@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Row, Col } from 'shards-react'
 
 export default function Loading() {
+
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  },[])
+
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
       <Row style={{paddingTop: '25%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}></Row>

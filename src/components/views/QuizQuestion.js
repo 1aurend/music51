@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Chord from '../Chord'
 import Choice from '../Choice'
 import {
@@ -24,6 +24,10 @@ export default function QuizQuestion(props) {
   })()
   const red = colors[colors.length-1]?.color === 'red' ? true : false
   const green = noteColors
+
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  },[question])
 
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>

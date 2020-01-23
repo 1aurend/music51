@@ -35,16 +35,16 @@ There is also a folder for hooks that contains a custom hook for responsive styl
 * Get rid of inline styles anywhere it makes sense in favor of styled-components
 * Make any changes to the start menu logic to accommodate changes in the generator and not duplicate logic there
 * Refactor `Quiz.js` and modularize the logic there better
-
-### To Do
-* Synthesize responsive styles. Lots of duplicates. Can we pass down styled components rather than js objects?
-* SVG button highlights on hover-- do we like those?
 * Add this to every layout:
 ```js
 useEffect(() => {
     window.scrollTo(0, 0)
 })
 ```
+
+### To Do
+* Synthesize responsive styles. Lots of duplicates. Can we pass down styled components rather than js objects?
+* SVG button highlights on hover-- do we like those?
 * Break `Stats.js` and `Session.js` into logic and views and modularize those calculations
 * Revisit `Chord.js` which should get renamed `Vexflow` and clean up
   * This depends on what happens with the generator too; some things that are vexflow specific might get pushed down here too

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Container,
   Row,
@@ -36,6 +36,10 @@ function ChartLayout({ chartData, qTypes, round, finished, viewStats, nextRound 
   const { progressTitle, progressSubtitle } = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
+
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  },[])
 
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
