@@ -14,7 +14,7 @@ import {
   VictoryAxis,
   VictoryLegend,
 } from 'victory'
-import generateChords from '../chordGenerator'
+import generateChords from '../generator/chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
 import SessionMatrix from './Session'
