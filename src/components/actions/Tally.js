@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Means } from '../Context'
-import RoundStats from '../Stats'
+import RoundStats from '../logic/Stats'
 import ChartData from './ChartData'
 import Loading from '../views/Loading'
 import { mean, rounded } from '../utility'
@@ -47,7 +47,7 @@ export function tallyRound(data) {
     }).reduce((obj, item) => {
           obj[item.type] = item.means
             return obj
-          } ,{})
+          }, {})
   return calculateOverallMeans(means, [...questionTypes])
 }
 function calculateOverallMeans(means, questionTypes) {

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { Session } from './Context'
-import Quiz from './logic/Quiz'
-import ProgressMenu from './logic/ProgressMenu'
-import generateChords from '../chordGenerator'
-import StatLines from './views/StatLines'
+import { Session } from '../Context'
+import Quiz from './Quiz'
+import ProgressMenu from './ProgressMenu'
+import generateChords from '../../generator/chordGenerator'
+import StatLines from '../views/StatLines'
 
 
 export default function RoundStats({ round, chartData, qTypes }) {
@@ -17,15 +17,10 @@ export default function RoundStats({ round, chartData, qTypes }) {
 
   if (quiz) {
     return <Quiz data={quiz} round={round+1} />
-  }
-  else if (progressChart) {
+  } else if (progressChart) {
     return <ProgressMenu round={round} chartData={chartData} qTypes={qTypes} />
+  } else {
+    return <StatLines round={round} qTypes={qTypes} nextRound={nextRound} showProgress={showProgress} />
   }
-  else {
-    return (
-      <StatLines round={round} qTypes={qTypes} nextRound={nextRound} showProgress={showProgress} />
-    )
-  }
-
 
 }

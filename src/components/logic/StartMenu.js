@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from 'react'
 import Quiz from './Quiz'
-import generateChords from '../../chordGenerator'
+import generateChords from '../../generator/chordGenerator'
 import { Session } from '../Context'
 import StartScreen from '../views/StartScreen'
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Means } from '../Context'
 import {
   Container,
@@ -6,10 +6,10 @@ import {
   Col,
   Button,
 } from 'shards-react'
-import useResponsiveStyles from '../hooks/useResponsiveStyles'
+import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
-import nextRoundSvg from '../assets/svgs-nextround.svg'
-import backSvg from '../assets/svgs-backarrows.svg'
+import nextRoundSvg from '../../assets/svgs-nextround.svg'
+import backSvg from '../../assets/svgs-backarrows.svg'
 
 const StyledRow = styled(Row)`
   display: flex;
@@ -48,6 +48,10 @@ export default function StatLines(props) {
   let statLines = qTypes.map( type => {
     return <Row key={type} style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}><p><span style={{fontWeight: '600'}}>{type.toUpperCase()}: </span>{means[type].attempts[means[type].attempts.length-1]} attempts and {means[type].times[means[type].times.length-1]} seconds per question</p></Row>
   })
+
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  },[])
 
 
 

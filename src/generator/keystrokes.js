@@ -2,8 +2,7 @@ import chalk from 'chalk'
 
 function addKeystrokes(chords) {
 
-
-  let questionTypes = {
+  const questionTypes = {
     NAMES: `Names`,
     ROOT: `Roots`,
     DEGREE: `Degrees`,
