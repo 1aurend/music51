@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'shards-react'
 import styled from 'styled-components'
 
+
 const StyledChoiceButton = styled(Button)`
   min-height: 10vh;
   min-width: 10vh;
@@ -22,7 +23,6 @@ const StyledKeystrokeSymbol = styled.p`
   margin-bottom: 0;
   margin-top: 2;
 `
-
 
 export default function Choice({ choice, keystroke, input, red, green, onClick }) {
   // TODO: update this after consolidating the colors object in QuizQuestion

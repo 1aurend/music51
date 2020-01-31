@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import Chord from '../Chord'
-import Choice from '../Choice'
+import Vexflow from './Vexflow'
+import Choice from './Choice'
 import {
   Container,
   Row,
@@ -9,11 +9,11 @@ import {
 import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 
 
-
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
+  //disentangle these color arrays... not all questions have note colors :)
   const noteColors = (() => {
     return colors.map(input => {
       if (input.color === 'green') {
@@ -36,7 +36,7 @@ export default function QuizQuestion(props) {
         <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '5%', backgroundColor: '#e5e6eb'}}>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '7%', marginRight: '7%', marginTop: '5%'}}><h2 style={questionText}>{question.questionText}</h2></Row>
           <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginBottom: '5%', marginTop: '3%'}}>
-            <Chord notes={chord.current.notes} octaves={chord.current.octaves} clef={chord.current.clef} keySig={chord.current.keySignature} colors={noteColors} />
+            <Vexflow notes={chord.current.notes} octaves={chord.current.octaves} clef={chord.current.clef} keySig={chord.current.keySignature} colors={noteColors} />
           </Row>
         </Col>
       </Row>
