@@ -13,17 +13,9 @@ export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
-  //disentangle these color arrays... not all questions have note colors :)
-  const noteColors = (() => {
-    return colors.map(input => {
-      if (input.color === 'green') {
-        return input.input
-      }
-      return null
-    }).filter( val => val !== null )
-  })()
+  const green = colors.filter(input => input.color === 'green').map(input => input.input)
+  const noteColors = question.type === 'Names' || question.type === 'Roots' ? green : []
   const red = colors[colors.length-1]?.color === 'red' ? true : false
-  const green = noteColors
 
   useEffect(() => {
       window.scrollTo(0, 0)
