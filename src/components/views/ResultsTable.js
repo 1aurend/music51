@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Means } from '../Context'
-import useResponsiveStyles from '../hooks/useResponsiveStyles'
+import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 import { rounded } from '../utility'
 import HorizontalTable from './HorizontalTable'
 import VerticalTable from './VerticalTable'

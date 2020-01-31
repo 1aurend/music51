@@ -4,7 +4,7 @@ import ChartLayout from '../views/ChartLayout'
 import generateChords from '../../generator/chordGenerator'
 import RoundStats from './Stats'
 import Quiz from './Quiz'
-import ResultsTable from '../Session'
+import ResultsTable from './Session'
 
 
 export default function EndOfRoundMenu({ round, chartData, qTypes }) {

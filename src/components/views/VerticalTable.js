@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardBody
 } from 'shards-react'
-import useResponsiveStyles from '../hooks/useResponsiveStyles'
-import startOverSvg from '../assets/svgs-startover.svg'
+import useResponsiveStyles from '../../hooks/useResponsiveStyles'
+import startOverSvg from '../../assets/svgs-startover.svg'
 
 
 export default function VerticalTable(props) {
