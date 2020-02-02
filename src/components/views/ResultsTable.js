@@ -7,7 +7,7 @@ import VerticalTable from './VerticalTable'
 
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
-export default function ResultsTable({ props }) {
+export default function ResultsTable(props) {
   const { qTypes, round, startOver } = props
   const means = useContext(Means)[0]
   const sizedStyles = useResponsiveStyles()
@@ -76,6 +76,7 @@ export default function ResultsTable({ props }) {
             greeting={greeting}
             verticalTableAtt={verticalTableAtt}
             verticalTableT={verticalTableT}
+            startOver={startOver}
             />
     }
 }

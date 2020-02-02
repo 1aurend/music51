@@ -22,7 +22,7 @@ const StyledRow = styled(Row)`
 
 
 export default function StatLines(props) {
-  const { round, qTypes, showProgress, nextRound } = props
+  const { round, qTypes, setShowStats, nextRound } = props
   const means = useContext(Means)[0]
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, statsTitle, statsSubtitle } = sizedStyles
@@ -35,7 +35,7 @@ export default function StatLines(props) {
                                 </Col>) :
                                 (<><Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>
                                     <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', marginLeft: '5%', marginRight: '5%', padding: '0'}} onClick={(e) => {
-                                      showProgress(true)
+                                      setShowStats(false)
                                     }}><img src={backSvg} alt='next round' style={{width: '10rem'}}></img></Button>
                                 </Col>
                                 <Col sm='8' lg='5' style={{display: 'flex', justifyContent: 'center', marginBottom: '5%'}}>

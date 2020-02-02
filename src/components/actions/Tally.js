@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Means } from '../Context'
-import RoundStats from '../logic/Stats'
+import EndOfRound from '../logic/EndOfRound'
 import ChartData from './ChartData'
 import Loading from '../views/Loading'
 import { mean, rounded } from '../utility'
@@ -105,7 +105,7 @@ export default function Tally({ data, round }) {
   }, [data, updateMeans])
 
   if (questionTypes && round === 1) {
-    return <RoundStats round={round}/>
+    return <EndOfRound round={round} qTypes={questionTypes}/>
   } else if (questionTypes) {
     return <ChartData round={round} questionTypes={questionTypes} />
   } else {

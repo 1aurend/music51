@@ -30,24 +30,27 @@ There is also a folder for hooks that contains a custom hook for responsive styl
   * Also want to try implementing suspense and using loading as a fallback to see if that enables a loading screen in the delay after clicking the back button from the round stats screen.
   * Also want to see about getting away from Victory and using just HTML Canvas or something that might be faster for these basic graphs
 * Got rid of all hardcoded info re: question types so the UI can accept any new questions from the generator
+* Refactor `Quiz.js` and modularize the logic there better
+* Break `Stats.js` and `Session.js` into logic and views and modularize those calculations
+  * In the end, removed these components altogether in favor of a unified `EndOfRound.js` controller
+* Revisit `Chord.js` which should get renamed `Vexflow` and clean up
+  * This depends on what happens with the generator too; some things that are vexflow specific might get pushed down here too
+
 
 ### In Progress
 * Get rid of inline styles anywhere it makes sense in favor of styled-components
 * Make any changes to the start menu logic to accommodate changes in the generator and not duplicate logic there
-* Refactor `Quiz.js` and modularize the logic there better
 * Add this to every layout:
 ```js
 useEffect(() => {
     window.scrollTo(0, 0)
 })
 ```
+* SVG button highlights on hover-- do we like those?
+
 
 ### To Do
 * Synthesize responsive styles. Lots of duplicates. Can we pass down styled components rather than js objects?
-* SVG button highlights on hover-- do we like those?
-* Break `Stats.js` and `Session.js` into logic and views and modularize those calculations
-* Revisit `Chord.js` which should get renamed `Vexflow` and clean up
-  * This depends on what happens with the generator too; some things that are vexflow specific might get pushed down here too
 * Rethink the charts and what to display if we have a larger number of question types. Should we display best and worst question type and overall? And then have some other screen with detailed numbers? Or detailed numbers below?
   * KP is also thinking about this
 * Update `keystrokes.js` to accomodate new question types

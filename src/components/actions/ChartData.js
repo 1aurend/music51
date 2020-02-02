@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import ProgressMenu from '../logic/ProgressMenu'
+import EndOfRound from '../logic/EndOfRound'
 import { Means } from '../Context'
 import Loading from '../views/Loading'
 import { rounded } from '../utility'
@@ -70,7 +70,7 @@ export default function ChartData({ round, questionTypes }) {
   }, [questionTypes, round])
 
   if (chartData) {
-    return <ProgressMenu round={round} chartData={chartData} qTypes={questionTypes} />
+    return <EndOfRound round={round} chartData={chartData} qTypes={questionTypes} />
   } else {
     return <Loading />
   }
