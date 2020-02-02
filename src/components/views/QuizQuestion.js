@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Vexflow from './Vexflow'
-import Choice from './Choice'
+import AnswerChoice from './AnswerChoice'
 import {
   Container,
   Row,
@@ -13,9 +13,7 @@ export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
-  const green = colors.filter(input => input.color === 'green').map(input => input.input)
-  const noteColors = question.type === 'Names' || question.type === 'Roots' ? green : []
-  const red = colors[colors.length-1]?.color === 'red' ? true : false
+  const noteColors = question.type === 'Names' || question.type === 'Roots' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -37,7 +35,7 @@ export default function QuizQuestion(props) {
               <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%'}}>
               {question.choices.map(choice => {
                 return (
-                <Choice onClick={(e) => handleClick(choice.choice)} choice={choice.choice} key={choice.key} keystroke={choice.key} input={currentInput} red={red} green={green} />)})}
+                <AnswerChoice onClick={(e) => handleClick(choice.choice)} choice={choice.choice} key={choice.key} keystroke={choice.key} input={currentInput} colors={colors} />)})}
               </Row>
             </Col>
         </Row>

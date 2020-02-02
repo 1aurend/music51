@@ -14,8 +14,8 @@ const StyledRow = styled(Row)`
   justify-content: center;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: ${props => props.marginTop || 0};
-  margin-bottom: ${props => props.marginBottom || 0};
+  margin-top: ${props => props.margintop || 0};
+  margin-bottom: ${props => props.marginbottom || 0};
 `
 const StyledCenterPane = styled(Col)`
   border: 5px solid black;
@@ -39,7 +39,7 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
       <Row noGutters style={{paddingTop: '3%'}}></Row>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
         <StyledCenterPane sm='12' lg='8'>
-          <StyledRow marginTop='5%'>
+          <StyledRow margintop='5%'>
             <h1 style={chordCrusher}>{title.headline}</h1>
           </StyledRow>
           <StyledRow>
@@ -48,7 +48,7 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
           <StyledRow>
             <h2 style={beta}>{title.beta}</h2>
           </StyledRow>
-          <StyledRow marginBottom='2%'>
+          <StyledRow marginbottom='2%'>
             <h2 style={music51}>{title.subtitle}</h2>
           </StyledRow>
           <StyledRow>

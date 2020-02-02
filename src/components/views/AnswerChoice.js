@@ -16,6 +16,9 @@ const StyledChoiceButton = styled(Button)`
   border-width: 4px;
   border-radius: 0;
   background-color: ${props => props.color};
+  &:hover {
+    background-color: ${props => props.color};
+  }
 `
 const StyledKeystrokeSymbol = styled.p`
   font-size: 14px;
@@ -24,16 +27,18 @@ const StyledKeystrokeSymbol = styled.p`
   margin-top: 2;
 `
 
-export default function Choice({ choice, keystroke, input, red, green, onClick }) {
-  // TODO: update this after consolidating the colors object in QuizQuestion
+export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
   const background = (() => {
-    if (green.includes(choice)) {
-      return '#17c671'
-    } else if (choice === input && red) {
+    const thisInput = colors[colors.length-1]
+    const greens = colors.filter(input => input.color === 'green').map(input => input.input)
+    if (colors.length > 0 && thisInput.color === 'red' && thisInput.input === choice) {
       return '#c4183c'
+    } else if (greens.includes(choice)) {
+      return '#17c671'
     }
     return '#e5e6eb'
   })()
+
   function formatButtonText(choice) {
     if (choice.includes('^')) {
       return (
