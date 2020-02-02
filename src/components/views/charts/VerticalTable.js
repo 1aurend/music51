@@ -11,7 +11,7 @@ import {
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import startOverSvg from '../../../assets/svgs-startover.svg'
 
-
+// TODO: add styled-components
 export default function VerticalTable(props) {
   const { greeting, verticalTableAtt, verticalTableT, startOver } = props
   const sizedStyles = useResponsiveStyles()

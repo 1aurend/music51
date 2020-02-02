@@ -7,6 +7,7 @@ import VerticalTable from '../charts/VerticalTable'
 
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
+// TODO: add a better breakpoint for tables?
 export default function ResultsTable(props) {
   const { qTypes, round, startOver } = props
   const means = useContext(Means)[0]

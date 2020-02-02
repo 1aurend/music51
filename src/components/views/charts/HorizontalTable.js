@@ -11,7 +11,7 @@ import {
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import startOverSvg from '../../../assets/svgs-startover.svg'
 
-
+// TODO: add styled-components
 export default function HorizontalTable(props) {
   const { greeting, headers, firstRoundAtt, firstRoundT, lastRoundAtt, lastRoundT, bestRoundAtt, bestRoundT, startOver } = props
   const sizedStyles = useResponsiveStyles()

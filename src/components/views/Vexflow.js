@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import useResponsiveStyles from '../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 

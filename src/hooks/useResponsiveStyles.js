@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import * as responsiveStyles from './responsiveStyles'
 
 
@@ -57,7 +57,6 @@ export default function useResponsiveStyles() {
   useLayoutEffect(() => {
     chooseSizedStyles(size, false)
   }, [size])
-
 
   return sizedStyles
 }

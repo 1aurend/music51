@@ -8,7 +8,7 @@ import {
 } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
-
+// TODO: add styled-components
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { borderRadius, questionText } = sizedStyles

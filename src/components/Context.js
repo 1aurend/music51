@@ -1,3 +1,4 @@
+// TODO: refactor this when ready to introduce reducers
 import React, { createContext, useState, useCallback } from 'react'
 import StartMenu from './logic/StartMenu'
 

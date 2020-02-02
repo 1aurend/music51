@@ -9,6 +9,7 @@ import {
 } from 'shards-react'
 import styled from 'styled-components'
 
+
 const StyledRow = styled(Row)`
   display: flex;
   justify-content: center;
@@ -30,13 +31,14 @@ const StyledSvgButton = styled(Button)`
   padding: 0;
 `
 
+// TODO: rename and/or reorganize to accomodate nav buttons in StatLines
 export default function NavButtons({ viewStats, nextRound, finished }) {
   return (
     <>
       <StyledRow>
         <StyledCol sm='8' lg='5'>
           <StyledSvgButton
-            theme="dark"
+            theme="light"
             onClick={() => {viewStats(true)}}
             >
             <img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}/>
@@ -44,7 +46,7 @@ export default function NavButtons({ viewStats, nextRound, finished }) {
         </StyledCol>
         <StyledCol sm='8' lg='5'>
           <StyledSvgButton
-            theme="dark"
+            theme="light"
             onClick={() => {nextRound()}}
             >
             <img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}/>
@@ -54,7 +56,7 @@ export default function NavButtons({ viewStats, nextRound, finished }) {
       <StyledRow marginBottom='5%'>
         <StyledCol sm='8' lg='5'>
          <StyledSvgButton
-            theme="dark"
+            theme="light"
             onClick={() => {finished(true)}}
             >
             <img src={endSessionSvg} alt='end session' style={{width: '15rem'}}/>

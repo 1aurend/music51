@@ -3,6 +3,7 @@ import { Button } from 'shards-react'
 import goSvg from '../../../assets/svgs-go.svg'
 import styled from 'styled-components'
 
+
 const StyledSvgButton = styled(Button)`
   display: block;
   cursor: pointer;

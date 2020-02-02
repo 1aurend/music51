@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import nextRoundSvg from '../../../assets/svgs-nextround.svg'
 import backSvg from '../../../assets/svgs-backarrows.svg'
 
+// TODO: finish implementing styled-components and refactor
 const StyledRow = styled(Row)`
   display: flex;
   justify-content: center;
@@ -19,7 +20,6 @@ const StyledRow = styled(Row)`
   margin-top: ${props => props.marginTop || 0};
   margin-bottom: ${props => props.marginBottom || 0};
 `
-
 
 export default function StatLines(props) {
   const { round, qTypes, setShowStats, nextRound } = props

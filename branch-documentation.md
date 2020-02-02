@@ -35,17 +35,16 @@ There is also a folder for hooks that contains a custom hook for responsive styl
   * In the end, removed these components altogether in favor of a unified `EndOfRound.js` controller
 * Revisit `Chord.js` which should get renamed `Vexflow` and clean up
   * This depends on what happens with the generator too; some things that are vexflow specific might get pushed down here too
-
+  * Add this to every layout:
+  ```js
+  useEffect(() => {
+      window.scrollTo(0, 0)
+  })
+  ```
 
 ### In Progress
 * Get rid of inline styles anywhere it makes sense in favor of styled-components
 * Make any changes to the start menu logic to accommodate changes in the generator and not duplicate logic there
-* Add this to every layout:
-```js
-useEffect(() => {
-    window.scrollTo(0, 0)
-})
-```
 * SVG button highlights on hover-- do we like those?
 
 
