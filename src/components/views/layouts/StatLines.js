@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from 'react'
-import { Means } from '../Context'
+import { Means } from '../../Context'
 import {
   Container,
   Row,
   Col,
   Button,
 } from 'shards-react'
-import useResponsiveStyles from '../../hooks/useResponsiveStyles'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
-import nextRoundSvg from '../../assets/svgs-nextround.svg'
-import backSvg from '../../assets/svgs-backarrows.svg'
+import nextRoundSvg from '../../../assets/svgs-nextround.svg'
+import backSvg from '../../../assets/svgs-backarrows.svg'
 
 const StyledRow = styled(Row)`
   display: flex;

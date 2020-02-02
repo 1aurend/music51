@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'shards-react'
-import goSvg from '../../assets/svgs-go.svg'
+import goSvg from '../../../assets/svgs-go.svg'
 import styled from 'styled-components'
 
 const StyledSvgButton = styled(Button)`

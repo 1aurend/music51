@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react'
 import Tally from '../actions/Tally'
 import { Rounds } from '../Context'
-import QuizQuestion from '../views/QuizQuestion'
+import QuizQuestion from '../views/layouts/QuizQuestion'
 
 
 export default function Quiz ({ data, round }) {

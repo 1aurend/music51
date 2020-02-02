@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Means } from '../Context'
 import EndOfRound from '../logic/EndOfRound'
 import ChartData from './ChartData'
-import Loading from '../views/Loading'
+import Loading from '../views/layouts/Loading'
 import { mean, rounded } from '../utility'
 
 

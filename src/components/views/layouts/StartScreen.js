@@ -4,9 +4,9 @@ import {
   Row,
   Col,
 } from 'shards-react'
-import Options from './Options'
-import Go from './Go'
-import useResponsiveStyles from '../../hooks/useResponsiveStyles'
+import Options from '../buttons/Options'
+import Go from '../buttons/Go'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 
 const StyledRow = styled(Row)`

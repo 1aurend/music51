@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import EndOfRound from '../logic/EndOfRound'
 import { Means } from '../Context'
-import Loading from '../views/Loading'
+import Loading from '../views/layouts/Loading'
 import { rounded } from '../utility'
 
 

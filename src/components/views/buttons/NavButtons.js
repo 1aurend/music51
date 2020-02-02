@@ -1,7 +1,7 @@
 import React from 'react'
-import nextRoundSvg from '../../assets/svgs-nextround.svg'
-import endSessionSvg from '../../assets/svgs-endsessionred.svg'
-import roundStatsSvg from '../../assets/svgs-roundstats.svg'
+import nextRoundSvg from '../../../assets/svgs-nextround.svg'
+import endSessionSvg from '../../../assets/svgs-endsessionred.svg'
+import roundStatsSvg from '../../../assets/svgs-roundstats.svg'
 import {
   Row,
   Col,

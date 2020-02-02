@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import Context, { Session } from '../Context'
-import ChartLayout from '../views/ChartLayout'
+import ChartLayout from '../views/layouts/ChartLayout'
 import generateChords from '../../generator/chordGenerator'
-import StatLines from '../views/StatLines'
+import StatLines from '../views/layouts/StatLines'
 import Quiz from './Quiz'
-import ResultsTable from '../views/ResultsTable'
+import ResultsTable from '../views/layouts/ResultsTable'
 
 
 export default function EndOfRoundMenu({ round, chartData, qTypes }) {

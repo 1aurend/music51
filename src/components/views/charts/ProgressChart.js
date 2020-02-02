@@ -7,7 +7,7 @@ import {
   VictoryLegend,
   VictoryChart
 } from 'victory'
-import { rounded } from '../utility'
+import { rounded } from '../../utility'
 
 
 function ProgressChart(props) {

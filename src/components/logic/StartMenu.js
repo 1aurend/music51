@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react'
 import Quiz from './Quiz'
 import generateChords from '../../generator/chordGenerator'
 import { Session } from '../Context'
-import StartScreen from '../views/StartScreen'
+import StartScreen from '../views/layouts/StartScreen'
 
 
 export default function Start({ title, round }) {

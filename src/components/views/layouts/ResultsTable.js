@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import { Means } from '../Context'
-import useResponsiveStyles from '../../hooks/useResponsiveStyles'
-import { rounded } from '../utility'
-import HorizontalTable from './HorizontalTable'
-import VerticalTable from './VerticalTable'
+import { Means } from '../../Context'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
+import { rounded } from '../../utility'
+import HorizontalTable from '../charts/HorizontalTable'
+import VerticalTable from '../charts/VerticalTable'
 
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import Vexflow from './Vexflow'
-import AnswerChoice from './AnswerChoice'
+import Vexflow from '../Vexflow'
+import AnswerChoice from '../buttons/AnswerChoice'
 import {
   Container,
   Row,
   Col,
 } from 'shards-react'
-import useResponsiveStyles from '../../hooks/useResponsiveStyles'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
 
 export default function QuizQuestion(props) {
