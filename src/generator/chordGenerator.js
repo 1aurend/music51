@@ -544,11 +544,10 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
         // console.log(noteSyllable)
 
       // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-      let noteIp = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + classes[newClass][translatedNoteIP].tensionMod12 -1)%12]
-
+      let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + classes[newClass][translatedNoteIP].tensionMod12 -1)%12]
 
       // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-      let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIp))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+      let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
         // adjusts for IPs on opposite ends of the array, like "D" from "R"
         // but something about this feels hacky... is there a better way?
         if(accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal -= Object.values(IndependentPitch).length
