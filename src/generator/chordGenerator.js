@@ -626,7 +626,13 @@ export function invert(chord, inversion) {
   return notes
 }
 
+/**
+ * @param ChordType chordType The `ChordType` of a chord (either a `TRIAD` or `SEVENTH` for now) for which you would like
+ *        an enumeration of inversions.
+ * @return An array of strings representing the various inversions available for a `TRIAD` or `SEVENTH` chord.
+ */
 function inversions(chordType) {
+  // TODO: Consider moving this functionality over be over `ChordType`.
   switch (chordType) {
     case ChordType.TRIAD:
       return ["","63","64"]
