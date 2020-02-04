@@ -583,7 +583,17 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
     }
 }
 
-// and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
+/**
+ * randomChord - A big function to generate a random, correctly spelled chord structure within clef/staff limits
+ * 
+ * @param options The user settings for a given session, in the form:
+ *                {
+ *                  { 
+ *                    chordTypes: { triads: true, sevenths: true },
+                      roots: { common:true, any: false } 
+ *                  }
+ *                }
+ */
 function randomChord(options) {
 
   // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
