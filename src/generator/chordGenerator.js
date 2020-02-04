@@ -532,7 +532,6 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
   //     letter: rootLetter
   //   }
 
-    // FIXME: This should be its own function
     // build the structure with correct spellings
     for(var i=0; i<chordStructure.structure.length; i++){
 
@@ -544,7 +543,7 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
         // console.log(noteSyllable)
 
       // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-      let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + classes[newClass][translatedNoteIP].tensionMod12 -1)%12]
+      let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
 
       // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
       let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
@@ -567,8 +566,6 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
         octave += 1;
         chordOctave +=1 // sets the default octave up for the next note
       }
-
-
 
       chord.notes.push(
         {
