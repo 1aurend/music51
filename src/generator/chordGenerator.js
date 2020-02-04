@@ -597,7 +597,10 @@ function randomChord(options) {
   // Shuffles the root note choices so they're not always in root position haha
   // shuffle(chord.questions[1].choices)
 
-  const chord = makeChord(chooseChordType(chordTypesOption(options.chordTypes)))
+  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const inversion = inversions(chordType)
+  const chord = makeChord(chordType)
+  // TODO: (James) add `inversion` method on `Chord` type
   const inverted = handleInversion(chord, inversion)
   const positionedChord = staffAdjust(inverted)
   return positionedChord

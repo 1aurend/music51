@@ -110,5 +110,7 @@ export function chordStructures(chordType) {
         ChordStructure.HALF_DIMINISHED_SEVENTH,
         ChordStructure.FULLY_DIMINISHED_SEVENTH
       ])
+    default:
+      throw "Unsupported chordType"
   }
 }
