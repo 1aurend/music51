@@ -243,7 +243,6 @@ export function makeChord(chordType) {
   }
 }
 
-
 /**
  * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
  *
@@ -255,8 +254,8 @@ export function concretizeRoot(keySignature, modeNote) {
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
-  for(var i=0; i<Shapes[keySignature].notes.length; i++){
-    if(Shapes[keySignature].notes[i].mode === modeNote){
+  for (var i=0; i<Shapes[keySignature].notes.length; i++) {
+    if (Shapes[keySignature].notes[i].mode === modeNote) {
       const rootAccidental = Shapes[keySignature].notes[i].accidental
       const rootSyllable = Shapes[keySignature].notes[i].refIP
       const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
@@ -307,7 +306,6 @@ const allowedModesByChordStructure = {
   [ChordStructure.HALF_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
 }
-
 
 /**
  * randomRomanNumeralContext - Choose a random roman numeral context -- mode, mode note, scale degree, and numeral -- given a chord structure.
@@ -585,8 +583,6 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
 // and a big function to generate a random, correctly spelled chord structure within clef/staff limits:
 function randomChord(options) {
-
-
 
   // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
   // shuffles the root note choices so they're not always in root position haha
