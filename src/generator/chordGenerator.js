@@ -547,10 +547,18 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
       // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
       let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+
+      // FIXME: (James) Perhaps break this into a function of its own
+      // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
       // adjusts for IPs on opposite ends of the array, like "D" from "R"
       // but something about this feels hacky... is there a better way?
-      if(accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal -= Object.values(IndependentPitch).length
-      if(-accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal += Object.values(IndependentPitch).length
+      if (accidentalVal > Object.values(IndependentPitch).length/2) {
+        accidentalVal -= Object.values(IndependentPitch).length
+      }
+      if (-accidentalVal > Object.values(IndependentPitch).length/2) {
+        accidentalVal += Object.values(IndependentPitch).length
+      }
+
       let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
         // console.log(accidental)
 
