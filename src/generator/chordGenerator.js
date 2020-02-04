@@ -540,11 +540,11 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
       const translatedNoteIP = translateNoteIPIndex(chordStructure.structure[i], rootIP)
 
       // get the syllable "position" from the reference subset based on tensionMod7 value in the class
-      let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][newNote].tensionMod7 -1)%7)]
+      let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
         // console.log(noteSyllable)
 
       // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-      let noteIp = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIp) + classes[newClass][newNote].tensionMod12 -1)%12]
+      let noteIp = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIp) + classes[newClass][translatedNoteIP].tensionMod12 -1)%12]
 
 
       // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
