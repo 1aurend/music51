@@ -662,7 +662,7 @@ function inversions(chordType) {
                           roots: {common:true, any:false}}
  * @return {type}         returns final questions object
  */
-export default function(numQs, options){
+export default function(numQs, options) {
   // console.log(JSON.stringify(options));
   let chords = []
   for (var i = 0; i < numQs; i++) {
