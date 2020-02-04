@@ -25,7 +25,7 @@ export default function EndOfRoundMenu({ round, chartData, qTypes }) {
   } else if (endSession) {
     return <ResultsTable round={round} qTypes={qTypes} startOver={setShowStart} />
   } else if (showStats || round === 1) {
-    return <StatLines round={round} qTypes={qTypes} nextRound={nextRound} setShowStats={setShowStats} />
+    return <StatLines round={round} qTypes={qTypes} nextRound={nextRound} setShowStats={setShowStats} finished={setEndSession} />
   } else {
     return <ChartLayout chartData={chartData} qTypes={qTypes} round={round} finished={setEndSession} viewStats={setShowStats} nextRound={nextRound} />
   }
