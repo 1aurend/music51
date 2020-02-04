@@ -532,55 +532,60 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
   //     letter: rootLetter
   //   }
 
-    // build the structure with correct spellings
-    for(var i=0; i<chordStructure.structure.length; i++){
+  let notes = []  
 
-      // translate the template ip to a relative note in the class
-      const translatedNoteIP = translateNoteIPIndex(chordStructure.structure[i], rootIP)
+  // build the structure with correct spellings
+  for(var i=0; i<chordStructure.structure.length; i++){
 
-      // get the syllable "position" from the reference subset based on tensionMod7 value in the class
-      let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
+    // translate the template ip to a relative note in the class
+    const translatedNoteIP = translateNoteIPIndex(chordStructure.structure[i], rootIP)
 
-      // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-      let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
+    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
+    let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
 
-      // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-      let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
 
-      // FIXME: (James) Perhaps break this into a function of its own
-      // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
-      // adjusts for IPs on opposite ends of the array, like "D" from "R"
-      // but something about this feels hacky... is there a better way?
-      if (accidentalVal > Object.values(IndependentPitch).length/2) {
-        accidentalVal -= Object.values(IndependentPitch).length
-      }
-      if (-accidentalVal > Object.values(IndependentPitch).length/2) {
-        accidentalVal += Object.values(IndependentPitch).length
-      }
+    // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
+    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
 
-      let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
-
-      // translate the syllable "position" to a letter
-      // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
-      let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
-
-      // octave adjustments:
-      // TODO: will this also work for template structures bigger than an octave?
-      let octaveIndex = letterNamePosition(noteLetter)
-      let octave = chordOctave
-      if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
-        octave += 1;
-        chordOctave +=1 // sets the default octave up for the next note
-      }
-
-      chord.notes.push(
-        {
-          letter: noteLetter,
-          accidental: accidental,
-          octave: octave
-        }
-      )
+    // FIXME: (James) Perhaps break this into a function of its own
+    // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
+    // adjusts for IPs on opposite ends of the array, like "D" from "R"
+    // but something about this feels hacky... is there a better way?
+    if (accidentalVal > Object.values(IndependentPitch).length/2) {
+      accidentalVal -= Object.values(IndependentPitch).length
     }
+    if (-accidentalVal > Object.values(IndependentPitch).length/2) {
+      accidentalVal += Object.values(IndependentPitch).length
+    }
+
+    // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
+    let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
+
+    // Translate the syllable "position" to a letter
+    // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
+    let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
+
+    // FIXME: (James) This currently requires context not injected into this function.
+    //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
+    // TODO: Octave adjustments
+    // TODO: will this also work for template structures bigger than an octave?
+    // let octaveIndex = letterNamePosition(noteLetter)
+    // let octave = chordOctave
+    // if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
+    //   octave += 1;
+    //   chordOctave +=1 // sets the default octave up for the next note
+    // }
+
+    // Create the note with all of our nice new data
+    const note = { letter: noteLetter, accidental: accidental, octave: octave }
+
+    // Append our new note to the array to be returned
+    notes.push(note)
+  }
+
+  return notes
 }
 
 /**
