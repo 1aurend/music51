@@ -512,6 +512,9 @@ export function translateNoteIPIndex(componentIP, rootIP) {
   return (untranslatedIndex-rootIndex).mod(12)
 }
 
+/**
+ * 
+ */
 function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
   const { rootIP, rootLetter, rootAccidental, rootSyllable } = concretizedRoot
