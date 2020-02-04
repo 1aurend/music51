@@ -540,7 +540,6 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
       // get the syllable "position" from the reference subset based on tensionMod7 value in the class
       let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
-        // console.log(noteSyllable)
 
       // find the equivalent IP based on the rootIp and tensionMod12 value in the class
       let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
@@ -560,12 +559,10 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
       }
 
       let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
-        // console.log(accidental)
 
       // translate the syllable "position" to a letter
       // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
       let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
-        // console.log(noteLetter+accidental)
 
       // octave adjustments:
       // TODO: will this also work for template structures bigger than an octave?
