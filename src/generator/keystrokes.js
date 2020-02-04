@@ -1,9 +1,7 @@
-import chalk from 'chalk'
 
-function addKeystrokes(chords) {
+export default function addKeystrokes(chords) {
 
-
-  let questionTypes = {
+  const questionTypes = {
     NAMES: `Names`,
     ROOT: `Roots`,
     DEGREE: `Degrees`,
@@ -247,8 +245,5 @@ function addKeystrokes(chords) {
   chords[i].questions = questions
 }
 
-console.log(chalk.yellow(JSON.stringify(chords, null, 3)))
 return chords
 }
-
-export default addKeystrokes

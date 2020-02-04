@@ -607,7 +607,7 @@ export default (numQs, options) => {
   for (var i = 0; i < numQs; i++) {
     chords.push(randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions))
   }
-  console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
+  // console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
   return addKeystrokes(chords)
 }
 
