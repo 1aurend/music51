@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="main-content-container px-4 container-fluid"
+  id="container"
+  style={
+    Object {
+      "backgroundColor": "black",
+      "minHeight": "120vh",
+    }
+  }
+>
+  <div
+    className="row"
+    style={
+      Object {
+        "justifyContent": "center",
+        "marginLeft": "5%",
+        "marginRight": "5%",
+        "paddingTop": "25%",
+      }
+    }
+  />
+  <div
+    className="col-sm-12 col-lg-12"
+  >
+    <div
+      className="no-gutters row"
+      style={
+        Object {
+          "display": "flex",
+          "justifyContent": "center",
+          "marginLeft": "5%",
+          "marginRight": "5%",
+        }
+      }
+    >
+      <h2
+        style={
+          Object {
+            "color": "#17c671",
+            "fontFamily": "'Press Start 2P', cursive",
+          }
+        }
+      >
+        Calculating your stats...
+      </h2>
+    </div>
+  </div>
+</div>
+`;
