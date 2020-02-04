@@ -563,7 +563,8 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
         // console.log(accidental)
 
       // translate the syllable "position" to a letter
-      let noteLetter = letters[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
+      // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
+      let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
         // console.log(noteLetter+accidental)
 
       // octave adjustments:
