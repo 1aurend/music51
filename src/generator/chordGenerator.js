@@ -274,7 +274,6 @@ export function concretizeRoot(keySignature, modeNote) {
   throw new Error('modeNote ' + modeNote + ' not found in keySignature ' + keySignature)
 }
 
-
 /**
  * romanNumeral - Returns a roman numeral or romanette of the appropriate number given a chord structure and scale degree.
  *
