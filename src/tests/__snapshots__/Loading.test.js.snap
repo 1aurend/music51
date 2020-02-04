@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`<Loading /> renders correctly 1`] = `
 <div
   className="main-content-container px-4 container-fluid"
   id="container"

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Go /> renders correctly 1`] = `
+<button
+  className="sc-AykKC hCaSnZ btn btn-dark"
+  onClick={[Function]}
+  type="button"
+>
+  <img
+    alt="go"
+    src="svgs-go.svg"
+    style={
+      Object {
+        "width": "8rem",
+      }
+    }
+  />
+</button>
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AnswerChoice /> renders correctly 1`] = `
+<button
+  className="sc-AykKC bOmntQ btn btn-light"
+  color="#e5e6eb"
+  onClick={[Function]}
+  type="button"
+>
+  B
+  <p
+    className="sc-AykKD iJrcuN"
+  >
+    [
+    b
+    ]
+  </p>
+</button>
+`;
