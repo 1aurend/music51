@@ -504,14 +504,13 @@ function chooseInitialOctave(clef) {
 
 export function translateNoteIPIndex(componentIP, rootIP) {
   const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
-  console.log(`untranslatedIndex: ${untranslatedIndex}`);
   // TODO: audit addition of 12 here
   const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
-  console.log(`rootIndex: ${rootIndex}`);
   return (untranslatedIndex-rootIndex).mod(12)
 }
 
 /**
+ * makeNotes - return an array of notes (in the form: { letter, accidental, octave })
  * @param chordStructure ChordStructure The "intervallic shape" of the chord to concretize (David, please improve doc comment)
  * @param concretizedRoot object { independentPitch, accidental, letter, syllable }
  * @param keySignature Shape The "Shape" of the context to contain the chord (David, please improve doc comment)
@@ -520,6 +519,7 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
   const { rootIP, rootAccidental, rootLetter, rootSyllable } = concretizedRoot
 
+  // The notes of a chord to be returned
   let notes = []
 
   // build the structure with correct spellings
@@ -561,10 +561,13 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
     // TODO: will this also work for template structures bigger than an octave?
     // let octaveIndex = letterNamePosition(noteLetter)
     // let octave = chordOctave
-    // if(chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)){
+    // if (chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)) {
     //   octave += 1;
     //   chordOctave +=1 // sets the default octave up for the next note
     // }
+
+    // FIXME: Use the code above with the correct context to set this variable correctly
+    const octave = 4
 
     // Create the note with all of our nice new data
     const note = { letter: noteLetter, accidental: accidental, octave: octave }
