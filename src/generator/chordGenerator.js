@@ -551,7 +551,7 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
       // but something about this feels hacky... is there a better way?
       if(accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal -= Object.values(IndependentPitch).length
       if(-accidentalVal > Object.values(IndependentPitch).length/2)accidentalVal += Object.values(IndependentPitch).length
-      let accidental = accidentals[(2 + accidentalVal)%5]
+      let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
         // console.log(accidental)
 
       // translate the syllable "position" to a letter
