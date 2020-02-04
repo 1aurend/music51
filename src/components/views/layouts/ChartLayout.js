@@ -5,7 +5,7 @@ import {
   Col,
 } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import NavButtons from '../buttons/NavButtons'
+import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
 
@@ -14,8 +14,8 @@ const StyledRow = styled(Row)`
   justify-content: center;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: ${props => props.marginTop || 0};
-  margin-bottom: ${props => props.marginBottom || 0};
+  margin-top: ${props => props.margintop || 0};
+  margin-bottom: ${props => props.marginbottom || 0};
 `
 const StyledCenterPane = styled(Col)`
   border: 5px solid black;
@@ -45,14 +45,14 @@ function ChartLayout({ chartData, qTypes, round, finished, viewStats, nextRound 
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
       <StyledRow noGutters>
         <StyledCenterPane sm='12' lg='8'>
-          <StyledRow marginTop='5%'>
+          <StyledRow margintop='5%'>
             <h2 style={progressTitle}>Round {round} Complete!</h2>
           </StyledRow>
-          <StyledRow marginTop='3%'>
+          <StyledRow margintop='3%'>
             <h2 style={progressSubtitle}>Your Progress:</h2>
           </StyledRow>
           <Col sm='12' lg='12'>
-            <StyledRow marginTop='3%' marginBottom='1%'>
+            <StyledRow margintop='3%' marginbottom='1%'>
               <p style={{marginBottom: 0}}>
                 <span style={{fontWeight: '600'}}>
                   ATTEMPTS:{'\u00A0'}

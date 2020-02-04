@@ -22,7 +22,7 @@ const StyledColHeader = styled.h4`
   margin-top: 2%;
 `
 
-export default function Options({checked, onChange, onCheck, text, size}) {
+export default function SessionOptions({checked, onChange, onCheck, text, size}) {
   return (
       <>
       <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%', marginBottom: '5%'}}>

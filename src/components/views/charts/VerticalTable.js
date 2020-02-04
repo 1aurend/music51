@@ -3,13 +3,12 @@ import {
   Container,
   Row,
   Col,
-  Button,
   Card,
   CardHeader,
   CardBody
 } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import startOverSvg from '../../../assets/svgs-startover.svg'
+import NavButtons from '../buttons/RoundEndNav'
 
 // TODO: add styled-components
 export default function VerticalTable(props) {
@@ -91,10 +90,8 @@ export default function VerticalTable(props) {
               </Row>
             </Col>
           </Row>
-            <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}>
-              <Button theme="dark" style={{display: 'block', cursor: 'pointer', backgroundColor: '#e5e6eb', border: 'none', padding: '0'}} onClick={(e) => {
-                startOver(true)
-              }}><img src={startOverSvg} alt='next round' style={{width: '15rem'}}></img></Button>
+            <Row style={{display: 'flex', justifyContent: 'center'}}>
+              <NavButtons table startOver={startOver}/>
             </Row>
           </Col>
         </Row>

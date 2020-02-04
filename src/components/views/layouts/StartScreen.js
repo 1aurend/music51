@@ -4,7 +4,7 @@ import {
   Row,
   Col,
 } from 'shards-react'
-import Options from '../buttons/Options'
+import SessionOptions from '../buttons/SessionOptions'
 import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
@@ -58,7 +58,7 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
             <p style={{fontFamily: "'Overpass Mono', monospace", marginBottom: '0', textAlign: 'left'}}>
               In a session of Chord Crusher, you'll complete multiple rounds; see if you can improve your time and accuracy on each round. You can set rounds from 5-25 chords in length. For each chord, there are four questions that aggregate to name the chord, quality, and inversion. If this is your first time, try 5 chords per round. After that, choose as many as you want!</p>
           </StyledRow>
-          <Options checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} size={input}/>
+          <SessionOptions checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} size={input}/>
         </StyledCenterPane>
       </Row>
       <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>

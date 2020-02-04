@@ -1,8 +1,6 @@
 // TODO: add more breakpoints for better responsive styling
 // TODO: comb through here and see where there are duplicates and how we can consolidate these styles
 
-export const borderRadius = '1rem'
-
 export const chordCrusher = {
   LARGE: {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '3em'},
   SMALL: {fontFamily: "'Press Start 2P', cursive", textAlign: 'center', fontSize: '2.5em'}
@@ -71,4 +69,9 @@ export const staveSize = {
 export const matrixSize = {
   LARGE: 701,
   SMALL: 699
+}
+
+export const loadingMargin = {
+  LARGE: '5%',
+  SMALL: '25%'
 }

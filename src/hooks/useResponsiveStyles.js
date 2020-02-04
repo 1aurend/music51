@@ -13,7 +13,6 @@ export default function useResponsiveStyles() {
     const matrix = size.width > 700 ? 'LARGE' : 'SMALL'
     if (init) {
       return {
-        borderRadius: responsiveStyles.borderRadius,
         chordCrusher: responsiveStyles.chordCrusher[screen],
         music51: responsiveStyles.music51[screen],
         beta: responsiveStyles.beta[screen],
@@ -25,11 +24,11 @@ export default function useResponsiveStyles() {
         statsTitle: responsiveStyles.statsTitle[screen],
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
-        matrixSize: responsiveStyles.matrixSize[matrix]
+        matrixSize: responsiveStyles.matrixSize[matrix],
+        loadingMargin: responsiveStyles.loadingMargin[screen]
       }
     } else {
       return setSizedStyles({
-        borderRadius: responsiveStyles.borderRadius,
         chordCrusher: responsiveStyles.chordCrusher[screen],
         music51: responsiveStyles.music51[screen],
         beta: responsiveStyles.beta[screen],
@@ -41,7 +40,8 @@ export default function useResponsiveStyles() {
         statsTitle: responsiveStyles.statsTitle[screen],
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
-        matrixSize: responsiveStyles.matrixSize[matrix]
+        matrixSize: responsiveStyles.matrixSize[matrix],
+        loadingMargin: responsiveStyles.loadingMargin[screen]
       })
     }
   }

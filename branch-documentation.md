@@ -41,11 +41,12 @@ There is also a folder for hooks that contains a custom hook for responsive styl
       window.scrollTo(0, 0)
   })
   ```
+* SVG button highlights on hover nixed.
+* Did a first pass of revamping start menu logic; will need to update this when we get the new questions.
+
 
 ### In Progress
 * Get rid of inline styles anywhere it makes sense in favor of styled-components
-* Make any changes to the start menu logic to accommodate changes in the generator and not duplicate logic there
-* SVG button highlights on hover-- do we like those?
 
 
 ### To Do
