@@ -592,9 +592,12 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
  */
 function randomChord(options) {
 
-  // FIXME: Let's use `shuffled` here rather than mutating our source of truth.
-  // shuffles the root note choices so they're not always in root position haha
-  shuffle(chord.questions[1].choices)
+  // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
+  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
+  // Shuffles the root note choices so they're not always in root position haha
+  // shuffle(chord.questions[1].choices)
+
+  const chord = makeChord(chooseChordType(chordTypesOption(options.chordTypes)))
   const inverted = handleInversion(chord, inversion)
   const positionedChord = staffAdjust(inverted)
   return positionedChord
