@@ -512,27 +512,15 @@ export function translateNoteIPIndex(componentIP, rootIP) {
 }
 
 /**
- * 
+ * @param chordStructure ChordStructure The "intervallic shape" of the chord to concretize (David, please improve doc comment)
+ * @param concretizedRoot object { independentPitch, accidental, letter, syllable }
+ * @param keySignature Shape The "Shape" of the context to contain the chord (David, please improve doc comment)
  */
 function makeNotes(chordStructure, concretizedRoot, keySignature) {
 
-  const { rootIP, rootLetter, rootAccidental, rootSyllable } = concretizedRoot
+  const { rootIP, rootAccidental, rootLetter, rootSyllable } = concretizedRoot
 
-  // if(Shapes[keySignature].notes[i].mode === modeNote){
-  //   const rootAccidental = Shapes[keySignature].notes[i].accidental
-  //   const rootSyllable = Shapes[keySignature].notes[i].refIP
-  //   const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
-  //   const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-  //   const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-  //   const rootIPIndex = (rootSyllableIndex+offset)%12
-  //   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-  //   return {
-  //     independentPitch: rootIP,
-  //     accidental: rootAccidental,
-  //     letter: rootLetter
-  //   }
-
-  let notes = []  
+  let notes = []
 
   // build the structure with correct spellings
   for(var i=0; i<chordStructure.structure.length; i++){
