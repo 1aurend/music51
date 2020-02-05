@@ -48,8 +48,6 @@ export default function(numQs, options) {
  */
 function randomChord(options) {
 
-  console.log("random chord please with options: " + JSON.stringify(options))
-
   // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
   // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
   // Shuffles the root note choices so they're not always in root position haha
@@ -62,15 +60,52 @@ function randomChord(options) {
   const chordType = chooseChordType(allowedChordTypes)
   // All of the inversions afforded by the chosen chord type
   // TODO: Implement inversions as an instance method over `ChordType`
-  const allowedInversions = inversionse(chordType)
+  const allowedInversions = inversions(chordType)
   // Choose a random inversion from those afforded by the chosen chord type
-  const chosenInversion = inversions(chordType).randomElement()
+  const chosenInversion = allowedInversions.randomElement()
 
+  console.log("chosen inversion: " + chosenInversion)
+
+  // Construct a chord with the desired specification
   const chord = makeChord(chordType)
+
+  console.log("concretized chord: " + JSON.stringify(chord))
+
   // TODO: (James) add `inversion` method on `Chord` type
-  const inverted = handleInversion(chord, inversion)
+  const inverted = handleInversion(chord, chosenInversion)
   const positionedChord = staffAdjust(inverted)
+
   return positionedChord
+}
+
+// Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
+// random chord!
+//
+// => (Note,Int)
+export function makeChord(chordType) {
+  // Set of all of the possible chord structures for the given chord type
+  // Consider moving any vs common root note option to a higher level
+  const possibleChordStructures = chordStructures(chordType)
+  // Choose one of the possible chord structures for the given chord type
+  // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
+  const chordStructure = possibleChordStructures.randomElement()
+  // Choose random roman numeral context
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+  // TODO: Concretize abstract chord (roman numeral context) into spelled key context (in progress)
+  const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
+  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
+
+  // TODO: put these in the right places
+  const inversion = inversions(chordType).randomElement()
+  const clef = Clef.randomElement()
+  const initialOctave = chooseInitialOctave(clef)
+
+  // TODO: Fix this return... no longer correct... (11/15)
+  return {
+    structure: chordStructure,
+    root: concretizedRoot,
+    inversion: inversion
+  }
 }
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
@@ -274,37 +309,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
 //       //
 //   }
 // }
-
-// Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
-// random chord!
-//
-// => (Note,Int)
-export function makeChord(chordType) {
-  // Set of all of the possible chord structures for the given chord type
-  // Consider moving any vs common root note option to a higher level
-  const possibleChordStructures = chordStructures(chordType)
-  // Choose one of the possible chord structures for the given chord type
-  // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
-  const chordStructure = possibleChordStructures.randomElement()
-  // Choose random roman numeral context
-  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  // TODO: Concretize abstract chord (roman numeral context) into spelled key context (in progress)
-  const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
-  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
-
-
-  // TODO: put these in the right places
-  const inversion = inversions(chordType).randomElement()
-  const clef = Clef.randomElement()
-  const initialOctave = chooseInitialOctave(clef)
-
-  // TODO: Fix this return... no longer correct... (11/15)
-  return {
-    structure: chordStructure,
-    root: concretizedRoot,
-    inversion: inversion
-  }
-}
 
 /**
  * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
