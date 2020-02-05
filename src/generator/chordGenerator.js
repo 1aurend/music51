@@ -121,6 +121,20 @@ function syllablePosition(rootSyllable, translatedNoteIP, keySignature) {
 }
 
 /**
+ * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
+ * @param translatedNoteIP  IndependentPitch  The IndependentPitch syllable of the chord component
+ * @param keySignature      KeySignature      The KeySignature context of the chord
+ */
+// find the equivalent IP based on the rootIp and tensionMod12 value in the class
+function componentIP(rootIP, translatedNoteIP, keySignature) {
+  const ips = Object.values(IndependentPitch)
+  const rootIPIndex = ips.indexOf(rootIP)
+  const shape = Object.values(Shapes)[keySignature]
+  const noteOffsetInShape = shape[translatedNoteIP].tensionMod12 - 1
+  return ips[(rootIPIndex + noteOffsetInShape) % 12]
+}
+
+/**
  * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
  * @param chord
  * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
@@ -141,7 +155,7 @@ function partiallyConcretizeChord(chord, keySignature) {
     const noteSyllable = syllablePosition(rootSyllable, translatedNoteIP, keySignature)
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 - 1) % 12]
+    let noteIP = componentIP(rootIP, translatedNoteIP, keySignature)
 
     // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
     let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
