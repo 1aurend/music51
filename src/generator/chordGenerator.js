@@ -24,8 +24,6 @@ import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
  * @return {type}         returns final questions object
  */
 export default function(numQs, options) {
-  console.log("hello hello hello")
-  console.log(JSON.stringify(options))
   let chords = []
   for (var i = 0; i < numQs; i++) {
     chords.push(randomChord(options))
@@ -183,7 +181,6 @@ function octaveTranspose(notes, octaves) {
 function chordTypesOption(chordTypes) {
   console.log("chord types option from " + JSON.stringify(chordTypes))
   if (chordTypes.triads && chordTypes.sevenths) {
-    console.log("we've got triads AND sevenths!")
     return ChordTypesOption.BOTH
   } else if (chordTypes.triads && !chordTypes.sevenths) {
     return ChordTypesOption.TRIADS
@@ -196,7 +193,6 @@ function chordTypesOption(chordTypes) {
 
 // return Type of the chord we are constructing
 function chooseChordType(chordTypesOption) {
-  console.log("chord types option: " + JSON.stringify(chordTypesOption))
   switch (chordTypesOption) {
     case ChordTypesOption.TRIADS:
       return ChordType.TRIAD
