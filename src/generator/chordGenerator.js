@@ -14,6 +14,61 @@ import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
+/**
+ * export default - this is the interface between the generator and chord crusher or any other app; this function is named over in the react app that imports it
+ *
+ * @param  {type} numQs   int; comes from react app, number of questions student has asked for
+ * @param  {type} options comes from react app; student selections
+ *                        {chordTypes: {triads:true, sevenths:true},
+                          roots: {common:true, any:false}}
+ * @return {type}         returns final questions object
+ */
+export default function(numQs, options) {
+  console.log("hello hello hello")
+  console.log(JSON.stringify(options))
+  let chords = []
+  for (var i = 0; i < numQs; i++) {
+    chords.push(randomChord(options))
+  }
+  console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
+  return addKeystrokes(chords)
+}
+
+/**
+ * randomChord - A big function to generate a random, correctly spelled chord structure within clef/staff limits
+ * 
+ * @param options The user settings for a given session, in the form:
+ *                {
+ *                  { 
+ *                    chordTypes: { triads: true, sevenths: true },
+                      roots: { common:true, any: false } 
+ *                  }
+ *                }
+ */
+function randomChord(options) {
+
+  console.log("random chord please with options: " + JSON.stringify(options))
+
+  // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
+  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
+  // Shuffles the root note choices so they're not always in root position haha
+  // shuffle(chord.questions[1].choices)
+
+  // Smush the four possible cases from the pair of Boolean values (triads yes/no, sevenths yes/no)
+  // into three cases (triads, sevenths, both)
+  const chosenChordTypes = chordTypesOption(options.chordTypes)
+
+  console.log("chord chord types: " + JSON.stringify(chosenChordTypes))
+
+  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const inversion = inversions(chordType)
+  const chord = makeChord(chordType)
+  // TODO: (James) add `inversion` method on `Chord` type
+  const inverted = handleInversion(chord, inversion)
+  const positionedChord = staffAdjust(inverted)
+  return positionedChord
+}
+
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
 
@@ -126,7 +181,9 @@ function octaveTranspose(notes, octaves) {
 // This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false.
 
 function chordTypesOption(chordTypes) {
+  console.log("chord types option from " + JSON.stringify(chordTypes))
   if (chordTypes.triads && chordTypes.sevenths) {
+    console.log("we've got triads AND sevenths!")
     return ChordTypesOption.BOTH
   } else if (chordTypes.triads && !chordTypes.sevenths) {
     return ChordTypesOption.TRIADS
@@ -139,6 +196,7 @@ function chordTypesOption(chordTypes) {
 
 // return Type of the chord we are constructing
 function chooseChordType(chordTypesOption) {
+  console.log("chord types option: " + JSON.stringify(chordTypesOption))
   switch (chordTypesOption) {
     case ChordTypesOption.TRIADS:
       return ChordType.TRIAD
@@ -582,33 +640,6 @@ function makeNotes(chordStructure, concretizedRoot, keySignature) {
   return notes
 }
 
-/**
- * randomChord - A big function to generate a random, correctly spelled chord structure within clef/staff limits
- * 
- * @param options The user settings for a given session, in the form:
- *                {
- *                  { 
- *                    chordTypes: { triads: true, sevenths: true },
-                      roots: { common:true, any: false } 
- *                  }
- *                }
- */
-function randomChord(options) {
-
-  // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
-  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
-  // Shuffles the root note choices so they're not always in root position haha
-  // shuffle(chord.questions[1].choices)
-
-  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
-  const inversion = inversions(chordType)
-  const chord = makeChord(chordType)
-  // TODO: (James) add `inversion` method on `Chord` type
-  const inverted = handleInversion(chord, inversion)
-  const positionedChord = staffAdjust(inverted)
-  return positionedChord
-}
-
 /// TODO: Decouple inversion from amount of notes in chord
 function handleInversion(chord, inversion) {
 
@@ -656,23 +687,4 @@ function inversions(chordType) {
     case ChordType.SEVENTH:
       return ["","65","43","42"]
   }
-}
-
-/**
- * export default - this is the interface between the generator and chord crusher or any other app; this function is named over in the react app that imports it
- *
- * @param  {type} numQs   int; comes from react app, number of questions student has asked for
- * @param  {type} options comes from react app; student selections
- *                        {chordTypes: {triads:true, sevenths:true},
-                          roots: {common:true, any:false}}
- * @return {type}         returns final questions object
- */
-export default function(numQs, options) {
-  // console.log(JSON.stringify(options));
-  let chords = []
-  for (var i = 0; i < numQs; i++) {
-    chords.push(randomChord(options))
-  }
-  console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
-  return addKeystrokes(chords)
 }
