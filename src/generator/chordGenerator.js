@@ -138,7 +138,7 @@ function partiallyConcretizeChord(chord, keySignature) {
     // translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(chord.structure[i], rootIP)
 
-    const noteSyllable = syllablePosition()
+    const noteSyllable = syllablePosition(rootSyllable, translatedNoteIP, keySignature)
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
     let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 - 1) % 12]
