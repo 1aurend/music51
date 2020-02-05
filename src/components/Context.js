@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react'
-import Start from './Start'
+// TODO: refactor this when ready to introduce reducers
+import React, { createContext, useState, useCallback } from 'react'
+import StartMenu from './logic/StartMenu'
 
 export const Session = createContext()
 export const Means = createContext()
@@ -9,7 +10,7 @@ export const Progress = createContext()
 export const Size = createContext()
 
 export default function Context() {
-
+  //wrap updateSession in useCallback?
   const [session, updateSession] = useState({
         user: 'anonymous for now',
         sessionId: Date.now(),
@@ -20,56 +21,21 @@ export default function Context() {
           options: {}
         }
       })
-  const [means, updateMeans] = useState({
-          noteNames: {
-            attempts: [],
-            times: []
-          },
-          roots: {
-            attempts: [],
-            times: []
-          },
-          quality: {
-            attempts: [],
-            times: []
-          },
-          inversions: {
-            attempts: [],
-            times: []
-          },
-          average: {
-            attempts: [],
-            times: []
-          }
-        })
+  const [means, setMeans] = useState({})
+  const updateMeans = useCallback((val) => setMeans(val), [])
   const [rounds, updateRounds] = useState({})
   const [count, increment] = useState(1)
-  const [size, setSize] = useState({
-                                    width: window.innerWidth,
-                                    height: window.innerHeight
-                                  })
-
-
-  useEffect(() => {
-    const handleResize = () => setSize({width: window.innerWidth, height: window.innerHeight})
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-  }
-  },[])
-
-
+  // TODO: read more about passing arrays to a provider. does this create a new array each time as is the case for objects?
   return (
-    <Size.Provider value={size}>
       <Session.Provider value={[session, updateSession]}>
         <Means.Provider value={[means, updateMeans]}>
           <Rounds.Provider value={[rounds, updateRounds]}>
             <Count.Provider value={[count, increment]}>
-                  <Start title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
+              {/*do headline and round need to start here as props?*/}
+              <StartMenu title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
             </Count.Provider>
           </Rounds.Provider>
         </Means.Provider>
       </Session.Provider>
-    </Size.Provider>
   )
 }

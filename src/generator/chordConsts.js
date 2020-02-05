@@ -100,8 +100,14 @@ const accidentals = ["𝄫", "♭", "♮", "♯", "𝄪"];
 
 const clefs = ["bass","treble"];
 
-const triadInversions = ["root","63","64"];
-const seventhInversions = ["root","65","43","42"];
+const triadInversions = ["","63","64"];
+const seventhInversions = ["","65","43","42"];
+
+const majModes = ['Maj','dor','phr','Lyd','Dom','min','loc']
+const minModes = ['min','loc','Maj','dor','phr','Lyd','Dom']
+
+const bigRoman = ['I','II','III','IV','V','VI','VII']
+const littleRoman = ['i','ii','iii','iv','v','vi','vii']
 
 export {
   templateTriads,
@@ -116,5 +122,9 @@ export {
   accidentals,
   clefs,
   triadInversions,
-  seventhInversions
+  seventhInversions,
+  majModes,
+  minModes,
+  bigRoman,
+  littleRoman
 }

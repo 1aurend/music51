@@ -11,8 +11,14 @@ import {
   accidentals,
   clefs,
   triadInversions,
-  seventhInversions
+  seventhInversions,
+  majModes,
+  minModes,
+  bigRoman,
+  littleRoman
 } from './chordConsts'
+import addKeystrokes from './keystrokes'
+import chalk from 'chalk'
 
 // a function to choose something random:
 function randomchoice(array){
@@ -140,7 +146,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
   let keySignature
 
   // apply option for any root notes
-  if((options.roots.common === false) && (options.roots.any === true)){
+  if(options.roots.any === true){
 
     keySignature = randomchoice(Object.keys(keySignatures));
     rootSyllable = randomchoice(subsets.B); // B is set implicitly as the "reference" subset
@@ -156,25 +162,146 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     }
   }
 
+  let modeNote
+  let key
+  let degree
+  let romanQuality
+  let inversionQuality
+
   // apply option for common root notes
   if((options.roots.common === true) && (options.roots.any === false)){
     keySignature = randomchoice(Object.keys(keySignatures).slice(3, 12));
 
-    let modeNote
+    // set the key and mode note based on chord type
 
-    // set the mode note based on chord type
-    if(newStructure === 'M' || newStructure === '+' || newStructure === 'M7'){
-      modeNote = 'Maj'
+    if(newStructure === 'M'){
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = ''
+      inversionQuality = ''
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = randomchoice(['Maj','Lyd','Dom'])
+      }
+      if(key === 'minor'){
+        modeNote = randomchoice(['Maj','phr','Lyd','Dom'])
+      }
     }
-    if(newStructure === 'm' || newStructure === 'm7'){
-      modeNote = 'min'
+
+    if(newStructure === 'm'){
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = ''
+      inversionQuality = ''
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = randomchoice(['dor','phr','min'])
+      }
+      if(key === 'minor'){
+        modeNote = randomchoice(['min','dor','loc'])
+      }
     }
-    if(newStructure === 'o' || newStructure === 'ø7' || newStructure === 'o7'){
-      modeNote = 'loc'
+
+    if(newStructure === 'o'){
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = 'o'
+      inversionQuality = 'o'
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = 'loc'
+      }
+      if(key === 'minor'){
+        modeNote = randomchoice(['loc','Dom'])
+      }
     }
+
+    if(newStructure === '+'){
+      // choose to put it in a Major or minor key
+      key = 'minor'
+      romanQuality = '+'
+      inversionQuality = '+'
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'minor'){
+        modeNote = 'Maj'
+      }
+    }
+
     if(newStructure === '7'){
-      modeNote = randomchoice(["Dom","phr"])
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = '7'
+      inversionQuality = ''
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = 'Dom'
+      }
+      if(key === 'minor'){
+        modeNote = 'phr'
+      }
     }
+
+    if(newStructure === 'M7'){
+      // choose to put it in a Major or minor key
+      key = 'Major'
+      romanQuality = '7'
+      inversionQuality = ''
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = randomchoice(['Maj','Lyd'])
+      }
+    }
+
+    if(newStructure === 'm7'){
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = '7'
+      inversionQuality = ''
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = randomchoice(['dor','phr','min'])
+      }
+      if(key === 'minor'){
+        modeNote = randomchoice(['min','dor'])
+      }
+    }
+
+    if(newStructure === 'ø7'){
+      // choose to put it in a Major or minor key
+      key = randomchoice(['Major','minor'])
+      romanQuality = 'ø7'
+      inversionQuality = 'ø'
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'Major'){
+        modeNote = 'loc'
+      }
+      if(key === 'minor'){
+        modeNote = randomchoice(['loc','Dom'])
+      }
+    }
+
+    if(newStructure === 'o7'){
+      // choose to put it in a Major or minor key
+      key = 'minor'
+      romanQuality = 'o7'
+      inversionQuality = 'o'
+      // then choose from KP's common occurrences in Major or minor
+      if(key === 'minor'){
+        modeNote = 'Dom'
+      }
+    }
+
+    // define the degree of the chord in its key
+    if(key === 'Major'){
+      degree = (1+ majModes.indexOf(modeNote))
+    }
+    if(key === 'minor'){
+      degree = (1+ minModes.indexOf(modeNote))
+    }
+
+    console.log('key is ' + key)
+    // console.log('modeNote is ' + modeNote)
+    console.log('degree is ' + degree)
 
     // set root syllable and accidental based on the mode note
     for(var i=0; i<keySignatures[keySignature].notes.length; i++){
@@ -185,13 +312,70 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     }
   }
 
+  // roman numerals
+  let roman
+
+  if(newStructure === 'M' || newStructure === '+' || newStructure === '7' || newStructure === 'M7'){
+    roman = bigRoman[degree-1]
+  }
+  else{
+    roman = littleRoman[degree-1]
+  }
+
+  console.log('roman is ' + roman + romanQuality)
+  console.log('quality is ' + newStructure)
+  console.log('chord type is ' + chordType)
+
+  // roman numeral question options
+  let romanOptions
+
+  if(chordType === 'triad'){
+    romanOptions = [
+      roman.toUpperCase(),
+      roman.toLowerCase(),
+      roman.toLowerCase() + 'o',
+      roman.toUpperCase() + '+'
+    ]
+  }
+  if(chordType === 'seventh'){
+    romanOptions = [
+    roman.toUpperCase() + '7',
+    roman.toLowerCase() + '7',
+    roman.toLowerCase() + 'ø7',
+    roman.toLowerCase() + 'o7'
+  ]
+  }
+
+  // roman inversion question options
+  let romanInversionOptions
+
+  // [roman + inversionQuality + " " + inversion]
+
+  if(chordType === 'triad'){
+    romanInversionOptions = [
+      roman + inversionQuality,
+      roman + inversionQuality + '63',
+      roman + inversionQuality + '64'
+    ]
+  }
+  if(chordType === 'seventh'){
+    romanInversionOptions = [
+      roman + inversionQuality,
+      roman + inversionQuality + '65',
+      roman + inversionQuality + '43',
+      roman + inversionQuality + '42'
+    ]
+  }
+
+
   // translate to vexSig
   let vexSig = keySignatures[keySignature].vexSig;
-    console.log('key signature is: '+ vexSig)
+    // console.log('major key is: '+ vexSig)
 
   // translate the syllable "position" to a letter
   let rootLetter = letters[subsets.B.indexOf(rootSyllable)] // order of reference subset IPs and order of letters need to match
     // console.log(rootLetter+rootAccidental+" "+newStructure);
+    // console.log("root letter is " + rootLetter)
 
   // find the equivalent IP based on the accidental's offset from the "natural" root syllable
   let offset = (accidentals.indexOf(rootAccidental))-(accidentals.indexOf('♮')) // the distance from natural!
@@ -244,7 +428,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   chord.questions = [
     {
-      "type": "Note Names",
+      "type": "Names",
       "questionText": "Name the letter positions from lowest to highest.",
       "answers": [], // will populate in the loop
       "ordered": true,
@@ -259,22 +443,42 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       ]
     },
     {
-      "type": "Root",
+      "type": "Roots",
       "questionText": "What's the root note?",
       "answers": [rootLetter+rootAccidental],
       "choices": [] // will populate in the loop
     },
     {
-      "type": "Chord Quality",
-      "questionText": "What's the chord quality?",
-      "answers": [rootLetter + rootAccidental + newStructure],
-      "choices": qualityOptions
+      "type": "Degrees",
+      "questionText": "In a " + key + " key, what degree is this chord built on?",
+      "answers": [degree + "^"],
+      "choices": [
+          "1^",
+          "2^",
+          "3^",
+          "4^",
+          "5^",
+          "6^",
+          "7^"
+      ]
+    },
+    // {
+    //   "type": "Quality",
+    //   "questionText": "What's the chord's quality?",
+    //   "answers": [rootLetter + rootAccidental + newStructure],
+    //   "choices": qualityOptions
+    // },
+    {
+      "type": "Numerals",
+      "questionText": "Which roman numeral describes this chord’s degree and quality?",
+      "answers": [roman + romanQuality],
+      "choices": romanOptions
     },
     {
       "type": "Inversions",
       "questionText": "What's the inversion?",
-      "answers": [rootLetter + rootAccidental + newStructure + " " + inversion],
-      "choices": inversionOptions
+      "answers": [roman + inversionQuality + inversion],
+      "choices": romanInversionOptions
     }
   ]
 
@@ -398,11 +602,13 @@ function handleInversion(chord, inversion) {
 }
 
 export default (numQs, options) => {
-  console.log(JSON.stringify(options));
+  // console.log(JSON.stringify(options));
   let chords = []
   for (var i = 0; i < numQs; i++) {
     chords.push(randomChord(options, templateTriads, templateSevenths, subsets, keySignatures, rootAccidentals, accidentals, ip, triadInversions, seventhInversions))
   }
-  console.log(JSON.stringify(chords, null, 4));
-  return chords
+  // console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
+  return addKeystrokes(chords)
 }
+
+// console.log(chalk.magenta(JSON.stringify(argv, null, 3)));
