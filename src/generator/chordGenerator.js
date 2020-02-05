@@ -105,6 +105,21 @@ export function makeChordDescription(chordType, inversion, keySignature) {
   }
 }
 
+// get the syllable "position" from the reference subset based on tensionMod7 value in the class
+/**
+ * @param rootSyllable      IndependentPitch  The IndependentPitch syllable of the root of a chord
+ * @param translatedNoteIP  IndependentPitch  The IndependentPitch syllable of the chord component
+ * @param keySignature      KeySignature      The KeySignature context of the chord
+ */
+function syllablePosition(rootSyllable, translatedNoteIP, keySignature) {
+  // The array of the "Bottom" modes in-order
+  const modeSubset = Object.values(ModeSubset.BOTTOM)
+  const rootSyllableIndex = modeSubset.indexOf(rootSyllable)
+  const shape = Object.values(Shapes)[keySignature]
+  const noteOffsetInShape = shape[translatedNoteIP].tensionMod7 - 1
+  return modeSubset[(rootSyllableIndex + noteOffsetInShape) % 7]  
+}
+
 /**
  * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
  * @param chord
@@ -112,12 +127,7 @@ export function makeChordDescription(chordType, inversion, keySignature) {
  */
 function partiallyConcretizeChord(chord, keySignature) {
 
-  console.log("make notes with " + JSON.stringify(chord.structure))
-  console.log("concretized root " + JSON.stringify(chord.root))
-
   const { rootIP, rootAccidental, rootLetter, rootSyllable } = chord.root
-
-  console.log("make notes with: " + rootIP + " " + rootAccidental + " " + rootLetter + " " + rootSyllable)
 
   // The notes of a chord to be returned
   let notes = []
@@ -128,11 +138,10 @@ function partiallyConcretizeChord(chord, keySignature) {
     // translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(chord.structure[i], rootIP)
 
-    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
-    let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
+    const noteSyllable = syllablePosition()
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
+    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 - 1) % 12]
 
     // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
     let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
