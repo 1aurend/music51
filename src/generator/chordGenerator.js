@@ -40,7 +40,9 @@ function allowableRange(clef) {
 }
 
 /*
+* @param Clef clef The type of clef for which we are trying to get the middle c position.
 * @return {type} The position in the staff of middle c in the context of a given `clef`.
+* @todo Implement `middleCPosition` as an instance method over `Clef`.
 */
 export function middleCPosition(clef) {
   switch (clef) {
@@ -122,6 +124,7 @@ function octaveTranspose(notes, octaves) {
 }
 
 // This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false.
+
 function chordTypesOption(chordTypes) {
   if (chordTypes.triads && chordTypes.sevenths) {
     return ChordTypesOption.BOTH
