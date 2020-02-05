@@ -17,11 +17,14 @@ import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 /**
  * export default - this is the interface between the generator and chord crusher or any other app; this function is named over in the react app that imports it
  *
- * @param  {type} numQs   int; comes from react app, number of questions student has asked for
- * @param  {type} options comes from react app; student selections
- *                        {chordTypes: {triads:true, sevenths:true},
-                          roots: {common:true, any:false}}
- * @return {type}         returns final questions object
+ * @param  Int numQs      The number of questions a student has asked for
+ * @param  Object options Configuration from student, in the form:
+ *                          {
+ *                            chordTypes: {triads: true, sevenths: true },
+  *                           roots: { common: true, any: false }
+ *                          }
+ * @return Object         The questions object.
+ * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
   let chords = []
@@ -54,12 +57,15 @@ function randomChord(options) {
 
   // Smush the four possible cases from the pair of Boolean values (triads yes/no, sevenths yes/no)
   // into three cases (triads, sevenths, both)
-  const chosenChordTypes = chordTypesOption(options.chordTypes)
+  const allowedChordTypes = chordTypesOption(options.chordTypes)
+  // Make a random choice from the set of allowed chord types
+  const chordType = chooseChordType(allowedChordTypes)
+  // All of the inversions afforded by the chosen chord type
+  // TODO: Implement inversions as an instance method over `ChordType`
+  const allowedInversions = inversionse(chordType)
+  // Choose a random inversion from those afforded by the chosen chord type
+  const chosenInversion = inversions(chordType).randomElement()
 
-  console.log("chord chord types: " + JSON.stringify(chosenChordTypes))
-
-  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
-  const inversion = inversions(chordType)
   const chord = makeChord(chordType)
   // TODO: (James) add `inversion` method on `Chord` type
   const inverted = handleInversion(chord, inversion)
