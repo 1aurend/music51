@@ -53,27 +53,33 @@ function randomChord(options) {
   // Shuffles the root note choices so they're not always in root position haha
   // shuffle(chord.questions[1].choices)
 
-  // Smush the four possible cases from the pair of Boolean values (triads yes/no, sevenths yes/no)
-  // into three cases (triads, sevenths, both)
-  const allowedChordTypes = chordTypesOption(options.chordTypes)
-  // Make a random choice from the set of allowed chord types
-  const chordType = chooseChordType(allowedChordTypes)
-  // All of the inversions afforded by the chosen chord type
-  // TODO: Implement inversions as an instance method over `ChordType`
-  const allowedInversions = inversions(chordType)
-  // Choose a random inversion from those afforded by the chosen chord type
-  const chosenInversion = allowedInversions.randomElement()
+  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const inversion = chooseInversion(chordType)
+  const keySignature = chooseKeySignature()
 
-  console.log("chosen inversion: " + chosenInversion)
+  // Construct non—octave-positioned description of a chord, in the form:
+  // {
+  //    root: { independentPitch, accidental, letter, syllable },
+  //    structure: ChordStructure,
+  //    inversion: Int
+  // }
+  const chordDescription = makeChordDescription(chordType, inversion, keySignature)
 
-  // Construct a chord with the desired specification
-  const chord = makeChord(chordType)
-
-  console.log("concretized chord: " + JSON.stringify(chord))
+  // Construct the non-octave positioned notes for chord described above
+  // TODO: Come up with a better name
+  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
 
   // TODO: (James) add `inversion` method on `Chord` type
-  const inverted = handleInversion(chord, chosenInversion)
-  const positionedChord = staffAdjust(inverted)
+  // const inverted = handleInversion(chordDescription, inversion)
+  
+  const clef = Clef.randomElement()
+
+  // Positions
+  const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
+
+  // FIXME: Put in the correct place
+  
+  
 
   return positionedChord
 }
@@ -82,30 +88,95 @@ function randomChord(options) {
 // random chord!
 //
 // => (Note,Int)
-export function makeChord(chordType) {
-  // Set of all of the possible chord structures for the given chord type
-  // Consider moving any vs common root note option to a higher level
-  const possibleChordStructures = chordStructures(chordType)
+export function makeChordDescription(chordType, inversion, keySignature) {
   // Choose one of the possible chord structures for the given chord type
   // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
-  const chordStructure = possibleChordStructures.randomElement()
+  const chordStructure = chooseChordStructure(chordType)
   // Choose random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  // TODO: Concretize abstract chord (roman numeral context) into spelled key context (in progress)
-  const keySignature = Object.keys(Shapes).slice(3, 12).randomElement()
+  
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
-
-  // TODO: put these in the right places
-  const inversion = inversions(chordType).randomElement()
-  const clef = Clef.randomElement()
-  const initialOctave = chooseInitialOctave(clef)
 
   // TODO: Fix this return... no longer correct... (11/15)
   return {
-    structure: chordStructure,
     root: concretizedRoot,
+    structure: chordStructure,
     inversion: inversion
   }
+}
+
+/**
+ * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
+ * @param chord
+ * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
+ */
+function partiallyConcretizeChord(chord, keySignature) {
+
+  console.log("make notes with " + JSON.stringify(chord.structure))
+  console.log("concretized root " + JSON.stringify(chord.root))
+
+  const { rootIP, rootAccidental, rootLetter, rootSyllable } = chord.root
+
+  console.log("make notes with: " + rootIP + " " + rootAccidental + " " + rootLetter + " " + rootSyllable)
+
+  // The notes of a chord to be returned
+  let notes = []
+
+  // build the structure with correct spellings
+  for(var i=0; i<chord.structure.length; i++){
+
+    // translate the template ip to a relative note in the class
+    const translatedNoteIP = translateNoteIPIndex(chord.structure[i], rootIP)
+
+    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
+    let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
+
+    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
+
+    // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
+    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+
+    // FIXME: (James) Perhaps break this into a function of its own
+    // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
+    // adjusts for IPs on opposite ends of the array, like "D" from "R"
+    // but something about this feels hacky... is there a better way?
+    if (accidentalVal > Object.values(IndependentPitch).length/2) {
+      accidentalVal -= Object.values(IndependentPitch).length
+    }
+    if (-accidentalVal > Object.values(IndependentPitch).length/2) {
+      accidentalVal += Object.values(IndependentPitch).length
+    }
+
+    // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
+    let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
+
+    // Translate the syllable "position" to a letter
+    // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
+    let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
+
+    // FIXME: (James) This currently requires context not injected into this function.
+    //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
+    // TODO: Octave adjustments
+    // TODO: will this also work for template structures bigger than an octave?
+    // let octaveIndex = letterNamePosition(noteLetter)
+    // let octave = chordOctave
+    // if (chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)) {
+    //   octave += 1;
+    //   chordOctave +=1 // sets the default octave up for the next note
+    // }
+
+    // FIXME: Use the code above with the correct context to set this variable correctly
+    const octave = 4
+
+    // Create the note with all of our nice new data
+    const note = { letter: noteLetter, accidental: accidental, octave: octave }
+
+    // Append our new note to the array to be returned
+    notes.push(note)
+  }
+
+  return notes
 }
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
@@ -184,24 +255,21 @@ export function requiredOctaveDisplacement(staffPositions, range) {
 }
 
 /**
- * @param {type} chord The chord to adjust so that it stays within the desired bounds.
+ * @param Array of notes chord  notes   The notes to be adjusted, in the form:
+                                          { letter, accidental }
+ * @param Clef                  clef    The clef context in which we are positioning the given 
+ *                                      `notes`.
+ * @return An array of notes positioned properly within the context of the given `clef`.
 */
-// FIXME: Refactor function to take in a `chord` and return an int.
-//        This way, we aren't mutating the `chord`. It would be best if this
-//        returned a _new_ chord, but in case you are _relying_ on mutation
-//        from elsewhere, this may break things.
-export function staffAdjust(chord) {
-
-  // FIXME: We are using `let` instead of `const` here to highlight the fact that we are try to tear ourselves away from the monolithic `chord` object.
-  let clef = chord.clef
+// FIXME: Establish when we know a note's octave. Do we generate it here, or later?
+export function staffAdjust(notes, clef) {
+  const initialOctave = chooseInitialOctave(clef)
   const range = allowableRange(clef)
-  const staffPositions = chord.notes.map(note => {
+  const staffPositions = notes.map(note => {
     return staffPosition(note.letter, note.octave, clef)
   })
   const octaveTransposition = requiredOctaveDisplacement(staffPositions, range)
-  const notes = chord.notes
-  chord.notes = octaveTranspose(chord.notes, octaveTransposition)
-  return chord
+  return octaveTranspose(notes, octaveTransposition)
 }
 
 /**
@@ -371,6 +439,78 @@ const allowedModesByChordStructure = {
   [ChordStructure.MINOR_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.HALF_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
+}
+
+function chooseInitialOctave(clef) {
+  switch (clef) {
+    case Clef.BASS:
+      // range of 4 octaves starting from octave 1
+      return Math.floor(Math.random() * 4) + 1
+    case Clef.TREBLE:
+      // range of 4 octaves starting from octave 3
+      return Math.floor(Math.random() * 4) + 3
+    default:
+      throw new Error('invalid clef')
+  }
+}
+
+export function translateNoteIPIndex(componentIP, rootIP) {
+  const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
+  // TODO: audit addition of 12 here
+  const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
+  return (untranslatedIndex-rootIndex).mod(12)
+}
+
+// TODO: Decouple inversion from amount of notes in chord
+// TODO: Move into partiallyConcretizeChordNotes
+function handleInversion(chord, inversion) {
+
+  console.log("handle inversion for chord: " + JSON.stringify(chord) + "by inversion " + JSON.stringify(inversion))
+
+  // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
+  if ((inversion === "63") || (inversion === "65")) {
+    chord.notes = invert(chord.notes, 1)
+    chord.questions[0].answers.rotate(1)
+  } else if ((inversion === "64") || (inversion === "43")) {
+    chord.notes = invert(chord.notes, 2)
+    chord.questions[0].answers.rotate(2)
+  } else if (inversion === "42") {
+    chord.notes = invert(chord.notes, 3)
+    chord.questions[0].answers.rotate(3)
+  }
+  return chord
+}
+
+/**
+ * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
+ *
+ * @param  {type} chord   Note values to be inverted
+ * @param  {type} inversion The amount of inversions to perform
+ * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
+ */
+export function invert(chord, inversion) {
+  let notes = [...chord]
+  for (let i = 0; i < inversion; i++) {
+    const head = notes.shift()
+    head.octave += 1
+    notes.push(head)
+  }
+  return notes
+}
+
+/**
+ * @param ChordType chordType The `ChordType` of a chord (either a `TRIAD` or `SEVENTH` for now) for which you would like
+ *        an enumeration of inversions.
+ * @return An array of strings representing the various inversions available for a `TRIAD` or `SEVENTH` chord.
+ */
+function inversions(chordType) {
+  // TODO: Consider moving this functionality over be over `ChordType`.
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return ["","63","64"]
+    case ChordType.SEVENTH:
+      return ["","65","43","42"]
+  }
 }
 
 /**
@@ -556,141 +696,34 @@ export function randomRomanNumeralContext(chordStructure) {
   }
 }
 
-function chooseInitialOctave(clef) {
-  switch (clef) {
-    case Clef.BASS:
-      // range of 4 octaves starting from octave 1
-      return Math.floor(Math.random() * 4) + 1
-    case Clef.TREBLE:
-      // range of 4 octaves starting from octave 3
-      return Math.floor(Math.random() * 4) + 3
-    default:
-      throw new Error('invalid clef')
-  }
-}
-
-export function translateNoteIPIndex(componentIP, rootIP) {
-  const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
-  // TODO: audit addition of 12 here
-  const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
-  return (untranslatedIndex-rootIndex).mod(12)
+/**
+ * @param ChordType chordType The type of chord affording inversions from which to select
+ * @return A random inversion from those afforded by the given `chordType`
+ */
+export function chooseInversion(chordType) {
+  // TODO: Implement inversions as an instance method over `ChordType`
+  return inversions(chordType).randomElement()
 }
 
 /**
- * makeNotes - return an array of notes (in the form: { letter, accidental, octave })
- * @param chordStructure ChordStructure The "intervallic shape" of the chord to concretize (David, please improve doc comment)
- * @param concretizedRoot object { independentPitch, accidental, letter, syllable }
- * @param keySignature Shape The "Shape" of the context to contain the chord (David, please improve doc comment)
+ * @return  A random key signature within the realm of reason (omitting c+f flat, e+b sharp)
+ * @todo    Add some configurability with an input of allowed key signatures, with some 
+ *          sensible default
  */
-function makeNotes(chordStructure, concretizedRoot, keySignature) {
-
-  const { rootIP, rootAccidental, rootLetter, rootSyllable } = concretizedRoot
-
-  // The notes of a chord to be returned
-  let notes = []
-
-  // build the structure with correct spellings
-  for(var i=0; i<chordStructure.structure.length; i++){
-
-    // translate the template ip to a relative note in the class
-    const translatedNoteIP = translateNoteIPIndex(chordStructure.structure[i], rootIP)
-
-    // get the syllable "position" from the reference subset based on tensionMod7 value in the class
-    let noteSyllable = Object.values(ModeSubset.BOTTOM)[((Object.values(ModeSubset.BOTTOM).indexOf(rootSyllable) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod7 -1)%7)]
-
-    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIP = Object.values(IndependentPitch)[(Object.values(IndependentPitch).indexOf(rootIP) + Object.values(Shapes)[keySignature][translatedNoteIP].tensionMod12 -1)%12]
-
-    // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
-
-    // FIXME: (James) Perhaps break this into a function of its own
-    // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
-    // adjusts for IPs on opposite ends of the array, like "D" from "R"
-    // but something about this feels hacky... is there a better way?
-    if (accidentalVal > Object.values(IndependentPitch).length/2) {
-      accidentalVal -= Object.values(IndependentPitch).length
-    }
-    if (-accidentalVal > Object.values(IndependentPitch).length/2) {
-      accidentalVal += Object.values(IndependentPitch).length
-    }
-
-    // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
-    let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
-
-    // Translate the syllable "position" to a letter
-    // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
-    let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
-
-    // FIXME: (James) This currently requires context not injected into this function.
-    //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
-    // TODO: Octave adjustments
-    // TODO: will this also work for template structures bigger than an octave?
-    // let octaveIndex = letterNamePosition(noteLetter)
-    // let octave = chordOctave
-    // if (chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)) {
-    //   octave += 1;
-    //   chordOctave +=1 // sets the default octave up for the next note
-    // }
-
-    // FIXME: Use the code above with the correct context to set this variable correctly
-    const octave = 4
-
-    // Create the note with all of our nice new data
-    const note = { letter: noteLetter, accidental: accidental, octave: octave }
-
-    // Append our new note to the array to be returned
-    notes.push(note)
-  }
-
-  return notes
-}
-
-/// TODO: Decouple inversion from amount of notes in chord
-function handleInversion(chord, inversion) {
-
-  // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
-  if ((inversion === "63") || (inversion === "65")) {
-    chord.notes = invert(chord.notes, 1)
-    chord.questions[0].answers.rotate(1)
-  } else if ((inversion === "64") || (inversion === "43")) {
-    chord.notes = invert(chord.notes, 2)
-    chord.questions[0].answers.rotate(2)
-  } else if (inversion === "42") {
-    chord.notes = invert(chord.notes, 3)
-    chord.questions[0].answers.rotate(3)
-  }
-  return chord
+export function chooseKeySignature() {
+  return Object.keys(Shapes).slice(3, 12).randomElement()
 }
 
 /**
- * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
- *
- * @param  {type} chord   Note values to be inverted
- * @param  {type} inversion The amount of inversions to perform
- * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
+ * @return A random `Clef`.
  */
-export function invert(chord, inversion) {
-  let notes = [...chord]
-  for (let i = 0; i < inversion; i++) {
-    const head = notes.shift()
-    head.octave += 1
-    notes.push(head)
-  }
-  return notes
+export function chooseClef() {
+  return Clef.randomElement()
 }
 
 /**
- * @param ChordType chordType The `ChordType` of a chord (either a `TRIAD` or `SEVENTH` for now) for which you would like
- *        an enumeration of inversions.
- * @return An array of strings representing the various inversions available for a `TRIAD` or `SEVENTH` chord.
+ * @return A random `ChordStructure` for the given `chordType`.
  */
-function inversions(chordType) {
-  // TODO: Consider moving this functionality over be over `ChordType`.
-  switch (chordType) {
-    case ChordType.TRIAD:
-      return ["","63","64"]
-    case ChordType.SEVENTH:
-      return ["","65","43","42"]
-  }
+export function chooseChordStructure(chordType) {
+  return chordStructures(chordType).randomElement()
 }
