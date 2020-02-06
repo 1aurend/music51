@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Means } from '../../Context'
+import { MeansVal } from '../../Context'
 import {
   Container,
   Row,
@@ -29,8 +29,9 @@ const StyledCenterPane = styled(Col)`
 `
 
 export default function StatLines(props) {
-  const { round, qTypes, setShowStats, nextRound, finished } = props
-  const means = useContext(Means)[0]
+  const { round, setShowStats, nextRound, finished } = props
+  const means = useContext(MeansVal).tally
+  const qTypes = useContext(MeansVal).questionTypes
   const sizedStyles = useResponsiveStyles()
   const { statsTitle, statsSubtitle } = sizedStyles
 

@@ -6,7 +6,7 @@ import StartScreen from '../views/layouts/StartScreen'
 
 
 export default function Start({ title, round }) {
-  const [session, updateSession] = useContext(Session)
+  const dispatch = useContext(Session)
   const numQs = useRef(5)
   const [quiz, setQuiz] = useState()
   const [options, updateOptions] = useState({
@@ -22,7 +22,7 @@ export default function Start({ title, round }) {
       numChords: numQs.current,
       options: options
     }
-    updateSession({...session, settings: settings })
+    dispatch({type: 'settings', data: settings})
     setQuiz(questions)
   }
   const onCheck = (type, option) => {

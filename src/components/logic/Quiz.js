@@ -1,10 +1,11 @@
 import React, { useState, useRef, useContext } from 'react'
-import Tally from '../actions/Tally'
-import { Rounds } from '../Context'
+import { Rounds, Means, Chart } from '../Context'
 import QuizQuestion from '../views/layouts/QuizQuestion'
+import Loading from '../views/layouts/Loading'
 
 
 export default function Quiz ({ data, round }) {
+  const dispatch = useContext(Means)
   const [rounds, updateRounds] = useContext(Rounds)
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [colors, setColors] = useState([])
@@ -123,6 +124,7 @@ export default function Quiz ({ data, round }) {
           currentChord.current = data[roundData.current.length]
           nextQ(currentChord.current.questions[0])
         } else {
+          dispatch({type: 'tally', data: roundData.current})
           updateRounds({...rounds, [round]: roundData.current}) //this should become a dispatch eventually
         }
       }
@@ -130,7 +132,7 @@ export default function Quiz ({ data, round }) {
   }
 
   if (roundData.current.length === data.length) {
-    return <Tally round={round} data={roundData.current}/> //keep passing round data down after implementing reducer?
+    return <Loading round={round} />
   } else {
     return <QuizQuestion
               chord={currentChord}

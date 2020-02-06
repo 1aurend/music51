@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import EndOfRound from '../logic/EndOfRound'
-import { Means } from '../Context'
+import { MeansVal } from '../Context'
 import Loading from '../views/layouts/Loading'
 import { rounded } from '../utility'
 
@@ -32,7 +32,9 @@ export function getSummaryData(data, param, round) {
   }
 }
 // TODO: get a prototype data set for testing this function
-export function getChartData(data, qTypes, round) {
+export function getChartData(means, round) {
+  const data = means.tally
+  const qTypes = means.questionTypes
   const chartData = {
     domainMaxYAtt: findYMax(data, qTypes, 'attempts'),
     domainMaxYTime: findYMax(data, qTypes, 'times'),
@@ -56,22 +58,23 @@ export function getChartData(data, qTypes, round) {
 }
 
 
-export default function ChartData({ round, questionTypes }) {
-  const means = useRef(useContext(Means)[0])
-  const [chartData, setData] = useState(null)
+export default function ChartData({ round }) {
+  const means = useRef(useContext(MeansVal))
+  const [chartData, setData] = useState(false)
+  console.log(chartData);
 
   useEffect(() => {
     let ignore = false;
     (async () => {
-      const result = await getChartData(means.current, questionTypes, round)
+      const result = await getChartData(means.current, round)
       if (!ignore) setData(result)
     })()
     return () => {ignore = true}
-  }, [questionTypes, round])
+  }, [round])
 
   if (chartData) {
-    return <EndOfRound round={round} chartData={chartData} qTypes={questionTypes} />
+    return <EndOfRound round={round} chartData={chartData} />
   } else {
-    return <Loading />
+    return <Loading round={round} />
   }
 }

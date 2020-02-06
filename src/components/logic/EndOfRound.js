@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react'
-import Context, { Session } from '../Context'
+import Context, { SessionVal } from '../Context'
 import ChartLayout from '../views/layouts/ChartLayout'
 import generateChords from '../../generator/chordGenerator'
 import StatLines from '../views/layouts/StatLines'
 import Quiz from './Quiz'
 import ResultsTable from '../views/layouts/ResultsTable'
+import ChartData from '../actions/ChartData'
+import Loading from '../views/layouts/Loading'
 
 
 export default function EndOfRoundMenu({ round, chartData, qTypes }) {
-  const session = useContext(Session)[0]
+  const session = useContext(SessionVal)
   const [nextQuiz, setNextQuiz] = useState(false)
   const [endSession, setEndSession] = useState(false)
   const [showStats, setShowStats] = useState(false)
@@ -25,8 +27,10 @@ export default function EndOfRoundMenu({ round, chartData, qTypes }) {
   } else if (endSession) {
     return <ResultsTable round={round} qTypes={qTypes} startOver={setShowStart} />
   } else if (showStats || round === 1) {
-    return <StatLines round={round} qTypes={qTypes} nextRound={nextRound} setShowStats={setShowStats} finished={setEndSession} />
+    return <StatLines round={round} nextRound={nextRound} setShowStats={setShowStats} finished={setEndSession} />
+  } else if (chartData) {
+    return <ChartLayout chartData={chartData} round={round} finished={setEndSession} viewStats={setShowStats} nextRound={nextRound} />
   } else {
-    return <ChartLayout chartData={chartData} qTypes={qTypes} round={round} finished={setEndSession} viewStats={setShowStats} nextRound={nextRound} />
+    return <ChartData round={round} />
   }
 }
