@@ -1,8 +1,7 @@
 import React, { useState, useRef, useContext } from 'react'
-import { Rounds, Means, Chart } from '../Context'
+import { Rounds, Means } from '../Context'
 import QuizQuestion from '../views/layouts/QuizQuestion'
-import Loading from '../views/layouts/Loading'
-
+import EndOfRound from './EndOfRound'
 
 export default function Quiz ({ data, round }) {
   const dispatch = useContext(Means)
@@ -132,7 +131,7 @@ export default function Quiz ({ data, round }) {
   }
 
   if (roundData.current.length === data.length) {
-    return <Loading round={round} />
+    return <EndOfRound round={round} />
   } else {
     return <QuizQuestion
               chord={currentChord}

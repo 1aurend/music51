@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Container, Row, Col } from 'shards-react'
-import EndOfRound from '../../logic/EndOfRound'
 
-export default function Loading({round}) {
-  const [first, setFirst] = useState(true)
-  useEffect(() => {
-      window.scrollTo(0, 0)
-      if (round !== 1) {
-        setTimeout(() => setFirst(false), 100)
-        return
-      }
-      setFirst(false)
-  },[round])
 
-  if (first) {
+export default function Loading() {
     return (
       <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
         <Row style={{paddingTop: '25%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}></Row>
@@ -24,8 +13,4 @@ export default function Loading({round}) {
           </Col>
         </Container>
     )
-  } else {
-    return <EndOfRound round={round} />
-  }
-
 }

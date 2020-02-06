@@ -1,10 +1,4 @@
-// import React, { useContext, useEffect, useState, useRef, useReducer } from 'react'
-// import { Means } from '../Context'
-// import EndOfRound from '../logic/EndOfRound'
-// import ChartData from './ChartData'
-// import Loading from '../views/layouts/Loading'
 import { mean, rounded } from '../utility'
-// import sessionDataReducer from './sessionDataReducer'
 
 
 export function listAttemptsByQuestionType(data, questionType) {
@@ -90,39 +84,3 @@ export function tallyMeans(state, data) {
   })
   return {tally: tally, questionTypes: questionTypes}
 }
-
-
-// export default function Tally({ data, round }) {
-//   const means = useRef(useContext(Means))
-//   const [questionTypes, setQTypes] = useState(null)
-//   const [state, dispatch] = useReducer(sessionDataReducer, means.current)
-//
-//   useEffect(() => {
-//     let ignore = false;
-//     (async () => {
-//       // const result = await tallyMeans(means.current, data)
-//       dispatch({type: 'tally', data: data})
-//       if (!ignore) {
-//         // updateMeans(result.tally)
-//         // setQTypes(result.questionTypes)
-//       }
-//     })()
-//     return () => {ignore = true}
-//   }, [data])
-//   // useEffect(() => {
-//   //   updateMeans(state.tally)
-//   //   setQTypes(state.questionTypes)
-//   // }, [state, updateMeans])
-//
-//   console.log(state)
-//   console.log(questionTypes)
-//
-//
-//   if (questionTypes && round === 1) {
-//     return <EndOfRound round={round} qTypes={questionTypes}/>
-//   } else if (questionTypes) {
-//     return <ChartData round={round} questionTypes={questionTypes} />
-//   } else {
-//     return <Loading />
-//   }
-// }

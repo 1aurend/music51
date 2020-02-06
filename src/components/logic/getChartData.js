@@ -1,7 +1,3 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
-import EndOfRound from '../logic/EndOfRound'
-import { MeansVal } from '../Context'
-import Loading from '../views/layouts/Loading'
 import { rounded } from '../utility'
 
 
@@ -54,27 +50,5 @@ export function getChartData(means, round) {
   return {
     chartData: chartData,
     progressSummary: progressSummary
-  }
-}
-
-
-export default function ChartData({ round }) {
-  const means = useRef(useContext(MeansVal))
-  const [chartData, setData] = useState(false)
-  console.log(chartData);
-
-  useEffect(() => {
-    let ignore = false;
-    (async () => {
-      const result = await getChartData(means.current, round)
-      if (!ignore) setData(result)
-    })()
-    return () => {ignore = true}
-  }, [round])
-
-  if (chartData) {
-    return <EndOfRound round={round} chartData={chartData} />
-  } else {
-    return <Loading round={round} />
   }
 }
