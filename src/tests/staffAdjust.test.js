@@ -4,16 +4,10 @@ import { Clef } from '../generator/Clef'
 import { invert } from '../generator/chordGenerator'
 
 test('chord in range not adjusted', () => {
-  let chord = {
-    notes: [
-      {
-        letter: LetterName.C,
-        octave: 4
-      }
-    ],
-    clef: Clef.TREBLE
-  }
-  expect(staffAdjust(chord)).toEqual(chord)
+  let chord = [
+    { letter: LetterName.C, octave: 4 }
+  ]
+  expect(staffAdjust(chord, Clef.TREBLE)).toEqual(chord)
 })
 
 test('monad below range adjusted up in treble clef', () => {
