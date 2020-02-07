@@ -14,8 +14,6 @@ export default function ResultsTable(props) {
   const qTypes = useContext(Session).means.questionTypes
   const sizedStyles = useResponsiveStyles()
   const { matrixSize } = sizedStyles
-  const log = useContext(Session)
-  console.log(JSON.stringify(log, null, 3))
 
   const perfectRounds = (means.Overall.attempts.filter(average => average === 1)).length
   const greeting = perfectRounds >= 1 ? `Pefection! You completed ${perfectRounds} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
