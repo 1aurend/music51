@@ -17,31 +17,17 @@ test('monad below range adjusted up in treble clef', () => {
   let expected = [
     { letter: LetterName.C, octave: 4 }
   ]
-  console.log(JSON.stringify(chord, null, 3));
   expect(staffAdjust(chord, Clef.TREBLE)).toEqual(expected)
 })
 
 test('monad below range adjusted up in bass clef', () => {
-  let chord1 = {
-    notes: [
-      {
-        letter: LetterName.C,
-        octave: 1
-      }
-    ],
-    clef: Clef.BASS
-  }
-  let chord2 = {
-    notes: [
-      {
-        letter: LetterName.C,
-        octave: 2
-      }
-    ],
-    clef: Clef.BASS
-  }
-  console.log(JSON.stringify(chord1, null, 3));
-  expect(staffAdjust(chord1)).toEqual(chord2)
+  let chord = [
+    { letter: LetterName.C, octave: 1 }
+  ]
+  let expected = [
+    { letter: LetterName.C, octave: 2 }
+  ]
+  expect(staffAdjust(chord, Clef.BASS)).toEqual(expected)
 })
 
 test('monad above range adjusted down in treble clef', () => {
