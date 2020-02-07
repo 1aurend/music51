@@ -1,5 +1,5 @@
 import React from 'react'
-import Context from './components/Context'
+import Context from './components/data/Context'
 import { BrowserRouter, Route } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "shards-ui/dist/css/shards.min.css"

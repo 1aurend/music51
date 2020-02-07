@@ -1,11 +1,11 @@
 import React, { useState, useRef, useContext } from 'react'
-import { Rounds, Means } from '../Context'
+import { Dispatch } from '../data/Context'
 import QuizQuestion from '../views/layouts/QuizQuestion'
 import EndOfRound from './EndOfRound'
 
 export default function Quiz ({ data, round }) {
-  const dispatch = useContext(Means)
-  const [rounds, updateRounds] = useContext(Rounds)
+  const dispatch = useContext(Dispatch)
+  // const [rounds, updateRounds] = useContext(Rounds)
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [colors, setColors] = useState([])
   const thisInput = useRef(null)
@@ -124,7 +124,7 @@ export default function Quiz ({ data, round }) {
           nextQ(currentChord.current.questions[0])
         } else {
           dispatch({type: 'tally', data: roundData.current})
-          updateRounds({...rounds, [round]: roundData.current}) //this should become a dispatch eventually
+          dispatch({type: 'round', round: round, data: roundData.current})
         }
       }
     }, 1000)

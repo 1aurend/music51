@@ -15,12 +15,12 @@ import NavButtons from '../buttons/RoundEndNav'
 export default function HorizontalTable(props) {
   const { greeting, headers, firstRoundAtt, firstRoundT, lastRoundAtt, lastRoundT, bestRoundAtt, bestRoundT, startOver } = props
   const sizedStyles = useResponsiveStyles()
-  const { borderRadius, sessionTitle } = sizedStyles
+  const { sessionTitle } = sizedStyles
 
   return (
     <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '150vh', fontFamily: "'Overpass Mono', monospace"}}>
       <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: borderRadius, marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
+        <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '1rem', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
           <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={sessionTitle}>Session Status</h2></Row>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
               <p style={{marginBottom: '4%'}}>{greeting}</p>

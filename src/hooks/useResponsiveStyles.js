@@ -10,7 +10,7 @@ export default function useResponsiveStyles() {
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
     const screen = size.width > 500 ? 'LARGE' : 'SMALL'
-    const matrix = size.width > 700 ? 'LARGE' : 'SMALL'
+    const matrix = size.width > 900 ? 'LARGE' : 'SMALL'
     if (init) {
       return {
         chordCrusher: responsiveStyles.chordCrusher[screen],

@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import Context, { SessionVal, MeansVal } from '../Context'
+import Context, { Session } from '../data/Context'
 import ChartLayout from '../views/layouts/ChartLayout'
 import generateChords from '../../generator/chordGenerator'
 import StatLines from '../views/layouts/StatLines'
 import Quiz from './Quiz'
 import ResultsTable from '../views/layouts/ResultsTable'
-import { getChartData } from './getChartData'
+import { getChartData } from '../data/getChartData'
 import Loading from '../views/layouts/Loading'
 
 
 export default function EndOfRoundMenu({ round }) {
-  const session = useContext(SessionVal)
-  const means = useRef(useContext(MeansVal))
+  const session = useContext(Session)
+  const means = useRef(useContext(Session).means)
   const [nextQuiz, setNextQuiz] = useState(false)
   const [endSession, setEndSession] = useState(false)
   const [showStats, setShowStats] = useState(false)

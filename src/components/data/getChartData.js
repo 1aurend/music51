@@ -1,4 +1,4 @@
-import { rounded } from '../utility'
+import { rounded } from '../../utility'
 
 
 export function findYMax(data, qTypes, param) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import {
   Container,
   Row,
@@ -8,7 +8,7 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
-import { MeansVal } from '../../Context'
+import { Session } from '../../data/Context'
 
 const StyledRow = styled(Row)`
   display: flex;
@@ -29,7 +29,7 @@ const StyledCenterPane = styled(Col)`
 
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
-  const qTypes = useContext(MeansVal).questionTypes
+  const qTypes = useContext(Session).means.questionTypes
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb

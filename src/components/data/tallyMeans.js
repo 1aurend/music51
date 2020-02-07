@@ -1,4 +1,4 @@
-import { mean, rounded } from '../utility'
+import { mean, rounded } from '../../utility'
 
 
 export function listAttemptsByQuestionType(data, questionType) {
@@ -66,8 +66,6 @@ function calculateOverallMeans(means, questionTypes) {
 export function tallyMeans(state, data) {
   const { roundMeans, questionTypes } = tallyRound(data)
   const means = state.tally? state.tally : {}
-  console.log(means)
-  console.log(state)
   //left this one for simplicity, but it could be a const structured like means in TallyRound() above
   let tally
   questionTypes.forEach( type => {

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { MeansVal } from '../../Context'
+import { Session } from '../../data/Context'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import { rounded } from '../../utility'
+import { rounded } from '../../../utility'
 import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
 
@@ -10,10 +10,12 @@ import VerticalTable from '../charts/VerticalTable'
 // TODO: add a better breakpoint for tables?
 export default function ResultsTable(props) {
   const { round, startOver } = props
-  const means = useContext(MeansVal).tally
-  const qTypes = useContext(MeansVal).questionTypes
+  const means = useContext(Session).means.tally
+  const qTypes = useContext(Session).means.questionTypes
   const sizedStyles = useResponsiveStyles()
   const { matrixSize } = sizedStyles
+  const log = useContext(Session)
+  console.log(JSON.stringify(log, null, 3))
 
   const perfectRounds = (means.Overall.attempts.filter(average => average === 1)).length
   const greeting = perfectRounds >= 1 ? `Pefection! You completed ${perfectRounds} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
@@ -22,7 +24,7 @@ export default function ResultsTable(props) {
       window.scrollTo(0, 0)
   },[])
 
-  if (matrixSize >= 700) {
+  if (matrixSize >= 900) {
     const headers = qTypes.map( type => {
       return  <th scope="col" className="border-0">
                 {type.toUpperCase()}
