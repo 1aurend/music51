@@ -417,8 +417,14 @@ export function concretizeRoot(keySignature, modeNote) {
     if (Shapes[keySignature].notes[i].mode === modeNote) {
       const rootAccidental = shape.notes[i].accidental
       const rootSyllable = shape.notes[i].refIP
+
+      // FIXME: (James) Implement convenience getter over `Accidental`
       const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
+
+      // FIXME: (James) Implement convenience getter over `LetterName`
       const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
+
+      // FIXME: (James) Implement convenience getter over `IndependentPitch`
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex+offset)%12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
