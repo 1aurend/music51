@@ -91,7 +91,8 @@ export function makeChordDescription(chordType, inversion, keySignature) {
   const chordStructure = chooseChordStructure(chordType)
   // Choose random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  
+  // Concretize the root by situating the roman numeral context's `modeNote` in the given 
+  // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
 
   // TODO: Fix this return... no longer correct... (11/15)
