@@ -15,12 +15,12 @@ import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
 /**
- * export default - this is the interface between the generator and chord crusher or any other app; this function is named over in the react app that imports it
+ * export default - This is the interface between the generator and chord crusher or any other app
  *
  * @param  Int numQs      The number of questions a student has asked for
  * @param  Object options Configuration from student, in the form:
  *                          {
- *                            chordTypes: {triads: true, sevenths: true },
+ *                            chordTypes: { triads: true, sevenths: true },
   *                           roots: { common: true, any: false }
  *                          }
  * @return Object         The questions object.
@@ -36,7 +36,8 @@ export default function(numQs, options) {
 }
 
 /**
- * randomChord - A big function to generate a random, correctly spelled chord structure within clef/staff limits
+ * randomChord - A big function to generate a random, correctly spelled chord structure within 
+ *               clef/ staff limits
  * 
  * @param options The user settings for a given session, in the form:
  *                {
@@ -76,10 +77,6 @@ function randomChord(options) {
 
   // Positions
   const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
-
-  // FIXME: Put in the correct place
-  
-  
 
   return positionedChord
 }
@@ -428,7 +425,7 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-      
+
       return {
         independentPitch: rootIP,
         accidental: rootAccidental,
