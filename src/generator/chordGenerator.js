@@ -426,7 +426,7 @@ export function concretizeRoot(keySignature, modeNote) {
 
       // FIXME: (James) Implement convenience getter over `IndependentPitch`
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-      const rootIPIndex = (rootSyllableIndex+offset)%12
+      const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
       return {
         independentPitch: rootIP,
