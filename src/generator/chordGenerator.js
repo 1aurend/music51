@@ -412,10 +412,11 @@ export function concretizeRoot(keySignature, modeNote) {
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
-  for (var i=0; i<Shapes[keySignature].notes.length; i++) {
+  const shape = Shapes[keySignature]
+  for (var i = 0; i < shape.notes.length; i++) {
     if (Shapes[keySignature].notes[i].mode === modeNote) {
-      const rootAccidental = Shapes[keySignature].notes[i].accidental
-      const rootSyllable = Shapes[keySignature].notes[i].refIP
+      const rootAccidental = shape.notes[i].accidental
+      const rootSyllable = shape.notes[i].refIP
       const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
       const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
