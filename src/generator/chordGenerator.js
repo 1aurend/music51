@@ -428,6 +428,7 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+      
       return {
         independentPitch: rootIP,
         accidental: rootAccidental,

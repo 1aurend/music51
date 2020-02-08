@@ -3,5 +3,5 @@ export const Accidental = {
   FLAT: "♭",
   NATURAL: "♮",
   SHARP: "♯",
-  DOUBLESHARP: "𝄪",
+  DOUBLESHARP: "𝄪"
 }
