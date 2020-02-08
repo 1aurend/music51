@@ -1,4 +1,4 @@
-import { listAttemptsByQuestionType, listTimesByQuestionType, tallyRound } from '../components/tally'
+import { listAttemptsByQuestionType, listTimesByQuestionType, tallyRound } from '../components/actions/tally'
 
 test('listAttemptsByQuestionType returns a single array', () => {
   const data = [
