@@ -1,4 +1,4 @@
-import { rounded } from '../components/utility.js'
+import { rounded } from '../utility.js'
 
 test('rounds 0.9999 to 1.00', () => {
   expect(rounded(0.999, 2)).toBe(1.00);
