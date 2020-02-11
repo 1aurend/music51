@@ -1,0 +1,650 @@
+{
+   "user": "anonymous for now",
+   "sessionId": 1581087042062,
+   "settings": {
+      "numChords": "1",
+      "options": {
+         "chordTypes": {
+            "triads": true,
+            "sevenths": true
+         },
+         "roots": {
+            "common": true,
+            "any": false
+         }
+      }
+   },
+   "rounds": {
+      "1": [
+         {
+            "chord": [
+               {
+                  "letter": "A",
+                  "accidental": "",
+                  "octave": 2
+               },
+               {
+                  "letter": "C",
+                  "accidental": "",
+                  "octave": 3
+               },
+               {
+                  "letter": "E",
+                  "accidental": "",
+                  "octave": 3
+               },
+               {
+                  "letter": "F",
+                  "accidental": "",
+                  "octave": 3
+               }
+            ],
+            "questions": [
+               {
+                  "type": "Names",
+                  "answers": [
+                     {
+                        "answer": "A",
+                        "tries": [
+                           {
+                              "input": "A",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087047695,
+                        "endTime": 1581087048241,
+                        "elapsedTime": 0.546
+                     },
+                     {
+                        "answer": "C",
+                        "tries": [
+                           {
+                              "input": "B",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "C",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087048241,
+                        "endTime": 1581087048655,
+                        "elapsedTime": 0.414
+                     },
+                     {
+                        "answer": "E",
+                        "tries": [
+                           {
+                              "input": "D",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "E",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087048655,
+                        "endTime": 1581087049354,
+                        "elapsedTime": 0.699
+                     },
+                     {
+                        "answer": "F",
+                        "tries": [
+                           {
+                              "input": "F",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087049354,
+                        "endTime": 1581087049617,
+                        "elapsedTime": 0.263
+                     }
+                  ]
+               },
+               {
+                  "type": "Roots",
+                  "answers": [
+                     {
+                        "answer": "F",
+                        "tries": [
+                           {
+                              "input": "F",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087050630,
+                        "endTime": 1581087051381,
+                        "elapsedTime": 0.751
+                     }
+                  ]
+               },
+               {
+                  "type": "Degrees",
+                  "answers": [
+                     {
+                        "answer": "4^",
+                        "tries": [
+                           {
+                              "input": "1^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "2^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "3^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "4^",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087052393,
+                        "endTime": 1581087053848,
+                        "elapsedTime": 1.455
+                     }
+                  ]
+               },
+               {
+                  "type": "Numerals",
+                  "answers": [
+                     {
+                        "answer": "IV7",
+                        "tries": [
+                           {
+                              "input": "IV7",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087054865,
+                        "endTime": 1581087055815,
+                        "elapsedTime": 0.95
+                     }
+                  ]
+               },
+               {
+                  "type": "Inversions",
+                  "answers": [
+                     {
+                        "answer": "IV65",
+                        "tries": [
+                           {
+                              "input": "IV",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "IV65",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087056823,
+                        "endTime": 1581087058278,
+                        "elapsedTime": 1.455
+                     }
+                  ]
+               }
+            ]
+         }
+      ],
+      "2": [
+         {
+            "chord": [
+               {
+                  "letter": "B",
+                  "accidental": "",
+                  "octave": 4
+               },
+               {
+                  "letter": "D",
+                  "accidental": "",
+                  "octave": 5
+               },
+               {
+                  "letter": "E",
+                  "accidental": "",
+                  "octave": 5
+               },
+               {
+                  "letter": "G",
+                  "accidental": "",
+                  "octave": 5
+               }
+            ],
+            "questions": [
+               {
+                  "type": "Names",
+                  "answers": [
+                     {
+                        "answer": "B",
+                        "tries": [
+                           {
+                              "input": "A",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "B",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087060899,
+                        "endTime": 1581087061413,
+                        "elapsedTime": 0.514
+                     },
+                     {
+                        "answer": "D",
+                        "tries": [
+                           {
+                              "input": "C",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "D",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087061413,
+                        "endTime": 1581087061897,
+                        "elapsedTime": 0.484
+                     },
+                     {
+                        "answer": "E",
+                        "tries": [
+                           {
+                              "input": "E",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087061897,
+                        "endTime": 1581087062145,
+                        "elapsedTime": 0.248
+                     },
+                     {
+                        "answer": "G",
+                        "tries": [
+                           {
+                              "input": "F",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "G",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087062145,
+                        "endTime": 1581087062981,
+                        "elapsedTime": 0.836
+                     }
+                  ]
+               },
+               {
+                  "type": "Roots",
+                  "answers": [
+                     {
+                        "answer": "E♭",
+                        "tries": [
+                           {
+                              "input": "E♭",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087063997,
+                        "endTime": 1581087064817,
+                        "elapsedTime": 0.82
+                     }
+                  ]
+               },
+               {
+                  "type": "Degrees",
+                  "answers": [
+                     {
+                        "answer": "1^",
+                        "tries": [
+                           {
+                              "input": "1^",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087065828,
+                        "endTime": 1581087066565,
+                        "elapsedTime": 0.737
+                     }
+                  ]
+               },
+               {
+                  "type": "Numerals",
+                  "answers": [
+                     {
+                        "answer": "I7",
+                        "tries": [
+                           {
+                              "input": "i7",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "iø7",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "io7",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "I7",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087067578,
+                        "endTime": 1581087070376,
+                        "elapsedTime": 2.798
+                     }
+                  ]
+               },
+               {
+                  "type": "Inversions",
+                  "answers": [
+                     {
+                        "answer": "I43",
+                        "tries": [
+                           {
+                              "input": "I",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "I65",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "I43",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087071382,
+                        "endTime": 1581087074363,
+                        "elapsedTime": 2.981
+                     }
+                  ]
+               }
+            ]
+         }
+      ],
+      "3": [
+         {
+            "chord": [
+               {
+                  "letter": "A",
+                  "accidental": "",
+                  "octave": 4
+               },
+               {
+                  "letter": "D",
+                  "accidental": "",
+                  "octave": 5
+               },
+               {
+                  "letter": "F",
+                  "accidental": "",
+                  "octave": 5
+               }
+            ],
+            "questions": [
+               {
+                  "type": "Names",
+                  "answers": [
+                     {
+                        "answer": "A",
+                        "tries": [
+                           {
+                              "input": "A",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087081209,
+                        "endTime": 1581087081970,
+                        "elapsedTime": 0.761
+                     },
+                     {
+                        "answer": "D",
+                        "tries": [
+                           {
+                              "input": "B",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "C",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "D",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087081970,
+                        "endTime": 1581087082661,
+                        "elapsedTime": 0.691
+                     },
+                     {
+                        "answer": "F",
+                        "tries": [
+                           {
+                              "input": "E",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "F",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087082661,
+                        "endTime": 1581087083155,
+                        "elapsedTime": 0.494
+                     }
+                  ]
+               },
+               {
+                  "type": "Roots",
+                  "answers": [
+                     {
+                        "answer": "D",
+                        "tries": [
+                           {
+                              "input": "A",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "F♯",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "D",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087084164,
+                        "endTime": 1581087086416,
+                        "elapsedTime": 2.252
+                     }
+                  ]
+               },
+               {
+                  "type": "Degrees",
+                  "answers": [
+                     {
+                        "answer": "7^",
+                        "tries": [
+                           {
+                              "input": "1^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "2^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "3^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "4^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "5^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "6^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "6^",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "7^",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087087425,
+                        "endTime": 1581087090755,
+                        "elapsedTime": 3.33
+                     }
+                  ]
+               },
+               {
+                  "type": "Numerals",
+                  "answers": [
+                     {
+                        "answer": "VII",
+                        "tries": [
+                           {
+                              "input": "vii",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "VII",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087091766,
+                        "endTime": 1581087092996,
+                        "elapsedTime": 1.23
+                     }
+                  ]
+               },
+               {
+                  "type": "Inversions",
+                  "answers": [
+                     {
+                        "answer": "VII64",
+                        "tries": [
+                           {
+                              "input": "VII",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "VII63",
+                              "type": "keypress"
+                           },
+                           {
+                              "input": "VII64",
+                              "type": "keypress"
+                           }
+                        ],
+                        "startTime": 1581087094006,
+                        "endTime": 1581087096362,
+                        "elapsedTime": 2.356
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   },
+   "means": {
+      "tally": {
+         "Names": {
+            "attempts": [
+               1.5,
+               1.75,
+               2
+            ],
+            "times": [
+               0.48,
+               0.52,
+               0.65
+            ]
+         },
+         "Roots": {
+            "attempts": [
+               1,
+               1,
+               3
+            ],
+            "times": [
+               0.75,
+               0.82,
+               2.25
+            ]
+         },
+         "Degrees": {
+            "attempts": [
+               4,
+               1,
+               8
+            ],
+            "times": [
+               1.46,
+               0.74,
+               3.33
+            ]
+         },
+         "Numerals": {
+            "attempts": [
+               1,
+               4,
+               2
+            ],
+            "times": [
+               0.95,
+               2.8,
+               1.23
+            ]
+         },
+         "Inversions": {
+            "attempts": [
+               2,
+               3,
+               3
+            ],
+            "times": [
+               1.46,
+               2.98,
+               2.36
+            ]
+         },
+         "Overall": {
+            "attempts": [
+               1.9,
+               2.15,
+               3.6
+            ],
+            "times": [
+               1.02,
+               1.57,
+               1.96
+            ]
+         }
+      },
+      "questionTypes": [
+         "Names",
+         "Roots",
+         "Degrees",
+         "Numerals",
+         "Inversions",
+         "Overall"
+      ]
+   },
+   "questionTypes": []
+}

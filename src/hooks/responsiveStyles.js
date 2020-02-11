@@ -67,8 +67,8 @@ export const staveSize = {
 }
 
 export const matrixSize = {
-  LARGE: 701,
-  SMALL: 699
+  LARGE: 901,
+  SMALL: 899
 }
 
 export const loadingMargin = {

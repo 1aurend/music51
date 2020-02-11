@@ -1,12 +1,12 @@
 import React, { useState, useRef, useContext } from 'react'
 import Quiz from './Quiz'
 import generateChords from '../../generator/chordGenerator'
-import { Session } from '../Context'
+import { Dispatch } from '../data/Context'
 import StartScreen from '../views/layouts/StartScreen'
 
 
 export default function Start({ title, round }) {
-  const [session, updateSession] = useContext(Session)
+  const dispatch = useContext(Dispatch)
   const numQs = useRef(5)
   const [quiz, setQuiz] = useState()
   const [options, updateOptions] = useState({
@@ -17,12 +17,12 @@ export default function Start({ title, round }) {
   const generateQuiz = async () => {
     //this probably doesn't actually need to await
     const questions = await generateChords(numQs.current, options)
-    // TODO: after the generator refactor is finishesd, figure out what info about the session settings we'll want to push to a db and where to store that info
+    // TODO: after the generator refactor is finished, figure out what info about the session settings we'll want to push to a db and where to store that info
     const settings = {
       numChords: numQs.current,
       options: options
     }
-    updateSession({...session, settings: settings })
+    dispatch({type: 'settings', data: settings})
     setQuiz(questions)
   }
   const onCheck = (type, option) => {
