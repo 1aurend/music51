@@ -1,6 +1,6 @@
 language: node_js
 node_js: 
-  - "13.7.0"
+  - "13.3.0"
 cache:
   directories:
     - "node_modules"
