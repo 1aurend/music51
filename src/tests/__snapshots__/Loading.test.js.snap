@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loads with correct text 1`] = `
+<DocumentFragment>
+  <div
+    class="main-content-container px-4 container-fluid"
+    id="container"
+    style="background-color: black; min-height: 120vh;"
+  >
+    <div
+      class="row"
+      style="padding-top: 25%; justify-content: center; margin-left: 5%; margin-right: 5%;"
+    />
+    <div
+      class="col-sm-12 col-lg-12"
+    >
+      <div
+        class="no-gutters row"
+        style="display: flex; justify-content: center; margin-left: 5%; margin-right: 5%;"
+      >
+        <h2
+          style="color: rgb(23, 198, 113); font-family: 'Press Start 2P', cursive;"
+        >
+          Calculating your stats...
+        </h2>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,4 +1,4 @@
-import { findYMax, getDataPoints, getSummaryData } from '../components/actions/ChartData'
+import { findYMax, getDataPoints, getSummaryData } from '../components/data/getChartData'
 
 test('findYMax returns the correct int', () => {
   const qTypes = [1, 2, 3, 4]
