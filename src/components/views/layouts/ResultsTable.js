@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { Means } from '../../Context'
+import { Session } from '../../data/Context'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import { rounded } from '../../utility'
+import { rounded } from '../../../utility'
 import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
 
@@ -9,8 +9,9 @@ import VerticalTable from '../charts/VerticalTable'
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
 // TODO: add a better breakpoint for tables?
 export default function ResultsTable(props) {
-  const { qTypes, round, startOver } = props
-  const means = useContext(Means)[0]
+  const { round, startOver } = props
+  const means = useContext(Session).means.tally
+  const qTypes = useContext(Session).means.questionTypes
   const sizedStyles = useResponsiveStyles()
   const { matrixSize } = sizedStyles
 
@@ -21,7 +22,7 @@ export default function ResultsTable(props) {
       window.scrollTo(0, 0)
   },[])
 
-  if (matrixSize >= 700) {
+  if (matrixSize >= 900) {
     const headers = qTypes.map( type => {
       return  <th scope="col" className="border-0">
                 {type.toUpperCase()}

@@ -1,11 +1,11 @@
 import React, { useState, useRef, useContext } from 'react'
-import Tally from '../actions/Tally'
-import { Rounds } from '../Context'
+import { Dispatch } from '../data/Context'
 import QuizQuestion from '../views/layouts/QuizQuestion'
-
+import EndOfRound from './EndOfRound'
 
 export default function Quiz ({ data, round }) {
-  const [rounds, updateRounds] = useContext(Rounds)
+  const dispatch = useContext(Dispatch)
+  const [devMode, setDevMode] = useState(true) //change to true to enable dev mode
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [colors, setColors] = useState([])
   const thisInput = useRef(null)
@@ -55,6 +55,9 @@ export default function Quiz ({ data, round }) {
     checkInput(input)
   }
   function checkInput(input) {
+    if (devMode) {
+      input = currentQ.answers[subQ.current.answers.length]
+    }
     switch (input) {
       case null:
         return
@@ -123,14 +126,15 @@ export default function Quiz ({ data, round }) {
           currentChord.current = data[roundData.current.length]
           nextQ(currentChord.current.questions[0])
         } else {
-          updateRounds({...rounds, [round]: roundData.current}) //this should become a dispatch eventually
+          dispatch({type: 'tally', data: roundData.current})
+          dispatch({type: 'round', round: round, data: roundData.current})
         }
       }
     }, 1000)
   }
 
   if (roundData.current.length === data.length) {
-    return <Tally round={round} data={roundData.current}/> //keep passing round data down after implementing reducer?
+    return <EndOfRound round={round} />
   } else {
     return <QuizQuestion
               chord={currentChord}
