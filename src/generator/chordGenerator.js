@@ -42,15 +42,199 @@ import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
  * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
-  let chords = []
-  for (var i = 0; i < numQs; i++) {
-    // Create the chords for each round.
-    chords.push(randomChord(options))
-    // For each chord, generate a sequence of questions appropriate for the given chord
-    // TODO: Generate questions
-  }
-  console.log(JSON.stringify(chords))
-  return addKeystrokes(chords)
+  // let chords = []
+  // for (var i = 0; i < numQs; i++) {
+  //   // Create the chords for each round.
+  //   chords.push(randomChord(options))
+  //   // For each chord, generate a sequence of questions appropriate for the given chord
+  //   // TODO: Generate questions
+  // }
+  // console.log(JSON.stringify(chords))
+  // return addKeystrokes(chords)
+
+  return [
+   {
+      "clef": "treble",
+      "keySignature": "F",
+      "notes": [
+         {
+            "letter": "G",
+            "accidental": "",
+            "octave": 4
+         },
+         {
+            "letter": "B",
+            "accidental": "",
+            "octave": 4
+         },
+         {
+            "letter": "D",
+            "accidental": "",
+            "octave": 5
+         },
+         {
+            "letter": "F",
+            "accidental": "",
+            "octave": 5
+         }
+      ],
+      "questions": [
+         {
+            "type": "Names",
+            "questionText": "Name the letter positions from lowest to highest.",
+            "answers": [
+               "G",
+               "B",
+               "D",
+               "F"
+            ],
+            "ordered": true,
+            "choices": [
+               {
+                  "choice": "A",
+                  "key": "a"
+               },
+               {
+                  "choice": "B",
+                  "key": "b"
+               },
+               {
+                  "choice": "C",
+                  "key": "c"
+               },
+               {
+                  "choice": "D",
+                  "key": "d"
+               },
+               {
+                  "choice": "E",
+                  "key": "e"
+               },
+               {
+                  "choice": "F",
+                  "key": "f"
+               },
+               {
+                  "choice": "G",
+                  "key": "g"
+               }
+            ]
+         },
+         {
+            "type": "Roots",
+            "questionText": "What's the root note?",
+            "answers": [
+               "G"
+            ],
+            "choices": [
+               {
+                  "choice": "D",
+                  "key": "d"
+               },
+               {
+                  "choice": "B♭",
+                  "key": "b"
+               },
+               {
+                  "choice": "F",
+                  "key": "f"
+               },
+               {
+                  "choice": "G",
+                  "key": "g"
+               }
+            ]
+         },
+         {
+            "type": "Degrees",
+            "questionText": "In a minor key, what degree is this chord built on?",
+            "answers": [
+               "4^"
+            ],
+            "choices": [
+               {
+                  "choice": "1^",
+                  "key": "1"
+               },
+               {
+                  "choice": "2^",
+                  "key": "2"
+               },
+               {
+                  "choice": "3^",
+                  "key": "3"
+               },
+               {
+                  "choice": "4^",
+                  "key": "4"
+               },
+               {
+                  "choice": "5^",
+                  "key": "5"
+               },
+               {
+                  "choice": "6^",
+                  "key": "6"
+               },
+               {
+                  "choice": "7^",
+                  "key": "7"
+               }
+            ]
+         },
+         {
+            "type": "Numerals",
+            "questionText": "Which roman numeral describes this chord’s degree and quality?",
+            "answers": [
+               "iv7"
+            ],
+            "choices": [
+               {
+                  "choice": "IV7",
+                  "key": "7"
+               },
+               {
+                  "choice": "iv7",
+                  "key": "m"
+               },
+               {
+                  "choice": "ivø7",
+                  "key": "h"
+               },
+               {
+                  "choice": "ivo7",
+                  "key": "d"
+               }
+            ]
+         },
+         {
+            "type": "Inversions",
+            "questionText": "What's the inversion?",
+            "answers": [
+               "iv"
+            ],
+            "choices": [
+               {
+                  "choice": "iv",
+                  "key": "r"
+               },
+               {
+                  "choice": "iv65",
+                  "key": "5"
+               },
+               {
+                  "choice": "iv43",
+                  "key": "3"
+               },
+               {
+                  "choice": "iv42",
+                  "key": "2"
+               }
+            ]
+         }
+      ]
+   }
+ ]
 }
 
 /**
