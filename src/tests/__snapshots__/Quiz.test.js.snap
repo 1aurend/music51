@@ -2,7 +2,116 @@
 
 exports[`evaluates input and colors choices correctly 1`] = `
 <DocumentFragment>
-  <div
+  .c3 {
+  display: block;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.c5 {
+  min-height: 10vh;
+  min-width: 10vh;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  font-size: 2rem;
+  text-align: center;
+  font-family: 'Overpass Mono',monospace;
+  font-weight: 600;
+  border-width: 4px;
+  border-radius: 0;
+  background-color: #e5e6eb;
+}
+
+.c5:hover {
+  background-color: #e5e6eb;
+}
+
+.c7 {
+  min-height: 10vh;
+  min-width: 10vh;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  font-size: 2rem;
+  text-align: center;
+  font-family: 'Overpass Mono',monospace;
+  font-weight: 600;
+  border-width: 4px;
+  border-radius: 0;
+  background-color: #17c671;
+}
+
+.c7:hover {
+  background-color: #17c671;
+}
+
+.c6 {
+  font-size: 14px;
+  color: #898a8d;
+  margin-bottom: 0;
+  margin-top: 2;
+}
+
+.c0 {
+  border: 5px solid black;
+  border-radius: 1rem;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+  background-color: #e5e6eb;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-top: 5%;
+  margin-bottom: 0;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 3%;
+  margin-bottom: 5%;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+
+<div
     class="main-content-container px-4 container-fluid"
     id="container"
     style="background-color: black; min-height: 120vh;"
@@ -12,10 +121,10 @@ exports[`evaluates input and colors choices correctly 1`] = `
       style="display: flex; justify-content: center; padding-top: 4%;"
     >
       <div
-        class="sc-AykKK ecSggb col-sm-12 col-lg-8"
+        class="c0 col-sm-12 col-lg-8"
       >
         <div
-          class="sc-fzXfLO irlDmL row"
+          class="c1 row"
           marginleft="7%"
           marginright="7%"
           margintop="5%"
@@ -27,12 +136,12 @@ exports[`evaluates input and colors choices correctly 1`] = `
           </h2>
         </div>
         <div
-          class="sc-fzXfLO CxRNT row"
+          class="c2 row"
           marginbottom="5%"
           margintop="3%"
         >
           <div
-            class="sc-AykKH hTsXvu"
+            class="c3"
             style="width: 500px;"
           >
             <svg
@@ -190,7 +299,7 @@ exports[`evaluates input and colors choices correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-fzXfLO fmBtSQ no-gutters row"
+      class="c4 no-gutters row"
       marginleft="0"
       marginright="0"
       margintop="2%"
@@ -200,91 +309,91 @@ exports[`evaluates input and colors choices correctly 1`] = `
         style="margin-left: 5%; margin-right: 5%;"
       >
         <div
-          class="sc-fzXfLO fmBtSQ row"
+          class="c4 row"
           marginleft="0"
           marginright="0"
           margintop="2%"
         >
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             A
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [a]
             </p>
           </button>
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             B
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [b]
             </p>
           </button>
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             C
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [c]
             </p>
           </button>
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             D
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [d]
             </p>
           </button>
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             E
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [e]
             </p>
           </button>
           <button
-            class="sc-AykKI favgEK btn btn-light"
+            class="c5 btn btn-light"
             color="#e5e6eb"
             type="button"
           >
             F
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [f]
             </p>
           </button>
           <button
-            class="sc-AykKI kVsUFQ btn btn-light"
+            class="c7 btn btn-light"
             color="#17c671"
             type="button"
           >
             G
             <p
-              class="sc-AykKJ EkzIL"
+              class="c6"
             >
               [g]
             </p>
