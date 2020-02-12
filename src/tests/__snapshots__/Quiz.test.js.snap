@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`evaluates input correctly 1`] = `
+exports[`evaluates input and colors choices correctly 1`] = `
 <DocumentFragment>
   <div
     class="main-content-container px-4 container-fluid"
