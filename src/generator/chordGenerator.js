@@ -1,6 +1,5 @@
 import { classes } from './chordConsts'
 import addKeystrokes from './keystrokes'
-import chalk from 'chalk'
 import './utility.js'
 import { shuffle } from './utility'
 import { LetterName, letterNamePosition } from './LetterName'
@@ -31,7 +30,7 @@ export default function(numQs, options) {
   for (var i = 0; i < numQs; i++) {
     chords.push(randomChord(options))
   }
-  console.log(chalk.cyan(JSON.stringify(chords, null, 4)));
+  console.log(JSON.stringify(chords))
   return addKeystrokes(chords)
 }
 
