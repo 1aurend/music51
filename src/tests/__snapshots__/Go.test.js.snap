@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`calls "generator" on click 1`] = `
+<DocumentFragment>
+  <button
+    class="sc-AykKC hCaSnZ btn btn-dark"
+    type="button"
+  >
+    <img
+      alt="go"
+      src="svgs-go.svg"
+      style="width: 8rem;"
+    />
+  </button>
+</DocumentFragment>
+`;
