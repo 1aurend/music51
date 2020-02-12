@@ -1,7 +1,7 @@
-import { staffAdjust } from '../generator/chordGenerator'
 import { LetterName } from '../generator/LetterName'
 import { Clef } from '../generator/Clef'
 import { invert } from '../generator/chordGenerator'
+import { staffAdjust } from '../generator/chordGenerator'
 
 test('chord in range not adjusted', () => {
   let chord = [
