@@ -22,7 +22,21 @@ import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
  *                            chordTypes: { triads: true, sevenths: true },
   *                           roots: { common: true, any: false }
  *                          }
- * @return Object         The questions object.
+ * @return Object         The questions object, in the form:
+ *                          {
+ *                             "clef": Clef,
+ *                             "keySignature": KeySignature,
+ *                             "notes": [ { "letter", "accidental", "octave" } ],
+ *                             "questions": [
+ *                                { 
+ *                                  "type": ("Names" | "Degrees", etc. ), 
+ *                                  "questionText": "...", 
+ *                                  "answers": [ "iv7", ... ] ,
+ *                                  "ordered": Boolean, 
+ *                                  "choices": [ { "choice": "IV7", "key": "7" } ] 
+ *                                }
+ *                             ]
+ *                          }
  * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
