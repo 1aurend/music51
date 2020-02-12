@@ -253,7 +253,7 @@ export default function(numQs, options) {
  *                  clef, keySignature, chordType, inversion, notes
  *                }
  */
-function randomChord(options) {
+export function randomChord(options) {
 
   // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
   // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
@@ -261,8 +261,11 @@ function randomChord(options) {
   // shuffle(chord.questions[1].choices)
 
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  console.log("I have chosen a chord type: " + JSON.stringify(chordType))
   const inversion = chooseInversion(chordType)
+  console.log("I have chosen an inversion: " + JSON.stringify(inversion))
   const keySignature = chooseKeySignature()
+  console.log("I have chosen a keySignature: " + JSON.stringify(keySignature))
 
   // Construct non—octave-positioned description of a chord, in the form:
   // {
@@ -272,9 +275,13 @@ function randomChord(options) {
   // }
   const chordDescription = makeChordDescription(chordType, inversion, keySignature)
 
+  console.log("I have made a chordDescription: " + JSON.stringify(chordDescription))
+
   // Construct the non-octave positioned notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
+
+  console.log("I have partially concretized chord notes: " + JSON.stringify(partiallyConcretizedChordNotes))
 
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
@@ -340,21 +347,21 @@ function componentIP(rootIP, translatedNoteIP, keySignature) {
 
 /**
  * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
- * @param chord
+ * @param chordDescription
  * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
  */
-function partiallyConcretizeChord(chord, keySignature) {
+function partiallyConcretizeChord(chordDescription, keySignature) {
 
-  const { rootIP, rootAccidental, rootLetter, rootSyllable } = chord.root
+  const { rootIP, rootAccidental, rootLetter, rootSyllable } = chordDescription.root
 
   // The notes of a chord to be returned
   let notes = []
 
   // build the structure with correct spellings
-  for(var i=0; i<chord.structure.length; i++){
+  for(var i=0; i<chordDescription.structure.length; i++){
 
     // translate the template ip to a relative note in the class
-    const translatedNoteIP = translateNoteIPIndex(chord.structure[i], rootIP)
+    const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
 
     const noteSyllable = syllablePosition(rootSyllable, translatedNoteIP, keySignature)
 

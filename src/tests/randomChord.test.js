@@ -7,3 +7,10 @@ test('randomChord does not blow up', () => {
   }
   let chord = randomChord(options)
 })
+
+test('partially concretize chord does something', () => {
+  const chord = { }
+  const keySignature = { }
+    
+})
+
