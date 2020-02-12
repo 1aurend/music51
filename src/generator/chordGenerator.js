@@ -245,7 +245,7 @@ export default function(numQs, options) {
  *                {
  *                  { 
  *                    chordTypes: { triads: true, sevenths: true },
-                      roots: { common:true, any: false } 
+                      roots: { common: true, any: false } 
  *                  }
  *                }
  * @return chord  A contextualized chord object in the form: 
