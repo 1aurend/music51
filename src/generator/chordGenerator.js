@@ -248,6 +248,10 @@ export default function(numQs, options) {
                       roots: { common:true, any: false } 
  *                  }
  *                }
+ * @return chord  A contextualized chord object in the form: 
+ *                { 
+ *                  clef, keySignature, chordType, inversion, notes
+ *                }
  */
 function randomChord(options) {
 
