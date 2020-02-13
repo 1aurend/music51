@@ -1,7 +1,7 @@
 export const ChordType = {
   TRIAD: "triad",
   SEVENTH: "seventh",
-  CHROMATIC: "chromatic variation",
-  MIXTURE: "mode mixture",
-  APPLIED: "applied"
+  CHROMATIC_VARIATION: "chromatic variation",
+  MODE_MIXTURE: "mode mixture",
+  APPLIED_CHORD: "applied"
 }
