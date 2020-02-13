@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import Go from '../components/views/buttons/Go'
+import 'jest-styled-components'
 
 
 test('calls "generator" on click', () => {

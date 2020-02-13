@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect'
 import Quiz from '../components/logic/Quiz'
 //import 'jest-styled-components'
 
+
 const sampleData =
 [
    {
