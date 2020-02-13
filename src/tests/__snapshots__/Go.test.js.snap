@@ -2,8 +2,15 @@
 
 exports[`calls "generator" on click 1`] = `
 <DocumentFragment>
-  <button
-    class="sc-AykKC hCaSnZ btn btn-dark"
+  .c0 {
+  display: block;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+<button
+    class="c0 btn btn-dark"
     type="button"
   >
     <img
