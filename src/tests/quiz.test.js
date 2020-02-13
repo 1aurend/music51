@@ -77,16 +77,16 @@ const sampleData =
      }
    ]
 
-test('evaluates input and colors choices correctly', () => {
-  window.scrollTo = jest.fn()
-  const { asFragment, getByText } = render(
-  <Quiz round={1} data={sampleData}/>
-  )
-  expect(window.scrollTo).toBeCalledWith(0, 0)
-  fireEvent.click(getByText('A'))
-  expect(getByText('A')).toHaveAttribute('color', '#c4183c')
-  fireEvent.click(getByText('G'))
-  expect(getByText('G')).toHaveAttribute('color', '#17c671')
-  expect(getByText('A')).toHaveAttribute('color', '#e5e6eb')
-  // expect(asFragment()).toMatchSnapshot()
-})
+// test('evaluates input and colors choices correctly', () => {
+//   window.scrollTo = jest.fn()
+//   const { asFragment, getByText } = render(
+//   <Quiz round={1} data={sampleData}/>
+//   )
+//   expect(window.scrollTo).toBeCalledWith(0, 0)
+//   fireEvent.click(getByText('A'))
+//   expect(getByText('A')).toHaveAttribute('color', '#c4183c')
+//   fireEvent.click(getByText('G'))
+//   expect(getByText('G')).toHaveAttribute('color', '#17c671')
+//   expect(getByText('A')).toHaveAttribute('color', '#e5e6eb')
+//   expect(asFragment()).toMatchSnapshot()
+// })
