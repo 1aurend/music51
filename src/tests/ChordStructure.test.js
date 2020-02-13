@@ -3,7 +3,7 @@ import { ChordType } from '../generator/ChordType'
 
 test('triad chord type returns four chord structures', () => {
   const expected = new Set([
-  ChordStructure.MAJOR,
+    ChordStructure.MAJOR,
     ChordStructure.MINOR,
     ChordStructure.AUGMENTED,
     ChordStructure.DIMINISHED
@@ -20,4 +20,8 @@ test('seventh chord type returns five chord structures', () => {
     ChordStructure.FULLY_DIMINISHED_SEVENTH
   ])
   expect(chordStructures(ChordType.SEVENTH)).toEqual(expected)
+})
+
+test('ChordStructure.NEAPOLITAN_SIXTH exists', () => {
+  expect(ChordStructure.NEAPOLITAN_SIXTH).toBeDefined()
 })
