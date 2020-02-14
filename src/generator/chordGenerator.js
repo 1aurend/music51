@@ -326,16 +326,17 @@ export function makeChordDescription(chordStructure, inversion, keySignature) {
  */
 export function partiallyConcretizeChord(chordDescription, keySignature) {
 
-  // const { rootIP, rootAccidental, rootLetter, rootSyllable } = chordDescription.root
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
 
   // The notes of a chord to be returned
+  // TODO: Consider implementing this with `map`
   let notes = []
 
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
+  // TODO: Consider breaking out the body of this loop into its own function
   for(var i=0; i<chordDescription.structure.structure.length; i++){
 
     // Translate the template ip to a relative note in the class
