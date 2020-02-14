@@ -1,10 +1,13 @@
 import { 
 	randomChord, 
+	chooseChordType,
 	chooseChordStructure, 
 	chooseInversion,
-	chooseKeySignature
+	chooseKeySignature,
+	makeChordDescription
 } from '../generator/chordGenerator'
 import { ChordType } from '../generator/ChordType'
+import { ChordTypesOption } from '../generator/ChordTypesOption'
 
 test('chooseChordStructure returns a value for all valid inputs', () => {
 	expect(chooseChordStructure(ChordType.TRIAD)).toBeDefined()
@@ -19,6 +22,13 @@ test('chooseInversion returns a value for all valid inputs', () => {
 
 test('chooseKeySignature returns something', () => {
 	expect(chooseKeySignature()).toBeDefined()
+})
+
+test('makeChordDescription makes a chordDescription', () => {
+	const chordType = chooseChordType(ChordTypesOption.BOTH)
+	const inversion = chooseInversion(chordType)
+	const keySignature = chooseKeySignature()
+	expect(makeChordDescription(chordType, inversion, keySignature)).toBeDefined()
 })
 
 test('randomChord does not blow up', () => {

@@ -542,7 +542,7 @@ function chordTypesOption(chordTypes) {
 }
 
 // return Type of the chord we are constructing
-function chooseChordType(chordTypesOption) {
+export function chooseChordType(chordTypesOption) {
   switch (chordTypesOption) {
     case ChordTypesOption.TRIADS:
       return ChordType.TRIAD
