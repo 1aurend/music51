@@ -27,16 +27,18 @@ test('chooseKeySignature returns something', () => {
 
 test('makeChordDescription makes a chordDescription', () => {
 	const chordType = chooseChordType(ChordTypesOption.BOTH)
+	const chordStructure = chooseChordStructure(chordType)
 	const inversion = chooseInversion(chordType)
 	const keySignature = chooseKeySignature()
-	expect(makeChordDescription(chordType, inversion, keySignature)).toBeDefined()
+	expect(makeChordDescription(chordStructure, inversion, keySignature)).toBeDefined()
 })
 
 test('partially concretize chord notes makes three notes for a triad', () => {
 	const chordType = ChordType.TRIAD
+	const chordStructure = chooseChordStructure(chordType)
 	const inversion = chooseInversion(chordType)
 	const keySignature = chooseKeySignature()
-	const chordDescription = makeChordDescription(chordType, inversion, keySignature)	
+	const chordDescription = makeChordDescription(chordStructure, inversion, keySignature)	
 	expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
 })
 

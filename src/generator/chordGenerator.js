@@ -280,7 +280,7 @@ export function randomChord(options) {
   //    structure: ChordStructure,
   //    inversion: Int
   // }
-  const chordDescription = makeChordDescription(chordType, inversion, keySignature)
+  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature)
 
   console.log("I have made a chordDescription: " + JSON.stringify(chordDescription))
 
@@ -305,10 +305,10 @@ export function randomChord(options) {
 // random chord!
 //
 // => (Note,Int)
-export function makeChordDescription(chordType, inversion, keySignature) {
-  // Choose one of the possible chord structures for the given chord type
-  // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
-  const chordStructure = chooseChordStructure(chordType)
+export function makeChordDescription(chordStructure, inversion, keySignature) {
+  // // Choose one of the possible chord structures for the given chord type
+  // // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
+  // const chordStructure = chooseChordStructure(chordType)
   // Choose random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
@@ -364,7 +364,8 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
 
-  console.log("root: " + JSON.stringify(chordDescription.root))
+  console.log("partially concretize chord with root: " + JSON.stringify(chordDescription.root))
+  console.log("structure: ")
 
   // The notes of a chord to be returned
   let notes = []
@@ -778,6 +779,7 @@ function inversions(chordType) {
  * @return {type}                An object consisting of a mode, a mode note, scale degree, and roman numeral.
  */
 export function randomRomanNumeralContext(chordStructure) {
+
   // FIXME: Consider adding configurability of allowable range of "shapes" and complexity
   const mode = allowedModesByChordStructure[chordStructure].randomElement()
   switch (chordStructure) {
