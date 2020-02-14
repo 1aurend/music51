@@ -393,7 +393,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
 
 
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
-  // FIXME: Come up with a name that is neither `whiteNotes` or `.BOTTOM`
+  // FIXME: Come up with a name that is neither `whiteNotes` nor `.BOTTOM`
   const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
   const rootSyllable = chordDescription.root.syllable
   const rootSyllableIndex = whiteNotes.indexOf(rootSyllable)
