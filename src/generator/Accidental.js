@@ -6,12 +6,8 @@ export const Accidental = {
   DOUBLESHARP: "𝄪",
   offset: function(accidental) {
     return Object.values(this).indexOf(accidental)
+  },
+  offsetFromNatural: function(accidental) {
+    return this.offset(accidental) - this.offset(this.NATURAL)
   }
-}
-
-/**
- * @returns Int The distance from the given `accidental` to `Accidental.Natural`
- */
-export function distanceFromNatural(accidental) {
-  return Accidental.offset(accidental) - Accidental.offset(Accidental.NATURAL)
 }

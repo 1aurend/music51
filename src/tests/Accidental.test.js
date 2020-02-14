@@ -9,13 +9,13 @@ test('Accidental offset does not blow up', () => {
 })
 
 test('Natural has a 0 distance from natural', () => {
-	expect(distanceFromNatural(Accidental.NATURAL)).toBe(0)
+	expect(Accidental.offsetFromNatural(Accidental.NATURAL)).toBe(0)
 })
 
 test('Sharp has a 1 distance from natural', () => {
-	expect(distanceFromNatural(Accidental.SHARP)).toBe(1)
+	expect(Accidental.offsetFromNatural(Accidental.SHARP)).toBe(1)
 })
 
 test('Doubleflat has a -2 distance from natural', () => {
-	expect(distanceFromNatural(Accidental.DOUBLEFLAT)).toBe(-2)
+	expect(Accidental.offsetFromNatural(Accidental.DOUBLEFLAT)).toBe(-2)
 })
