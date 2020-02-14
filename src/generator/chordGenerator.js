@@ -340,7 +340,10 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   for(var i=0; i<chordDescription.structure.structure.length; i++){
 
     // Translate the template ip to a relative note in the class
+    // FIXME: (James) I am relatively certain this is not there yet.
     const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
+
+    // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
@@ -362,12 +365,13 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     }
 
     // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
-    let accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
+    const accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
 
     // Translate the syllable "position" to a letter
     // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
 
-    let noteLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)]
+    const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
+    const noteLetter = Object.values(LetterName)[syllableIndex]
 
     // FIXME: (James) This currently requires context not injected into this function.
     //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
