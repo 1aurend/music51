@@ -527,43 +527,14 @@ function octaveTranspose(notes, octaves) {
   })
 }
 
-// This function takes converts a pair of Boolean values into a tri-state enum `ChordTypesOption` so that we invalidate the case where both triads and seventh chords are false.
 
-function chordTypesOption(chordTypes) {
-  console.log("chord types option from " + JSON.stringify(chordTypes))
-  if (chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.BOTH
-  } else if (chordTypes.triads && !chordTypes.sevenths) {
-    return ChordTypesOption.TRIADS
-  } else if (!chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.SEVENTHS
-  } else {
-    throw "Invalid chord types selection"
-  }
-}
-
-// return Type of the chord we are constructing
-export function chooseChordType(chordTypesOption) {
-  switch (chordTypesOption) {
-    case ChordTypesOption.TRIADS:
-      return ChordType.TRIAD
-    case ChordTypesOption.SEVENTHS:
-      return ChordType.SEVENTH
-    case ChordTypesOption.BOTH:
-      return [ChordType.TRIAD, ChordType.SEVENTH].randomElement()
-    default:
-      throw 'Impossible ChordTypesOption'
-  }
-}
 
 const RootOption = {
   ANY: "any",
   COMMON: "common"
 }
 
-function chooseRandomAccidental(allowedAccidentals) {
-  return allowedAccidentals.randomElement()
-}
+
 
 // Constrains accidental only for root pitch
 function constrainAccidental(syllable, structure, initialChoice) {
@@ -695,19 +666,6 @@ const allowedModesByChordStructure = {
   [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
 }
 
-function chooseInitialOctave(clef) {
-  switch (clef) {
-    case Clef.BASS:
-      // range of 4 octaves starting from octave 1
-      return Math.floor(Math.random() * 4) + 1
-    case Clef.TREBLE:
-      // range of 4 octaves starting from octave 3
-      return Math.floor(Math.random() * 4) + 3
-    default:
-      throw new Error('invalid clef')
-  }
-}
-
 export function translateNoteIPIndex(componentIP, rootIP) {
   const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
   // TODO: audit addition of 12 here
@@ -718,8 +676,6 @@ export function translateNoteIPIndex(componentIP, rootIP) {
 // TODO: Decouple inversion from amount of notes in chord
 // TODO: Move into partiallyConcretizeChordNotes
 function handleInversion(chord, inversion) {
-
-  console.log("handle inversion for chord: " + JSON.stringify(chord) + "by inversion " + JSON.stringify(inversion))
 
   // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
   if ((inversion === "63") || (inversion === "65")) {
@@ -765,6 +721,81 @@ function inversions(chordType) {
     case ChordType.SEVENTH:
       return ["","65","43","42"]
   }
+}
+
+/**
+ * @param ChordType chordType The type of chord affording inversions from which to select
+ * @return A random inversion from those afforded by the given `chordType`
+ */
+export function chooseInversion(chordType) {
+  // TODO: Implement inversions as an instance method over `ChordType`
+  return inversions(chordType).randomElement()
+}
+
+/**
+ * @return  A random key signature within the realm of reason (omitting c+f flat, e+b sharp)
+ * @todo    Add some configurability with an input of allowed key signatures, with some 
+ *          sensible default
+ */
+export function chooseKeySignature() {
+  return Object.keys(Shapes).slice(3, 12).randomElement()
+}
+
+/**
+ * @return A random `Clef`.
+ */
+export function chooseClef() {
+  return Clef.randomElement()
+}
+
+/**
+ * @return A random `ChordStructure` for the given `chordType`.
+ */
+export function chooseChordStructure(chordType) {
+  return chordStructures(chordType).randomElement()
+}
+
+function chordTypesOption(chordTypes) {
+  if (chordTypes.triads && chordTypes.sevenths) {
+    return ChordTypesOption.BOTH
+  } else if (chordTypes.triads && !chordTypes.sevenths) {
+    return ChordTypesOption.TRIADS
+  } else if (!chordTypes.triads && chordTypes.sevenths) {
+    return ChordTypesOption.SEVENTHS
+  } else {
+    throw "Invalid chord types selection"
+  }
+}
+
+// return Type of the chord we are constructing
+export function chooseChordType(chordTypesOption) {
+  switch (chordTypesOption) {
+    case ChordTypesOption.TRIADS:
+      return ChordType.TRIAD
+    case ChordTypesOption.SEVENTHS:
+      return ChordType.SEVENTH
+    case ChordTypesOption.BOTH:
+      return [ChordType.TRIAD, ChordType.SEVENTH].randomElement()
+    default:
+      throw 'Impossible ChordTypesOption'
+  }
+}
+
+function chooseInitialOctave(clef) {
+  switch (clef) {
+    case Clef.BASS:
+      // range of 4 octaves starting from octave 1
+      return Math.floor(Math.random() * 4) + 1
+    case Clef.TREBLE:
+      // range of 4 octaves starting from octave 3
+      return Math.floor(Math.random() * 4) + 3
+    default:
+      throw new Error('invalid clef')
+  }
+}
+
+function chooseRandomAccidental(allowedAccidentals) {
+  return allowedAccidentals.randomElement()
 }
 
 /**
@@ -949,36 +980,4 @@ export function randomRomanNumeralContext(chordStructure) {
     default:
       throw new Error("Invalid chord structure")
   }
-}
-
-/**
- * @param ChordType chordType The type of chord affording inversions from which to select
- * @return A random inversion from those afforded by the given `chordType`
- */
-export function chooseInversion(chordType) {
-  // TODO: Implement inversions as an instance method over `ChordType`
-  return inversions(chordType).randomElement()
-}
-
-/**
- * @return  A random key signature within the realm of reason (omitting c+f flat, e+b sharp)
- * @todo    Add some configurability with an input of allowed key signatures, with some 
- *          sensible default
- */
-export function chooseKeySignature() {
-  return Object.keys(Shapes).slice(3, 12).randomElement()
-}
-
-/**
- * @return A random `Clef`.
- */
-export function chooseClef() {
-  return Clef.randomElement()
-}
-
-/**
- * @return A random `ChordStructure` for the given `chordType`.
- */
-export function chooseChordStructure(chordType) {
-  return chordStructures(chordType).randomElement()
 }
