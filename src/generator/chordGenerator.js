@@ -418,16 +418,14 @@ function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
 
 /**
  * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
- * @param translatedNoteIP  Int               The index of the translated note independent pitch
+ * @param translatedNoteIPIndex  Int               The index of the translated note independent pitch
  * @param keySignature      KeySignature      The KeySignature context of the chord
  */
 // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-function chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature) {
+function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex, keySignature) {
   const ips = Object.values(IndependentPitch)
   const rootIPIndex = ips.indexOf(rootIP)
-  const shape = Shapes[keySignature]
-  const noteOffsetInShape = shape[translatedNoteIP].tensionMod12 - 1
-  return ips[(rootIPIndex + noteOffsetInShape) % 12]
+  return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
 }
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
