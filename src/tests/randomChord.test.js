@@ -4,7 +4,8 @@ import {
 	chooseChordStructure, 
 	chooseInversion,
 	chooseKeySignature,
-	makeChordDescription
+	makeChordDescription,
+	partiallyConcretizeChord
 } from '../generator/chordGenerator'
 import { ChordType } from '../generator/ChordType'
 import { ChordTypesOption } from '../generator/ChordTypesOption'
@@ -31,6 +32,14 @@ test('makeChordDescription makes a chordDescription', () => {
 	expect(makeChordDescription(chordType, inversion, keySignature)).toBeDefined()
 })
 
+test('partially concretize chord notes makes three notes for a triad', () => {
+	const chordType = ChordType.TRIAD
+	const inversion = chooseInversion(chordType)
+	const keySignature = chooseKeySignature()
+	const chordDescription = makeChordDescription(chordType, inversion, keySignature)	
+	expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
+})
+
 test('randomChord does not blow up', () => {
   const options = {
     chordTypes: { triads: true, sevenths: true },
@@ -44,4 +53,3 @@ test('partially concretize chord does something', () => {
   const keySignature = { }
     
 })
-

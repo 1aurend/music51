@@ -357,9 +357,14 @@ function componentIP(rootIP, translatedNoteIP, keySignature) {
  * @param chordDescription
  * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
  */
-function partiallyConcretizeChord(chordDescription, keySignature) {
+export function partiallyConcretizeChord(chordDescription, keySignature) {
 
-  const { rootIP, rootAccidental, rootLetter, rootSyllable } = chordDescription.root
+  // const { rootIP, rootAccidental, rootLetter, rootSyllable } = chordDescription.root
+  const rootIP = chordDescription.root.independentPitch
+  const rootAccidental = chordDescription.root.accidental
+  const rootSyllable = chordDescription.root.syllable
+
+  console.log("root: " + JSON.stringify(chordDescription.root))
 
   // The notes of a chord to be returned
   let notes = []
@@ -627,6 +632,9 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
  */
 export function concretizeRoot(keySignature, modeNote) {
+
+  console.log("concretize root in key signature " + keySignature + " with mode note: " + modeNote)
+
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
@@ -637,15 +645,21 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootSyllable = shape.notes[i].refIP
 
       // FIXME: (James) Implement convenience getter over `Accidental`
-      const offset = (Object.keys(Accidental).indexOf(rootAccidental))-(Object.keys(Accidental).indexOf(Accidental.NATURAL))
+      const naturalOffset = Object.values(Accidental).indexOf(Accidental.NATURAL)
+      console.log("natural offset " + naturalOffset)
+      const accidentalIndex = Object.keys(Accidental).indexOf(rootAccidental)
+      const offset = (Object.values(Accidental).indexOf(rootAccidental))-(Object.values(Accidental).indexOf(Accidental.NATURAL))
+      console.log("syllable offset: " + offset)
 
       // FIXME: (James) Implement convenience getter over `LetterName`
-      const rootLetter = Object.keys(LetterName)[Object.keys(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
+      const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
 
       // FIXME: (James) Implement convenience getter over `IndependentPitch`
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+
+      console.log("About to return from concretizeRoot with letter: " + rootLetter)
 
       return {
         independentPitch: rootIP,
