@@ -630,6 +630,7 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @param  {type} keySignature A randomly chosen key signature represented as a shape
  * @param  {type} modeNote     The mode of the root note
  * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
+ * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
  */
 export function concretizeRoot(keySignature, modeNote) {
 
@@ -654,8 +655,6 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-
-      console.log("About to return from concretizeRoot with letter: " + rootLetter)
 
       return {
         independentPitch: rootIP,
