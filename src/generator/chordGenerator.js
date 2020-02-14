@@ -7,7 +7,7 @@ import { Clef } from './Clef'
 import { Accidental } from './Accidental'
 import { IndependentPitch, IndependentPitchSubset } from './IP'
 import { Shapes } from './Shapes'
-import { Mode, ModeSubset, degree } from './Mode'
+import { Mode, ModeSubset, degree, noteIdentities } from './Mode'
 import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
@@ -341,7 +341,10 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
 
-    const noteSyllable = syllablePosition(rootSyllable, translatedNoteIP, keySignature)
+    console.log("translatedNoteIP: " + JSON.stringify(translatedNoteIP))
+
+    const _noteSyllable = syllable(translatedNoteIP, chordDescription)
+    console.log("_syllablePosition: " + JSON.stringify(_noteSyllable))
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
     let noteIP = componentIP(rootIP, translatedNoteIP, keySignature)
@@ -391,25 +394,22 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   return notes
 }
 
-// get the syllable "position" from the reference subset based on tensionMod7 value in the class
-/**
- * @param rootSyllable      IndependentPitch  The IndependentPitch syllable of the root of a chord
- * @param translatedNoteIP  IndependentPitch  The IndependentPitch syllable of the chord component
- * @param keySignature      KeySignature      The KeySignature context of the chord
- */
-function syllablePosition(rootSyllable, translatedNoteIP, keySignature) {
-  // The array of the "Bottom" modes in-order
-  const modeSubset = Object.keys(IndependentPitchSubset.BOTTOM)
-  const rootSyllableIndex = modeSubset.indexOf(rootSyllable)
-  const shape = Shapes[keySignature]
-  console.log("translated note ip: " + translatedNoteIP)
-  const noteOffsetInShape = shape[translatedNoteIP].tensionMod7 - 1
-  return modeSubset[(rootSyllableIndex + noteOffsetInShape) % 7]  
+
+function syllable(translatedNoteIPIndex, chordDescription) {
+  // FIXME: Come up with a name that is neither `whiteNotes` or `.BOTTOM`
+  const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
+  const rootSyllable = chordDescription.root.syllable
+  const rootSyllableIndex = whiteNotes.indexOf(rootSyllable)
+  const modeConstructor = chordDescription.structure.modeConstructor
+  const modeNoteIdentities = noteIdentities(modeConstructor)
+  const tensionMod7 = noteIdentities(modeConstructor)[translatedNoteIPIndex].tensionMod7
+  const index = (rootSyllableIndex + tensionMod7 - 1) % 7
+  return whiteNotes[index]
 }
 
 /**
  * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
- * @param translatedNoteIP  IndependentPitch  The IndependentPitch syllable of the chord component
+ * @param translatedNoteIP  Int               The index of the translated note independent pitch
  * @param keySignature      KeySignature      The KeySignature context of the chord
  */
 // find the equivalent IP based on the rootIp and tensionMod12 value in the class
@@ -420,7 +420,6 @@ function componentIP(rootIP, translatedNoteIP, keySignature) {
   const noteOffsetInShape = shape[translatedNoteIP].tensionMod12 - 1
   return ips[(rootIPIndex + noteOffsetInShape) % 12]
 }
-
 
 // TODO: (David) make sure this matches with the range set in randomChoice(clefs)
 // this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)

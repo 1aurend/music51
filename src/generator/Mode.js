@@ -125,6 +125,8 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":0},
         {"tensionMod7":7,"quality":1,"incidental":1}
       ]
+      default:
+        throw "Unsupported Mode: " + JSON.stringify(mode)
     }
 }
 
