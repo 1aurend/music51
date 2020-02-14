@@ -338,19 +338,15 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   for(var i=0; i<chordDescription.structure.structure.length; i++){
 
-    // translate the template ip to a relative note in the class
+    // Translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
-
-    console.log("translatedNoteIP: " + JSON.stringify(translatedNoteIP))
-
-    const _noteSyllable = syllable(translatedNoteIP, chordDescription)
-    console.log("_syllablePosition: " + JSON.stringify(_noteSyllable))
+    const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIP = componentIP(rootIP, translatedNoteIP, keySignature)
+    let noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
     // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(noteSyllable))
+    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(syllable))
 
     // FIXME: (James) Perhaps break this into a function of its own
     // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
@@ -368,7 +364,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
 
     // Translate the syllable "position" to a letter
     // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
-    let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(noteSyllable)]
+    let noteLetter = Object.values(LetterName)[Object.values(ModeSubset.BOTTOM).indexOf(syllable)]
 
     // FIXME: (James) This currently requires context not injected into this function.
     //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
@@ -395,7 +391,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
 }
 
 
-function syllable(translatedNoteIPIndex, chordDescription) {
+function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
   // FIXME: Come up with a name that is neither `whiteNotes` or `.BOTTOM`
   const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
   const rootSyllable = chordDescription.root.syllable
@@ -413,7 +409,7 @@ function syllable(translatedNoteIPIndex, chordDescription) {
  * @param keySignature      KeySignature      The KeySignature context of the chord
  */
 // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-function componentIP(rootIP, translatedNoteIP, keySignature) {
+function chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature) {
   const ips = Object.values(IndependentPitch)
   const rootIPIndex = ips.indexOf(rootIP)
   const shape = Shapes[keySignature]
