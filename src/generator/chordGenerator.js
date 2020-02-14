@@ -428,14 +428,6 @@ function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex, keySignat
   return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
 }
 
-// TODO: (David) make sure this matches with the range set in randomChoice(clefs)
-// this assumes a structure will only exceed ONE of those limits, not both. also has an "or" statement for upper limit octaves, but not lower (because chords are inverted/modified upward)
-
-// NOTE:  There is quite a bit of potential for accidential mutation here
-//        - `chord` should not be touched inside here
-//        - `adjust` could be _adjusted_ by many things and it feels quite brittle
-//
-
 /**
  * range - returns range of acceptable letter name + octave pairs for a given clef
  *
