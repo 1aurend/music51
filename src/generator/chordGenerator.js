@@ -260,8 +260,15 @@ export function randomChord(options) {
   // Shuffles the root note choices so they're not always in root position haha
   // shuffle(chord.questions[1].choices)
 
+  // Choose a `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
   console.log("I have chosen a chord type: " + JSON.stringify(chordType))
+
+  // Choose a `ChordStructure` belonging to the chosen `ChordType` family
+  const chordStructure = chooseChordStructure(chordType)
+  console.log("I have chosen a chord structure: " + JSON.stringify(chordStructure))
+
+  // Choose an inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
   console.log("I have chosen an inversion: " + JSON.stringify(inversion))
   const keySignature = chooseKeySignature()
