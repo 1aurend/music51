@@ -262,17 +262,15 @@ export function randomChord(options) {
 
   // Choose a `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
-  console.log("I have chosen a chord type: " + JSON.stringify(chordType))
 
   // Choose a `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
-  console.log("I have chosen a chord structure: " + JSON.stringify(chordStructure))
 
   // Choose an inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
-  console.log("I have chosen an inversion: " + JSON.stringify(inversion))
+
+  // Choose a `KeySignature`
   const keySignature = chooseKeySignature()
-  console.log("I have chosen a keySignature: " + JSON.stringify(keySignature))
 
   // Construct non—octave-positioned description of a chord, in the form:
   // {
@@ -281,8 +279,6 @@ export function randomChord(options) {
   //    inversion: Int
   // }
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature)
-
-  console.log("I have made a chordDescription: " + JSON.stringify(chordDescription))
 
   // Construct the non-octave positioned notes for chord described above
   // TODO: Come up with a better name
@@ -331,9 +327,10 @@ export function makeChordDescription(chordStructure, inversion, keySignature) {
  */
 function syllablePosition(rootSyllable, translatedNoteIP, keySignature) {
   // The array of the "Bottom" modes in-order
-  const modeSubset = Object.values(ModeSubset.BOTTOM)
+  const modeSubset = Object.keys(IndependentPitchSubset.BOTTOM)
   const rootSyllableIndex = modeSubset.indexOf(rootSyllable)
-  const shape = Object.values(Shapes)[keySignature]
+  const shape = Shapes[keySignature]
+  console.log("translated note ip: " + translatedNoteIP)
   const noteOffsetInShape = shape[translatedNoteIP].tensionMod7 - 1
   return modeSubset[(rootSyllableIndex + noteOffsetInShape) % 7]  
 }
@@ -347,7 +344,7 @@ function syllablePosition(rootSyllable, translatedNoteIP, keySignature) {
 function componentIP(rootIP, translatedNoteIP, keySignature) {
   const ips = Object.values(IndependentPitch)
   const rootIPIndex = ips.indexOf(rootIP)
-  const shape = Object.values(Shapes)[keySignature]
+  const shape = Shapes[keySignature]
   const noteOffsetInShape = shape[translatedNoteIP].tensionMod12 - 1
   return ips[(rootIPIndex + noteOffsetInShape) % 12]
 }
