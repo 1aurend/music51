@@ -1,4 +1,11 @@
-import { randomChord } from '../generator/chordGenerator'
+import { randomChord, chooseChordStructure } from '../generator/chordGenerator'
+import { ChordType } from '../generator/ChordType'
+
+test('chooseChordStructure returns a value for all valid inputs', () => {
+	expect(chooseChordStructure(ChordType.TRIAD)).toBeDefined()
+	expect(chooseChordStructure(ChordType.SEVENTH)).toBeDefined()
+	// TODO: Add tests for borrowed and applied chords
+})
 
 test('randomChord does not blow up', () => {
   const options = {
