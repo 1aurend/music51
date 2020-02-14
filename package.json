@@ -43,16 +43,17 @@
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
     "airtable": "^0.7.2",
-    "axios": "^0.19.2",
-    "babel-plugin-styled-components": "^1.10.7",
+    "axios": "^0.19.1",
+    "babel-plugin-styled-components": "^1.10.6",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jest-styled-components": "^7.0.0",
     "morgan": "^1.9.1",
     "node-env-run": "^3.0.2",
     "nodemon": "^1.19.4",
     "npm-run-all": "^4.1.5",
-    "vexflow": "^1.2.90"
+    "vexflow": "^1.2.89"
   },
   "proxy": "http://localhost:4000"
 }

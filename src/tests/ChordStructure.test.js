@@ -22,6 +22,14 @@ test('seventh chord type returns five chord structures', () => {
   expect(chordStructures(ChordType.SEVENTH)).toEqual(expected)
 })
 
-test('ChordStructure.NEAPOLITAN_SIXTH exists', () => {
-  expect(ChordStructure.NEAPOLITAN_SIXTH).toBeDefined()
+test('Basic chord structures exist', () => {
+  expect(ChordStructure.MAJOR).toBeDefined()
+  expect(ChordStructure.MINOR).toBeDefined()
+  expect(ChordStructure.DIMINISHED).toBeDefined()
+  expect(ChordStructure.AUGMENTED).toBeDefined()
+  expect(ChordStructure.DOMINANT_SEVENTH).toBeDefined()
+  expect(ChordStructure.MAJOR_SEVENTH).toBeDefined()
+  expect(ChordStructure.MINOR_SEVENTH).toBeDefined()
+  expect(ChordStructure.HALF_DIMINISHED_SEVENTH).toBeDefined()
+  expect(ChordStructure.FULLY_DIMINISHED_SEVENTH).toBeDefined()
 })
