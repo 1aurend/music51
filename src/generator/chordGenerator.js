@@ -347,11 +347,11 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
 
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-    let noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
+    const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
     // FIXME: (James) Make a helper function that tidies this up
     // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(syllable))
+    const accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(syllable))
 
     // FIXME: (James) Perhaps break this into a function of its own
     // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
