@@ -397,7 +397,19 @@ function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
   const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
   const rootSyllable = chordDescription.root.syllable
   const rootSyllableIndex = whiteNotes.indexOf(rootSyllable)
-  const modeConstructor = chordDescription.structure.modeConstructor
+  let modeConstructor = chordDescription.structure.modeConstructor
+
+  // FIXME: This sanitizes the mode constructors for chords which are set as `MAJOR` or `DOMINANT`,
+  //        and changes them to `LYDIAN_DOMINANT`. Likewise, we change `MINOR` inputs to `DORIAN`.
+  //
+  //        Either, we need change the values of the chord structure schema, or we need to flesh out
+  //        our `noteIdentities(mode)`.
+  if (modeConstructor === Mode.MAJOR || modeConstructor === Mode.DOMINANT) {
+    modeConstructor = Mode.LYDIAN_DOMINANT
+  } else if (modeConstructor === Mode.MINOR) {
+    modeConstructor = Mode.DORIAN
+  }
+
   const modeNoteIdentities = noteIdentities(modeConstructor)
   const tensionMod7 = noteIdentities(modeConstructor)[translatedNoteIPIndex].tensionMod7
   const index = (rootSyllableIndex + tensionMod7 - 1) % 7
