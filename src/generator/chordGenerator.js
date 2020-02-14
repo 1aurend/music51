@@ -364,14 +364,12 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
 
-  console.log("partially concretize chord with root: " + JSON.stringify(chordDescription.root))
-  console.log("structure: ")
-
   // The notes of a chord to be returned
   let notes = []
 
   // build the structure with correct spellings
-  for(var i=0; i<chordDescription.structure.length; i++){
+  // FIXME: Assess schema (diving `structure.structure` is not elegant)
+  for(var i=0; i<chordDescription.structure.structure.length; i++){
 
     // translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
