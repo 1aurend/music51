@@ -644,12 +644,8 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootAccidental = shape.notes[i].accidental
       const rootSyllable = shape.notes[i].refIP
 
-      // FIXME: (James) Implement convenience getter over `Accidental`
-      const naturalOffset = Object.values(Accidental).indexOf(Accidental.NATURAL)
-      console.log("natural offset " + naturalOffset)
-      const accidentalIndex = Object.keys(Accidental).indexOf(rootAccidental)
-      const offset = (Object.values(Accidental).indexOf(rootAccidental))-(Object.values(Accidental).indexOf(Accidental.NATURAL))
-      console.log("syllable offset: " + offset)
+      // Get the offset from the root accidental from `NATURAL`
+      const offset = Accidental.offsetFromNatural(rootAccidental)
 
       // FIXME: (James) Implement convenience getter over `LetterName`
       const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
