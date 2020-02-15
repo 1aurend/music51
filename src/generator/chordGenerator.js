@@ -272,19 +272,19 @@ export function randomChord(options) {
   // Choose a `KeySignature`
   const keySignature = chooseKeySignature()
 
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+
   // Construct non—octave-positioned description of a chord, in the form:
   // {
   //    root: { independentPitch, accidental, letter, syllable },
   //    structure: ChordStructure,
   //    inversion: Int
   // }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature)
+  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
 
   // Construct the non-octave positioned notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
-
-  console.log("I have partially concretized chord notes: " + JSON.stringify(partiallyConcretizedChordNotes))
 
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
@@ -301,12 +301,7 @@ export function randomChord(options) {
 // random chord!
 //
 // => (Note,Int)
-export function makeChordDescription(chordStructure, inversion, keySignature) {
-  // // Choose one of the possible chord structures for the given chord type
-  // // Consider making this a function that generates an abstract chord rather than chooses one of the representations currently in ChordStructure
-  // const chordStructure = chooseChordStructure(chordType)
-  // Choose random roman numeral context
-  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
@@ -807,11 +802,20 @@ function chooseRandomAccidental(allowedAccidentals) {
  *
  * @param  {type} chordStructure The chord structure to create context for.
  * @return {type}                An object consisting of a mode, a mode note, scale degree, and roman numeral.
+ * @todo                         Rename to `chooseRomanNumeralContext`
  */
 export function randomRomanNumeralContext(chordStructure) {
 
-  // FIXME: Consider adding configurability of allowable range of "shapes" and complexity
-  const mode = allowedModesByChordStructure[chordStructure].randomElement()
+  // FIXME: Codify "Major" and "minor" here!  
+  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  let mode
+  switch (modeLabel) {
+    case "Major":
+      mode = Mode.MAJOR
+    case "minor":
+      mode = Mode.MINOR
+  }
+
   switch (chordStructure) {
     case ChordStructure.MAJOR:
       switch (mode) {

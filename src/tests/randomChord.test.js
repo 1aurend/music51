@@ -4,11 +4,13 @@ import {
 	chooseChordStructure, 
 	chooseInversion,
 	chooseKeySignature,
+	randomRomanNumeralContext,
 	makeChordDescription,
 	partiallyConcretizeChord
 } from '../generator/chordGenerator'
 import { ChordType } from '../generator/ChordType'
 import { ChordTypesOption } from '../generator/ChordTypesOption'
+import { ChordStructure } from '../generator/ChordStructure'
 
 test('chooseChordStructure returns a value for all valid inputs', () => {
 	expect(chooseChordStructure(ChordType.TRIAD)).toBeDefined()
@@ -30,7 +32,9 @@ test('makeChordDescription makes a chordDescription', () => {
 	const chordStructure = chooseChordStructure(chordType)
 	const inversion = chooseInversion(chordType)
 	const keySignature = chooseKeySignature()
-	expect(makeChordDescription(chordStructure, inversion, keySignature)).toBeDefined()
+	const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+	const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+	expect(chordDescription).toBeDefined()
 })
 
 test('partially concretize chord notes makes three notes for a triad', () => {
@@ -38,8 +42,25 @@ test('partially concretize chord notes makes three notes for a triad', () => {
 	const chordStructure = chooseChordStructure(chordType)
 	const inversion = chooseInversion(chordType)
 	const keySignature = chooseKeySignature()
-	const chordDescription = makeChordDescription(chordStructure, inversion, keySignature)	
+	const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+	const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)	
 	expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
+})
+
+test('partially concretize major chord on c natural in root position in c major', () => {
+	const chordStructure = ChordStructure.MAJOR
+	const inversion = ""
+	const keySignature = 'B' // "Bottom", i.e., C major
+	const romanNumeralContext = {
+		"mode": "Maj",
+		"modeNote": "Maj",
+		"degree": 1,
+		"romanNumeral": "I"
+	}
+	const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+	const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
+	expect(partiallyConcretized.length).toBe(3)
+	// TODO: Actually check logic, please.
 })
 
 test('randomChord does not blow up', () => {
