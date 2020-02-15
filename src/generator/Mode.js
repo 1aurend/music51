@@ -125,11 +125,12 @@ export function noteIdentities(mode) {
         {"tensionMod7":7,"quality":-1,"incidental":0},
         {"tensionMod7":7,"quality":1,"incidental":1}
       ]
+      default:
+        throw "Unsupported Mode: " + JSON.stringify(mode)
     }
 }
 
 export function degree(mode, modeNote) {
-  console.log("degree incoming mode: " + JSON.stringify(mode) + " and mode note: " + JSON.stringify(modeNote))
   switch (mode) {
     case Mode.MAJOR:
       return Object.values(ModeSubset.MAJOR).indexOf(modeNote)+1
