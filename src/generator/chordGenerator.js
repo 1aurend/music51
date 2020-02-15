@@ -55,9 +55,14 @@ export default function(numQs, options) {
     // For each chord, generate a sequence of questions appropriate for the given chord
     // TODO: Generate questions
   }
-
   // TODO: Add keyStrokes
   // return addKeystrokes(chords)
+
+  // TODO: Shuffle questions up around these parts
+  // FIXME: (James) We need to move chord shuffling closer to the user interface layer.
+  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
+  // Shuffles the root note choices so they're not always in root position haha
+  // shuffle(chord.questions[1].choices)
 
   // This is a sample output from v1 that we aspire to generating.
   return [
@@ -262,30 +267,18 @@ export default function(numQs, options) {
  *                }
  */
 export function randomChord(options) {
-
-  // FIXME: (James) We need to move chord shuffling closer to the user interface layer. 
-  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
-  // Shuffles the root note choices so they're not always in root position haha
-  // shuffle(chord.questions[1].choices)
-
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
-
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
-
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
-
   // Choose a random `KeySignature`
   const keySignature = chooseKeySignature()
-
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-
   // Choose a random clef
   const clef = Clef.randomElement()
-
   // Construct non—octave-positioned description of a chord, in the form:
   // {
   //    root: { independentPitch, accidental, letter, syllable },
@@ -293,25 +286,24 @@ export function randomChord(options) {
   //    inversion: Int
   // }
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
-
-  // Construct the non-octave positioned notes for chord described above
+  // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
-  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)  
-
-  // TODO: Staff adjust
-
-  // const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
-
+  const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)  
+  // Place the notes on the staff as is appropriate for the randomly chosen `clef`.
+  const staffAdjustedNotes = staffAdjust(partiallyConcretizedNotes, clef)
+  // Get the VexFlow representation of the "Shapes" key signature.
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
-
+  // Bundle up all of the information useful to graphically represent the notes on the screen.
+  // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
+  //       `chordDescription`, `romanNumeralContext`, etc.
   const result = {
     clef: clef,
     keySignature: vexFlowKeySignature,
-    notes: partiallyConcretizedChordNotes
+    notes: staffAdjustedNotes
   }
-
+  // All done!
   return result
 }
 
@@ -560,7 +552,7 @@ export function staffAdjust(notes, clef) {
  */
 function octaveTranspose(notes, octaves) {
   return notes.map(note => {
-    return { letter: note.letter, octave: note.octave + octaves }
+    return { letter: note.letter, accidental: note.accidental, octave: note.octave + octaves }
   })
 }
 
