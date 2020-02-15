@@ -272,6 +272,7 @@ export function randomChord(options) {
   // Choose a `KeySignature`
   const keySignature = chooseKeySignature()
 
+  // Choose a roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
 
   // Construct non—octave-positioned description of a chord, in the form:
