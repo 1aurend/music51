@@ -13,6 +13,12 @@ import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
+// TODO: (James) Audit this type. Is it used anywhere.
+const RootOption = {
+  ANY: "any",
+  COMMON: "common"
+}
+
 /**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
@@ -288,9 +294,7 @@ export function randomChord(options) {
 
   // Construct the non-octave positioned notes for chord described above
   // TODO: Come up with a better name
-  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
-
-  
+  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)  
 
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
@@ -332,14 +336,34 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
 
   let octaveDisplacement = 0
 
+  let template = chordDescription.structure.structure
+  const inversion = chordDescription.inversion
+
+  console.log("inversion: " + JSON.stringify(inversion))
+
+  // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
+  if ((inversion === "63") || (inversion === "65")) {
+    template.rotate(1)
+    // chord.notes = invert(chord.notes, 1)
+    // chord.questions[0].answers.rotate(1)
+  } else if ((inversion === "64") || (inversion === "43")) {
+    template.rotate(2)
+    // chord.notes = invert(chord.notes, 2)
+    // chord.questions[0].answers.rotate(2)
+  } else if (inversion === "42") {
+    template.rotate(3)
+    // chord.notes = invert(chord.notes, 3)
+    // chord.questions[0].answers.rotate(3)
+  }
+
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
-  for(var i=0; i<chordDescription.structure.structure.length; i++){
+  for(var i=0; i<template.length; i++){
 
     // Translate the template ip to a relative note in the class
     // FIXME: (James) Again, the `structure.structure` ain't pretty
-    const translatedNoteIP = translateNoteIPIndex(chordDescription.structure.structure[i], rootIP)
+    const translatedNoteIP = translateNoteIPIndex(template[i], rootIP)
 
     // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
@@ -528,15 +552,6 @@ function octaveTranspose(notes, octaves) {
     return { letter: note.letter, octave: note.octave + octaves }
   })
 }
-
-
-
-const RootOption = {
-  ANY: "any",
-  COMMON: "common"
-}
-
-
 
 // Constrains accidental only for root pitch
 function constrainAccidental(syllable, structure, initialChoice) {
