@@ -63,12 +63,10 @@ test('partially concretize major chord on c natural in root position in c major'
   }
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  console.log(JSON.stringify(partiallyConcretized))
-  // FIXME: Handle octave correctly
   const expected = [
-    { "letter": "C", "accidental": "♮", "octave": 4 },
-    { "letter": "E", "accidental": "♮", "octave": 4 },
-    { "letter": "G", "accidental": "♮", "octave": 4 }
+    { "letter": "C", "accidental": "♮", "octave": 0 },
+    { "letter": "E", "accidental": "♮", "octave": 0 },
+    { "letter": "G", "accidental": "♮", "octave": 0 }
   ]
   expect(partiallyConcretized).toStrictEqual(expected)
 })

@@ -290,7 +290,7 @@ export function randomChord(options) {
   // TODO: Come up with a better name
   const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
 
-  console.log(partiallyConcretizedChordNotes)
+  
 
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
@@ -330,6 +330,8 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // TODO: Consider implementing this with `map`
   let notes = []
 
+  let octaveDisplacement = 0
+
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
@@ -360,7 +362,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // }
 
     // FIXME: Use the code above with the correct context to set this variable correctly
-    const octave = 4
+    const octave = octaveDisplacement
 
     // Create the note with all of our nice new data
     const note = { letter: noteLetter, accidental: accidental(noteIP, syllable), octave: octave }
