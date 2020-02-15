@@ -336,8 +336,8 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   for(var i=0; i<chordDescription.structure.structure.length; i++){
 
     // Translate the template ip to a relative note in the class
-    // FIXME: (James) I am relatively certain this is not there yet.
-    const translatedNoteIP = translateNoteIPIndex(chordDescription.structure[i], rootIP)
+    // FIXME: (James) Again, the `structure.structure` ain't pretty
+    const translatedNoteIP = translateNoteIPIndex(chordDescription.structure.structure[i], rootIP)
 
     // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
