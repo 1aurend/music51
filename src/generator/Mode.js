@@ -11,7 +11,7 @@ export const Mode = { // TODO: these should be called modeConstructor to differe
   MINOR_DOMINANT: "mD",
   MELODIC_MINOR: "Mm",
   PHRYGIAN_DORIAN: "pd",
-  DIMINISHED_MINOR: 'dm'
+  DIMINISHED_MINOR: 'dm',
   ALTERED: "Alt",
   DOMINANT_ALTERED: "DA",
   DIMINISHED: 'dim',

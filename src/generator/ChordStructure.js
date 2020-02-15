@@ -301,8 +301,8 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [4],
     commonRootOffsets: {
-      Major: [4], // none defined.
-      minor: []
+      Major: [4],
+      minor: [] // none defined.
     }
   },
   FIVE_SEVEN_OF_SIX: {
