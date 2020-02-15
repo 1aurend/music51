@@ -292,7 +292,6 @@ export function randomChord(options) {
   
   const clef = Clef.randomElement()
 
-  // Positions
   const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
 
   return positionedChord
