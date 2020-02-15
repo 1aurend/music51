@@ -138,10 +138,6 @@ test('concretizeRoot f natural in d', () => {
   expect(result).toStrictEqual(expected)
 })
 
-test('translateNoteIPIndex C natural', () => {
-
-})
-
 test('randomChord does not blow up', () => {
   const options = {
     chordTypes: { triads: true, sevenths: true },
