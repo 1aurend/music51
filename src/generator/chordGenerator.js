@@ -337,19 +337,13 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // TODO: Then, pull this out to its own function
   let template = chordDescription.structure.structure
 
-  // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
+  // Rotates the independent pitches in the `template` based on the `inversion`.
   if ((inversion === "63") || (inversion === "65")) {
     template.rotate(1)
-    // chord.notes = invert(chord.notes, 1)
-    // chord.questions[0].answers.rotate(1)
   } else if ((inversion === "64") || (inversion === "43")) {
     template.rotate(2)
-    // chord.notes = invert(chord.notes, 2)
-    // chord.questions[0].answers.rotate(2)
   } else if (inversion === "42") {
     template.rotate(3)
-    // chord.notes = invert(chord.notes, 3)
-    // chord.questions[0].answers.rotate(3)
   }
 
   // Keep track of the preceeding letter name position (e.g., C = 0, D = 1, G = 4, etc.) in order to see
