@@ -349,27 +349,6 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // find the equivalent IP based on the rootIp and tensionMod12 value in the class
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
-    // FIXME: (James) Make a helper function that tidies this up
-    // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-    let accidentalVal = (Object.values(IndependentPitch).indexOf(noteIP))-(Object.values(IndependentPitch).indexOf(syllable))
-
-    // FIXME: (James) Perhaps break this into a function of its own
-    // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
-    // adjusts for IPs on opposite ends of the array, like "D" from "R"
-    // but something about this feels hacky... is there a better way?
-    if (accidentalVal > Object.values(IndependentPitch).length/2) {
-      accidentalVal -= Object.values(IndependentPitch).length
-    }
-    if (-accidentalVal > Object.values(IndependentPitch).length/2) {
-      accidentalVal += Object.values(IndependentPitch).length
-    }
-
-    // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
-    const accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
-
-    // Translate the syllable "position" to a letter
-    // FIXME: Add convenience getters to LetterName to avoid the `Object.values` choreography
-
     const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
     const noteLetter = Object.values(LetterName)[syllableIndex]
 
@@ -388,7 +367,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     const octave = 4
 
     // Create the note with all of our nice new data
-    const note = { letter: noteLetter, accidental: accidental, octave: octave }
+    const note = { letter: noteLetter, accidental: accidental(noteIP, syllable), octave: octave }
 
     // Append our new note to the array to be returned
     notes.push(note)
@@ -432,6 +411,26 @@ function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex, keySignat
   const ips = Object.values(IndependentPitch)
   const rootIPIndex = ips.indexOf(rootIP)
   return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
+}
+
+function accidental(independentPitch, syllable) {
+  // FIXME: (James) Make a helper function that tidies this up
+  // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
+  let accidentalVal = (Object.values(IndependentPitch).indexOf(independentPitch))-(Object.values(IndependentPitch).indexOf(syllable))
+
+  // FIXME: (James) Perhaps break this into a function of its own
+  // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
+  // adjusts for IPs on opposite ends of the array, like "D" from "R"
+  // but something about this feels hacky... is there a better way?
+  if (accidentalVal > Object.values(IndependentPitch).length/2) {
+    accidentalVal -= Object.values(IndependentPitch).length
+  }
+  if (-accidentalVal > Object.values(IndependentPitch).length/2) {
+    accidentalVal += Object.values(IndependentPitch).length
+  }
+  // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
+  const accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
+  return accidental
 }
 
 /**
