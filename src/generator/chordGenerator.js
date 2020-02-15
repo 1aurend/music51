@@ -322,24 +322,20 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
 /**
  * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
  * @param chordDescription
- * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
+ * @return An array of octave-displaced spelled pitches comprising a `chord`.
  */
 export function partiallyConcretizeChord(chordDescription, keySignature) {
 
+  const rootLetter = chordDescription.root.letter
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
 
-  // The notes of a chord to be returned
-  // TODO: Consider implementing this with `map`
-  let notes = []
-
-  let octaveDisplacement = 0
-
-  let template = chordDescription.structure.structure
   const inversion = chordDescription.inversion
 
-  console.log("inversion: " + JSON.stringify(inversion))
+  // TODO: First, codify `inversion` in a stronger way
+  // TODO: Then, pull this out to its own function
+  let template = chordDescription.structure.structure
 
   // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
   if ((inversion === "63") || (inversion === "65")) {
@@ -356,6 +352,22 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // chord.questions[0].answers.rotate(3)
   }
 
+  // Keep track of the preceeding letter name position (e.g., C = 0, D = 1, G = 4, etc.) in order to see
+  // when we have crossed over the mod7 boundary, and thus when to bump up the octave displacement.
+  // We start with `7` as it is a kind of `Infinity`, which all values will register as being "less than".
+  // As such, we will bump up the `octaveDisplacement` from `-1` to `0` for the first note no matter what.
+  //
+  // This is surely not the only way, and quite possibly not the best way, to do this. Open for critique!
+  //
+  // One other method would be to do this in a second pass over non-octave-positioned notes. This could be
+  // theoretically wasteful, but we are iterating over 3–4 values for now…
+  let prevLetterNamePosition = 7
+  let octaveDisplacement = -1
+
+  // The notes of a chord to be returned
+  // TODO: Consider implementing this with `map`
+  let notes = []
+
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
@@ -368,28 +380,24 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
 
-    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
     const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
     const noteLetter = Object.values(LetterName)[syllableIndex]
+    const notePosition = letterNamePosition(noteLetter)
 
-    // FIXME: (James) This currently requires context not injected into this function.
-    //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
-    // TODO: Octave adjustments
-    // TODO: will this also work for template structures bigger than an octave?
-    // let octaveIndex = letterNamePosition(noteLetter)
-    // let octave = chordOctave
-    // if (chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)) {
-    //   octave += 1;
-    //   chordOctave +=1 // sets the default octave up for the next note
-    // }
-
-    // FIXME: Use the code above with the correct context to set this variable correctly
-    const octave = octaveDisplacement
+    // Handle octave displacement if we cross over the mod7 boundary
+    // FIXME: Consider doing this in another pass
+    if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
+    prevLetterNamePosition = notePosition
 
     // Create the note with all of our nice new data
-    const note = { letter: noteLetter, accidental: accidental(noteIP, syllable), octave: octave }
+    const note = { 
+      letter: noteLetter, 
+      accidental: accidental(noteIP, syllable), 
+      octave: octaveDisplacement 
+    }
 
     // Append our new note to the array to be returned
     notes.push(note)
