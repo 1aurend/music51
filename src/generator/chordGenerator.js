@@ -20,6 +20,22 @@ const RootOption = {
 }
 
 /**
+ * @param chordContext  Object Object in the form:
+ *                      {
+ *                        clef,
+ *                        keySignature
+ *                        chordDescription,
+ *                        romanNumeralContext,
+ *                        notes
+*                       }
+ * @returns             An array of questions (and answers) for the given `chordContext`.
+ */
+export function questions(chordContext) {
+  // TODO
+  return []
+}
+
+/**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
  * @param  Int numQs      The number of questions a student has asked for
@@ -48,13 +64,65 @@ const RootOption = {
  * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
-  let chords = []
-  for (var i = 0; i < numQs; i++) {
-    // Create the chords for each round.
-    chords.push(randomChord(options))
-    // For each chord, generate a sequence of questions appropriate for the given chord
-    // TODO: Generate questions
-  }
+  
+  // let chords = []
+  // for (var i = 0; i < numQs; i++) {
+  //   // Create the chords for each round.
+  //   chords.push(randomChord(options))
+  //   // For each chord, generate a sequence of questions appropriate for the given chord
+  //   // TODO: Generate questions
+  // }
+
+  // Fake a chord:
+  let chord = randomChordContext(options)
+
+  chord.questions = [
+     {
+        "type": "Names",
+        "questionText": "Name the letter positions from lowest to highest.",
+        "answers": [
+           "G",
+           "B",
+           "D",
+           "F"
+        ],
+        "ordered": true,
+        "choices": [
+           {
+              "choice": "A",
+              "key": "a"
+           },
+           {
+              "choice": "B",
+              "key": "b"
+           },
+           {
+              "choice": "C",
+              "key": "c"
+           },
+           {
+              "choice": "D",
+              "key": "d"
+           },
+           {
+              "choice": "E",
+              "key": "e"
+           },
+           {
+              "choice": "F",
+              "key": "f"
+           },
+           {
+              "choice": "G",
+              "key": "g"
+           }
+        ]
+     }
+  ]
+  let chords = [chord]
+
+  return chords
+
   // TODO: Add keyStrokes
   // return addKeystrokes(chords)
 
@@ -266,7 +334,7 @@ export default function(numQs, options) {
  *                  clef, keySignature, chordType, inversion, notes
  *                }
  */
-export function randomChord(options) {
+export function randomChordContext(options) {
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
@@ -301,6 +369,8 @@ export function randomChord(options) {
   const result = {
     clef: clef,
     keySignature: vexFlowKeySignature,
+    chordDescription,
+    romanNumeralContext,
     notes: staffAdjustedNotes
   }
   // All done!

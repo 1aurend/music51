@@ -1,5 +1,5 @@
 import { 
-  randomChord, 
+  randomChordContext, 
   chooseChordType,
   chooseChordStructure, 
   chooseInversion,
@@ -156,11 +156,11 @@ test('concretizeRoot f natural in d', () => {
   expect(result).toStrictEqual(expected)
 })
 
-test('randomChord does not blow up', () => {
+test('randomChordContext does not blow up', () => {
   const options = {
     chordTypes: { triads: true, sevenths: true },
     roots: { common: true, any: false }
   }
-  let chord = randomChord(options)
+  let chord = randomChordContext(options)
 })
 
