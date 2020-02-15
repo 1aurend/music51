@@ -6,8 +6,12 @@ import {
 	chooseKeySignature,
 	randomRomanNumeralContext,
 	makeChordDescription,
-	partiallyConcretizeChord
+	partiallyConcretizeChord,
+	concretizeRoot
 } from '../generator/chordGenerator'
+import { IndependentPitch } from '../generator/IP'
+import { Accidental } from '../generator/Accidental'
+import { LetterName } from '../generator/LetterName'
 import { ChordType } from '../generator/ChordType'
 import { ChordTypesOption } from '../generator/ChordTypesOption'
 import { ChordStructure } from '../generator/ChordStructure'
@@ -61,6 +65,19 @@ test('partially concretize major chord on c natural in root position in c major'
 	const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
 	expect(partiallyConcretized.length).toBe(3)
 	// TODO: Actually check logic, please.
+})
+
+test('concretizeRoot c natural in c', () => {
+	const keySignature = 'B' // "Bottom", i.e., C major
+	const modeNote = 'Maj'
+	const expected = {
+		independentPitch: IndependentPitch.DO,
+		accidental: Accidental.NATURAL,
+		letter: LetterName.C,
+		syllable: IndependentPitch.DO
+	}
+	const result = concretizeRoot(keySignature, modeNote)
+	expect(result).toStrictEqual(expected)
 })
 
 test('randomChord does not blow up', () => {
