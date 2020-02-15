@@ -71,6 +71,26 @@ test('partially concretize major chord on c natural in root position in c major'
   expect(partiallyConcretized).toStrictEqual(expected)
 })
 
+test('partially concretize G major chord octaves', () => {
+  const chordStructure = ChordStructure.MAJOR
+  const inversion = ""
+  const keySignature = 'L1' // G major
+  const romanNumeralContext = {
+    "mode": "Maj",
+    "modeNote": "Maj",
+    "degree": 1,
+    "romanNumeral": "I"
+  }
+  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
+  const expected = [
+    { "letter": "G", "accidental": "♮", "octave": 0 },
+    { "letter": "B", "accidental": "♮", "octave": 0 },
+    { "letter": "D", "accidental": "♮", "octave": 1 }
+  ]
+  expect(partiallyConcretized).toStrictEqual(expected)
+})
+
 test('concretizeRoot c natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
   const modeNote = 'Maj'
