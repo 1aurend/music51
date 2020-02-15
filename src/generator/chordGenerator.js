@@ -13,6 +13,12 @@ import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
+// TODO: (James) Audit this type. Is it used anywhere.
+const RootOption = {
+  ANY: "any",
+  COMMON: "common"
+}
+
 /**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
@@ -260,20 +266,23 @@ export function randomChord(options) {
   // Shuffles the root note choices so they're not always in root position haha
   // shuffle(chord.questions[1].choices)
 
-  // Choose a `ChordType` from the constraints provided by the user
+  // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
 
-  // Choose a `ChordStructure` belonging to the chosen `ChordType` family
+  // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
 
-  // Choose an inversion from those afforded by the chosen `ChordStructure`
+  // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
 
-  // Choose a `KeySignature`
+  // Choose a random `KeySignature`
   const keySignature = chooseKeySignature()
 
-  // Choose a roman numeral context
+  // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+
+  // Choose a random clef
+  const clef = Clef.randomElement()
 
   // Construct non—octave-positioned description of a chord, in the form:
   // {
@@ -285,12 +294,10 @@ export function randomChord(options) {
 
   // Construct the non-octave positioned notes for chord described above
   // TODO: Come up with a better name
-  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
+  const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)  
 
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
-  
-  const clef = Clef.randomElement()
 
   const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
 
@@ -305,8 +312,6 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
-
-  // TODO: Fix this return... no longer correct... (11/15)
   return {
     root: concretizedRoot,
     structure: chordStructure,
@@ -317,13 +322,47 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
 /**
  * partiallyConcretizeChord - Return the non-octave-positioned notes for the given `chord`.
  * @param chordDescription
- * @return An array of non-octave-positioned spelled pitches comprising a `chord`.
+ * @return An array of octave-displaced spelled pitches comprising a `chord`.
  */
 export function partiallyConcretizeChord(chordDescription, keySignature) {
 
+  const rootLetter = chordDescription.root.letter
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
+
+  const inversion = chordDescription.inversion
+
+  // TODO: First, codify `inversion` in a stronger way
+  // TODO: Then, pull this out to its own function
+  let template = chordDescription.structure.structure
+
+  // inverts the chord, reorders chord.notes, and adjusts the ordered answer for inversion
+  if ((inversion === "63") || (inversion === "65")) {
+    template.rotate(1)
+    // chord.notes = invert(chord.notes, 1)
+    // chord.questions[0].answers.rotate(1)
+  } else if ((inversion === "64") || (inversion === "43")) {
+    template.rotate(2)
+    // chord.notes = invert(chord.notes, 2)
+    // chord.questions[0].answers.rotate(2)
+  } else if (inversion === "42") {
+    template.rotate(3)
+    // chord.notes = invert(chord.notes, 3)
+    // chord.questions[0].answers.rotate(3)
+  }
+
+  // Keep track of the preceeding letter name position (e.g., C = 0, D = 1, G = 4, etc.) in order to see
+  // when we have crossed over the mod7 boundary, and thus when to bump up the octave displacement.
+  // We start with `7` as it is a kind of `Infinity`, which all values will register as being "less than".
+  // As such, we will bump up the `octaveDisplacement` from `-1` to `0` for the first note no matter what.
+  //
+  // This is surely not the only way, and quite possibly not the best way, to do this. Open for critique!
+  //
+  // One other method would be to do this in a second pass over non-octave-positioned notes. This could be
+  // theoretically wasteful, but we are iterating over 3–4 values for now…
+  let prevLetterNamePosition = 7
+  let octaveDisplacement = -1
 
   // The notes of a chord to be returned
   // TODO: Consider implementing this with `map`
@@ -332,37 +371,33 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
-  for(var i=0; i<chordDescription.structure.structure.length; i++){
+  for(var i=0; i<template.length; i++){
 
     // Translate the template ip to a relative note in the class
     // FIXME: (James) Again, the `structure.structure` ain't pretty
-    const translatedNoteIP = translateNoteIPIndex(chordDescription.structure.structure[i], rootIP)
+    const translatedNoteIP = translateNoteIPIndex(template[i], rootIP)
 
     // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
 
-    // find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
     const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
     const noteLetter = Object.values(LetterName)[syllableIndex]
+    const notePosition = letterNamePosition(noteLetter)
 
-    // FIXME: (James) This currently requires context not injected into this function.
-    //        We should do this octave adjustment after the fact, once we are put in a clef'd universe.
-    // TODO: Octave adjustments
-    // TODO: will this also work for template structures bigger than an octave?
-    // let octaveIndex = letterNamePosition(noteLetter)
-    // let octave = chordOctave
-    // if (chord.notes.length > 0 && octaveIndex < letterNamePosition(chord.notes[chord.notes.length-1].letter)) {
-    //   octave += 1;
-    //   chordOctave +=1 // sets the default octave up for the next note
-    // }
-
-    // FIXME: Use the code above with the correct context to set this variable correctly
-    const octave = 4
+    // Handle octave displacement if we cross over the mod7 boundary
+    // FIXME: Consider doing this in another pass
+    if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
+    prevLetterNamePosition = notePosition
 
     // Create the note with all of our nice new data
-    const note = { letter: noteLetter, accidental: accidental(noteIP, syllable), octave: octave }
+    const note = { 
+      letter: noteLetter, 
+      accidental: accidental(noteIP, syllable), 
+      octave: octaveDisplacement 
+    }
 
     // Append our new note to the array to be returned
     notes.push(note)
@@ -525,15 +560,6 @@ function octaveTranspose(notes, octaves) {
     return { letter: note.letter, octave: note.octave + octaves }
   })
 }
-
-
-
-const RootOption = {
-  ANY: "any",
-  COMMON: "common"
-}
-
-
 
 // Constrains accidental only for root pitch
 function constrainAccidental(syllable, structure, initialChoice) {
