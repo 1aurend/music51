@@ -290,10 +290,10 @@ export function randomChord(options) {
   // TODO: Come up with a better name
   const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)
 
+  console.log(partiallyConcretizedChordNotes)
+
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
-  
-  
 
   const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
 
@@ -308,8 +308,6 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
-
-  // TODO: Fix this return... no longer correct... (11/15)
   return {
     root: concretizedRoot,
     structure: chordStructure,
