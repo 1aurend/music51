@@ -120,7 +120,7 @@ test('concretizeRoot d natural in D', () => {
 })
 
 test('concretizeRoot f natural in d', () => {
-  const keySignature = 'R1' // D major
+  const keySignature = 'R1' // d min
   const modeNote = 'Maj'
   const expected = {
     independentPitch: IndependentPitch.FA,
