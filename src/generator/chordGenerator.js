@@ -260,20 +260,23 @@ export function randomChord(options) {
   // Shuffles the root note choices so they're not always in root position haha
   // shuffle(chord.questions[1].choices)
 
-  // Choose a `ChordType` from the constraints provided by the user
+  // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
 
-  // Choose a `ChordStructure` belonging to the chosen `ChordType` family
+  // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
 
-  // Choose an inversion from those afforded by the chosen `ChordStructure`
+  // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
 
-  // Choose a `KeySignature`
+  // Choose a random `KeySignature`
   const keySignature = chooseKeySignature()
 
-  // Choose a roman numeral context
+  // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+
+  // Choose a random clef
+  const clef = Clef.randomElement()
 
   // Construct non—octave-positioned description of a chord, in the form:
   // {
@@ -290,7 +293,7 @@ export function randomChord(options) {
   // TODO: (James) add `inversion` method on `Chord` type
   // const inverted = handleInversion(chordDescription, inversion)
   
-  const clef = Clef.randomElement()
+  
 
   const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
 
