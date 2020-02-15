@@ -67,7 +67,7 @@ test('partially concretize major chord on c natural in root position in c major'
   // TODO: Actually check logic, please.
 })
 
-test('concretizeRoot c natural in c', () => {
+test('concretizeRoot c natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
   const modeNote = 'Maj'
   const expected = {
@@ -75,6 +75,58 @@ test('concretizeRoot c natural in c', () => {
     accidental: Accidental.NATURAL,
     letter: LetterName.C,
     syllable: IndependentPitch.DO
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
+test('concretizeRoot e natural in C', () => {
+  const keySignature = 'B' // "Bottom", i.e., C major
+  const modeNote = 'phr'
+  const expected = {
+    independentPitch: IndependentPitch.MI,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.E,
+    syllable: IndependentPitch.MI
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
+test('concretizeRoot g natural in C', () => {
+  const keySignature = 'B' // "Bottom", i.e., C major
+  const modeNote = 'Dom'
+  const expected = {
+    independentPitch: IndependentPitch.SO,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.G,
+    syllable: IndependentPitch.SO
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
+test('concretizeRoot d natural in D', () => {
+  const keySignature = 'L2' // D major
+  const modeNote = 'Maj'
+  const expected = {
+    independentPitch: IndependentPitch.RE,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.D,
+    syllable: IndependentPitch.RE
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
+test('concretizeRoot f natural in d', () => {
+  const keySignature = 'R1' // D major
+  const modeNote = 'Maj'
+  const expected = {
+    independentPitch: IndependentPitch.FA,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.F,
+    syllable: IndependentPitch.FA
   }
   const result = concretizeRoot(keySignature, modeNote)
   expect(result).toStrictEqual(expected)
