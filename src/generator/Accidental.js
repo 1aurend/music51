@@ -3,5 +3,11 @@ export const Accidental = {
   FLAT: "♭",
   NATURAL: "♮",
   SHARP: "♯",
-  DOUBLESHARP: "𝄪"
+  DOUBLESHARP: "𝄪",
+  offset: function(accidental) {
+    return Object.values(this).indexOf(accidental)
+  },
+  offsetFromNatural: function(accidental) {
+    return this.offset(accidental) - this.offset(this.NATURAL)
+  }
 }

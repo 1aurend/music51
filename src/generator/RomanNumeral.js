@@ -16,12 +16,9 @@ export const RomanNumeral = {
 }
 
 export function degreeAndQualityToRomanNumeral(degree, isCapital) {
-  console.log("degree and quality to roman numeral incoming degree: " + degree + " is capital: " + isCapital)
   if (isCapital) {
-    console.log("result: " + Object.keys(RomanNumeral)[degree - 1])
     return Object.keys(RomanNumeral)[degree - 1]
   } else {
-    console.log("result: " + Object.keys(RomanNumeral)[degree - 1 + 7])
     return Object.keys(RomanNumeral)[degree - 1 + 7]
   }
 }
