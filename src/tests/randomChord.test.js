@@ -63,8 +63,14 @@ test('partially concretize major chord on c natural in root position in c major'
   }
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  expect(partiallyConcretized.length).toBe(3)
-  // TODO: Actually check logic, please.
+  console.log(JSON.stringify(partiallyConcretized))
+  // FIXME: Handle octave correctly
+  const expected = [
+    { "letter": "C", "accidental": "♮", "octave": 4 },
+    { "letter": "E", "accidental": "♮", "octave": 4 },
+    { "letter": "G", "accidental": "♮", "octave": 4 }
+  ]
+  expect(partiallyConcretized).toStrictEqual(expected)
 })
 
 test('concretizeRoot c natural in C', () => {
@@ -140,8 +146,3 @@ test('randomChord does not blow up', () => {
   let chord = randomChord(options)
 })
 
-test('partially concretize chord does something', () => {
-  const chord = { }
-  const keySignature = { }
-    
-})
