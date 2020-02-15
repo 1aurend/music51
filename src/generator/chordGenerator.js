@@ -600,8 +600,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  */
 export function concretizeRoot(keySignature, modeNote) {
 
-  console.log("concretize root in key signature " + keySignature + " with mode note: " + modeNote)
-
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
