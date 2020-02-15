@@ -94,10 +94,6 @@ export function questions(chordContext) {
   //   accidental = "";
   // }
 
-  console.log("rootLetter: " + JSON.stringify(rootLetter))
-
-  
-
   // Consider breaking this out to a factory-type function, like:
   // question(chordContext, type)
   let skeleton = [
