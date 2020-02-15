@@ -1,4 +1,4 @@
-import { classes } from './chordConsts'
+import { classes, keySignatures } from './chordConsts'
 import addKeystrokes from './keystrokes'
 import './utility.js'
 import { shuffle } from './utility'
@@ -13,7 +13,7 @@ import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 
-// TODO: (James) Audit this type. Is it used anywhere.
+// TODO: (James) Audit this type. Is it used anywhere?
 const RootOption = {
   ANY: "any",
   COMMON: "common"
@@ -48,16 +48,18 @@ const RootOption = {
  * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
-  // let chords = []
-  // for (var i = 0; i < numQs; i++) {
-  //   // Create the chords for each round.
-  //   chords.push(randomChord(options))
-  //   // For each chord, generate a sequence of questions appropriate for the given chord
-  //   // TODO: Generate questions
-  // }
-  // console.log(JSON.stringify(chords))
+  let chords = []
+  for (var i = 0; i < numQs; i++) {
+    // Create the chords for each round.
+    chords.push(randomChord(options))
+    // For each chord, generate a sequence of questions appropriate for the given chord
+    // TODO: Generate questions
+  }
+
+  // TODO: Add keyStrokes
   // return addKeystrokes(chords)
 
+  // This is a sample output from v1 that we aspire to generating.
   return [
    {
       "clef": "treble",
@@ -296,18 +298,25 @@ export function randomChord(options) {
   // TODO: Come up with a better name
   const partiallyConcretizedChordNotes = partiallyConcretizeChord(chordDescription, keySignature)  
 
-  // TODO: (James) add `inversion` method on `Chord` type
-  // const inverted = handleInversion(chordDescription, inversion)
+  // TODO: Staff adjust
 
-  const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
+  // const positionedChord = staffAdjust(partiallyConcretizedChordNotes, clef)
 
-  return positionedChord
+  // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
+  //        and Vexflow key signatures.
+  const vexFlowKeySignature = keySignatures[keySignature].vexSig
+
+  const result = {
+    clef: clef,
+    keySignature: vexFlowKeySignature,
+    notes: partiallyConcretizedChordNotes
+  }
+
+  return result
 }
 
-// Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
+// TODO: Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
-//
-// => (Note,Int)
 export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
   // `keySignature`.
