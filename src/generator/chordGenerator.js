@@ -144,10 +144,6 @@ export function questions(chordContext) {
     }
   ]
 
-  // // aggregate options for inversions question
-  // let inversionOptions = []
-  // inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
-
   // TODO:
   // for note in template: 
     // // push notes into questions before adjusting accidentals for key sig
@@ -170,7 +166,7 @@ export function questions(chordContext) {
     // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
     //   accidental = "";
     // }
-    // }
+  // }
 
   return skeleton
 }
