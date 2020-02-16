@@ -64,43 +64,13 @@ export function questions(chordContext) {
     ]
   }
 
-  // TODO:
-  // // aggregate options for chord quality question
-  // let qualityOptions = []
-  // Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
-
-  // // aggregate options for inversions question
-  // let inversionOptions = []
-  // inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
-
-  // // push notes into questions before adjusting accidentals for key sig
-  // chord.questions[0].answers.push(noteLetter);
-
-
-  // // FIXME: This should be its own function
-  // // only show natural in question choices if it's an alteration from the key sig
-  // if(accidental != '♮'){
-  //   chord.questions[1].choices.push(noteLetter+accidental);
-  // }
-  // else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
-  //   chord.questions[1].choices.push(noteLetter+'♮');
-  // }
-  // else {
-  //   chord.questions[1].choices.push(noteLetter);
-  // }
-
-  // // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
-  // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
-  //   accidental = "";
-  // }
-
   // Consider breaking this out to a factory-type function, like:
   // question(chordContext, type)
   let skeleton = [
     {
       "type": "Names",
       "questionText": "Name the letter positions from lowest to highest.",
-      "answers": [], // will populate in the loop
+      "answers": chordContext.notes.map(note => note.letter),
       "ordered": true,
       "choices": [
           "A",
@@ -151,7 +121,40 @@ export function questions(chordContext) {
       "choices": romanInversionOptions
     }
   ]
-  return []
+
+  // TODO:
+  // for note in template: 
+    // // aggregate options for chord quality question
+    // let qualityOptions = []
+    // Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
+
+    // // aggregate options for inversions question
+    // let inversionOptions = []
+    // inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
+
+    // // push notes into questions before adjusting accidentals for key sig
+    // chord.questions[0].answers.push(noteLetter);
+
+
+    // // FIXME: This should be its own function
+    // // only show natural in question choices if it's an alteration from the key sig
+    // if(accidental != '♮'){
+    //   chord.questions[1].choices.push(noteLetter+accidental);
+    // }
+    // else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
+    //   chord.questions[1].choices.push(noteLetter+'♮');
+    // }
+    // else {
+    //   chord.questions[1].choices.push(noteLetter);
+    // }
+
+    // // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
+    // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
+    //   accidental = "";
+    // }
+    // }
+
+  return skeleton
 }
 
 /**
@@ -183,68 +186,17 @@ export function questions(chordContext) {
  * @todo                  Assess the spec of the questions object which is put out by this function
  */
 export default function(numQs, options) {
-  
-  // let chords = []
-  // for (var i = 0; i < numQs; i++) {
-  //   // Create the chords for each round.
-  //   chords.push(randomChord(options))
-  //   // For each chord, generate a sequence of questions appropriate for the given chord
-  //   // TODO: Generate questions
-  // }
-
-  // Fake a chord:
-  let chord = randomChordContext(options)
-
-  chord.questions = [
-     {
-        "type": "Names",
-        "questionText": "Name the letter positions from lowest to highest.",
-        "answers": [
-           "G",
-           "B",
-           "D",
-           "F"
-        ],
-        "ordered": true,
-        "choices": [
-           {
-              "choice": "A",
-              "key": "a"
-           },
-           {
-              "choice": "B",
-              "key": "b"
-           },
-           {
-              "choice": "C",
-              "key": "c"
-           },
-           {
-              "choice": "D",
-              "key": "d"
-           },
-           {
-              "choice": "E",
-              "key": "e"
-           },
-           {
-              "choice": "F",
-              "key": "f"
-           },
-           {
-              "choice": "G",
-              "key": "g"
-           }
-        ]
-     }
-  ]
-  let chords = [chord]
-
+  let chords = []
+  for (var i = 0; i < numQs; i++) {
+    // Create the chords for each round.
+    let chordContext = randomChordContext(options)
+    chordContext.questions = questions(chordContext)  
+    chords.push(chordContext)
+  }
+  addKeystrokes(chords)
+  console.log(chords)
   return chords
-
-  // TODO: Add keyStrokes
-  // return addKeystrokes(chords)
-
+}
   // TODO: Shuffle questions up around these parts
   // FIXME: (James) We need to move chord shuffling closer to the user interface layer.
   // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
@@ -252,190 +204,7 @@ export default function(numQs, options) {
   // shuffle(chord.questions[1].choices)
 
   // This is a sample output from v1 that we aspire to generating.
-  return [
-   {
-      "clef": "treble",
-      "keySignature": "F",
-      "notes": [
-         {
-            "letter": "G",
-            "accidental": "",
-            "octave": 4
-         },
-         {
-            "letter": "B",
-            "accidental": "",
-            "octave": 4
-         },
-         {
-            "letter": "D",
-            "accidental": "",
-            "octave": 5
-         },
-         {
-            "letter": "F",
-            "accidental": "",
-            "octave": 5
-         }
-      ],
-      "questions": [
-         {
-            "type": "Names",
-            "questionText": "Name the letter positions from lowest to highest.",
-            "answers": [
-               "G",
-               "B",
-               "D",
-               "F"
-            ],
-            "ordered": true,
-            "choices": [
-               {
-                  "choice": "A",
-                  "key": "a"
-               },
-               {
-                  "choice": "B",
-                  "key": "b"
-               },
-               {
-                  "choice": "C",
-                  "key": "c"
-               },
-               {
-                  "choice": "D",
-                  "key": "d"
-               },
-               {
-                  "choice": "E",
-                  "key": "e"
-               },
-               {
-                  "choice": "F",
-                  "key": "f"
-               },
-               {
-                  "choice": "G",
-                  "key": "g"
-               }
-            ]
-         },
-         {
-            "type": "Roots",
-            "questionText": "What's the root note?",
-            "answers": [
-               "G"
-            ],
-            "choices": [
-               {
-                  "choice": "D",
-                  "key": "d"
-               },
-               {
-                  "choice": "B♭",
-                  "key": "b"
-               },
-               {
-                  "choice": "F",
-                  "key": "f"
-               },
-               {
-                  "choice": "G",
-                  "key": "g"
-               }
-            ]
-         },
-         {
-            "type": "Degrees",
-            "questionText": "In a minor key, what degree is this chord built on?",
-            "answers": [
-               "4^"
-            ],
-            "choices": [
-               {
-                  "choice": "1^",
-                  "key": "1"
-               },
-               {
-                  "choice": "2^",
-                  "key": "2"
-               },
-               {
-                  "choice": "3^",
-                  "key": "3"
-               },
-               {
-                  "choice": "4^",
-                  "key": "4"
-               },
-               {
-                  "choice": "5^",
-                  "key": "5"
-               },
-               {
-                  "choice": "6^",
-                  "key": "6"
-               },
-               {
-                  "choice": "7^",
-                  "key": "7"
-               }
-            ]
-         },
-         {
-            "type": "Numerals",
-            "questionText": "Which roman numeral describes this chord’s degree and quality?",
-            "answers": [
-               "iv7"
-            ],
-            "choices": [
-               {
-                  "choice": "IV7",
-                  "key": "7"
-               },
-               {
-                  "choice": "iv7",
-                  "key": "m"
-               },
-               {
-                  "choice": "ivø7",
-                  "key": "h"
-               },
-               {
-                  "choice": "ivo7",
-                  "key": "d"
-               }
-            ]
-         },
-         {
-            "type": "Inversions",
-            "questionText": "What's the inversion?",
-            "answers": [
-               "iv"
-            ],
-            "choices": [
-               {
-                  "choice": "iv",
-                  "key": "r"
-               },
-               {
-                  "choice": "iv65",
-                  "key": "5"
-               },
-               {
-                  "choice": "iv43",
-                  "key": "3"
-               },
-               {
-                  "choice": "iv42",
-                  "key": "2"
-               }
-            ]
-         }
-      ]
-   }
- ]
-}
+  
 
 /**
  * randomChord - A big function to generate a random, correctly spelled chord structure within 
