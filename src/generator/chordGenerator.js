@@ -46,6 +46,26 @@ export function questions(chordContext) {
   const inversionQuality = "???"
 
   // TODO: Wrap up in own function
+
+  // roman numeral question options
+  let romanOptions
+  if (chordType === 'triad') {
+    romanOptions = [
+      roman.toUpperCase(),
+      roman.toLowerCase(),
+      roman.toLowerCase() + 'o',
+      roman.toUpperCase() + '+'
+    ]
+  }
+  if (chordType === 'seventh') {
+    romanOptions = [
+      roman.toUpperCase() + '7',
+      roman.toLowerCase() + '7',
+      roman.toLowerCase() + 'ø7',
+      roman.toLowerCase() + 'o7'
+    ]
+  }
+  
   let romanInversionOptions
   // [roman + inversionQuality + " " + inversion]
   if (chordType === 'triad') {
@@ -110,12 +130,12 @@ export function questions(chordContext) {
         .map(structure => structure.displayName)
         .map(quality => rootLetter + rootAccidental + quality)
     },
-    // {
-    //   "type": "Numerals",
-    //   "questionText": "Which roman numeral describes this chord’s degree and quality?",
-    //   "answers": [roman + romanQuality],
-    //   "choices": romanOptions
-    // },
+    {
+      "type": "Numerals",
+      "questionText": "Which roman numeral describes this chord’s degree and quality?",
+      "answers": [roman + romanQuality],
+      "choices": romanOptions
+    },
     {
       "type": "Inversions",
       "questionText": "What's the inversion?",
