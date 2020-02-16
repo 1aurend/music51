@@ -801,12 +801,15 @@ export function randomRomanNumeralContext(chordStructure) {
 
   // FIXME: Codify "Major" and "minor" here!  
   const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+
   let mode
   switch (modeLabel) {
     case "Major":
       mode = Mode.MAJOR
+      break
     case "minor":
       mode = Mode.MINOR
+      break
   }
 
   switch (chordStructure) {
