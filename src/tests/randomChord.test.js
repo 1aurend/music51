@@ -164,3 +164,10 @@ test('randomChordContext does not blow up', () => {
   let chord = randomChordContext(options)
 })
 
+test('randomRomanNumeralContext returns a valid mode note', () => {
+  const chordStructure = ChordStructure.MINOR
+  for (var i = 0; i < 100; i++) {
+    const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+    expect(romanNumeralContext.modeNote).toBeDefined()
+  }
+})

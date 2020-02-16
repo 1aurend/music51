@@ -33,10 +33,6 @@ const RootOption = {
 export function questions(chordContext) {
 
   const rootLetter = chordContext.chordDescription.root.letter
-
-  console.log("root: " + JSON.stringify(chordContext.chordDescription.root))
-  console.log("root letter: " + rootLetter)
-
   const rootAccidental = chordContext.chordDescription.root.accidental
   const inversion = chordContext.chordDescription.inversion
   const degree = chordContext.romanNumeralContext.degree
@@ -126,9 +122,6 @@ export function questions(chordContext) {
       "choices": romanInversionOptions
     }
   ]
-
-  console.log("root answer: " + (rootLetter + rootAccidental))
-  console.log("all notes: " + JSON.stringify(chordContext.notes))
 
   // TODO:
   // for note in template: 
@@ -241,7 +234,6 @@ export function randomChordContext(options) {
   const keySignature = chooseKeySignature()
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  console.log("roman numeral context: " + JSON.stringify(romanNumeralContext))
   // Choose a random clef
   const clef = Clef.randomElement()
   // Construct non—octave-positioned description of a chord, in the form:
@@ -260,8 +252,6 @@ export function randomChordContext(options) {
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
-    
-  console.log("key signature: " + JSON.stringify(vexFlowKeySignature))
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
   //       `chordDescription`, `romanNumeralContext`, etc.
@@ -590,9 +580,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
  */
 export function concretizeRoot(keySignature, modeNote) {
-
-  console.log("concretizeRoot: keySignature: " + keySignature + ", modeNote: " + JSON.stringify(modeNote))
-
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
@@ -601,20 +588,14 @@ export function concretizeRoot(keySignature, modeNote) {
     if (Shapes[keySignature].notes[i].mode === modeNote) {
       const rootAccidental = shape.notes[i].accidental
       const rootSyllable = shape.notes[i].refIP
-
       // Get the offset from the root accidental from `NATURAL`
       const offset = Accidental.offsetFromNatural(rootAccidental)
-
       // FIXME: (James) Implement convenience getter over `LetterName`
       const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-
       // FIXME: (James) Implement convenience getter over `IndependentPitch`
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-
-      console.log("result: letter: " + rootLetter + rootAccidental)
-
       return {
         independentPitch: rootIP,
         accidental: rootAccidental,
@@ -839,7 +820,7 @@ export function randomRomanNumeralContext(chordStructure) {
     case ChordStructure.MINOR:
       switch (mode) {
         case Mode.MAJOR: {
-          const modeNote = [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement()
+          const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
           const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
@@ -916,7 +897,7 @@ export function randomRomanNumeralContext(chordStructure) {
         }
       }
     case ChordStructure.MAJOR_SEVENTH: {
-      const modeNote = [Mode.MAJOR,Mode.LYDIAN].randomElement()
+      const modeNote = [Mode.MAJOR, Mode.LYDIAN].randomElement()
       const scaleDegree = degree(mode, modeNote)
       return {
         mode: mode,
