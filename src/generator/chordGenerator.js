@@ -198,14 +198,6 @@ export default function(numQs, options) {
   console.log(chords)
   return chords
 }
-  // TODO: Shuffle questions up around these parts
-  // FIXME: (James) We need to move chord shuffling closer to the user interface layer.
-  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
-  // Shuffles the root note choices so they're not always in root position haha
-  // shuffle(chord.questions[1].choices)
-
-  // This is a sample output from v1 that we aspire to generating.
-  
 
 /**
  * randomChord - A big function to generate a random, correctly spelled chord structure within 
