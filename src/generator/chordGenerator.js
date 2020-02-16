@@ -20,6 +20,158 @@ const RootOption = {
 }
 
 /**
+ * @param chordContext  Object Object in the form:
+ *                      {
+ *                        clef,
+ *                        keySignature
+ *                        chordDescription,
+ *                        romanNumeralContext,
+ *                        notes
+*                       }
+ * @returns             An array of questions (and answers) for the given `chordContext`.
+ */
+export function questions(chordContext) {
+
+  const rootLetter = chordContext.chordDescription.root.letter
+  const rootAccidental = chordContext.chordDescription.root.accidental
+  const inversion = chordContext.chordDescription.inversion
+  const degree = chordContext.romanNumeralContext.degree
+  const roman = chordContext.romanNumeralContext.romanNumeral
+  const key = chordContext.keySignature
+  const chordType = chordContext.chordType
+
+  // FIXME: Infer `romanQuality` somehow?
+  const romanQuality = "???"
+  // FIXME: Infer `inversionQuality` somehow?
+  const inversionQuality = "???"
+
+  // TODO: Wrap up in own function
+
+  // roman numeral question options
+  let romanOptions
+  if (chordType === 'triad') {
+    romanOptions = [
+      roman.toUpperCase(),
+      roman.toLowerCase(),
+      roman.toLowerCase() + 'o',
+      roman.toUpperCase() + '+'
+    ]
+  }
+  if (chordType === 'seventh') {
+    romanOptions = [
+      roman.toUpperCase() + '7',
+      roman.toLowerCase() + '7',
+      roman.toLowerCase() + 'ø7',
+      roman.toLowerCase() + 'o7'
+    ]
+  }
+  
+  let romanInversionOptions
+  // [roman + inversionQuality + " " + inversion]
+  if (chordType === 'triad') {
+    romanInversionOptions = [
+      roman + inversionQuality,
+      roman + inversionQuality + '63',
+      roman + inversionQuality + '64'
+    ]
+  } else if (chordType === 'seventh') {
+    romanInversionOptions = [
+      roman + inversionQuality,
+      roman + inversionQuality + '65',
+      roman + inversionQuality + '43',
+      roman + inversionQuality + '42'
+    ]
+  }
+
+  // Consider breaking this out to a factory-type function, like:
+  // question(chordContext, type)
+  let skeleton = [
+    {
+      "type": "Names",
+      "questionText": "Name the letter positions from lowest to highest.",
+      "answers": chordContext.notes.map(note => note.letter),
+      "ordered": true,
+      "choices": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+      ]
+    },
+    {
+      "type": "Roots",
+      "questionText": "What's the root note?",
+      "answers": [rootLetter + rootAccidental],
+      // FIXME: Currently not filtering out naturals
+      "choices": chordContext.notes.map(note => note.letter + note.accidental)
+    },
+    {
+      "type": "Degrees",
+      "questionText": "In a " + key + " key, what degree is this chord built on?",
+      "answers": [degree + "^"],
+      "choices": [
+          "1^",
+          "2^",
+          "3^",
+          "4^",
+          "5^",
+          "6^",
+          "7^"
+      ]
+    },
+    {
+      "type": "Quality",
+      "questionText": "What's the chord's quality?",
+      "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
+      "choices": [...chordStructures(chordContext.chordType)]
+        .map(structure => structure.displayName)
+        .map(quality => rootLetter + rootAccidental + quality)
+    },
+    {
+      "type": "Numerals",
+      "questionText": "Which roman numeral describes this chord’s degree and quality?",
+      "answers": [roman + romanQuality],
+      "choices": romanOptions
+    },
+    {
+      "type": "Inversions",
+      "questionText": "What's the inversion?",
+      "answers": [roman + inversionQuality + inversion],
+      "choices": romanInversionOptions
+    }
+  ]
+
+  // TODO:
+  // for note in template: 
+    // // push notes into questions before adjusting accidentals for key sig
+    // chord.questions[0].answers.push(noteLetter);
+
+
+    // // FIXME: This should be its own function
+    // // only show natural in question choices if it's an alteration from the key sig
+    // if(accidental != '♮'){
+    //   chord.questions[1].choices.push(noteLetter+accidental);
+    // }
+    // else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
+    //   chord.questions[1].choices.push(noteLetter+'♮');
+    // }
+    // else {
+    //   chord.questions[1].choices.push(noteLetter);
+    // }
+
+    // // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
+    // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
+    //   accidental = "";
+    // }
+  // }
+
+  return skeleton
+}
+
+/**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
  * @param  Int numQs      The number of questions a student has asked for
@@ -51,203 +203,13 @@ export default function(numQs, options) {
   let chords = []
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
-    chords.push(randomChord(options))
-    // For each chord, generate a sequence of questions appropriate for the given chord
-    // TODO: Generate questions
+    let chordContext = randomChordContext(options)
+    chordContext.questions = questions(chordContext)  
+    chords.push(chordContext)
   }
-  // TODO: Add keyStrokes
-  // return addKeystrokes(chords)
-
-  // TODO: Shuffle questions up around these parts
-  // FIXME: (James) We need to move chord shuffling closer to the user interface layer.
-  // FIXME: (James) Let's use `shuffled` here rather than mutating our source of truth.
-  // Shuffles the root note choices so they're not always in root position haha
-  // shuffle(chord.questions[1].choices)
-
-  // This is a sample output from v1 that we aspire to generating.
-  return [
-   {
-      "clef": "treble",
-      "keySignature": "F",
-      "notes": [
-         {
-            "letter": "G",
-            "accidental": "",
-            "octave": 4
-         },
-         {
-            "letter": "B",
-            "accidental": "",
-            "octave": 4
-         },
-         {
-            "letter": "D",
-            "accidental": "",
-            "octave": 5
-         },
-         {
-            "letter": "F",
-            "accidental": "",
-            "octave": 5
-         }
-      ],
-      "questions": [
-         {
-            "type": "Names",
-            "questionText": "Name the letter positions from lowest to highest.",
-            "answers": [
-               "G",
-               "B",
-               "D",
-               "F"
-            ],
-            "ordered": true,
-            "choices": [
-               {
-                  "choice": "A",
-                  "key": "a"
-               },
-               {
-                  "choice": "B",
-                  "key": "b"
-               },
-               {
-                  "choice": "C",
-                  "key": "c"
-               },
-               {
-                  "choice": "D",
-                  "key": "d"
-               },
-               {
-                  "choice": "E",
-                  "key": "e"
-               },
-               {
-                  "choice": "F",
-                  "key": "f"
-               },
-               {
-                  "choice": "G",
-                  "key": "g"
-               }
-            ]
-         },
-         {
-            "type": "Roots",
-            "questionText": "What's the root note?",
-            "answers": [
-               "G"
-            ],
-            "choices": [
-               {
-                  "choice": "D",
-                  "key": "d"
-               },
-               {
-                  "choice": "B♭",
-                  "key": "b"
-               },
-               {
-                  "choice": "F",
-                  "key": "f"
-               },
-               {
-                  "choice": "G",
-                  "key": "g"
-               }
-            ]
-         },
-         {
-            "type": "Degrees",
-            "questionText": "In a minor key, what degree is this chord built on?",
-            "answers": [
-               "4^"
-            ],
-            "choices": [
-               {
-                  "choice": "1^",
-                  "key": "1"
-               },
-               {
-                  "choice": "2^",
-                  "key": "2"
-               },
-               {
-                  "choice": "3^",
-                  "key": "3"
-               },
-               {
-                  "choice": "4^",
-                  "key": "4"
-               },
-               {
-                  "choice": "5^",
-                  "key": "5"
-               },
-               {
-                  "choice": "6^",
-                  "key": "6"
-               },
-               {
-                  "choice": "7^",
-                  "key": "7"
-               }
-            ]
-         },
-         {
-            "type": "Numerals",
-            "questionText": "Which roman numeral describes this chord’s degree and quality?",
-            "answers": [
-               "iv7"
-            ],
-            "choices": [
-               {
-                  "choice": "IV7",
-                  "key": "7"
-               },
-               {
-                  "choice": "iv7",
-                  "key": "m"
-               },
-               {
-                  "choice": "ivø7",
-                  "key": "h"
-               },
-               {
-                  "choice": "ivo7",
-                  "key": "d"
-               }
-            ]
-         },
-         {
-            "type": "Inversions",
-            "questionText": "What's the inversion?",
-            "answers": [
-               "iv"
-            ],
-            "choices": [
-               {
-                  "choice": "iv",
-                  "key": "r"
-               },
-               {
-                  "choice": "iv65",
-                  "key": "5"
-               },
-               {
-                  "choice": "iv43",
-                  "key": "3"
-               },
-               {
-                  "choice": "iv42",
-                  "key": "2"
-               }
-            ]
-         }
-      ]
-   }
- ]
+  addKeystrokes(chords)
+  console.log(chords)
+  return chords
 }
 
 /**
@@ -266,7 +228,7 @@ export default function(numQs, options) {
  *                  clef, keySignature, chordType, inversion, notes
  *                }
  */
-export function randomChord(options) {
+export function randomChordContext(options) {
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
@@ -301,6 +263,9 @@ export function randomChord(options) {
   const result = {
     clef: clef,
     keySignature: vexFlowKeySignature,
+    chordType: chordType,
+    chordDescription,
+    romanNumeralContext,
     notes: staffAdjustedNotes
   }
   // All done!
@@ -620,7 +585,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
  */
 export function concretizeRoot(keySignature, modeNote) {
-
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
@@ -629,18 +593,14 @@ export function concretizeRoot(keySignature, modeNote) {
     if (Shapes[keySignature].notes[i].mode === modeNote) {
       const rootAccidental = shape.notes[i].accidental
       const rootSyllable = shape.notes[i].refIP
-
       // Get the offset from the root accidental from `NATURAL`
       const offset = Accidental.offsetFromNatural(rootAccidental)
-
       // FIXME: (James) Implement convenience getter over `LetterName`
       const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-
       // FIXME: (James) Implement convenience getter over `IndependentPitch`
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-
       return {
         independentPitch: rootIP,
         accidental: rootAccidental,
@@ -827,12 +787,15 @@ export function randomRomanNumeralContext(chordStructure) {
 
   // FIXME: Codify "Major" and "minor" here!  
   const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+
   let mode
   switch (modeLabel) {
     case "Major":
       mode = Mode.MAJOR
+      break
     case "minor":
       mode = Mode.MINOR
+      break
   }
 
   switch (chordStructure) {
@@ -862,7 +825,7 @@ export function randomRomanNumeralContext(chordStructure) {
     case ChordStructure.MINOR:
       switch (mode) {
         case Mode.MAJOR: {
-          const modeNote = [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement()
+          const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
           const scaleDegree = degree(mode, modeNote)
           return {
             mode: mode,
@@ -939,7 +902,7 @@ export function randomRomanNumeralContext(chordStructure) {
         }
       }
     case ChordStructure.MAJOR_SEVENTH: {
-      const modeNote = [Mode.MAJOR,Mode.LYDIAN].randomElement()
+      const modeNote = [Mode.MAJOR, Mode.LYDIAN].randomElement()
       const scaleDegree = degree(mode, modeNote)
       return {
         mode: mode,
