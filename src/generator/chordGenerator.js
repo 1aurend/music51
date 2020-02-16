@@ -85,7 +85,7 @@ export function questions(chordContext) {
     {
       "type": "Roots",
       "questionText": "What's the root note?",
-      "answers": [rootLetter+rootAccidental],
+      "answers": [rootLetter + rootAccidental],
       "choices": [] // will populate in the loop
     },
     {
