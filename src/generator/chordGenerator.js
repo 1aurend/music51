@@ -103,12 +103,14 @@ export function questions(chordContext) {
           "7^"
       ]
     },
-    // {
-    //   "type": "Quality",
-    //   "questionText": "What's the chord's quality?",
-    //   "answers": [rootLetter + rootAccidental + newStructure],
-    //   "choices": qualityOptions
-    // },
+    {
+      "type": "Quality",
+      "questionText": "What's the chord's quality?",
+      "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
+      "choices": [...chordStructures(chordContext.chordType)]
+        .map(structure => structure.displayName)
+        .map(quality => rootLetter + rootAccidental + quality)
+    },
     // {
     //   "type": "Numerals",
     //   "questionText": "Which roman numeral describes this chord’s degree and quality?",
@@ -123,16 +125,12 @@ export function questions(chordContext) {
     }
   ]
 
+  // // aggregate options for inversions question
+  // let inversionOptions = []
+  // inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
+
   // TODO:
   // for note in template: 
-    // // aggregate options for chord quality question
-    // let qualityOptions = []
-    // Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})
-
-    // // aggregate options for inversions question
-    // let inversionOptions = []
-    // inversions.map(type => {inversionOptions.push(rootLetter + rootAccidental + newStructure + " " + type)})
-
     // // push notes into questions before adjusting accidentals for key sig
     // chord.questions[0].answers.push(noteLetter);
 
