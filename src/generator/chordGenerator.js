@@ -45,10 +45,9 @@ export function questions(chordContext) {
   // FIXME: Infer `inversionQuality` somehow?
   const inversionQuality = "???"
 
+  // TODO: Wrap up in own function
   let romanInversionOptions
-
   // [roman + inversionQuality + " " + inversion]
-
   if (chordType === 'triad') {
     romanInversionOptions = [
       roman + inversionQuality,
