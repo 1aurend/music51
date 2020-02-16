@@ -33,11 +33,15 @@ const RootOption = {
 export function questions(chordContext) {
 
   const rootLetter = chordContext.chordDescription.root.letter
+
+  console.log("root: " + JSON.stringify(chordContext.chordDescription.root))
+  console.log("root letter: " + rootLetter)
+
   const rootAccidental = chordContext.chordDescription.root.accidental
   const inversion = chordContext.chordDescription.inversion
   const degree = chordContext.romanNumeralContext.degree
   const roman = chordContext.romanNumeralContext.romanNumeral
-  const key = chordContext.key
+  const key = chordContext.keySignature
   const chordType = chordContext.chordType
 
   // FIXME: Infer `romanQuality` somehow?
@@ -86,7 +90,8 @@ export function questions(chordContext) {
       "type": "Roots",
       "questionText": "What's the root note?",
       "answers": [rootLetter + rootAccidental],
-      "choices": [] // will populate in the loop
+      // FIXME: Currently not filtering out naturals
+      "choices": chordContext.notes.map(note => note.letter + note.accidental)
     },
     {
       "type": "Degrees",
@@ -121,6 +126,9 @@ export function questions(chordContext) {
       "choices": romanInversionOptions
     }
   ]
+
+  console.log("root answer: " + (rootLetter + rootAccidental))
+  console.log("all notes: " + JSON.stringify(chordContext.notes))
 
   // TODO:
   // for note in template: 
@@ -233,6 +241,7 @@ export function randomChordContext(options) {
   const keySignature = chooseKeySignature()
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+  console.log("roman numeral context: " + JSON.stringify(romanNumeralContext))
   // Choose a random clef
   const clef = Clef.randomElement()
   // Construct non—octave-positioned description of a chord, in the form:
@@ -251,6 +260,8 @@ export function randomChordContext(options) {
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
+    
+  console.log("key signature: " + JSON.stringify(vexFlowKeySignature))
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
   //       `chordDescription`, `romanNumeralContext`, etc.
@@ -580,6 +591,8 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  */
 export function concretizeRoot(keySignature, modeNote) {
 
+  console.log("concretizeRoot: keySignature: " + keySignature + ", modeNote: " + JSON.stringify(modeNote))
+
   // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
@@ -599,6 +612,8 @@ export function concretizeRoot(keySignature, modeNote) {
       const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
       const rootIPIndex = (rootSyllableIndex + offset) % 12
       const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+
+      console.log("result: letter: " + rootLetter + rootAccidental)
 
       return {
         independentPitch: rootIP,
