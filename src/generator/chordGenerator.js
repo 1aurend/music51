@@ -248,6 +248,7 @@ export function randomChordContext(options) {
   //    inversion: Int
   // }
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+  console.log("chord root: " + JSON.stringify(chordDescription.root.letter + chordDescription.root.accidental))
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)  
@@ -256,7 +257,9 @@ export function randomChordContext(options) {
   // Get the VexFlow representation of the "Shapes" key signature.
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
+  console.log("notes: " + staffAdjustedNotes.map(note => note.letter + note.accidental))
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
+  console.log("key signature: " + vexFlowKeySignature)
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
   //       `chordDescription`, `romanNumeralContext`, etc.
@@ -278,6 +281,7 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
   // Concretize the root by situating the roman numeral context's `modeNote` in the given 
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
+  console.log("concretized root: " + JSON.stringify(concretizedRoot.letter + concretizedRoot.accidental))
   return {
     root: concretizedRoot,
     structure: chordStructure,
@@ -328,6 +332,8 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // TODO: Consider implementing this with `map`
   let notes = []
 
+  console.log("root ip: " + JSON.stringify(rootIP))
+
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
@@ -336,6 +342,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     // Translate the template ip to a relative note in the class
     // FIXME: (James) Again, the `structure.structure` ain't pretty
     const translatedNoteIP = translateNoteIPIndex(template[i], rootIP)
+    console.log("translatedNoteIP: " + translatedNoteIP)
 
     // The syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
@@ -648,7 +655,7 @@ export function translateNoteIPIndex(componentIP, rootIP) {
   const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
   // TODO: audit addition of 12 here
   const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
-  return (untranslatedIndex-rootIndex).mod(12)
+  return (untranslatedIndex - rootIndex + 12).mod(12)
 }
 
 // TODO: Decouple inversion from amount of notes in chord
