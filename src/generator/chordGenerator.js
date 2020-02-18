@@ -41,8 +41,6 @@ export function questions(chordContext) {
   const key = chordContext.modeLabel
   const chordType = chordContext.chordType
 
-  // FIXME: Infer `romanQuality` somehow?
-  const romanQuality = "???"
   // FIXME: Infer `inversionQuality` somehow?
   const inversionQuality = "???"
 
@@ -83,6 +81,8 @@ export function questions(chordContext) {
       roman + inversionQuality + '42'
     ]
   }
+
+  console.log("roman quality: " + JSON.stringify(romanQuality))
 
   // Consider breaking this out to a factory-type function, like:
   // question(chordContext, type)
@@ -134,7 +134,7 @@ export function questions(chordContext) {
     {
       "type": "Numerals",
       "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality],
+      "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
       "choices": romanOptions
     },
     {
@@ -969,4 +969,27 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     default:
       throw new Error("Invalid chord structure")
   }
+}
+
+export function romanQuality(chordStructure) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR:
+      return ''
+    case ChordStructure.MINOR:
+      return ''
+    case ChordStructure.DIMINISHED:
+      return 'o'
+    case ChordStructure.AUGMENTED:
+      return '+'
+    case ChordStructure.DOMINANT_SEVENTH:
+      return '7'
+    case ChordStructure.MAJOR_SEVENTH:
+      return '7'
+    case ChordStructure.MINOR_SEVENTH:
+      return '7'
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+      return 'ø7'
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+      return 'o7'
+  } 
 }
