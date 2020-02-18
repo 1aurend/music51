@@ -15,8 +15,8 @@ import { Mode } from '../generator/Mode'
 test('triad chord comes out when we generate a triad chord', () => {
   const chord = chooseChordStructure(ChordType.TRIAD)
   const triads = new Set([
-    ChordStructure.MAJOR,
-    ChordStructure.MINOR,
+    ChordStructure.MAJOR_TRIAD,
+    ChordStructure.MINOR_TRIAD,
     ChordStructure.AUGMENTED,
     ChordStructure.DIMINISHED
   ])
@@ -27,8 +27,8 @@ test('seventh chord comes out when we generate a seventh chord', () => {
   const chord = chooseChordStructure(ChordType.SEVENTH)
   const sevenths = new Set([
     ChordStructure.DOMINANT_SEVENTH,
-    ChordStructure.MAJOR_SEVENTH,
-    ChordStructure.MINOR_SEVENTH,
+    ChordStructure.MAJOR_TRIAD_SEVENTH,
+    ChordStructure.MINOR_TRIAD_SEVENTH,
     ChordStructure.HALF_DIMINISHED_SEVENTH,
     ChordStructure.FULLY_DIMINISHED_SEVENTH
   ])

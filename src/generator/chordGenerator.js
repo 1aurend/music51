@@ -661,7 +661,7 @@ export function concretizeRoot(keySignature, modeNote) {
  */
 export function romanNumeral(chordStructure, degree) {
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
+    case ChordStructure.MAJOR_TRIAD:
     case ChordStructure.AUGMENTED:
     case ChordStructure.DOMINANT_SEVENTH:
     case ChordStructure.MAJOR_SEVENTH:
@@ -673,8 +673,8 @@ export function romanNumeral(chordStructure, degree) {
 
 //These are KP's choices. See note in randomRomanNumeralContext re: configurability.
 const allowedModesByChordStructure = {
-  [ChordStructure.MAJOR]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.MINOR]: [Mode.MAJOR, Mode.MINOR],
+  [ChordStructure.MAJOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
+  [ChordStructure.MINOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.DIMINISHED]: [Mode.MAJOR],
   [ChordStructure.AUGMENTED]: [Mode.MAJOR],
   [ChordStructure.DOMINANT_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
@@ -836,7 +836,7 @@ export function randomRomanNumeralContext(chordStructure) {
   }
 
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
+    case ChordStructure.MAJOR_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement()
@@ -859,7 +859,7 @@ export function randomRomanNumeralContext(chordStructure) {
           }
         }
       }
-    case ChordStructure.MINOR:
+    case ChordStructure.MINOR_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = [Mode.DORIAN, Mode.PHRYIGIAN, Mode.MINOR].randomElement()

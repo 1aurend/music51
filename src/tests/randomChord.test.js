@@ -52,7 +52,7 @@ test('partially concretize chord notes makes three notes for a triad', () => {
 })
 
 test('partially concretize major chord on c natural in root position in c major', () => {
-  const chordStructure = ChordStructure.MAJOR
+  const chordStructure = ChordStructure.MAJOR_TRIAD
   const inversion = ""
   const keySignature = 'B' // "Bottom", i.e., C major
   const romanNumeralContext = {
@@ -72,7 +72,7 @@ test('partially concretize major chord on c natural in root position in c major'
 })
 
 test('partially concretize major chord on c natural in first inversion in c major', () => {
-  const chordStructure = ChordStructure.MAJOR
+  const chordStructure = ChordStructure.MAJOR_TRIAD
   const inversion = "63"
   const keySignature = 'B' // "Bottom", i.e., C major
   const romanNumeralContext = {
