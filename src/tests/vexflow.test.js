@@ -25,7 +25,7 @@ test('returns an array of the correct length', () => {
   ]
   const noteColors = colors.map(color => {
     const noteNum = notes.map(note => note.letter).indexOf(color)
-    return {key: noteNum, color: '#17c671'}
+    return {key: noteNum, color: '#26AD5E'}
     })
   console.log(noteColors)
   expect(noteColors.length).toBe(3)

@@ -13,7 +13,7 @@ export default function ResultsTable(props) {
   const means = useContext(Session).means.tally
   const qTypes = useContext(Session).means.questionTypes
   const sizedStyles = useResponsiveStyles()
-  const { matrixSize } = sizedStyles
+  const { tableSize } = sizedStyles
 
   const perfectRounds = (means.Overall.attempts.filter(average => average === 1)).length
   const greeting = perfectRounds >= 1 ? `Pefection! You completed ${perfectRounds} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
@@ -22,7 +22,7 @@ export default function ResultsTable(props) {
       window.scrollTo(0, 0)
   },[])
 
-  if (matrixSize >= 900) {
+  /*if (tableSize >= 900) {
     const headers = qTypes.map( type => {
       return  <th scope="col" className="border-0">
                 {type.toUpperCase()}
@@ -57,7 +57,7 @@ export default function ResultsTable(props) {
             bestRoundT={bestRoundT}
             startOver={startOver}
             />
-  } else {
+  } else {*/
     const verticalTableAtt = qTypes.map( type => {
       return <tr>
               <td>{type[0].toUpperCase()}</td>
@@ -80,5 +80,5 @@ export default function ResultsTable(props) {
             verticalTableT={verticalTableT}
             startOver={startOver}
             />
-    }
+    /*}*/
 }

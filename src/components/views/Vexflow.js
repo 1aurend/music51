@@ -56,7 +56,7 @@ function Vexflow(props) {
     vexNotes[0].addAccidental(accidental.note, new VF.Accidental(accidental.accidental))
   })
   noteColors.forEach(index => {
-    vexNotes[0].setKeyStyle(index, { fillStyle: '#17c671'})
+    vexNotes[0].setKeyStyle(index, { fillStyle: '#26AD5E'})
   })
   const voice = new VF.Voice({num_beats: 4,  beat_value: 4})
   voice.addTickables(vexNotes)

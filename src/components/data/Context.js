@@ -23,7 +23,7 @@ export default function Context() {
       <Dispatch.Provider value={dispatch}>
         {/*do headline and round need to start here as props?*/}
         {/*also round really shouldn't be a prop; can get this from Object.keys(sessionData.rounds)*/}
-        <StartMenu title={{headline: 'Chord Crusher', beta: '*beta*', subtitle: 'MUSIC 51'}} round={1}/>
+        <StartMenu title={{headline: 'Chord Crusher', mode: '*non-diatonic mode*', subtitle: 'MUSIC 51'}} round={1}/>
       </Dispatch.Provider>
     </Session.Provider>
   )

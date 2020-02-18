@@ -8,7 +8,7 @@ export default function Loading() {
         <Row style={{paddingTop: '25%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}></Row>
           <Col sm='12' lg='12'>
             <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}} noGutters>
-              <h2 style={{color: '#17c671', fontFamily: "'Press Start 2P', cursive"}}>Calculating your stats...</h2>
+              <h2 style={{color: '#26AD5E', fontFamily: "'Press Start 2P', cursive"}}>Calculating your stats...</h2>
             </Row>
           </Col>
         </Container>

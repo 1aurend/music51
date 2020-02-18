@@ -1,28 +1,46 @@
 import React from 'react'
 import { Button } from 'shards-react'
 import styled from 'styled-components'
+import {ButtonBorder} from '../layouts/PixelBorder'
 
+
+//
+// const StyledChoiceButton = styled(Button)`
+  // min-height: 10vh;
+  // min-width: 10vh;
+  // margin-left: 2%;
+  // margin-right: 2%;
+  // margin-bottom: 2%;
+  // font-size: 2rem;
+  // text-align: center;
+//   font-family: 'Overpass Mono', monospace;
+//   font-weight: 600;
+//   border-width: 4px;
+//   border-radius: 0;
+//   background-color: ${props => props.color};
+//   &:hover {
+//     background-color: ${props => props.color};
+//   }
+// `
 
 const StyledChoiceButton = styled(Button)`
-  min-height: 10vh;
-  min-width: 10vh;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-bottom: 2%;
-  font-size: 2rem;
-  text-align: center;
-  font-family: 'Overpass Mono', monospace;
-  font-weight: 600;
-  border-width: 4px;
-  border-radius: 0;
+  display: block;
+  cursor: pointer;
+  border: none;
+  padding: 0;
   background-color: ${props => props.color};
   &:hover {
     background-color: ${props => props.color};
   }
+  min-height: 6vh;
+  min-width: 6vh;
+  font-size: 2rem;
+  text-align: center;
 `
+
 const StyledKeystrokeSymbol = styled.p`
   font-size: 14px;
-  color: #898a8d;
+  color: #FF0000;
   margin-bottom: 0;
   margin-top: 2;
 `
@@ -32,9 +50,9 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
     if (colors.length > 0 && thisInput.color === 'red' && thisInput.input === choice) {
-      return '#c4183c'
+      return '#B53F04'
     } else if (greens.includes(choice)) {
-      return '#17c671'
+      return '#6AD97A'
     }
     return '#e5e6eb'
   })()
@@ -69,15 +87,17 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
   const formattedChoice = formatButtonText(choice)
 
   return (
-    <StyledChoiceButton
-      theme='light'
-      color={background}
-      onClick={onClick}
-      >
-        {formattedChoice}
-        <StyledKeystrokeSymbol>
-          [{keystroke}]
-        </StyledKeystrokeSymbol>
-    </StyledChoiceButton>
+    <ButtonBorder>
+      <StyledChoiceButton
+        theme='dark'
+        color={background}
+        onClick={onClick}
+        >
+          {formattedChoice}
+          <StyledKeystrokeSymbol>
+            [{keystroke}]
+          </StyledKeystrokeSymbol>
+      </StyledChoiceButton>
+    </ButtonBorder>
   )
 }

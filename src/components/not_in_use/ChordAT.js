@@ -21,7 +21,7 @@ export default function Chord(props) {
       for (var j = 0; j < props.notes.length; j++) {
         let noteName = props.notes[j].length === 1 ? props.notes[j] : props.notes[j].slice(0,-1)
         if (props.colors[i] === noteName) {
-          colors.push({key: j, color: '#17c671'})
+          colors.push({key: j, color: '#26AD5E'})
         }
       }
     }

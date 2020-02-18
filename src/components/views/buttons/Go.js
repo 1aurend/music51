@@ -9,6 +9,10 @@ const StyledSvgButton = styled(Button)`
   cursor: pointer;
   border: none;
   padding: 0;
+  background: transparent;
+  :hover {
+    background:transparent;
+  }
 `
 
 export default function Go({ onClick }) {

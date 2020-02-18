@@ -36,8 +36,8 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const verbA = attemptsSummary.verb
   const sizedStyles = useResponsiveStyles()
   const { progressTitle, progressSubtitle } = sizedStyles
-  const vTColor = verbT === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
-  const vAColor = verbA === 'decreased' ? {color: '#17c671', fontWeight: '600'} : null
+  const vTColor = verbT === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
+  const vAColor = verbA === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -92,6 +92,10 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
                   {`${timesSummary.percent}%`}
                 </span>
                 .
+              </p>
+            </StyledRow>
+            <StyledRow>
+              <p>Here's what changed the most this round!
               </p>
             </StyledRow>
             <StyledRow margintop='5%'>

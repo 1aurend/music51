@@ -6,35 +6,38 @@ import {
   FormCheckbox
 } from 'shards-react'
 import styled from 'styled-components'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
 
 const StyledToggleRow = styled(Row)`
   display: flex;
   justify-content: flex-start;
   margin-left: 25%;
-  font-family: 'Overpass Mono', monospace;
 `
-const StyledColHeader = styled.h4`
-  font-family: 'Overpass Mono', monospace;
-  font-weight: 600;
-  margin-bottom: 1%;
+const StyledColHeader = styled.h3`
   text-align: center;
-  margin-top: 2%;
+  color: ${props => props.theme.colors.light};
+  line-height: 10px;
+`
+const ToggleDiv = styled.div`
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  > * {
+    margin: 5%
+  }
 `
 
 export default function SessionOptions({checked, onChange, onCheck, text, size}) {
+  const sizedStyles = useResponsiveStyles()
+  const { h1, h2, h3, h4, para, input} = sizedStyles
   return (
       <>
-      <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%', marginTop: '3%', marginBottom: '5%'}}>
-        <Col lg='4' sm='12'>
-          <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-            <StyledColHeader>CHORDS/ROUND</StyledColHeader>
-          </Row>
-          <Row style={{display: 'flex', justifyContent: 'center', paddingBottom: '2%'}}>
-          <FormInput onChange={onChange} type="text" placeholder="5" style={{maxWidth: size, fontFamily: "'Overpass Mono', monospace"}}/>
-          </Row>
-        </Col>
-          <Col sm='12' lg='4'>
+      <ToggleDiv>
+            <StyledColHeader style={h4}>chords/round:</StyledColHeader>
+          <FormInput onChange={onChange} type="text" placeholder="5" style={input}/>
+          {/*<Col sm='12' lg='4'>
             <StyledColHeader>CHORD TYPES</StyledColHeader>
             <StyledToggleRow>
               <FormCheckbox toggle checked={checked.chordTypes.triads} onChange={() => onCheck('chord', 'triads')}>
@@ -59,8 +62,8 @@ export default function SessionOptions({checked, onChange, onCheck, text, size})
                 Any
               </FormCheckbox>
             </StyledToggleRow>
-          </Col>
-        </Row>
+          </Col>*/}
+        </ToggleDiv>
       </>
     )
 

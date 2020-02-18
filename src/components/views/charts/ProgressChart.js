@@ -16,7 +16,7 @@ function ProgressChart(props) {
   const domainMaxY = metric === 'attempts' ? chartData.chartData.domainMaxYAtt : chartData.chartData.domainMaxYTime
   const yLabel = metric === 'attempts' ? '# ATTEMPTS' : 'TIME (secs)'
   const labelsX = chartData.chartData.labelsX
-  const colorScale = ['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#17c671']
+  const colorScale = ['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#26AD5E']
   //not sure useMemo helps here because data will always be different because object identity??
   const chartLines = useMemo(() => {
     return qTypes.map( type => {

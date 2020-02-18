@@ -8,6 +8,10 @@ import {
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../buttons/RoundEndNav'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
+import Marquee from './Marquee'
+import {Grid, Cell, SubCell} from './Grids'
+import Theme from '../Theme'
 
 // TODO: finish implementing styled-components and refactor
 const StyledRow = styled(Row)`
@@ -28,12 +32,13 @@ const StyledCenterPane = styled(Col)`
   background-color: #e5e6eb;
 `
 
+
 export default function StatLines(props) {
   const { round, setShowStats, nextRound, finished } = props
   const means = useContext(Session).means.tally
   const qTypes = useContext(Session).means.questionTypes
   const sizedStyles = useResponsiveStyles()
-  const { statsTitle, statsSubtitle } = sizedStyles
+  const { h1, h2, h3, h4, para, input, gridMarquee, gridMain, gridMisc, rowOrCol} = sizedStyles
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -54,30 +59,51 @@ export default function StatLines(props) {
   })
 
   return (
-    <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
-      <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <StyledCenterPane sm='12' lg='8'>
-          <StyledRow margintop='5%'>
-            <h2 style={statsTitle}>
-              {headline}
-            </h2>
-          </StyledRow>
-          <StyledRow margintop='5%' marginbottom='2%' font>
-            <Col sm='12' lg='10'>
-              {subtitle && <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}>
-                <h3 style={statsSubtitle}>{subtitle}</h3>
-              </Row>}
-                {statLines}
-              {closing && <Row style={{display: 'flex', justifyContent: 'center'}}>
-                <h3 style={statsSubtitle}>{closing}</h3>
-              </Row>}
-            </Col>
-          </StyledRow>
-          <StyledRow marginbottom='5%'>
-            <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
-          </StyledRow>
-        </StyledCenterPane>
-      </Row>
-    </Container>
+    <Theme>
+      <Grid>
+        <Cell style={gridMarquee}>
+          <MegaPixelBorder>
+            <h1 style={h1}>{headline}</h1>
+          </MegaPixelBorder>
+        </Cell>
+        <Cell style={gridMain}>
+          <SmallPixelBorderSingle>
+            <h3 style={h3}>{subtitle}</h3>
+            <h4 style={h4}>{statLines}</h4>
+            <h3 style={h3}>{closing}</h3>
+          </SmallPixelBorderSingle>
+        </Cell>
+        <Cell style={gridMisc}>
+          <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
+        </Cell>
+      </Grid>
+    </Theme>
+
+    //
+    // <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
+    //   <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
+    //     <StyledCenterPane sm='12' lg='8'>
+    //       <StyledRow margintop='5%'>
+    //         <h2 style={h2}>
+    //           {headline}
+    //         </h2>
+    //       </StyledRow>
+    //       <StyledRow margintop='5%' marginbottom='2%' font>
+    //         <Col sm='12' lg='10'>
+    //           {subtitle && <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}>
+    //             <h3 style={statsSubtitle}>{subtitle}</h3>
+    //           </Row>}
+    //             {statLines}
+    //           {closing && <Row style={{display: 'flex', justifyContent: 'center'}}>
+    //             <h3 style={statsSubtitle}>{closing}</h3>
+    //           </Row>}
+    //         </Col>
+    //       </StyledRow>
+    //       <StyledRow marginbottom='5%'>
+    //         <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
+    //       </StyledRow>
+    //     </StyledCenterPane>
+    //   </Row>
+    // </Container>
   )
 }

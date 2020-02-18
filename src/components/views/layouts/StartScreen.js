@@ -8,62 +8,44 @@ import SessionOptions from '../buttons/SessionOptions'
 import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
+import Marquee from './Marquee'
+import Expander from './Expander'
+import Instructions from './Instructions'
+import {Grid, Cell, SubCell} from './Grids'
+import Theme from '../Theme'
 
-const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: ${props => props.margintop || 0};
-  margin-bottom: ${props => props.marginbottom || 0};
-`
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-  background-color: #e5e6eb;
-`
 
 export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
-  const {chordCrusher, music51, beta, input} = sizedStyles
+  const { h1, h2, h3, h4, para, input, gridMarquee, gridMain, gridMisc, rowOrCol} = sizedStyles
 
   useEffect(() => {
-      window.scrollTo(0, 0)
-  },[])
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
-    <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
-      <Row noGutters style={{paddingTop: '3%'}}></Row>
-      <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <StyledCenterPane sm='12' lg='8'>
-          <StyledRow margintop='5%'>
-            <h1 style={chordCrusher}>{title.headline}</h1>
-          </StyledRow>
-          <StyledRow>
-            <h2 style={beta}>Roman Numerals Mode</h2>
-          </StyledRow>
-          <StyledRow>
-            <h2 style={beta}>{title.beta}</h2>
-          </StyledRow>
-          <StyledRow marginbottom='2%'>
-            <h2 style={music51}>{title.subtitle}</h2>
-          </StyledRow>
-          <StyledRow>
-            <h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '0'}}>INSTRUCTIONS</h4>
-          </StyledRow>
-          <StyledRow>
-            <p style={{fontFamily: "'Overpass Mono', monospace", marginBottom: '0', textAlign: 'left'}}>
-              In a session of Chord Crusher, you'll complete multiple rounds; see if you can improve your time and accuracy on each round. You can set rounds from 5-25 chords in length. For each chord, there are four questions that aggregate to name the chord, quality, and inversion. If this is your first time, try 5 chords per round. After that, choose as many as you want!</p>
-          </StyledRow>
-          <SessionOptions checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} size={input}/>
-        </StyledCenterPane>
-      </Row>
-      <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
-        <Go onClick={generateQuiz}/>
-      </Row>
-    </Container>
+    <Theme>
+      <Grid>
+        <Cell style={gridMarquee}>
+          <MegaPixelBorder>
+            <Marquee title={title}/>
+          </MegaPixelBorder>
+        </Cell>
+        <Cell style={gridMain}>
+          <SmallPixelBorderSingle>
+              <Instructions infoText="In a round of Chord Crusher, you/’ll answer a series of questions about each chord. You can choose the number of chords in a round (if you/’re a newbie, try 5 chords). The goal is to answer questions in a round as quickly as possible, and then to beat your time in each successive round. Will you crush the chords? Or will the chords crush YOU?!"/>
+              <Expander infoText="
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat eros eu lacus pretium accumsan. Vestibulum ultricies egestas augue ac auctor. In purus nulla, malesuada sed nulla sit amet, fermentum condimentum ipsum. Suspendisse mi augue, porttitor sit amet sem at, lobortis vehicula sapien. Nullam sit amet risus quis ex maximus volutpat vitae nec quam. Pellentesque rhoncus ligula enim, eu varius turpis dignissim vitae. Quisque finibus, enim et scelerisque pulvinar, nisl sapien maximus massa, id feugiat lacus augue ac diam. Proin cursus quam ut sem maximus aliquam. Phasellus non ornare nulla. Pellentesque non convallis sapien. Sed at nunc enim. Nam posuere imperdiet luctus. Sed eu blandit mi, sed ullamcorper leo. Aliquam lobortis bibendum lectus eget tempus. Sed quis est vel massa rhoncus convallis. Cras posuere egestas nulla. Vivamus turpis leo, convallis nec metus ut, dignissim mattis odio. Aenean consectetur condimentum orci a vehicula."/>
+          </SmallPixelBorderSingle>
+        </Cell>
+        <Cell style={gridMisc}>
+          <SubCell style={{alignItems:'center',justifyContent:'center',flexDirection:'column'}}>
+            <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
+            <Go onClick={generateQuiz} />
+          </SubCell>
+        </Cell>
+      </Grid>
+    </Theme>
   )
 }
