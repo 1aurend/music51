@@ -241,7 +241,6 @@ export function randomChordContext(options) {
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
-  console.log("modeLabel: " + modeLabel)
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
