@@ -787,9 +787,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                  Rename to `chooseRomanNumeralContext`
  */
 export function randomRomanNumeralContext(chordStructure, modeLabel) {
-
-  console.log("random roman numeral context, mode label: " + JSON.stringify(modeLabel))
-
   // FIXME: Codify "Major" and "minor" here!  
   let mode
   switch (modeLabel) {
@@ -800,8 +797,6 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       mode = Mode.MINOR
       break
   }
-  console.log("mode: " + JSON.stringify(mode))
-
   switch (chordStructure) {
     case ChordStructure.MAJOR:
       switch (mode) {
