@@ -236,7 +236,7 @@ export function randomChordContext(options) {
   const inversion = chooseInversion(chordType)
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
-  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -529,7 +529,7 @@ function constrainAccidental(syllable, structure, initialChoice) {
   )
   const containsTripleSharp = (
     initialChoice === Accidental.SHARP &&
-    structure === ChordStructure.AUGMENTED &&
+    structure === ChordStructure.AUGMENTED_TRIAD &&
     syllable === IndependentPitch.TI
   )
   if (containsTripleFlat || containsTripleSharp) {
@@ -613,7 +613,7 @@ export function concretizeRoot(keySignature, modeNote) {
 export function romanNumeral(chordStructure, degree) {
   switch (chordStructure) {
     case ChordStructure.MAJOR_TRIAD:
-    case ChordStructure.AUGMENTED:
+    case ChordStructure.AUGMENTED_TRIAD:
     case ChordStructure.DOMINANT_SEVENTH:
     case ChordStructure.MAJOR_SEVENTH:
       return degreeAndQualityToRomanNumeral(degree, true)
@@ -626,8 +626,8 @@ export function romanNumeral(chordStructure, degree) {
 const allowedModesByChordStructure = {
   [ChordStructure.MAJOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.MINOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.DIMINISHED]: [Mode.MAJOR],
-  [ChordStructure.AUGMENTED]: [Mode.MAJOR],
+  [ChordStructure.DIMINISHED_TRIAD]: [Mode.MAJOR],
+  [ChordStructure.AUGMENTED_TRIAD]: [Mode.MAJOR],
   [ChordStructure.DOMINANT_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
   [ChordStructure.MAJOR_SEVENTH]: [Mode.MAJOR],
   [ChordStructure.MINOR_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
@@ -840,7 +840,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
           }
         }
       }
-    case ChordStructure.DIMINISHED:
+    case ChordStructure.DIMINISHED_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = Mode.LOCRIAN
@@ -863,7 +863,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
           }
         }
       }
-    case ChordStructure.AUGMENTED: {
+    case ChordStructure.AUGMENTED_TRIAD: {
       const modeNote = Mode.MAJOR
       const scaleDegree = degree(mode, modeNote)
       return {
@@ -962,8 +962,27 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
         romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
     }
+    case ChordStructure.NEAPOLITAN_SIXTH:
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
     default:
-      throw new Error("Invalid chord structure")
+      "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
 }
 
@@ -973,9 +992,9 @@ export function inversionQuality(chordStructure) {
       return ''
     case ChordStructure.MINOR:
       return ''
-    case ChordStructure.DIMINISHED:
+    case ChordStructure.DIMINISHED_TRIAD:
       return 'o'
-    case ChordStructure.AUGMENTED:
+    case ChordStructure.AUGMENTED_TRIAD:
       return '+'
     case ChordStructure.DOMINANT_SEVENTH:
       return ''
@@ -996,9 +1015,9 @@ export function romanQuality(chordStructure) {
       return ''
     case ChordStructure.MINOR:
       return ''
-    case ChordStructure.DIMINISHED:
+    case ChordStructure.DIMINISHED_TRIAD:
       return 'o'
-    case ChordStructure.AUGMENTED:
+    case ChordStructure.AUGMENTED_TRIAD:
       return '+'
     case ChordStructure.DOMINANT_SEVENTH:
       return '7'

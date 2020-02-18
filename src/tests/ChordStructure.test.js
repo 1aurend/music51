@@ -5,8 +5,8 @@ test('triad chord type returns four chord structures', () => {
   const expected = new Set([
     ChordStructure.MAJOR_TRIAD,
     ChordStructure.MINOR_TRIAD,
-    ChordStructure.AUGMENTED,
-    ChordStructure.DIMINISHED
+    ChordStructure.AUGMENTED_TRIAD,
+    ChordStructure.DIMINISHED_TRIAD
   ])
   expect(chordStructures(ChordType.TRIAD)).toEqual(expected)
 })
@@ -25,8 +25,8 @@ test('seventh chord type returns five chord structures', () => {
 test('Basic chord structures exist', () => {
   expect(ChordStructure.MAJOR_TRIAD).toBeDefined()
   expect(ChordStructure.MINOR_TRIAD).toBeDefined()
-  expect(ChordStructure.DIMINISHED).toBeDefined()
-  expect(ChordStructure.AUGMENTED).toBeDefined()
+  expect(ChordStructure.DIMINISHED_TRIAD).toBeDefined()
+  expect(ChordStructure.AUGMENTED_TRIAD).toBeDefined()
   expect(ChordStructure.DOMINANT_SEVENTH).toBeDefined()
   expect(ChordStructure.MAJOR_SEVENTH).toBeDefined()
   expect(ChordStructure.MINOR_SEVENTH).toBeDefined()

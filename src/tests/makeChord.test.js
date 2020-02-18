@@ -16,8 +16,8 @@ test('triad chord comes out when we generate a triad chord', () => {
   const triads = new Set([
     ChordStructure.MAJOR_TRIAD,
     ChordStructure.MINOR_TRIAD,
-    ChordStructure.AUGMENTED,
-    ChordStructure.DIMINISHED
+    ChordStructure.AUGMENTED_TRIAD,
+    ChordStructure.DIMINISHED_TRIAD
   ])
   expect(triads.has(chord)).toBeTruthy()
 })
@@ -26,8 +26,8 @@ test('seventh chord comes out when we generate a seventh chord', () => {
   const chord = chooseChordStructure(ChordType.SEVENTH)
   const sevenths = new Set([
     ChordStructure.DOMINANT_SEVENTH,
-    ChordStructure.MAJOR_TRIAD_SEVENTH,
-    ChordStructure.MINOR_TRIAD_SEVENTH,
+    ChordStructure.MAJOR_SEVENTH,
+    ChordStructure.MINOR_SEVENTH,
     ChordStructure.HALF_DIMINISHED_SEVENTH,
     ChordStructure.FULLY_DIMINISHED_SEVENTH
   ])
@@ -37,7 +37,8 @@ test('seventh chord comes out when we generate a seventh chord', () => {
 test('make roman numeral context', () => {
   for (var i = 0; i < Object.keys(ChordStructure).length; i++) {
     const chordStructure = Object.values(ChordStructure)[i]
-    const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+    console.log("chord structure: " + JSON.stringify(chordStructure))
+    const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
     expect(randomRomanNumeralContext(chordStructure, modeLabel)).toBeTruthy()
   }
 })
