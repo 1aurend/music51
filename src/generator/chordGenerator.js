@@ -41,11 +41,6 @@ export function questions(chordContext) {
   const key = chordContext.modeLabel
   const chordType = chordContext.chordType
 
-  // FIXME: Infer `romanQuality` somehow?
-  const romanQuality = "???"
-  // FIXME: Infer `inversionQuality` somehow?
-  const inversionQuality = "???"
-
   // TODO: Wrap up in own function
 
   // roman numeral question options
@@ -67,20 +62,21 @@ export function questions(chordContext) {
     ]
   }
   
+  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
   let romanInversionOptions
   // [roman + inversionQuality + " " + inversion]
   if (chordType === 'triad') {
     romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '63',
-      roman + inversionQuality + '64'
+      roman + inversionDisplay,
+      roman + inversionDisplay + '63',
+      roman + inversionDisplay + '64'
     ]
   } else if (chordType === 'seventh') {
     romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '65',
-      roman + inversionQuality + '43',
-      roman + inversionQuality + '42'
+      roman + inversionDisplay,
+      roman + inversionDisplay + '65',
+      roman + inversionDisplay + '43',
+      roman + inversionDisplay + '42'
     ]
   }
 
@@ -134,13 +130,13 @@ export function questions(chordContext) {
     {
       "type": "Numerals",
       "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality],
+      "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
       "choices": romanOptions
     },
     {
       "type": "Inversions",
       "questionText": "What's the inversion?",
-      "answers": [roman + inversionQuality + inversion],
+      "answers": [roman + inversionDisplay + inversion],
       "choices": romanInversionOptions
     }
   ]
@@ -787,9 +783,6 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                  Rename to `chooseRomanNumeralContext`
  */
 export function randomRomanNumeralContext(chordStructure, modeLabel) {
-
-  console.log("random roman numeral context, mode label: " + JSON.stringify(modeLabel))
-
   // FIXME: Codify "Major" and "minor" here!  
   let mode
   switch (modeLabel) {
@@ -800,8 +793,6 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       mode = Mode.MINOR
       break
   }
-  console.log("mode: " + JSON.stringify(mode))
-
   switch (chordStructure) {
     case ChordStructure.MAJOR:
       switch (mode) {
@@ -974,4 +965,50 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     default:
       throw new Error("Invalid chord structure")
   }
+}
+
+export function inversionQuality(chordStructure) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR:
+      return ''
+    case ChordStructure.MINOR:
+      return ''
+    case ChordStructure.DIMINISHED:
+      return 'o'
+    case ChordStructure.AUGMENTED:
+      return '+'
+    case ChordStructure.DOMINANT_SEVENTH:
+      return ''
+    case ChordStructure.MAJOR_SEVENTH:
+      return ''
+    case ChordStructure.MINOR_SEVENTH:
+      return ''
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+      return 'ø'
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+      return 'o'
+  } 
+}
+
+export function romanQuality(chordStructure) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR:
+      return ''
+    case ChordStructure.MINOR:
+      return ''
+    case ChordStructure.DIMINISHED:
+      return 'o'
+    case ChordStructure.AUGMENTED:
+      return '+'
+    case ChordStructure.DOMINANT_SEVENTH:
+      return '7'
+    case ChordStructure.MAJOR_SEVENTH:
+      return '7'
+    case ChordStructure.MINOR_SEVENTH:
+      return '7'
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+      return 'ø7'
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+      return 'o7'
+  } 
 }
