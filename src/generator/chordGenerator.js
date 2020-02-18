@@ -27,8 +27,9 @@ const RootOption = {
  *                        chordDescription,
  *                        romanNumeralContext,
  *                        notes
-*                       }
+ *                       }
  * @returns             An array of questions (and answers) for the given `chordContext`.
+ * @todo                Move to own file, potentially in a Class of its own
  */
 export function questions(chordContext) {
 
@@ -229,18 +230,16 @@ export default function(numQs, options) {
  *                }
  */
 export function randomChordContext(options) {
+  // Choose a random `KeySignature`
+  const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType(chordTypesOption(options.chordTypes))
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
-  // Choose a random `KeySignature`
-  const keySignature = chooseKeySignature()
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure)
-  // Choose a random clef
-  const clef = Clef.randomElement()
   // Construct non—octave-positioned description of a chord, in the form:
   // {
   //    root: { independentPitch, accidental, letter, syllable },
@@ -250,13 +249,20 @@ export function randomChordContext(options) {
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
-  const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)  
+  const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
   // Place the notes on the staff as is appropriate for the randomly chosen `clef`.
+
+  // Fully concretize the notes for the given clef
+
+  // Choose a random clef
+  const clef = Clef.randomElement()
+
   const staffAdjustedNotes = staffAdjust(partiallyConcretizedNotes, clef)
   // Get the VexFlow representation of the "Shapes" key signature.
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
+  
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
   //       `chordDescription`, `romanNumeralContext`, etc.
@@ -332,14 +338,10 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
   for(var i=0; i<template.length; i++){
-
     // Translate the template ip to a relative note in the class
-    // FIXME: (James) Again, the `structure.structure` ain't pretty
-    const translatedNoteIP = translateNoteIPIndex(template[i], rootIP)
-
-    // The syllable of the chord component
+    const translatedNoteIP = translateNoteIPIndex(template[i])
+    // Compute the syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
-
     // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
 
@@ -368,6 +370,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
 
 
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
+
   // FIXME: Come up with a name that is neither `whiteNotes` nor `.BOTTOM`
   const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
   const rootSyllable = chordDescription.root.syllable
@@ -539,14 +542,6 @@ function constrainAccidental(syllable, structure, initialChoice) {
   return initialChoice
 }
 
-// Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
-function chooseRootAccidental(syllable, structure, allowedAccidentals) {
-  return constrainAccidental(
-    syllable,
-    structure,
-    chooseRandomAccidental(allowedAccidentals))
-}
-
 // TODO: Decide if we still need this function. Is this now covered by concretizeRoot? If so, we'll need to deal with chooseRootAccidental above to make sure we're still dealing with the egregious edge cases.
 // => {
 //  syllable: Syllable,
@@ -644,11 +639,10 @@ const allowedModesByChordStructure = {
   [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
 }
 
-export function translateNoteIPIndex(componentIP, rootIP) {
+export function translateNoteIPIndex(componentIP) {
   const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
-  // TODO: audit addition of 12 here
-  const rootIndex = Object.values(IndependentPitch).indexOf(rootIP)
-  return (untranslatedIndex-rootIndex).mod(12)
+  const anchorIndex = Object.values(IndependentPitch).indexOf("D")
+  return (untranslatedIndex - anchorIndex + 12).mod(12)
 }
 
 // TODO: Decouple inversion from amount of notes in chord
@@ -774,6 +768,14 @@ function chooseInitialOctave(clef) {
 
 function chooseRandomAccidental(allowedAccidentals) {
   return allowedAccidentals.randomElement()
+}
+
+// Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
+function chooseRootAccidental(syllable, structure, allowedAccidentals) {
+  return constrainAccidental(
+    syllable,
+    structure,
+    chooseRandomAccidental(allowedAccidentals))
 }
 
 /**

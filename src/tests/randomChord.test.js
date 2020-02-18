@@ -156,6 +156,19 @@ test('concretizeRoot f natural in d', () => {
   expect(result).toStrictEqual(expected)
 })
 
+test('concretizeRoot E flat in g', () => {
+  const keySignature = 'R2' // g min
+  const modeNote = 'Lyd'
+  const expected = {
+    independentPitch: IndependentPitch.NA,
+    accidental: Accidental.FLAT,
+    letter: LetterName.E,
+    syllable: IndependentPitch.MI
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
 test('randomChordContext does not blow up', () => {
   const options = {
     chordTypes: { triads: true, sevenths: true },
@@ -164,10 +177,12 @@ test('randomChordContext does not blow up', () => {
   let chord = randomChordContext(options)
 })
 
-test('randomRomanNumeralContext returns a valid mode note', () => {
+test('randomRomanNumeralContext returns a valid mode note and degree', () => {
   const chordStructure = ChordStructure.MINOR
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 10000; i++) {
     const romanNumeralContext = randomRomanNumeralContext(chordStructure)
     expect(romanNumeralContext.modeNote).toBeDefined()
+    expect(romanNumeralContext.degree).toBeDefined()
   }
 })
+
