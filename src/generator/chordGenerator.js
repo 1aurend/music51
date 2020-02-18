@@ -41,9 +41,6 @@ export function questions(chordContext) {
   const key = chordContext.modeLabel
   const chordType = chordContext.chordType
 
-  // FIXME: Infer `inversionQuality` somehow?
-  const inversionQuality = "???"
-
   // TODO: Wrap up in own function
 
   // roman numeral question options
@@ -65,24 +62,23 @@ export function questions(chordContext) {
     ]
   }
   
+  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
   let romanInversionOptions
   // [roman + inversionQuality + " " + inversion]
   if (chordType === 'triad') {
     romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '63',
-      roman + inversionQuality + '64'
+      roman + inversionDisplay,
+      roman + inversionDisplay + '63',
+      roman + inversionDisplay + '64'
     ]
   } else if (chordType === 'seventh') {
     romanInversionOptions = [
-      roman + inversionQuality,
-      roman + inversionQuality + '65',
-      roman + inversionQuality + '43',
-      roman + inversionQuality + '42'
+      roman + inversionDisplay,
+      roman + inversionDisplay + '65',
+      roman + inversionDisplay + '43',
+      roman + inversionDisplay + '42'
     ]
   }
-
-  console.log("roman quality: " + JSON.stringify(romanQuality))
 
   // Consider breaking this out to a factory-type function, like:
   // question(chordContext, type)
@@ -140,7 +136,7 @@ export function questions(chordContext) {
     {
       "type": "Inversions",
       "questionText": "What's the inversion?",
-      "answers": [roman + inversionQuality + inversion],
+      "answers": [roman + inversionDisplay + inversion],
       "choices": romanInversionOptions
     }
   ]
@@ -969,6 +965,29 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     default:
       throw new Error("Invalid chord structure")
   }
+}
+
+export function inversionQuality(chordStructure) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR:
+      return ''
+    case ChordStructure.MINOR:
+      return ''
+    case ChordStructure.DIMINISHED:
+      return 'o'
+    case ChordStructure.AUGMENTED:
+      return '+'
+    case ChordStructure.DOMINANT_SEVENTH:
+      return ''
+    case ChordStructure.MAJOR_SEVENTH:
+      return ''
+    case ChordStructure.MINOR_SEVENTH:
+      return ''
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+      return 'ø'
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+      return 'o'
+  } 
 }
 
 export function romanQuality(chordStructure) {
