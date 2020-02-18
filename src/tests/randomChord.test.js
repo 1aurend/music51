@@ -1,5 +1,5 @@
 import { 
-  randomChord, 
+  randomChordContext, 
   chooseChordType,
   chooseChordStructure, 
   chooseInversion,
@@ -36,7 +36,8 @@ test('makeChordDescription makes a chordDescription', () => {
   const chordStructure = chooseChordStructure(chordType)
   const inversion = chooseInversion(chordType)
   const keySignature = chooseKeySignature()
-  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(chordDescription).toBeDefined()
 })
@@ -46,49 +47,10 @@ test('partially concretize chord notes makes three notes for a triad', () => {
   const chordStructure = chooseChordStructure(chordType)
   const inversion = chooseInversion(chordType)
   const keySignature = chooseKeySignature()
-  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) 
   expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
-})
-
-test('partially concretize major chord on c natural in root position in c major', () => {
-  const chordStructure = ChordStructure.MAJOR_TRIAD
-  const inversion = ""
-  const keySignature = 'B' // "Bottom", i.e., C major
-  const romanNumeralContext = {
-    "mode": "Maj",
-    "modeNote": "Maj",
-    "degree": 1,
-    "romanNumeral": "I"
-  }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
-  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  const expected = [
-    { "letter": "C", "accidental": "♮", "octave": 0 },
-    { "letter": "E", "accidental": "♮", "octave": 0 },
-    { "letter": "G", "accidental": "♮", "octave": 0 }
-  ]
-  expect(partiallyConcretized).toStrictEqual(expected)
-})
-
-test('partially concretize major chord on c natural in first inversion in c major', () => {
-  const chordStructure = ChordStructure.MAJOR_TRIAD
-  const inversion = "63"
-  const keySignature = 'B' // "Bottom", i.e., C major
-  const romanNumeralContext = {
-    "mode": "Maj",
-    "modeNote": "Maj",
-    "degree": 1,
-    "romanNumeral": "I"
-  }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
-  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  const expected = [
-    { "letter": "E", "accidental": "♮", "octave": 0 },
-    { "letter": "G", "accidental": "♮", "octave": 0 },
-    { "letter": "C", "accidental": "♮", "octave": 1 }
-  ]
-  expect(partiallyConcretized).toStrictEqual(expected)
 })
 
 test('concretizeRoot c natural in C', () => {
@@ -156,11 +118,34 @@ test('concretizeRoot f natural in d', () => {
   expect(result).toStrictEqual(expected)
 })
 
-test('randomChord does not blow up', () => {
+test('concretizeRoot E flat in g', () => {
+  const keySignature = 'R2' // g min
+  const modeNote = 'Lyd'
+  const expected = {
+    independentPitch: IndependentPitch.NA,
+    accidental: Accidental.FLAT,
+    letter: LetterName.E,
+    syllable: IndependentPitch.MI
+  }
+  const result = concretizeRoot(keySignature, modeNote)
+  expect(result).toStrictEqual(expected)
+})
+
+test('randomChordContext does not blow up', () => {
   const options = {
     chordTypes: { triads: true, sevenths: true },
     roots: { common: true, any: false }
   }
-  let chord = randomChord(options)
+  let chord = randomChordContext(options)
+})
+
+test('randomRomanNumeralContext returns a valid mode note and degree', () => {
+  const chordStructure = ChordStructure.MINOR
+  for (var i = 0; i < 100; i++) {
+    const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+    const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
+    expect(romanNumeralContext.modeNote).toBeDefined()
+    expect(romanNumeralContext.degree).toBeDefined()
+  }
 })
 
