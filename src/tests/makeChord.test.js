@@ -38,7 +38,8 @@ test('seventh chord comes out when we generate a seventh chord', () => {
 test('make roman numeral context', () => {
   for (var i = 0; i < Object.keys(ChordStructure).length; i++) {
     const chordStructure = Object.values(ChordStructure)[i]
-    expect(randomRomanNumeralContext(chordStructure)).toBeTruthy()
+    const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+    expect(randomRomanNumeralContext(chordStructure, modeLabel)).toBeTruthy()
   }
 })
 

@@ -38,7 +38,7 @@ export function questions(chordContext) {
   const inversion = chordContext.chordDescription.inversion
   const degree = chordContext.romanNumeralContext.degree
   const roman = chordContext.romanNumeralContext.romanNumeral
-  const key = chordContext.keySignature
+  const key = chordContext.modeLabel
   const chordType = chordContext.chordType
 
   // FIXME: Infer `romanQuality` somehow?
@@ -238,8 +238,12 @@ export function randomChordContext(options) {
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordType)
+  // Choose whether we will be in a major or minor mode.
+  // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
+  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  console.log("modeLabel: " + modeLabel)
   // Choose a random roman numeral context
-  const romanNumeralContext = randomRomanNumeralContext(chordStructure)
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
   // {
   //    root: { independentPitch, accidental, letter, syllable },
@@ -250,13 +254,9 @@ export function randomChordContext(options) {
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
-  // Place the notes on the staff as is appropriate for the randomly chosen `clef`.
-
-  // Fully concretize the notes for the given clef
-
   // Choose a random clef
   const clef = Clef.randomElement()
-
+  // Fully concretize the notes on the staff as is appropriate for the randomly chosen `clef`.
   const staffAdjustedNotes = staffAdjust(partiallyConcretizedNotes, clef)
   // Get the VexFlow representation of the "Shapes" key signature.
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
@@ -269,6 +269,7 @@ export function randomChordContext(options) {
   const result = {
     clef: clef,
     keySignature: vexFlowKeySignature,
+    modeLabel: modeLabel,
     chordType: chordType,
     chordDescription,
     romanNumeralContext,
@@ -781,15 +782,16 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
 /**
  * randomRomanNumeralContext - Choose a random roman numeral context -- mode, mode note, scale degree, and numeral -- given a chord structure.
  *
- * @param  {type} chordStructure The chord structure to create context for.
- * @return {type}                An object consisting of a mode, a mode note, scale degree, and roman numeral.
- * @todo                         Rename to `chooseRomanNumeralContext`
+ * @param  chordStructure The chord structure to create context for.
+ * @param  modeLabel      The mode label of the mode (i.e., mode category, i.e., "Major" | "minor")
+ * @return                An object consisting of a mode, a mode note, scale degree, and roman numeral.
+ * @todo                  Rename to `chooseRomanNumeralContext`
  */
-export function randomRomanNumeralContext(chordStructure) {
+export function randomRomanNumeralContext(chordStructure, modeLabel) {
+
+  console.log("random roman numeral context, mode label: " + JSON.stringify(modeLabel))
 
   // FIXME: Codify "Major" and "minor" here!  
-  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
-
   let mode
   switch (modeLabel) {
     case "Major":
@@ -799,6 +801,7 @@ export function randomRomanNumeralContext(chordStructure) {
       mode = Mode.MINOR
       break
   }
+  console.log("mode: " + JSON.stringify(mode))
 
   switch (chordStructure) {
     case ChordStructure.MAJOR:
