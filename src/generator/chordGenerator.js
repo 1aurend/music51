@@ -982,7 +982,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
     case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
     default:
-      "Invalid chord structure: " + JSON.stringify(chordStructure)
+      throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
 }
 
