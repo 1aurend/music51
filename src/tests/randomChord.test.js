@@ -53,46 +53,6 @@ test('partially concretize chord notes makes three notes for a triad', () => {
   expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
 })
 
-test('partially concretize major chord on c natural in root position in c major', () => {
-  const chordStructure = ChordStructure.MAJOR
-  const inversion = ""
-  const keySignature = 'B' // "Bottom", i.e., C major
-  const romanNumeralContext = {
-    "mode": "Maj",
-    "modeNote": "Maj",
-    "degree": 1,
-    "romanNumeral": "I"
-  }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
-  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  const expected = [
-    { "letter": "C", "accidental": "♮", "octave": 0 },
-    { "letter": "E", "accidental": "♮", "octave": 0 },
-    { "letter": "G", "accidental": "♮", "octave": 0 }
-  ]
-  expect(partiallyConcretized).toStrictEqual(expected)
-})
-
-test('partially concretize major chord on c natural in first inversion in c major', () => {
-  const chordStructure = ChordStructure.MAJOR
-  const inversion = "63"
-  const keySignature = 'B' // "Bottom", i.e., C major
-  const romanNumeralContext = {
-    "mode": "Maj",
-    "modeNote": "Maj",
-    "degree": 1,
-    "romanNumeral": "I"
-  }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
-  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
-  const expected = [
-    { "letter": "E", "accidental": "♮", "octave": 0 },
-    { "letter": "G", "accidental": "♮", "octave": 0 },
-    { "letter": "C", "accidental": "♮", "octave": 1 }
-  ]
-  expect(partiallyConcretized).toStrictEqual(expected)
-})
-
 test('concretizeRoot c natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
   const modeNote = 'Maj'
