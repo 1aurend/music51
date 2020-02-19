@@ -54,9 +54,10 @@ export function getChartData(means, round) {
     domainMaxYTime: findYMax(data, categoriesToChartTime, 'times'),
     labelsX: Array(round).fill(1).map((x, i) => x + i),
     //decide what to do about colors and legend
-    legend: categoriesToChartAtt.map( type => {
-      return { name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
-    }),
+    // legend: categoriesToChartAtt.map( type => {
+    //   return { name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
+    // }),
+    categoriesIncluded: [...new Set(categoriesToChartAtt, categoriesToChartTime)],
     data: {
       attempts: getDataPoints(data, categoriesToChartAtt, 'attempts'),
       times: getDataPoints(data, categoriesToChartTime, 'times')
