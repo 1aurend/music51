@@ -4,14 +4,18 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import { rounded } from '../../../utility'
 import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
+import { questionsList } from '../../../generator/questionsList'
 
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
 // TODO: add a better breakpoint for tables?
+// TODO: add a conversion from null to N/A for empty categories
+// TODO: use the abbrev from the enum to get the table labels
 export default function ResultsTable(props) {
   const { round, startOver } = props
   const means = useContext(Session).means.tally
-  const qTypes = useContext(Session).means.questionTypes
+  //get rid of this variable; just a placeholder to mark the change
+  const qTypes = questionsList
   const sizedStyles = useResponsiveStyles()
   const { tableSize } = sizedStyles
 

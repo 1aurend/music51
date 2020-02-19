@@ -1,4 +1,5 @@
 import { mean, rounded } from '../../utility'
+import { questionsList } from '../../generator/questionsList'
 
 
 export function listAttemptsByQuestionType(data, questionType) {
@@ -24,15 +25,13 @@ export function listTimesByQuestionType(data, questionType) {
   ).flat(2)
 }
 export function tallyRound(data) {
-  //still not sure where the best place is for this. Need to create and hold onto this array somewhere so we don't keep iterating through the data to recreate it. Could be at start as context or here and passed down as a prop?
-  //what happens if this varies from round to round?
-  const questionTypes = new Set((data.map( chord => {
+  const questionsThisRound = [...new Set((data.map( chord => {
     return chord.questions.map( question => {
       return question.type
     })
-  })).flat())
+  })).flat())]
   const means =
-    [...questionTypes].map(type => {
+    questionsThisRound.map(type => {
       return {
               type: type,
               means: {
@@ -44,15 +43,15 @@ export function tallyRound(data) {
           obj[item.type] = item.means
             return obj
           }, {})
-  return calculateOverallMeans(means, [...questionTypes])
+  return calculateOverallMeans(means, questionsThisRound)
 }
-function calculateOverallMeans(means, questionTypes) {
+function calculateOverallMeans(means, questionsThisRound) {
   const overallAttempts = rounded(mean(
-    questionTypes.map(type => {
+    questionsThisRound.map(type => {
     return means[type].attempts
   })), 2)
   const overallTime = rounded(mean(
-    questionTypes.map(type => {
+    questionsThisRound.map(type => {
     return means[type].time
   })), 2)
   return {
@@ -60,25 +59,52 @@ function calculateOverallMeans(means, questionTypes) {
                   attempts: overallAttempts,
                   time: overallTime
                   }},
-          questionTypes: [...questionTypes, 'Overall']
+          questionsThisRound: [...questionsThisRound, 'Overall']
         }
 }
 export function tallyMeans(state, data) {
-  const { roundMeans, questionTypes } = tallyRound(data)
-  const means = state.tally? state.tally : {}
-  //left this one for simplicity, but it could be a const structured like means in TallyRound() above
+  const { roundMeans, questionsThisRound } = tallyRound(data)
+  const means = state.tally ? state.tally : {}
+  //gave up on avoiding mutation here... fix later when data is restructured
   let tally
-  questionTypes.forEach( type => {
-    tally = means[type] ? {...tally,
-      [type]: {
-        attempts: [...means[type].attempts, roundMeans[type].attempts],
-        times: [...means[type].times, roundMeans[type].time]
-      }} :
-      {...tally,
+  Object.keys(questionsList).forEach( type => {
+    if (questionsThisRound.includes(type)) {
+      tally = means[type] ? {...tally,
         [type]: {
-          attempts: [roundMeans[type].attempts],
-          times: [roundMeans[type].time]
-        }}
+          attempts: [...means[type].attempts, roundMeans[type].attempts],
+          times: [...means[type].times, roundMeans[type].time]
+        }} :
+        {...tally,
+          [type]: {
+            attempts: [roundMeans[type].attempts],
+            times: [roundMeans[type].time]
+          }
+        }
+    } else {
+      tally = means[type] ? {...tally,
+        [type]: {
+          attempts: [...means[type].attempts, null],
+          times: [...means[type].times, null]
+        }} :
+        {...tally,
+          [type]: {
+            attempts: [null],
+            times: [null]
+          }
+        }
+    }
   })
-  return {tally: tally, questionTypes: questionTypes}
+  tally = means.Overall ? {...tally,
+    Overall: {
+      attempts: [...means.Overall.attempts, roundMeans.Overall.attempts],
+      times: [...means.Overall.times, roundMeans.Overall.time]
+    }} :
+    {...tally,
+      Overall: {
+        attempts: [roundMeans.Overall.attempts],
+        times: [roundMeans.Overall.time]
+      }
+    }
+  // TODO: get questionTypes out of here when we're not using it anymore? or at least label it accurately
+  return {tally: tally, questionsCurrentRound: questionsThisRound}
 }

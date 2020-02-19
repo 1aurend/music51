@@ -428,7 +428,7 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
 
   chord.questions = [
     {
-      "type": "Names",
+      "type": "LETTER_NAMES",
       "questionText": "Name the letter positions from lowest to highest.",
       "answers": [], // will populate in the loop
       "ordered": true,
@@ -443,13 +443,13 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
       ]
     },
     {
-      "type": "Roots",
+      "type": "ROOT",
       "questionText": "What's the root note?",
       "answers": [rootLetter+rootAccidental],
       "choices": [] // will populate in the loop
     },
     {
-      "type": "Degrees",
+      "type": "DEGREE",
       "questionText": "In a " + key + " key, what degree is this chord built on?",
       "answers": [degree + "^"],
       "choices": [
@@ -469,13 +469,13 @@ function randomChord(options, templateTriads, templateSevenths, subsets, keySign
     //   "choices": qualityOptions
     // },
     {
-      "type": "Numerals",
+      "type": "NUMERAL",
       "questionText": "Which roman numeral describes this chord’s degree and quality?",
       "answers": [roman + romanQuality],
       "choices": romanOptions
     },
     {
-      "type": "Inversions",
+      "type": "INVERSION",
       "questionText": "What's the inversion?",
       "answers": [roman + inversionQuality + inversion],
       "choices": romanInversionOptions

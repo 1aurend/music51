@@ -2,12 +2,12 @@
 export default function addKeystrokes(chords) {
 
   const questionTypes = {
-    NAMES: `Names`,
-    ROOT: `Roots`,
-    DEGREE: `Degrees`,
-    QUALITY: `Quality`,
-    NUMERAL: `Numerals`,
-    INVERSION: `Inversions`
+    NAMES: `LETTER_NAMES`,
+    ROOT: `ROOT`,
+    DEGREE: `DEGREE`,
+    QUALITY: `QUALITY`,
+    NUMERAL: `NUMERAL`,
+    INVERSION: `INVERSION`
   }
 
 
