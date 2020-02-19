@@ -29,7 +29,9 @@ const StyledCenterPane = styled(Col)`
 
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
-  const qTypes = useContext(Session).means.questionTypes
+  const qTypes = chartData.chartData.categoriesIncluded
+  console.log(qTypes);
+  console.log(chartData);
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb
@@ -99,7 +101,7 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
               </p>
             </StyledRow>
             <StyledRow margintop='5%'>
-              <Chart showLegend={true} chartData={chartData} qTypes={qTypes} metric={'attempts'} />
+              <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'attempts'} />
             </StyledRow>
             <StyledRow margintop='-50'>
               <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'times'} />
