@@ -31,7 +31,7 @@ const StyledCenterPane = styled(Col)`
 export default function StatLines(props) {
   const { round, setShowStats, nextRound, finished } = props
   const means = useContext(Session).means.tally
-  const qTypes = useContext(Session).means.questionTypes
+  const qTypes = useContext(Session).means.questionsCurrentRound
   const sizedStyles = useResponsiveStyles()
   const { statsTitle, statsSubtitle } = sizedStyles
 
