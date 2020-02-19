@@ -12,7 +12,8 @@ import {SmallPixelBorderSingle, SmallPixelBorderDouble, MediumPixelBorder, Large
 import Marquee from './Marquee'
 import Expander from './Expander'
 import Instructions from './Instructions'
-import {Grid, Cell, SubCell} from './Grids'
+import {Bug, SpeechBubble} from '../buttons/Bug'
+import {Grid, Cell, SubCell, BugWrapper} from './Grids'
 import Theme from '../Theme'
 
 
@@ -45,6 +46,10 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
             <Go onClick={generateQuiz} />
           </SubCell>
         </Cell>
+        <BugWrapper>
+          <SpeechBubble />
+          <Bug />
+        </BugWrapper>
       </Grid>
     </Theme>
   )

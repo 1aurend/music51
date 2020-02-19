@@ -25,3 +25,12 @@ export const SubCell = styled.div`
     margin: 2%;
   }
 `
+
+export const BugWrapper = styled.div`
+  display: grid;
+  grid-template-rows:  42px 50px;
+  grid-template-columns: 50px 50px;
+  position: absolute;
+  bottom: 6%;
+  right: 4%;
+`
