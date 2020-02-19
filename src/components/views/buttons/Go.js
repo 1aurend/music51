@@ -8,7 +8,7 @@ const StyledSvgButton = styled(Button)`
   display: block;
   cursor: pointer;
   border: none;
-  padding: 0;
+  padding: 0px;
   background: transparent;
   :hover {
     background:transparent;

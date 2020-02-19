@@ -31,6 +31,6 @@ export const BugWrapper = styled.div`
   grid-template-rows:  42px 50px;
   grid-template-columns: 50px 50px;
   position: absolute;
-  bottom: 6%;
-  right: 4%;
+  bottom: 5%;
+  right: 5%;
 `

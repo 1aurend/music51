@@ -7,8 +7,9 @@ const ExpanderDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  margin-top: 4%;
   > p {
-    color: ${props => props.theme.colors.secondary};
+    color: ${props => props.theme.colors.light};
   }
 `
 const ExpanderLink = styled.a`

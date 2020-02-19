@@ -22,7 +22,7 @@ const StyledColHeader = styled.h3`
 const ToggleDiv = styled.div`
   display: flex;
   flex-flow: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   > * {
     margin: 5%
