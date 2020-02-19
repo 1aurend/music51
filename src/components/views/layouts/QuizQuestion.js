@@ -54,44 +54,44 @@ export default function QuizQuestion(props) {
 
   return (
     <Theme>
-      <Grid>
-        <Cell style={gridMain}>
-            <QuestionH4 style={h4}>{question.questionText}</QuestionH4>
-        </Cell>
-        <Cell style={gridMarquee}>
-          <MegaPixelBorder>
-            <Vexflow
-                    notes={chord.current.notes}
-                    octaves={chord.current.octaves}
-                    clef={chord.current.clef}
-                    keySig={chord.current.keySignature}
-                    colors={noteColors}
+      <div style={{outline:'none'}}
+        onKeyDown={(e) => onKeyPressed(e)}
+        tabIndex="1"
+        ref={keyboard => keyboard && keyboard.focus()}
+        >
+        <Grid>
+          <Cell style={gridMain}>
+              <QuestionH4 style={h4}>{question.questionText}</QuestionH4>
+          </Cell>
+          <Cell style={gridMarquee}>
+            <MegaPixelBorder>
+              <Vexflow
+                      notes={chord.current.notes}
+                      octaves={chord.current.octaves}
+                      clef={chord.current.clef}
+                      keySig={chord.current.keySignature}
+                      colors={noteColors}
+                      />
+            </MegaPixelBorder>
+          </Cell>
+          <Cell style={gridMisc}>
+            <ButtonBox>
+              {question.choices.map(choice => {
+                return (
+                  <AnswerChoice
+                    onClick={(e) => handleClick(choice.choice)}
+                    choice={choice.choice}
+                    key={choice.key}
+                    keystroke={choice.key}
+                    input={currentInput}
+                    colors={colors}
                     />
-          </MegaPixelBorder>
-        </Cell>
-        <Cell style={gridMisc}>
-          <ButtonBox>
-            {question.choices.map(choice => {
-              return (
-                <AnswerChoice
-                  onClick={(e) => handleClick(choice.choice)}
-                  choice={choice.choice}
-                  key={choice.key}
-                  keystroke={choice.key}
-                  input={currentInput}
-                  colors={colors}
-                  />
+                )}
               )}
-            )}
-          </ButtonBox>
-        </Cell>
-        <div style={{outline:'none'}}
-          onKeyDown={(e) => onKeyPressed(e)}
-          tabIndex="1"
-          ref={keyboard => keyboard && keyboard.focus()}
-          >
-        </div>
-      </Grid>
+            </ButtonBox>
+          </Cell>
+        </Grid>
+      </div>
     </Theme>
     // <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
     //   <Row style={{display: 'flex', justifyContent: 'center', paddingTop: '4%'}} noGutters>
