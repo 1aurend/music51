@@ -46,8 +46,6 @@ color: ${props => props.theme.colors.light};
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const qTypes = chartData.chartData.categoriesIncluded
-  console.log(qTypes);
-  console.log(chartData);
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb

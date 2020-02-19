@@ -20,7 +20,7 @@ export default function ResultsTable(props) {
   const { round, startOver } = props
   const means = useContext(Session).means.tally
   //get rid of this variable; just a placeholder to mark the change
-  const qTypes = questionsList
+  const qTypes = Object.keys(questionsList)
   const sizedStyles = useResponsiveStyles()
   const { tableSize } = sizedStyles
 
@@ -69,7 +69,7 @@ export default function ResultsTable(props) {
   } else {*/
     const verticalTableAtt = qTypes.map( type => {
       return <tr>
-              <td>{type[0].toUpperCase()}</td>
+              <td>{questionsList[type].abbrev}</td>
               <td>{rounded(means[type].attempts[0], 2)}</td>
               <td>{rounded(means[type].attempts[round-1],2)}</td>
               <td>{rounded(Math.min(...means[type].attempts), 2)}</td>
@@ -77,7 +77,7 @@ export default function ResultsTable(props) {
     })
     const verticalTableT = qTypes.map( type => {
       return <tr>
-              <td>{type[0].toUpperCase()}</td>
+              <td>{questionsList[type].abbrev}</td>
               <td>{rounded(means[type].times[0], 2)}</td>
               <td>{rounded(means[type].times[round-1],2)}</td>
               <td>{rounded(Math.min(...means[type].times), 2)}</td>
