@@ -8,29 +8,24 @@ import {
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../buttons/RoundEndNav'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import Marquee from './Marquee'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
 import {Grid, Cell, SubCell} from './Grids'
 import Theme from '../Theme'
 
-// TODO: finish implementing styled-components and refactor
-const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: ${props => props.margintop || 0};
-  margin-bottom: ${props => props.marginbottom || 0};
-  font-family: ${props => props.font ? "'Overpass Mono', monospace ": 0}
+const StatsH3 = styled.h3`
+color: ${props => props.theme.colors.tertiary};
 `
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-  background-color: #e5e6eb;
+const StatsH4 = styled.h4`
+color: ${props => props.theme.colors.light};
+.category {
+  color: ${props => props.theme.colors.light};
+  font-weight: 600;
+}
+.num {
+  color: ${props => props.theme.colors.secondary};
+}
 `
+
 
 
 export default function StatLines(props) {
@@ -50,10 +45,10 @@ export default function StatLines(props) {
   const statLines = qTypes.map( type => {
     return <Row
             key={type}
-            style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}>
+            style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
               <p>
-                <span style={{fontWeight: '600'}}>{type.toUpperCase()}: </span>
-                {means[type].attempts[means[type].attempts.length-1]} attempts and {means[type].times[means[type].times.length-1]} seconds per question
+                <span class='category'>{type.toUpperCase()}: </span><br />
+                <span class='num'>{means[type].attempts[means[type].attempts.length-1]}</span> attempts and <span class='num'>{means[type].times[means[type].times.length-1]}</span> seconds per question
               </p>
             </Row>
   })
@@ -67,43 +62,19 @@ export default function StatLines(props) {
           </MegaPixelBorder>
         </Cell>
         <Cell style={gridMain}>
-          <SmallPixelBorderSingle>
-            <h3 style={h3}>{subtitle}</h3>
-            <h4 style={h4}>{statLines}</h4>
-            <h3 style={h3}>{closing}</h3>
-          </SmallPixelBorderSingle>
+          <SmallPixelBorderOutline>
+            <StatsH3 style={h3}>{subtitle}</StatsH3>
+            <StatsH4 style={h4}>{statLines}</StatsH4>
+            <StatsH3 style={h3}>{closing}</StatsH3>
+          </SmallPixelBorderOutline>
         </Cell>
         <Cell style={gridMisc}>
-          <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
+          <SubCell>
+            <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
+          </SubCell>
         </Cell>
       </Grid>
     </Theme>
 
-    //
-    // <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
-    //   <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-    //     <StyledCenterPane sm='12' lg='8'>
-    //       <StyledRow margintop='5%'>
-    //         <h2 style={h2}>
-    //           {headline}
-    //         </h2>
-    //       </StyledRow>
-    //       <StyledRow margintop='5%' marginbottom='2%' font>
-    //         <Col sm='12' lg='10'>
-    //           {subtitle && <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}>
-    //             <h3 style={statsSubtitle}>{subtitle}</h3>
-    //           </Row>}
-    //             {statLines}
-    //           {closing && <Row style={{display: 'flex', justifyContent: 'center'}}>
-    //             <h3 style={statsSubtitle}>{closing}</h3>
-    //           </Row>}
-    //         </Col>
-    //       </StyledRow>
-    //       <StyledRow marginbottom='5%'>
-    //         <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
-    //       </StyledRow>
-    //     </StyledCenterPane>
-    //   </Row>
-    // </Container>
   )
 }

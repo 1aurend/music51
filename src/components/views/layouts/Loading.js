@@ -1,16 +1,34 @@
 import React from 'react'
-import { Container, Row, Col } from 'shards-react'
+import styled from 'styled-components'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
+import Theme from '../Theme'
 
+
+
+const Universe = styled.div`
+  background-color: ${props => props.theme.colors.dark};
+  min-height: 120vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10%;
+`
+
+const LoadingText = styled.h1`
+  color: ${props => props.theme.colors.light};
+  line-height: 2em;
+`
 
 export default function Loading() {
-    return (
-      <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
-        <Row style={{paddingTop: '25%', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}></Row>
-          <Col sm='12' lg='12'>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}} noGutters>
-              <h2 style={{color: '#26AD5E', fontFamily: "'Press Start 2P', cursive"}}>Calculating your stats...</h2>
-            </Row>
-          </Col>
-        </Container>
-    )
+  const sizedStyles = useResponsiveStyles()
+  const {h1} = sizedStyles
+  return (
+    <Theme>
+      <Universe>
+        <LoadingText style={h1}>
+          Calculating your stats...
+        </LoadingText>
+      </Universe>
+    </Theme>
+  )
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: 10% auto auto auto 10%;
+  grid-template-columns: 1fr auto auto auto 1fr;
   grid-template-rows: 1fr auto auto auto 1fr;
   background-color: ${props => props.theme.colors.dark};
   grid-gap: 2%;
@@ -20,10 +20,9 @@ export const Cell = styled.div`
 
 export const SubCell = styled.div`
   display: flex;
-  align-items: flex-start;
-  > * {
-    margin: 2%;
-  }
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `
 
 export const BugWrapper = styled.div`

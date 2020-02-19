@@ -77,6 +77,13 @@ const ContentPane = styled.div`
   width: 100%;
   padding: 10px 30px;
 `
+const ContentPaneClear = styled.div`
+  background-color: none;
+  height: 100%;
+  width: 100%;
+  padding: 10px 30px;
+`
+
 const ButtonContent = styled.div`
   background-color: none;
 `
@@ -128,6 +135,36 @@ export const SmallPixelBorderSingle = ({children}) => {
         <Px1v /><Px0v /><Px0v /><ContentPane>
           {children}
         </ContentPane><Px0v /><Px0v /><Px1v />
+      </ PixelRow>
+      <PixelRow>
+        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+      </ PixelRow>
+      <PixelRow>
+        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+      </ PixelRow>
+      <PixelRow>
+        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+      </ PixelRow>
+    </PixelWrapper>
+  )
+}
+
+export const SmallPixelBorderOutline = ({children}) => {
+  return (
+    <PixelWrapper>
+      <PixelRow>
+        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+      </ PixelRow>
+      <PixelRow>
+        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+      </ PixelRow>
+      <PixelRow>
+        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+      </ PixelRow>
+      <PixelRow>
+        <Px1v /><Px0v /><Px0v /><ContentPaneClear>
+          {children}
+        </ContentPaneClear><Px0v /><Px0v /><Px1v />
       </ PixelRow>
       <PixelRow>
         <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />

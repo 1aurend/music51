@@ -35,18 +35,19 @@ const QuestionH4 = styled.h4`
 `
 const ButtonBox = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-flow: row wrap;
   > * {
     margin: 2%;
   }
 `
 
-
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { h1, h2, h3, h4, para, input, gridMarquee, gridMain, gridMisc, rowOrCol} = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
-  const noteColors = question.type === 'Names' || question.type === 'Roots' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
+  const noteColors = question.type === 'LETTER_NAMES' || question.type === 'ROOT' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -61,7 +62,9 @@ export default function QuizQuestion(props) {
         >
         <Grid>
           <Cell style={gridMain}>
+            <SubCell>
               <QuestionH4 style={h4}>{question.questionText}</QuestionH4>
+            </SubCell>
           </Cell>
           <Cell style={gridMarquee}>
             <MegaPixelBorder>

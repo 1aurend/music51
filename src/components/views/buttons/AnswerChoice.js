@@ -32,8 +32,8 @@ const StyledChoiceButton = styled(Button)`
   &:hover {
     background-color: ${props => props.color};
   }
-  min-height: 6vh;
-  min-width: 6vh;
+  min-height: 10vh;
+  min-width: 10vh;
   font-size: 2rem;
   text-align: center;
 `

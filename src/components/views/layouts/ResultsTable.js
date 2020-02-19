@@ -5,6 +5,11 @@ import { rounded } from '../../../utility'
 import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
 import { questionsList } from '../../../generator/questionsList'
+import styled from 'styled-components'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
+import {Grid, Cell, SubCell} from './Grids'
+import Theme from '../Theme'
+
 
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
