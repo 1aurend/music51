@@ -538,35 +538,6 @@ function constrainAccidental(syllable, structure, initialChoice) {
   return initialChoice
 }
 
-// TODO: Decide if we still need this function. Is this now covered by concretizeRoot? If so, we'll need to deal with chooseRootAccidental above to make sure we're still dealing with the egregious edge cases.
-// => {
-//  syllable: Syllable,
-//  accidental: Accidental,
-//  keySignature: KeySignature
-// }
-// function chooseRootSyllableAccidentalAndKeySignature(
-//   rootOption,
-//   structure,
-//   rootSyllable,
-//   keySignatures
-// ) {
-//   // TODO: Inject keySignatures
-//   // TODO: Inject subsets
-//   // TODO: Inject rootAccidentals
-//   switch (rootOption) {
-//     case RootOption.ANY:
-//       return {
-//         "syllable": subsets.B.randomElement(),
-//         "accidental": chooseRootAccidental(rootSyllable, structure),
-//         "keySignature": Object.keys(keySignatures).randomElement()
-//       }
-//     case RootOption.COMMON:
-//       // TODO
-//     default:
-//       //
-//   }
-// }
-
 /**
  * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
  *
