@@ -52,7 +52,7 @@ color: ${props => props.theme.colors.light};
 `
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
-  const qTypes = chartData.chartData.categoriesIncluded
+  // const qTypes = chartData.chartData.categoriesIncluded
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb
@@ -124,10 +124,10 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
             <SmallPixelBorderSingle>
                 <StatsH3 style={h3}>Here's what changed the most this round!</StatsH3>
               <StyledRow margintop='5%'>
-                <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'attempts'} />
+                <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesAtt} metric={'attempts'} />
               </StyledRow>
               <StyledRow margintop='-50'>
-                <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'times'} />
+                <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesTime} metric={'times'} />
               </StyledRow>
             </ SmallPixelBorderSingle>
           </SubCell>

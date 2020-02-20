@@ -49,11 +49,14 @@ export function getChartData(means, round) {
   const categoriesToChartAtt = ['Overall', ...findThreeLargestDeltas(means, 'attempts')]
   const colorScaleAtt = ['#50FA97',
     categoriesToChartAtt.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
-    ]
+  ].flat()
+  console.log(colorScaleAtt);
   const categoriesToChartTime = ['Overall', ...findThreeLargestDeltas(means, 'times')]
+  console.log(categoriesToChartTime);
   const colorScaleTime = ['#50FA97',
     categoriesToChartTime.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
-    ]
+  ].flat()
+  console.log(colorScaleTime)
   const data = means.tally
   const chartData = {
     domainMaxYAtt: findYMax(data, categoriesToChartAtt, 'attempts'),
