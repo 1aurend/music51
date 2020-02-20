@@ -6,8 +6,9 @@ import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
 import { questionsList } from '../../../generator/questionsList'
 import styled from 'styled-components'
+import {Bug} from '../buttons/Bug'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell} from './Grids'
+import {Grid, Cell, SubCell, BugWrapper} from './Grids'
 import Theme from '../Theme'
 
 
@@ -83,11 +84,18 @@ export default function ResultsTable(props) {
               <td>{rounded(Math.min(...means[type].times), 2)}</td>
             </tr>
     })
-    return <VerticalTable
-            greeting={greeting}
-            verticalTableAtt={verticalTableAtt}
-            verticalTableT={verticalTableT}
-            startOver={startOver}
-            />
+    return (
+      <Theme>
+        <VerticalTable
+                greeting={greeting}
+                verticalTableAtt={verticalTableAtt}
+                verticalTableT={verticalTableT}
+                startOver={startOver} />
+        <BugWrapper>
+          <Bug />
+        </BugWrapper>
+      </Theme>
+    )
+
     /*}*/
 }

@@ -8,9 +8,10 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
+import {Bug} from '../buttons/Bug'
 import { Session } from '../../data/Context'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell} from './Grids'
+import {Grid, Cell, SubCell,BugWrapper} from './Grids'
 import Theme from '../Theme'
 
 const StyledRow = styled(Row)`
@@ -30,14 +31,20 @@ const StyledCenterPane = styled(Col)`
   margin-top: 2%;
   background-color: #e5e6eb;
 `
+
+const StatsH1 = styled.h1`
+color: ${props => props.theme.colors.dark};
+`
+
 const StatsH3 = styled.h3`
 color: ${props => props.theme.colors.tertiary};
 `
 const StatsH4 = styled.h4`
 color: ${props => props.theme.colors.light};
 .category {
-  color: ${props => props.theme.colors.light};
+  color: ${props => props.theme.colors.tertiary};
   font-weight: 600;
+  text-transform: uppercase;
 }
 .num {
   color: ${props => props.theme.colors.secondary};
@@ -64,7 +71,7 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
       <Grid>
         <Cell style={gridMarquee}>
           <MegaPixelBorder>
-            <h1 style={h1}>Round {round} Complete!</h1>
+            <StatsH1 style={h1}>Round {round} Complete!</StatsH1>
           </MegaPixelBorder>
         </Cell>
         <Cell style={gridMain}>
@@ -130,6 +137,9 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
             <NavButtons viewStats={viewStats} nextRound={nextRound} finished={finished}/>
           </SubCell>
         </Cell>
+        <BugWrapper>
+          <Bug />
+        </BugWrapper>
       </Grid>
     </Theme>
   )

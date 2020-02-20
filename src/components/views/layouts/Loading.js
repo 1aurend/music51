@@ -7,7 +7,7 @@ import Theme from '../Theme'
 
 const Universe = styled.div`
   background-color: ${props => props.theme.colors.dark};
-  min-height: 120vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

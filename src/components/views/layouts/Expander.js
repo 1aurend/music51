@@ -14,7 +14,11 @@ const ExpanderDiv = styled.div`
 `
 const ExpanderLink = styled.a`
   cursor: pointer;
-  color: ${props => props.theme.colors.tertiary}!important;
+  transition: 0.5s;
+  color: ${props => props.theme.buttonColors.green1}!important;
+  &:hover {
+    color: ${props => props.theme.buttonColors.green3}!important;
+  }
 `
 export default function Expander({href,infoText}) {
   const [expanded, setExpanded] = useState(false)

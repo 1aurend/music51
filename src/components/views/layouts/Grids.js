@@ -25,6 +25,16 @@ export const SubCell = styled.div`
   width: 100%;
 `
 
+export const SubCellMargin = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  > * {
+    margin: 2%
+  }
+`
+
 export const BugWrapper = styled.div`
   display: grid;
   grid-template-rows:  42px 50px;

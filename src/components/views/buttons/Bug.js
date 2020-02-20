@@ -1,19 +1,15 @@
 import React from 'react'
-import { Button } from 'shards-react'
 import bugSvg from '../../../assets/bug.svg'
 import bubbleSvg from '../../../assets/bubble.svg'
 import styled from 'styled-components'
 
+const formLink = 'https://forms.gle/qwFKMPGCG12vo8xM6'
 
 const StyledSvgButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
   padding: 0;
-  background: transparent;
-  :hover {
-    background:transparent;
-  }
   grid-column: 2/2;
   grid-row: 2/2;
 `
@@ -21,12 +17,7 @@ const StyledSvgButton = styled.div`
 const StyledSvgBubbleDiv = styled.div`
   display: block;
   color:${props => props.theme.colors.tertiary};
-  cursor: pointer;
   padding: 0;
-  background: transparent;
-  :hover {
-    background:transparent;
-  }
   grid-row: 1/1;
   background-repeat: no-repeat;
   background-size: cover;
@@ -42,24 +33,20 @@ const StyledSvgBubbleDiv = styled.div`
 
 export function Bug({ onClick }) {
   return (
-    <>
-      <StyledSvgButton
-        onClick={onClick}
-        >
+    <StyledSvgButton onClick={onClick}>
+      <a href={formLink} alt='Bug Report Google Form'>
         <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
-      </StyledSvgButton>
-    </>
+      </a>
+    </StyledSvgButton>
   )
 }
 
 export function SpeechBubble({ onClick }) {
   return (
-    <>
       <StyledSvgBubbleDiv
         onClick={onClick}
         style={{backgroundImage: `url(${bubbleSvg})`}}
         ><h4>BUGS?</h4>
       </StyledSvgBubbleDiv>
-    </>
   )
 }

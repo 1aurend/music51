@@ -3,9 +3,8 @@ import styled from 'styled-components'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
 const InstructionsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: block;
+  padding-top: 2%;
   > h3 {
     color: ${props => props.theme.colors.primary};
   }

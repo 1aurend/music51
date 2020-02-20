@@ -49,6 +49,13 @@ export const input = {
   SMALL: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28}
 }
 
+export const answerText = {
+  LARGE: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
+  MEDIUM: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
+  SMALL: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28}
+}
+
+
 export const rowOrCol = {
   LARGE: {flexFlow: 'row'},
   MEDIUM: {flexFlow: 'row'},

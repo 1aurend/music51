@@ -9,8 +9,13 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../buttons/RoundEndNav'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell} from './Grids'
+import {Grid, Cell, SubCell, BugWrapper} from './Grids'
+import {Bug} from '../buttons/Bug'
 import Theme from '../Theme'
+
+const StatsH1 = styled.h1`
+color: ${props => props.theme.colors.dark};
+`
 
 const StatsH3 = styled.h3`
 color: ${props => props.theme.colors.tertiary};
@@ -18,8 +23,9 @@ color: ${props => props.theme.colors.tertiary};
 const StatsH4 = styled.h4`
 color: ${props => props.theme.colors.light};
 .category {
-  color: ${props => props.theme.colors.light};
+  color: ${props => props.theme.colors.tertiary};
   font-weight: 600;
+  text-transform: uppercase;
 }
 .num {
   color: ${props => props.theme.colors.secondary};
@@ -58,7 +64,7 @@ export default function StatLines(props) {
       <Grid>
         <Cell style={gridMarquee}>
           <MegaPixelBorder>
-            <h1 style={h1}>{headline}</h1>
+            <StatsH1 style={h1}>{headline}</StatsH1>
           </MegaPixelBorder>
         </Cell>
         <Cell style={gridMain}>
@@ -73,6 +79,9 @@ export default function StatLines(props) {
             <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
           </SubCell>
         </Cell>
+        <BugWrapper>
+          <Bug />
+        </BugWrapper>
       </Grid>
     </Theme>
 

@@ -4,6 +4,7 @@ import generateChords from '../../generator/chordGenerator'
 import { Dispatch } from '../data/Context'
 import StartScreen from '../views/layouts/StartScreen'
 
+
 export default function Start({ title, round }) {
   const dispatch = useContext(Dispatch)
   const numQs = useRef(5)

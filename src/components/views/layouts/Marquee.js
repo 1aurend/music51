@@ -10,10 +10,10 @@ const MarqueeDiv = styled.div`
     color: ${props => props.theme.colors.dark};
   }
   > h2 {
-    color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.secondary};
   }
   > h4 {
-    color: ${props => props.theme.colors.secondary};
+    color: ${props => props.theme.colors.tertiary};
   }
 `
 

@@ -1,60 +1,46 @@
 import React from 'react'
-import { Button } from 'shards-react'
 import styled from 'styled-components'
 import {ButtonBorder} from '../layouts/PixelBorder'
 
+const buttonSize = '8vh'
 
-//
-// const StyledChoiceButton = styled(Button)`
-  // min-height: 10vh;
-  // min-width: 10vh;
-  // margin-left: 2%;
-  // margin-right: 2%;
-  // margin-bottom: 2%;
-  // font-size: 2rem;
-  // text-align: center;
-//   font-family: 'Overpass Mono', monospace;
-//   font-weight: 600;
-//   border-width: 4px;
-//   border-radius: 0;
-//   background-color: ${props => props.color};
-//   &:hover {
-//     background-color: ${props => props.color};
-//   }
-// `
-
-const StyledChoiceButton = styled(Button)`
+const StyledChoiceButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
-  padding: 0;
+  margin: 3px;
   background-color: ${props => props.color};
   &:hover {
-    background-color: ${props => props.color};
+    background-color: #186E3C;
   }
-  min-height: 10vh;
-  min-width: 10vh;
+  min-height: ${buttonSize};
+  min-width: ${buttonSize};
   font-size: 2rem;
   text-align: center;
 `
 
 const StyledKeystrokeSymbol = styled.p`
-  font-size: 14px;
-  color: #FF0000;
-  margin-bottom: 0;
-  margin-top: 2;
+  font-family: 'Thintel', monospace;
+  font-size: 26px;
+  color: ${props => props.theme.colors.tertiary};
+  margin: 0;
 `
+
+const StyledChoice = styled.h4`
+
+`
+
 
 export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
   const background = (() => {
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
     if (colors.length > 0 && thisInput.color === 'red' && thisInput.input === choice) {
-      return '#B53F04'
+      return '#c4183c'
     } else if (greens.includes(choice)) {
-      return '#6AD97A'
+      return '#26AD5E'
     }
-    return '#e5e6eb'
+    return '#FFFFFF'
   })()
 
   function formatButtonText(choice) {
@@ -82,20 +68,19 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
         </>
       )
     }
-    return choice
+    return <StyledChoice>{choice}</StyledChoice>
   }
   const formattedChoice = formatButtonText(choice)
 
   return (
     <ButtonBorder>
       <StyledChoiceButton
-        theme='dark'
         color={background}
         onClick={onClick}
         >
           {formattedChoice}
           <StyledKeystrokeSymbol>
-            [{keystroke}]
+            {keystroke}
           </StyledKeystrokeSymbol>
       </StyledChoiceButton>
     </ButtonBorder>

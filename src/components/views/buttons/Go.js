@@ -1,28 +1,22 @@
 import React from 'react'
-import { Button } from 'shards-react'
-import goSvg from '../../../assets/svgs-go.svg'
 import styled from 'styled-components'
+import {SolidButtonGreen} from '../layouts/PixelBorder'
 
 
-const StyledSvgButton = styled(Button)`
+const StyledSvgButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
-  padding: 0px;
-  background: transparent;
-  :hover {
-    background:transparent;
-  }
+  padding: 0;
 `
 
 export default function Go({ onClick }) {
   return (
     <>
       <StyledSvgButton
-        theme="dark"
-        onClick={onClick}
+        onClick={onClick} title='go'
         >
-        <img src={goSvg} alt='go' style={{width: '8rem'}}/>
+        <SolidButtonGreen props='GO!' />
       </StyledSvgButton>
     </>
   )
