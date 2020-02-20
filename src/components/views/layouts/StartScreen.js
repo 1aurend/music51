@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react'
-import {
-  Container,
-  Row,
-  Col,
-} from 'shards-react'
 import SessionOptions from '../buttons/SessionOptions'
 import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import styled from 'styled-components'
 import {SmallPixelBorderSingle, MegaPixelBorder, SolidButtonGreen, SolidButtonRed} from './PixelBorder'
 import Marquee from './Marquee'
 import Expander from './Expander'

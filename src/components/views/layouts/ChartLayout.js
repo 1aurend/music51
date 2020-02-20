@@ -1,6 +1,5 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import {
-  Container,
   Row,
   Col,
 } from 'shards-react'
@@ -9,7 +8,6 @@ import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
-import { Session } from '../../data/Context'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
 import {Grid, Cell, SubCell,BugWrapper} from './Grids'
 import Theme from '../Theme'
@@ -23,14 +21,14 @@ const StyledRow = styled(Row)`
   margin-top: ${props => props.margintop || 0};
   margin-bottom: ${props => props.marginbottom || 0};
 `
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 2%;
-  background-color: #e5e6eb;
-`
+// const StyledCenterPane = styled(Col)`
+//   border: 5px solid black;
+//   border-radius: 1rem;
+//   margin-left: 5%;
+//   margin-right: 5%;
+//   margin-top: 2%;
+//   background-color: #e5e6eb;
+// `
 
 const StatsH1 = styled.h1`
 color: ${props => props.theme.colors.dark};
