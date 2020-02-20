@@ -12,9 +12,14 @@ import {Grid, Cell, SubCell, BugWrapper} from './Grids'
 import Theme from '../Theme'
 
 
+function replaceNaNs(num) {
+  if (isNaN(num) || num === 0) {
+    return 'n/a'
+  }
+  return num
+}
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
-// TODO: add a conversion from null to N/A for empty categories
 export default function ResultsTable(props) {
   const { round, startOver } = props
   const means = useContext(Session).means.tally
@@ -71,12 +76,12 @@ export default function ResultsTable(props) {
         <td>{rounded(means.Overall.attempts[round-1],2)}</td>
         <td>{rounded(Math.min(...means.Overall.attempts), 2)}</td>
       </tr>,
-      qTypes.map( type => {
-      return <tr>
+      qTypes.map( (type, i) => {
+      return <tr key={i}>
               <td>{questionsList[type].abbrev}</td>
-              <td>{rounded(means[type].attempts[0], 2)}</td>
-              <td>{rounded(means[type].attempts[round-1],2)}</td>
-              <td>{rounded(Math.min(...means[type].attempts), 2)}</td>
+              <td>{replaceNaNs(rounded(means[type].attempts[0], 2))}</td>
+              <td>{replaceNaNs(rounded(means[type].attempts[round-1],2))}</td>
+              <td>{replaceNaNs(rounded(Math.min(...means[type].attempts), 2))}</td>
             </tr>
           })
     ]
@@ -87,12 +92,12 @@ export default function ResultsTable(props) {
         <td>{rounded(means.Overall.times[round-1],2)}</td>
         <td>{rounded(Math.min(...means.Overall.times), 2)}</td>
       </tr>,
-      qTypes.map( type => {
-        return <tr>
+      qTypes.map( (type, i) => {
+        return <tr key={i}>
                 <td>{questionsList[type].abbrev}</td>
-                <td>{rounded(means[type].times[0], 2)}</td>
-                <td>{rounded(means[type].times[round-1],2)}</td>
-                <td>{rounded(Math.min(...means[type].times), 2)}</td>
+                <td>{replaceNaNs(rounded(means[type].times[0], 2))}</td>
+                <td>{replaceNaNs(rounded(means[type].times[round-1],2))}</td>
+                <td>{replaceNaNs(rounded(Math.min(...means[type].times), 2))}</td>
               </tr>
             })
     ]
