@@ -939,7 +939,15 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
     case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
     case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
-      
+      // We have fallen through to here
+      // FIXME: This is a fake value for now. We must alter the input to this function
+      //        in order to handle chromatic alterations.
+      return {
+        mode: mode,
+        modeNote: Mode.MAJOR,
+        degree: 1,
+        romanNumeral: RomanNumeral.I
+      }
     default:
       throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
