@@ -1,7 +1,7 @@
-import { 
-  randomChordContext, 
+import {
+  randomChordContext,
   chooseChordType,
-  chooseChordStructure, 
+  chooseChordStructure,
   chooseInversion,
   chooseKeySignature,
   randomRomanNumeralContext,
@@ -49,7 +49,7 @@ test('partially concretize chord notes makes three notes for a triad', () => {
   const keySignature = chooseKeySignature()
   const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) 
+  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
 })
 
@@ -148,4 +148,3 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
     expect(romanNumeralContext.degree).toBeDefined()
   }
 })
-

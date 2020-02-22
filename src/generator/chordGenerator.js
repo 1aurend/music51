@@ -593,19 +593,6 @@ export function romanNumeral(chordStructure, degree) {
   }
 }
 
-//These are KP's choices. See note in randomRomanNumeralContext re: configurability.
-const allowedModesByChordStructure = {
-  [ChordStructure.MAJOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.MINOR_TRIAD]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.DIMINISHED_TRIAD]: [Mode.MAJOR],
-  [ChordStructure.AUGMENTED_TRIAD]: [Mode.MAJOR],
-  [ChordStructure.DOMINANT_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.MAJOR_SEVENTH]: [Mode.MAJOR],
-  [ChordStructure.MINOR_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.HALF_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
-}
-
 export function translateNoteIPIndex(componentIP) {
   const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
   const anchorIndex = Object.values(IndependentPitch).indexOf("D")
