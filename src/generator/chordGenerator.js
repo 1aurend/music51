@@ -620,9 +620,9 @@ function handleInversion(chord, inversion) {
 /**
  * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
  *
- * @param  {type} chord   Note values to be inverted
+ * @param  {type} chord     Note values to be inverted
  * @param  {type} inversion The amount of inversions to perform
- * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
+ * @return {type}           An array of notes inverted the amount of times indicated by `inversion`
  */
 export function invert(chord, inversion) {
   let notes = [...chord]
@@ -939,6 +939,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
     case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
     case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
     case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+      
     default:
       throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
