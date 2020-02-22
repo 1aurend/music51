@@ -61,7 +61,7 @@ export function questions(chordContext) {
       roman.toLowerCase() + 'o7'
     ]
   }
-  
+
   const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
   let romanInversionOptions
   // [roman + inversionQuality + " " + inversion]
@@ -142,7 +142,7 @@ export function questions(chordContext) {
   ]
 
   // TODO:
-  // for note in template: 
+  // for note in template:
     // // push notes into questions before adjusting accidentals for key sig
     // chord.questions[0].answers.push(noteLetter);
 
@@ -184,12 +184,12 @@ export function questions(chordContext) {
  *                               "keySignature": KeySignature,
  *                               "notes": [ { "letter", "accidental", "octave" } ],
  *                               "questions": [
- *                                  { 
- *                                    "type": ("Names" | "Degrees", etc. ), 
- *                                    "questionText": "...", 
+ *                                  {
+ *                                    "type": ("Names" | "Degrees", etc. ),
+ *                                    "questionText": "...",
  *                                    "answers": [ "iv7", ... ] ,
- *                                    "ordered": Boolean, 
- *                                    "choices": [ { "choice": "IV7", "key": "7" } ] 
+ *                                    "ordered": Boolean,
+ *                                    "choices": [ { "choice": "IV7", "key": "7" } ]
  *                                  }
  *                               ]
  *                            }
@@ -201,7 +201,7 @@ export default function(numQs, options) {
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
     let chordContext = randomChordContext(options)
-    chordContext.questions = questions(chordContext)  
+    chordContext.questions = questions(chordContext)
     chords.push(chordContext)
   }
   addKeystrokes(chords)
@@ -210,18 +210,18 @@ export default function(numQs, options) {
 }
 
 /**
- * randomChord - A big function to generate a random, correctly spelled chord structure within 
+ * randomChord - A big function to generate a random, correctly spelled chord structure within
  *               clef/ staff limits
- * 
+ *
  * @param options The user settings for a given session, in the form:
  *                {
- *                  { 
+ *                  {
  *                    chordTypes: { triads: true, sevenths: true },
-                      roots: { common: true, any: false } 
+                      roots: { common: true, any: false }
  *                  }
  *                }
- * @return chord  A contextualized chord object in the form: 
- *                { 
+ * @return chord  A contextualized chord object in the form:
+ *                {
  *                  clef, keySignature, chordType, inversion, notes
  *                }
  */
@@ -257,9 +257,9 @@ export function randomChordContext(options) {
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
-  
+
   // Bundle up all of the information useful to graphically represent the notes on the screen.
-  // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
+  // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g.,
   //       `chordDescription`, `romanNumeralContext`, etc.
   const result = {
     clef: clef,
@@ -277,7 +277,7 @@ export function randomChordContext(options) {
 // TODO: Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
 export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
-  // Concretize the root by situating the roman numeral context's `modeNote` in the given 
+  // Concretize the root by situating the roman numeral context's `modeNote` in the given
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
   return {
@@ -351,10 +351,10 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     prevLetterNamePosition = notePosition
 
     // Create the note with all of our nice new data
-    const note = { 
-      letter: noteLetter, 
-      accidental: accidental(noteIP, syllable), 
-      octave: octaveDisplacement 
+    const note = {
+      letter: noteLetter,
+      accidental: accidental(noteIP, syllable),
+      octave: octaveDisplacement
     }
 
     // Append our new note to the array to be returned
@@ -492,7 +492,7 @@ export function requiredOctaveDisplacement(staffPositions, range) {
 /**
  * @param Array of notes chord  notes   The notes to be adjusted, in the form:
                                           { letter, accidental }
- * @param Clef                  clef    The clef context in which we are positioning the given 
+ * @param Clef                  clef    The clef context in which we are positioning the given
  *                                      `notes`.
  * @return An array of notes positioned properly within the context of the given `clef`.
 */
@@ -673,7 +673,7 @@ export function chooseInversion(chordType) {
 
 /**
  * @return  A random key signature within the realm of reason (omitting c+f flat, e+b sharp)
- * @todo    Add some configurability with an input of allowed key signatures, with some 
+ * @todo    Add some configurability with an input of allowed key signatures, with some
  *          sensible default
  */
 export function chooseKeySignature() {
@@ -754,7 +754,7 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                  Rename to `chooseRomanNumeralContext`
  */
 export function randomRomanNumeralContext(chordStructure, modeLabel) {
-  // FIXME: Codify "Major" and "minor" here!  
+  // FIXME: Codify "Major" and "minor" here!
   let mode
   switch (modeLabel) {
     case "Major":
@@ -977,7 +977,7 @@ export function inversionQuality(chordStructure) {
       return 'ø'
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       return 'o'
-  } 
+  }
 }
 
 export function romanQuality(chordStructure) {
@@ -1000,5 +1000,5 @@ export function romanQuality(chordStructure) {
       return 'ø7'
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       return 'o7'
-  } 
+  }
 }
