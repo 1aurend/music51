@@ -205,7 +205,6 @@ export default function(numQs, options) {
     chords.push(chordContext)
   }
   addKeystrokes(chords)
-  console.log(chords)
   return chords
 }
 
