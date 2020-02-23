@@ -13,7 +13,7 @@ import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 import { QuestionType, questionTypes } from './QuestionType'
-import { Question } from './Question'
+import { Question, questionsForChordType } from './Question'
 
 // TODO: (James) Audit this type. Is it used anywhere?
 const RootOption = {
@@ -34,17 +34,9 @@ const RootOption = {
  * @todo                Move to own file, potentially in a Class of its own
  */
 export function questions(chordContext) {
-
-  // Consider breaking this out to a factory-type function, like:
-  // question(chordContext, type)
-  return [
-    Question.letterNames(chordContext),
-    Question.root(chordContext),
-    Question.degrees(chordContext),
-    Question.quality(chordContext),
-    Question.numerals(chordContext),
-    Question.inversions(chordContext)
-  ]
+  // Retrieve all of the question for the `chordType` of the given `chordContext`,
+  // and apply them to the given `chordContext`.
+  return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
 
   // TODO:
   // for note in template:

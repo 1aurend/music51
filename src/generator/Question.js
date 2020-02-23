@@ -1,3 +1,4 @@
+import { ChordType } from './ChordType'
 import { ChordStructure, chordStructures } from './ChordStructure'
 
 export const Question = {
@@ -5,18 +6,10 @@ export const Question = {
     return {
       // FIXME: Should this be "Names" or "Letter Names"?
       "type": "Names",
-      "questionText": "Name the letter positions from lowest to highest.",
+      "questionText": "Name the letter names from lowest to highest.",
       "answers": chordContext.notes.map(note => note.letter),
       "ordered": true,
-      "choices": [
-          "A",
-          "B",
-          "C",
-          "D",
-          "E",
-          "F",
-          "G"
-      ]
+      "choices": ["A", "B", "C", "D", "E", "F", "G"]
     }
   },
   root: function(chordContext) {
@@ -45,6 +38,20 @@ export const Question = {
           "5^",
           "6^",
           "7^"
+      ]
+    }
+  },
+  // FIXME: Finish implementation!
+  role: function(chordContext) {
+    return {
+      "type": "Role",
+      "questionText": "What is this chord's relationship to the key?",
+      "answers": [], // "In-Key" if the chord grouping is triad or seventh, otherwise the name of the grouping.
+      "choices": [
+          "In-Key", // keystroke "k"
+          "Chromatic", // keystroke "c" (Chromatic Variation)
+          "Mixture", // keystroke "m" (Borrowed: Mode Mixture)
+          "Applied" // keystroke "a" (Borrowed: Applied)
       ]
     }
   },
@@ -87,7 +94,7 @@ export const Question = {
       "choices": romanOptions
     }
   },
-  inversions: function(chordContext) {
+  inversion: function(chordContext) {
     const chordType = chordContext.chordType
     const inversion = chordContext.inversion
     const roman = chordContext.romanNumeralContext.romanNumeral
@@ -114,6 +121,65 @@ export const Question = {
       "answers": [roman + inversionDisplay + inversion],
       "choices": romanInversionOptions
     }
+  },
+  // FIXME: Finish implementation!
+  whatFollows: function(chordContext) {
+    return {
+      "type": "What Follows",
+      "questionText": "Which chord is most likely to follow this chord?",
+      "answers": "", // defined in the chord grouping
+      "choices": ""
+      // for Chromatic Variation?
+            // N6 or any Applied chords
+        //   if Major: I  ii  iii  IV  V  vi  viio  I
+        //   if minor: i  iio  III  iv  V  VI  viio  i
+        //
+        //  if +6
+        //  V, Cad64, i, I (don't need to diff M/m)
+    }
+  }
+}
+
+export function questionsForChordType(chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      // fallthrough
+    case ChordType.SEVENTH:
+      return [
+        Question.letterNames,
+        Question.root,
+        Question.degrees,
+        Question.numerals,
+        Question.inversion,
+      ]
+    case ChordType.CHROMATIC_VARIATION:
+      return [
+        Question.letterNames,
+        Question.root,
+        Question.degrees,
+        Question.role,
+        Question.quality,
+        Question.whatFollows,
+      ]
+    case ChordType.MODE_MIXTURE:
+      return [
+        Question.letterNames,
+        Question.root,
+        Question.degrees,
+        Question.role,
+        Question.quality,
+        Question.inversion,
+      ]
+    case ChordType.APPLIED_CHORD:
+      return [
+        Question.letterNames,
+        Question.root,
+        Question.degrees,
+        Question.role,
+        Question.quality,
+        Question.inversion,
+        Question.whatFollows,
+      ]
   }
 }
 
