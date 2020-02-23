@@ -70,6 +70,7 @@ export const Question = {
   numerals: function(chordContext) {
     const roman = chordContext.romanNumeralContext.romanNumeral
     const chordType = chordContext.chordType
+    // TODO: Move to own helper function
     let romanOptions
     if (chordType === 'triad') {
       romanOptions = [
@@ -100,7 +101,7 @@ export const Question = {
     const roman = chordContext.romanNumeralContext.romanNumeral
     const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
     let romanInversionOptions
-    // [roman + inversionQuality + " " + inversion]
+    // TODO: Move to own helper function
     if (chordType === 'triad') {
       romanInversionOptions = [
         roman + inversionDisplay,
