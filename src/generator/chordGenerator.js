@@ -12,7 +12,6 @@ import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
-import { QuestionType, questionTypes } from './QuestionType'
 import { Question, questionsForChordType } from './Question'
 
 // TODO: (James) Audit this type. Is it used anywhere?
