@@ -1,18 +1,19 @@
 import { rounded } from '../../utility'
-
+import { questionsList } from '../../generator/questionsList'
 
 export function findYMax(data, qTypes, param) {
   return Math.max(...(qTypes.map( type => {
     return data[type][param]
   })).flat())
 }
+//don't add points for null values
 export function getDataPoints(data, qTypes, param) {
   return qTypes.map(type => {
     return {
       type: type,
-      points: data[type][param].map( (point, i) => {
-       return {x: i+1, y: point, symbol: "square", size: 5}
-       })
+      points: data[type][param].map((point, i) => {
+        return {x: i+1, y: point, symbol: "square", size: 5}
+      }).filter( point => (point.y !== null))
       }
     }).reduce((obj, item) => {
         obj[item.type] = item.points
@@ -27,20 +28,38 @@ export function getSummaryData(data, param, round) {
     verb: delta >= 0 ? 'increased' : 'decreased'
   }
 }
-// TODO: get a prototype data set for testing this function
+export function findThreeLargestDeltas(means, param) {
+  const availableTypes = means.questionsCurrentRound.filter( type => type !== 'Overall')
+  const deltas = availableTypes.map( type => {
+    let delta
+    for (let i in means.tally[type][param]) {
+      if (means.tally[type][param][i]) {
+        delta = Math.abs(means.tally[type][param][means.tally[type][param].length-1]-means.tally[type][param][i])
+        break
+      }
+    }
+    return [type, delta]
+  })
+  deltas.sort((a, b) => {
+    return a[1] - b[1]
+  })
+  return [deltas[deltas.length-1][0], deltas[deltas.length-2][0], deltas[deltas.length-3][0]]
+}
 export function getChartData(means, round) {
+  const categoriesToChartAtt = ['Overall', ...findThreeLargestDeltas(means, 'attempts')]
+  const categoriesToChartTime = ['Overall', ...findThreeLargestDeltas(means, 'times')]
   const data = means.tally
-  const qTypes = means.questionTypes
   const chartData = {
-    domainMaxYAtt: findYMax(data, qTypes, 'attempts'),
-    domainMaxYTime: findYMax(data, qTypes, 'times'),
+    domainMaxYAtt: findYMax(data, categoriesToChartAtt, 'attempts'),
+    domainMaxYTime: findYMax(data, categoriesToChartTime, 'times'),
     labelsX: Array(round).fill(1).map((x, i) => x + i),
-    legend: qTypes.map( type => {
+    //decide what to do about colors and legend
+    legend: categoriesToChartAtt.map( type => {
       return { name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
     }),
     data: {
-      attempts: getDataPoints(data, qTypes, 'attempts'),
-      times: getDataPoints(data, qTypes, 'times')
+      attempts: getDataPoints(data, categoriesToChartAtt, 'attempts'),
+      times: getDataPoints(data, categoriesToChartTime, 'times')
     }
   }
   const progressSummary = {

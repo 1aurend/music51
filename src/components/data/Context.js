@@ -15,7 +15,6 @@ export default function Context() {
         },
         rounds: {},
         means: {},
-        questionTypes: [],
       }
   const [sessionData, dispatch] = useReducer(sessionDataReducer, initialSettings)
   return (
