@@ -21,24 +21,6 @@ const RootOption = {
 }
 
 /**
- * @param chordContext  Object Object in the form:
- *                      {
- *                        clef,
- *                        keySignature
- *                        chordDescription,
- *                        romanNumeralContext,
- *                        notes
- *                       }
- * @returns             An array of questions (and answers) for the given `chordContext`.
- * @todo                Move to own file, potentially in a Class of its own
- */
-export function questions(chordContext) {
-  // Retrieve all of the question for the `chordType` of the given `chordContext`,
-  // and apply them to the given `chordContext`.
-  return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
-}
-
-/**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
  * @param  Int numQs      The number of questions a student has asked for
@@ -71,7 +53,8 @@ export default function(numQs, options) {
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
     let chordContext = randomChordContext(options)
-    chordContext.questions = questions(chordContext)
+    chordContext.questions = questionsForChordType(chordContext.chordType)
+      .map(question => question(chordContext))
     chords.push(chordContext)
   }
   addKeystrokes(chords)
