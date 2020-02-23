@@ -30,7 +30,6 @@ export const Question = {
       "type": "Roots",
       "questionText": "What's the root note?",
       "answers": [rootLetter + rootAccidentalDisplay],
-      // FIXME: Currently not filtering out naturals
       "choices": chordContext.notes.map(note => note.letter + note.accidental)
     }
   },
