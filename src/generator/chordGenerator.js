@@ -78,11 +78,11 @@ export function randomChordContext(options) {
   const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
-  // Choose a random inversion from those afforded by the chosen `ChordStructure`
-  const inversion = chooseInversion(chordType)
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+  // Choose a random inversion from those afforded by the chosen `ChordStructure`
+  const inversion = chooseInversion(chordStructure)
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -522,21 +522,49 @@ export function invert(chord, inversion) {
 }
 
 /**
- * @param ChordType chordType The `ChordType` of a chord (either a `TRIAD` or `SEVENTH` for now) for which you would like
- *        an enumeration of inversions.
- * @return An array of strings representing the various inversions available for a `TRIAD` or `SEVENTH` chord.
+ * @param ChordStructure chordStructure The `ChordStructure` of a chord
+ * @return                              An array of strings representing the various inversions
+ *                                      available for the given `chordStructure`
  */
-function inversions(chordType) {
-  // TODO: Consider moving this functionality over be over `ChordType`.
-  switch (chordType) {
-    case ChordType.TRIAD:
+function inversions(chordStructure) {
+  switch (chordStructure) {
+    // Triads
+    case ChordStructure.MAJOR_TRIAD:
+    case ChordStructure.MINOR_TRIAD:
+    case ChordStructure.DIMINISHED_TRIAD:
+    case ChordStructure.AUGMENTED_TRIAD:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
       return ["","63","64"]
-    case ChordType.SEVENTH:
+    // Sevenths
+    case ChordStructure.DOMINANT_SEVENTH:
+    case ChordStructure.MAJOR_SEVENTH:
+    case ChordStructure.MINOR_SEVENTH:
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
       return ["","65","43","42"]
-    case ChordType.CHROMATIC_VARIATION:
-    case ChordType.MODE_MIXTURE:
-    case ChordType.APPLIED_CHORD:
-      throw "ChordType not yet supported: " + JSON.stringify(chordType)
+    // Unique cases
+    case ChordStructure.NEAPOLITAN_SIXTH:
+      return ["", "6"]
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+      return ["6"]
+    default:
+      throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
 }
 

@@ -18,14 +18,15 @@ import { ChordTypesOption } from '../generator/ChordTypesOption'
 import { ChordStructure } from '../generator/ChordStructure'
 
 test('chooseChordStructure returns a value for all valid inputs', () => {
-  expect(chooseChordStructure(ChordType.TRIAD)).toBeDefined()
-  expect(chooseChordStructure(ChordType.SEVENTH)).toBeDefined()
-  // TODO: Add tests for borrowed and applied chords
+  Object.values(ChordType).forEach(chordType => {
+    expect(chooseChordStructure(chordType))
+  })
 })
 
 test('chooseInversion returns a value for all valid inputs', () => {
-  expect(chooseInversion(ChordType.TRIAD)).toBeDefined()
-  expect(chooseInversion(ChordType.SEVENTH)).toBeDefined()
+  Object.values(ChordStructure).forEach(chordStructure => {
+    expect(chooseInversion(chordStructure)).toBeDefined()
+  })
 })
 
 test('chooseKeySignature returns something', () => {
