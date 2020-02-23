@@ -36,30 +36,6 @@ export function questions(chordContext) {
   // Retrieve all of the question for the `chordType` of the given `chordContext`,
   // and apply them to the given `chordContext`.
   return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
-
-  // TODO:
-  // for note in template:
-    // // push notes into questions before adjusting accidentals for key sig
-    // chord.questions[0].answers.push(noteLetter);
-
-
-    // // FIXME: This should be its own function
-    // // only show natural in question choices if it's an alteration from the key sig
-    // if(accidental != '♮'){
-    //   chord.questions[1].choices.push(noteLetter+accidental);
-    // }
-    // else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
-    //   chord.questions[1].choices.push(noteLetter+'♮');
-    // }
-    // else {
-    //   chord.questions[1].choices.push(noteLetter);
-    // }
-
-    // // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
-    // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
-    //   accidental = "";
-    // }
-  // }
 }
 
 /**
@@ -156,6 +132,7 @@ export function randomChordContext(options) {
   //       `chordDescription`, `romanNumeralContext`, etc.
   const result = {
     clef: clef,
+    shape: keySignature,
     keySignature: vexFlowKeySignature,
     modeLabel: modeLabel,
     chordType: chordType,
@@ -243,10 +220,16 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
     prevLetterNamePosition = notePosition
 
-    // Create the note with all of our nice new data
+    const accid = accidental(noteIP, syllable)
+    const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
+      noteLetter,
+      accid,
+      keySignature
+    )
+
     const note = {
       letter: noteLetter,
-      accidental: accidental(noteIP, syllable),
+      accidental: shouldFilterOutAccidental ? "" : accidental(noteIP, syllable),
       octave: octaveDisplacement
     }
 
@@ -257,6 +240,44 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   return notes
 }
 
+/**
+ * accidentalForLetterNameIsInKeySignature - description
+ *
+ * @param  LetterName   letterName
+ * @param  Accidental   accidental
+ * @param  KeySignature keySignature
+ * @return Boolean      `true` if the given `letterName` is inherent in the given
+ *                      `keySignature` is associated with the given `accidental`.
+ *                      Otherwise, `false`.
+ * @todo                Move to `Accidental` or somewhere similarly low-level
+ */
+export function accidentalForLetterNameIsInKeySignature(letterName, accidental, keySignature) {
+  const noteInKeySignature = Shapes[keySignature].notes.find(note =>
+    note.refIP == letterNameToRefIP(letterName)
+  )
+  return accidental == noteInKeySignature.accidental
+}
+
+function letterNameToRefIP(letter) {
+  switch (letter) {
+    case LetterName.C:
+      return IndependentPitch.DO
+    case LetterName.D:
+      return IndependentPitch.RE
+    case LetterName.E:
+      return IndependentPitch.MI
+    case LetterName.F:
+      return IndependentPitch.FA
+    case LetterName.G:
+      return IndependentPitch.SO
+    case LetterName.A:
+      return IndependentPitch.LA
+    case LetterName.B:
+      return IndependentPitch.TI
+    default:
+      throw 'invalid letter name'
+  }
+}
 
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
 

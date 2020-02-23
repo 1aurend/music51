@@ -7,7 +7,8 @@ import {
   randomRomanNumeralContext,
   makeChordDescription,
   partiallyConcretizeChord,
-  concretizeRoot
+  concretizeRoot,
+  accidentalForLetterNameIsInKeySignature
 } from '../generator/chordGenerator'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
@@ -147,4 +148,14 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
     expect(romanNumeralContext.modeNote).toBeDefined()
     expect(romanNumeralContext.degree).toBeDefined()
   }
+})
+
+test('c natural is in key signature with no sharps nor flats', () => {
+  expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.NATURAL, "B"))
+    .toBeTruthy()
+})
+
+test('c sharp is not in key signature with no sharps nor flats', () => {
+  expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.SHARP, "B"))
+    .toBeFalsy()
 })
