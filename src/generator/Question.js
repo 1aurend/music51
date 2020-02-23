@@ -18,22 +18,14 @@ export const Question = {
     }
   },
   root: function(chordContext) {
-    // FIXME: Filter out accidentals if they are inherent in the key signature.
     const rootLetter = chordContext.chordDescription.root.letter
     const rootAccidental = chordContext.chordDescription.root.accidental
-
-    console.log("key signature: " + JSON.stringify(chordContext.keySignature))
-
     const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
       rootLetter,
       rootAccidental,
       chordContext.shape
     )
-
-    const rootAccidentalDisplay = shouldFilterOutAccidental
-      ? ""
-      : chordContext.chordDescription.root.accidental
-
+    const rootAccidentalDisplay = shouldFilterOutAccidental ? "" : rootAccidental
     return {
       "type": "Roots",
       "questionText": "What's the root note?",
