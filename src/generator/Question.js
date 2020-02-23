@@ -17,6 +17,7 @@ export const Question = {
     }
   },
   root: function(chordContext) {
+    // FIXME: Filter out accidentals if they are inherent in the key signature.
     const rootLetter = chordContext.chordDescription.root.letter
     const rootAccidental = chordContext.chordDescription.root.accidental
     return {
