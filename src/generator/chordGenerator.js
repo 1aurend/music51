@@ -219,11 +219,16 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
     prevLetterNamePosition = notePosition
 
-    // Create the note with all of our nice new data
-    // FIXME: Filter out accidentals if they are inherent in the key signature!
+    const accid = accidental(noteIP, syllable)
+    const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
+      noteLetter,
+      accid,
+      keySignature
+    )
+
     const note = {
       letter: noteLetter,
-      accidental: accidental(noteIP, syllable),
+      accidental: shouldFilterOutAccidental ? "" : accidental(noteIP, syllable),
       octave: octaveDisplacement
     }
 
