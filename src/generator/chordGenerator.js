@@ -539,6 +539,10 @@ function inversions(chordType) {
       return ["","63","64"]
     case ChordType.SEVENTH:
       return ["","65","43","42"]
+    case ChordType.CHROMATIC_VARIATION:
+    case ChordType.MODE_MIXTURE:
+    case ChordType.APPLIED_CHORD:
+      throw "ChordType not yet supported: " + JSON.stringify(chordType)
   }
 }
 
