@@ -574,19 +574,9 @@ export function chooseChordStructure(chordType) {
   return chordStructures(chordType).randomElement()
 }
 
-function chordTypesOption(chordTypes) {
-  if (chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.BOTH
-  } else if (chordTypes.triads && !chordTypes.sevenths) {
-    return ChordTypesOption.TRIADS
-  } else if (!chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.SEVENTHS
-  } else {
-    throw "Invalid chord types selection"
-  }
-}
-
-// return Type of the chord we are constructing
+/**
+ * @return A random `ChordType` value.
+ */
 export function chooseChordType() {
   return ChordType.randomElement()
 }
