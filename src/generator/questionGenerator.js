@@ -86,7 +86,6 @@ if(chordType === 'seventh'){
   ]
 }
 
-
 // aggregate options for chord quality question
 let qualityOptions = []
 Object.keys(template).map(type => {qualityOptions.push(rootLetter + rootAccidental + type)})

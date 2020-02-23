@@ -687,7 +687,6 @@ export function noteIdentities(mode) {
       ]
     default:
       throw "Unsupported Mode: " + JSON.stringify(mode)
-    }
   }
 }
 

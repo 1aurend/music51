@@ -3,10 +3,10 @@ import { ChordType } from '../generator/ChordType'
 
 test('triad chord type returns four chord structures', () => {
   const expected = new Set([
-    ChordStructure.MAJOR,
-    ChordStructure.MINOR,
-    ChordStructure.AUGMENTED,
-    ChordStructure.DIMINISHED
+    ChordStructure.MAJOR_TRIAD,
+    ChordStructure.MINOR_TRIAD,
+    ChordStructure.AUGMENTED_TRIAD,
+    ChordStructure.DIMINISHED_TRIAD
   ])
   expect(chordStructures(ChordType.TRIAD)).toEqual(expected)
 })
@@ -23,10 +23,10 @@ test('seventh chord type returns five chord structures', () => {
 })
 
 test('Basic chord structures exist', () => {
-  expect(ChordStructure.MAJOR).toBeDefined()
-  expect(ChordStructure.MINOR).toBeDefined()
-  expect(ChordStructure.DIMINISHED).toBeDefined()
-  expect(ChordStructure.AUGMENTED).toBeDefined()
+  expect(ChordStructure.MAJOR_TRIAD).toBeDefined()
+  expect(ChordStructure.MINOR_TRIAD).toBeDefined()
+  expect(ChordStructure.DIMINISHED_TRIAD).toBeDefined()
+  expect(ChordStructure.AUGMENTED_TRIAD).toBeDefined()
   expect(ChordStructure.DOMINANT_SEVENTH).toBeDefined()
   expect(ChordStructure.MAJOR_SEVENTH).toBeDefined()
   expect(ChordStructure.MINOR_SEVENTH).toBeDefined()

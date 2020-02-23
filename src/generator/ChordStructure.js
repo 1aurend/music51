@@ -417,10 +417,10 @@ export function chordStructures(chordType) {
   switch (chordType) {
     case ChordType.TRIAD:
       return new Set([
-        ChordStructure.MAJOR,
-        ChordStructure.MINOR,
-        ChordStructure.AUGMENTED,
-        ChordStructure.DIMINISHED
+        ChordStructure.MAJOR_TRIAD,
+        ChordStructure.MINOR_TRIAD,
+        ChordStructure.AUGMENTED_TRIAD,
+        ChordStructure.DIMINISHED_TRIAD
       ])
     case ChordType.SEVENTH:
       return new Set([
