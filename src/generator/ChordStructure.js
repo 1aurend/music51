@@ -5,7 +5,7 @@ import { ChordType } from "./ChordType"
 export const ChordStructure = {
   MAJOR_TRIAD: {
     displayName: "M",
-    modeConstructor: Mode.MAJOR, // TODO: David to define all modeConstructors in mode.js
+    modeConstructor: Mode.MAJOR,
     structure: [
       IndependentPitch.DO,
       IndependentPitch.MI,
