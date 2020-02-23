@@ -81,7 +81,7 @@ export function randomChordContext(options) {
   // Choose a random `KeySignature`
   const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
-  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
