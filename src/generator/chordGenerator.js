@@ -12,6 +12,7 @@ import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
+import { Question, questionsForChordType } from './Question'
 
 // TODO: (James) Audit this type. Is it used anywhere?
 const RootOption = {
@@ -32,114 +33,9 @@ const RootOption = {
  * @todo                Move to own file, potentially in a Class of its own
  */
 export function questions(chordContext) {
-
-  const rootLetter = chordContext.chordDescription.root.letter
-  const rootAccidental = chordContext.chordDescription.root.accidental
-  const inversion = chordContext.chordDescription.inversion
-  const degree = chordContext.romanNumeralContext.degree
-  const roman = chordContext.romanNumeralContext.romanNumeral
-  const key = chordContext.modeLabel
-  const chordType = chordContext.chordType
-
-  // TODO: Wrap up in own function
-
-  // roman numeral question options
-  let romanOptions
-  if (chordType === 'triad') {
-    romanOptions = [
-      roman.toUpperCase(),
-      roman.toLowerCase(),
-      roman.toLowerCase() + 'o',
-      roman.toUpperCase() + '+'
-    ]
-  }
-  if (chordType === 'seventh') {
-    romanOptions = [
-      roman.toUpperCase() + '7',
-      roman.toLowerCase() + '7',
-      roman.toLowerCase() + 'ø7',
-      roman.toLowerCase() + 'o7'
-    ]
-  }
-
-  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
-  let romanInversionOptions
-  // [roman + inversionQuality + " " + inversion]
-  if (chordType === 'triad') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '63',
-      roman + inversionDisplay + '64'
-    ]
-  } else if (chordType === 'seventh') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '65',
-      roman + inversionDisplay + '43',
-      roman + inversionDisplay + '42'
-    ]
-  }
-
-  // Consider breaking this out to a factory-type function, like:
-  // question(chordContext, type)
-  let skeleton = [
-    {
-      "type": "Names",
-      "questionText": "Name the letter positions from lowest to highest.",
-      "answers": chordContext.notes.map(note => note.letter),
-      "ordered": true,
-      "choices": [
-          "A",
-          "B",
-          "C",
-          "D",
-          "E",
-          "F",
-          "G"
-      ]
-    },
-    {
-      "type": "Roots",
-      "questionText": "What's the root note?",
-      "answers": [rootLetter + rootAccidental],
-      // FIXME: Currently not filtering out naturals
-      "choices": chordContext.notes.map(note => note.letter + note.accidental)
-    },
-    {
-      "type": "Degrees",
-      "questionText": "In a " + key + " key, what degree is this chord built on?",
-      "answers": [degree + "^"],
-      "choices": [
-          "1^",
-          "2^",
-          "3^",
-          "4^",
-          "5^",
-          "6^",
-          "7^"
-      ]
-    },
-    {
-      "type": "Quality",
-      "questionText": "What's the chord's quality?",
-      "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
-      "choices": [...chordStructures(chordContext.chordType)]
-        .map(structure => structure.displayName)
-        .map(quality => rootLetter + rootAccidental + quality)
-    },
-    {
-      "type": "Numerals",
-      "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
-      "choices": romanOptions
-    },
-    {
-      "type": "Inversions",
-      "questionText": "What's the inversion?",
-      "answers": [roman + inversionDisplay + inversion],
-      "choices": romanInversionOptions
-    }
-  ]
+  // Retrieve all of the question for the `chordType` of the given `chordContext`,
+  // and apply them to the given `chordContext`.
+  return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
 
   // TODO:
   // for note in template:
@@ -164,8 +60,6 @@ export function questions(chordContext) {
     //   accidental = "";
     // }
   // }
-
-  return skeleton
 }
 
 /**
@@ -949,51 +843,5 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       }
     default:
       throw "Invalid chord structure: " + JSON.stringify(chordStructure)
-  }
-}
-
-export function inversionQuality(chordStructure) {
-  switch (chordStructure) {
-    case ChordStructure.MAJOR:
-      return ''
-    case ChordStructure.MINOR:
-      return ''
-    case ChordStructure.DIMINISHED_TRIAD:
-      return 'o'
-    case ChordStructure.AUGMENTED_TRIAD:
-      return '+'
-    case ChordStructure.DOMINANT_SEVENTH:
-      return ''
-    case ChordStructure.MAJOR_SEVENTH:
-      return ''
-    case ChordStructure.MINOR_SEVENTH:
-      return ''
-    case ChordStructure.HALF_DIMINISHED_SEVENTH:
-      return 'ø'
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
-      return 'o'
-  }
-}
-
-export function romanQuality(chordStructure) {
-  switch (chordStructure) {
-    case ChordStructure.MAJOR:
-      return ''
-    case ChordStructure.MINOR:
-      return ''
-    case ChordStructure.DIMINISHED_TRIAD:
-      return 'o'
-    case ChordStructure.AUGMENTED_TRIAD:
-      return '+'
-    case ChordStructure.DOMINANT_SEVENTH:
-      return '7'
-    case ChordStructure.MAJOR_SEVENTH:
-      return '7'
-    case ChordStructure.MINOR_SEVENTH:
-      return '7'
-    case ChordStructure.HALF_DIMINISHED_SEVENTH:
-      return 'ø7'
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
-      return 'o7'
   }
 }
