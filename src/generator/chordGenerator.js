@@ -127,6 +127,8 @@ export function randomChordContext(options) {
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
 
+  console.log("romanNumeralContext: " + JSON.stringify(romanNumeralContext))
+
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g.,
   //       `chordDescription`, `romanNumeralContext`, etc.

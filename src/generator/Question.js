@@ -89,8 +89,7 @@ export const Question = {
         roman.toLowerCase() + 'o',
         roman.toUpperCase() + '+'
       ]
-    }
-    if (chordType === 'seventh') {
+    } else if (chordType === 'seventh') {
       romanOptions = [
         roman.toUpperCase() + '7',
         roman.toLowerCase() + '7',
@@ -107,7 +106,7 @@ export const Question = {
   },
   inversion: function(chordContext) {
     const chordType = chordContext.chordType
-    const inversion = chordContext.inversion
+    const inversion = chordContext.chordDescription.inversion
     const roman = chordContext.romanNumeralContext.romanNumeral
     const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
     let romanInversionOptions
@@ -120,16 +119,17 @@ export const Question = {
       ]
     } else if (chordType === 'seventh') {
       romanInversionOptions = [
-        roman + inversionDisplay,
+        roman + inversionDisplay + '7',
         roman + inversionDisplay + '65',
         roman + inversionDisplay + '43',
         roman + inversionDisplay + '42'
       ]
     }
+    const answer = roman + inversionDisplay + inversion
     return {
       "type": "Inversions",
       "questionText": "What's the inversion?",
-      "answers": [roman + inversionDisplay + inversion],
+      "answers": [answer],
       "choices": romanInversionOptions
     }
   },
@@ -196,9 +196,9 @@ export function questionsForChordType(chordType) {
 
 export function romanQuality(chordStructure) {
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
+    case ChordStructure.MAJOR_TRIAD:
       return ''
-    case ChordStructure.MINOR:
+    case ChordStructure.MINOR_TRIAD:
       return ''
     case ChordStructure.DIMINISHED_TRIAD:
       return 'o'
@@ -219,9 +219,9 @@ export function romanQuality(chordStructure) {
 
 export function inversionQuality(chordStructure) {
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
+    case ChordStructure.MAJOR_TRIAD:
       return ''
-    case ChordStructure.MINOR:
+    case ChordStructure.MINOR_TRIAD:
       return ''
     case ChordStructure.DIMINISHED_TRIAD:
       return 'o'
