@@ -80,28 +80,11 @@ export const Question = {
   numerals: function(chordContext) {
     const roman = chordContext.romanNumeralContext.romanNumeral
     const chordType = chordContext.chordType
-    // TODO: Move to own helper function
-    let romanOptions
-    if (chordType === 'triad') {
-      romanOptions = [
-        roman.toUpperCase(),
-        roman.toLowerCase(),
-        roman.toLowerCase() + 'o',
-        roman.toUpperCase() + '+'
-      ]
-    } else if (chordType === 'seventh') {
-      romanOptions = [
-        roman.toUpperCase() + '7',
-        roman.toLowerCase() + '7',
-        roman.toLowerCase() + 'ø7',
-        roman.toLowerCase() + 'o7'
-      ]
-    }
     return {
       "type": "Numerals",
       "questionText": "Which roman numeral describes this chord’s degree and quality?",
       "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
-      "choices": romanOptions
+      "choices": romanOptions(roman, chordType)
     }
   },
   inversion: function(chordContext) {
@@ -190,6 +173,25 @@ export function questionsForChordType(chordType) {
         Question.quality,
         Question.inversion,
         Question.whatFollows,
+      ]
+  }
+}
+
+export function romanOptions(romanNumeral, chordType) {
+  switch (chordType) {
+    case ChordType.TRIAD:
+      return [
+        romanNumeral.toUpperCase(),
+        romanNumeral.toLowerCase(),
+        romanNumeral.toLowerCase() + 'o',
+        romanNumeral.toUpperCase() + '+'
+      ]
+    case ChordType: SEVENTH:
+      return [
+        romanNumeral.toUpperCase() + '7',
+        romanNumeral.toLowerCase() + '7',
+        romanNumeral.toLowerCase() + 'ø7',
+        romanNumeral.toLowerCase() + 'o7'
       ]
   }
 }
