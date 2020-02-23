@@ -465,28 +465,23 @@ export function concretizeRoot(keySignature, modeNote) {
   // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
   const shape = Shapes[keySignature]
-  for (var i = 0; i < shape.notes.length; i++) {
-    if (shape.notes[i].mode === modeNote) {
-      const note = shape.notes[i]
-      const rootAccidental = note.accidental
-      const rootSyllable = note.refIP
-      // Get the offset from the root accidental from `NATURAL`
-      const offset = Accidental.offsetFromNatural(rootAccidental)
-      // FIXME: (James) Implement convenience getter over `LetterName`
-      const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-      // FIXME: (James) Implement convenience getter over `IndependentPitch`
-      const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-      const rootIPIndex = (rootSyllableIndex + offset) % 12
-      const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-      return {
-        independentPitch: rootIP,
-        accidental: rootAccidental,
-        letter: rootLetter,
-        syllable: rootSyllable
-      }
-    }
+  const note = shape.notes.find(note => note.mode === modeNote)
+  const rootAccidental = note.accidental
+  const rootSyllable = note.refIP
+  // Get the offset from the root accidental from `NATURAL`
+  const offset = Accidental.offsetFromNatural(rootAccidental)
+  // FIXME: (James) Implement convenience getter over `LetterName`
+  const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
+  // FIXME: (James) Implement convenience getter over `IndependentPitch`
+  const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
+  const rootIPIndex = (rootSyllableIndex + offset) % 12
+  const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+  return {
+    independentPitch: rootIP,
+    accidental: rootAccidental,
+    letter: rootLetter,
+    syllable: rootSyllable
   }
-  throw new Error('modeNote ' + modeNote + ' not found in keySignature ' + keySignature)
 }
 
 /**
