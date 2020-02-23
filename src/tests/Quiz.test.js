@@ -85,11 +85,9 @@ test('evaluates input and colors choices correctly', () => {
   )
   expect(window.scrollTo).toBeCalledWith(0, 0)
   fireEvent.click(getByText('A'))
-  // FIXME: Reengage this test before merging into `master`!
-  // expect(getByText('A')).toHaveAttribute('color', '#c4183c')
+  expect(getByText('A')).toHaveAttribute('color', '#e5e6eb')
   fireEvent.click(getByText('G'))
   expect(getByText('G')).toHaveAttribute('color', '#17c671')
   expect(getByText('A')).toHaveAttribute('color', '#e5e6eb')
-  // FIXME: Reengage this test before merging into `master`!
-  // expect(asFragment()).toMatchSnapshot()
+  expect(asFragment()).toMatchSnapshot()
 })
