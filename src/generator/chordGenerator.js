@@ -220,6 +220,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     prevLetterNamePosition = notePosition
 
     // Create the note with all of our nice new data
+    // FIXME: Filter out accidentals if they are inherent in the key signature!
     const note = {
       letter: noteLetter,
       accidental: accidental(noteIP, syllable),
@@ -233,6 +234,43 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   return notes
 }
 
+/**
+ * accidentalForLetterNameIsInKeySignature - description
+ *
+ * @param  LetterName   letterName
+ * @param  Accidental   accidental
+ * @param  KeySignature keySignature
+ * @return Boolean      `true` if the given `letterName` is inherent in the given
+ *                      `keySignature` is associated with the given `accidental`.
+ *                      Otherwise, `false`.
+ */
+export function accidentalForLetterNameIsInKeySignature(letterName, accidental, keySignature) {
+  const noteInKeySignature = Shapes[keySignature].notes.find(note =>
+    note.refIP == letterNameToRefIP(letterName)
+  )
+  return accidental == noteInKeySignature.accidental
+}
+
+function letterNameToRefIP(letter) {
+  switch (letter) {
+    case LetterName.C:
+      return IndependentPitch.DO
+    case LetterName.D:
+      return IndependentPitch.RE
+    case LetterName.E:
+      return IndependentPitch.MI
+    case LetterName.F:
+      return IndependentPitch.FA
+    case LetterName.G:
+      return IndependentPitch.SO
+    case LetterName.A:
+      return IndependentPitch.LA
+    case LetterName.B:
+      return IndependentPitch.TI
+    default:
+      throw 'invalid letter name'
+  }
+}
 
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
 
