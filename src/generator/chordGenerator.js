@@ -52,7 +52,7 @@ export default function(numQs, options) {
   let chords = []
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
-    let chordContext = randomChordContext(options)
+    let chordContext = randomChordContext()
     chordContext.questions = questionsForChordType(chordContext.chordType)
       .map(question => question(chordContext))
     chords.push(chordContext)
@@ -587,17 +587,8 @@ function chordTypesOption(chordTypes) {
 }
 
 // return Type of the chord we are constructing
-export function chooseChordType(chordTypesOption) {
-  switch (chordTypesOption) {
-    case ChordTypesOption.TRIADS:
-      return ChordType.TRIAD
-    case ChordTypesOption.SEVENTHS:
-      return ChordType.SEVENTH
-    case ChordTypesOption.BOTH:
-      return [ChordType.TRIAD, ChordType.SEVENTH].randomElement()
-    default:
-      throw 'Impossible ChordTypesOption'
-  }
+export function chooseChordType() {
+  return ChordType.randomElement()
 }
 
 function chooseInitialOctave(clef) {
