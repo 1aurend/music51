@@ -78,11 +78,11 @@ export function randomChordContext(options) {
   const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
+  // Choose a random inversion from those afforded by the chosen `ChordStructure`
+  const inversion = chooseInversion(chordStructure)
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
-  // Choose a random inversion from those afforded by the chosen `ChordStructure`
-  const inversion = chooseInversion(chordStructure)
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -630,6 +630,10 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
     syllable,
     structure,
     chooseRandomAccidental(allowedAccidentals))
+}
+
+export function chooseModeLabel(chordStructure) {
+  return Object.keys(chordStructure.commonRootOffsets).randomElement()
 }
 
 /**

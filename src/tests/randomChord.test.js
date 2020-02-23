@@ -4,6 +4,7 @@ import {
   chooseChordStructure,
   chooseInversion,
   chooseKeySignature,
+  chooseModeLabel,
   randomRomanNumeralContext,
   makeChordDescription,
   partiallyConcretizeChord,
@@ -159,4 +160,10 @@ test('c natural is in key signature with no sharps nor flats', () => {
 test('c sharp is not in key signature with no sharps nor flats', () => {
   expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.SHARP, "B"))
     .toBeFalsy()
+})
+
+test('chooseModeLabel always returns a valid mode label', () => {
+  Object.values(ChordStructure).forEach(chordStructure => {
+    expect(chooseModeLabel(chordStructure)).toBeDefined()
+  })
 })
