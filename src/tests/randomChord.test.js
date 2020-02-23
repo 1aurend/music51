@@ -152,6 +152,15 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
   }
 })
 
+test('randomRomanNumeralContext for Major_TRIAD test bed', () => {
+  const romanNumeralContext = randomRomanNumeralContext(ChordStructure.MAJOR_TRIAD, "Major")
+})
+
+// test('randomRomanNumeralContext for Neapolitan test bed', () => {
+//   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.NEAPOLITAN_SIXTH, "Major")
+//
+// })
+
 test('c natural is in key signature with no sharps nor flats', () => {
   expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.NATURAL, "B"))
     .toBeTruthy()

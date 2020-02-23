@@ -523,9 +523,19 @@ export function invert(chord, inversion) {
 }
 
 /**
+ * @param ChordType chordType The type of chord affording inversions from which to select
+ * @return A random inversion from those afforded by the given `chordType`
+ */
+export function chooseInversion(chordType) {
+  // TODO: Implement inversions as an instance method over `ChordType`
+  return inversions(chordType).randomElement()
+}
+
+/**
  * @param ChordStructure chordStructure The `ChordStructure` of a chord
  * @return                              An array of strings representing the various inversions
  *                                      available for the given `chordStructure`
+ * @todo                                Create an `Inversion` abstraction
  */
 function inversions(chordStructure) {
   switch (chordStructure) {
@@ -567,15 +577,6 @@ function inversions(chordStructure) {
     default:
       throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
-}
-
-/**
- * @param ChordType chordType The type of chord affording inversions from which to select
- * @return A random inversion from those afforded by the given `chordType`
- */
-export function chooseInversion(chordType) {
-  // TODO: Implement inversions as an instance method over `ChordType`
-  return inversions(chordType).randomElement()
 }
 
 /**
@@ -666,7 +667,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -676,7 +678,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -689,7 +692,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -699,7 +703,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: scaleDegree,
             modeNote: modeNote,
             degree: degree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -712,7 +717,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -722,7 +728,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -733,7 +740,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
         mode: mode,
         modeNote: modeNote,
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree),
+        incidental: 0
       }
     }
     case ChordStructure.DOMINANT_SEVENTH:
@@ -745,7 +753,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -755,7 +764,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -766,7 +776,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
         mode: mode,
         modeNote: modeNote,
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree),
+        incidental: 0
       }
     }
     case ChordStructure.MINOR_SEVENTH:
@@ -778,7 +789,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -788,7 +800,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -801,7 +814,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
         case Mode.MINOR: {
@@ -811,7 +825,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
             mode: mode,
             modeNote: modeNote,
             degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
+            romanNumeral: romanNumeral(chordStructure, scaleDegree),
+            incidental: 0
           }
         }
       }
@@ -822,7 +837,8 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
         mode: mode,
         modeNote: modeNote,
         degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
+        romanNumeral: romanNumeral(chordStructure, scaleDegree),
+        incidental: 0
       }
     }
     case ChordStructure.NEAPOLITAN_SIXTH:
