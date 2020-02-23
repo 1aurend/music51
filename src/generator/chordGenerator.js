@@ -136,8 +136,8 @@ export function randomChordContext(options) {
     keySignature: vexFlowKeySignature,
     modeLabel: modeLabel,
     chordType: chordType,
-    chordDescription,
-    romanNumeralContext,
+    chordDescription: chordDescription,
+    romanNumeralContext: romanNumeralContext,
     notes: staffAdjustedNotes
   }
   // All done!
