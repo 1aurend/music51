@@ -34,112 +34,15 @@ const RootOption = {
  */
 export function questions(chordContext) {
 
-  const rootLetter = chordContext.chordDescription.root.letter
-  const rootAccidental = chordContext.chordDescription.root.accidental
-  const inversion = chordContext.chordDescription.inversion
-  const degree = chordContext.romanNumeralContext.degree
-  const roman = chordContext.romanNumeralContext.romanNumeral
-  const key = chordContext.modeLabel
-  const chordType = chordContext.chordType
-
-  // TODO: Wrap up in own function
-
-  // roman numeral question options
-  let romanOptions
-  if (chordType === 'triad') {
-    romanOptions = [
-      roman.toUpperCase(),
-      roman.toLowerCase(),
-      roman.toLowerCase() + 'o',
-      roman.toUpperCase() + '+'
-    ]
-  }
-  if (chordType === 'seventh') {
-    romanOptions = [
-      roman.toUpperCase() + '7',
-      roman.toLowerCase() + '7',
-      roman.toLowerCase() + 'ø7',
-      roman.toLowerCase() + 'o7'
-    ]
-  }
-
-  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
-  let romanInversionOptions
-  // [roman + inversionQuality + " " + inversion]
-  if (chordType === 'triad') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '63',
-      roman + inversionDisplay + '64'
-    ]
-  } else if (chordType === 'seventh') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '65',
-      roman + inversionDisplay + '43',
-      roman + inversionDisplay + '42'
-    ]
-  }
-
   // Consider breaking this out to a factory-type function, like:
   // question(chordContext, type)
   let skeleton = [
-    {
-      "type": "Names",
-      "questionText": "Name the letter positions from lowest to highest.",
-      "answers": chordContext.notes.map(note => note.letter),
-      "ordered": true,
-      "choices": [
-          "A",
-          "B",
-          "C",
-          "D",
-          "E",
-          "F",
-          "G"
-      ]
-    },
-    {
-      "type": "Roots",
-      "questionText": "What's the root note?",
-      "answers": [rootLetter + rootAccidental],
-      // FIXME: Currently not filtering out naturals
-      "choices": chordContext.notes.map(note => note.letter + note.accidental)
-    },
-    {
-      "type": "Degrees",
-      "questionText": "In a " + key + " key, what degree is this chord built on?",
-      "answers": [degree + "^"],
-      "choices": [
-          "1^",
-          "2^",
-          "3^",
-          "4^",
-          "5^",
-          "6^",
-          "7^"
-      ]
-    },
-    {
-      "type": "Quality",
-      "questionText": "What's the chord's quality?",
-      "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
-      "choices": [...chordStructures(chordContext.chordType)]
-        .map(structure => structure.displayName)
-        .map(quality => rootLetter + rootAccidental + quality)
-    },
-    {
-      "type": "Numerals",
-      "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
-      "choices": romanOptions
-    },
-    {
-      "type": "Inversions",
-      "questionText": "What's the inversion?",
-      "answers": [roman + inversionDisplay + inversion],
-      "choices": romanInversionOptions
-    }
+    letterNamesQuestion(chordContext),
+    rootQuestion(chordContext),
+    degreesQuestion(chordContext),
+    qualityQuestion(chordContext),
+    numeralsQuestion(chordContext),
+    inversionsQuestion(chordContext)
   ]
 
   // TODO:
@@ -167,6 +70,126 @@ export function questions(chordContext) {
   // }
 
   return skeleton
+}
+
+function letterNamesQuestion(chordContext) {
+  return {
+    // FIXME: Should this be "Names" or "Letter Names"?
+    "type": "Names",
+    "questionText": "Name the letter positions from lowest to highest.",
+    "answers": chordContext.notes.map(note => note.letter),
+    "ordered": true,
+    "choices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+    ]
+  }
+}
+
+function rootQuestion(chordContext) {
+  const rootLetter = chordContext.chordDescription.root.letter
+  const rootAccidental = chordContext.chordDescription.root.accidental
+  return {
+    "type": "Roots",
+    "questionText": "What's the root note?",
+    "answers": [rootLetter + rootAccidental],
+    // FIXME: Currently not filtering out naturals
+    "choices": chordContext.notes.map(note => note.letter + note.accidental)
+  }
+}
+
+function degreesQuestion(chordContext) {
+  const key = chordContext.modeLabel
+  const degree = chordContext.romanNumeralContext.degree
+  return {
+    "type": "Degrees",
+    "questionText": "In a " + key + " key, what degree is this chord built on?",
+    "answers": [degree + "^"],
+    "choices": [
+        "1^",
+        "2^",
+        "3^",
+        "4^",
+        "5^",
+        "6^",
+        "7^"
+    ]
+  }
+}
+
+function qualityQuestion(chordContext) {
+  const rootLetter = chordContext.chordDescription.root.letter
+  const rootAccidental = chordContext.chordDescription.root.accidental
+  return {
+    "type": "Quality",
+    "questionText": "What's the chord's quality?",
+    "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
+    "choices": [...chordStructures(chordContext.chordType)]
+      .map(structure => structure.displayName)
+      .map(quality => rootLetter + rootAccidental + quality)
+  }
+}
+
+function numeralsQuestion(chordContext) {
+  const roman = chordContext.romanNumeralContext.romanNumeral
+  const chordType = chordContext.chordType
+  let romanOptions
+  if (chordType === 'triad') {
+    romanOptions = [
+      roman.toUpperCase(),
+      roman.toLowerCase(),
+      roman.toLowerCase() + 'o',
+      roman.toUpperCase() + '+'
+    ]
+  }
+  if (chordType === 'seventh') {
+    romanOptions = [
+      roman.toUpperCase() + '7',
+      roman.toLowerCase() + '7',
+      roman.toLowerCase() + 'ø7',
+      roman.toLowerCase() + 'o7'
+    ]
+  }
+  return {
+    "type": "Numerals",
+    "questionText": "Which roman numeral describes this chord’s degree and quality?",
+    "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
+    "choices": romanOptions
+  }
+}
+
+function inversionsQuestion(chordContext) {
+  const chordType = chordContext.chordType
+  const inversion = chordContext.inversion
+  const roman = chordContext.romanNumeralContext.romanNumeral
+  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
+  let romanInversionOptions
+  // [roman + inversionQuality + " " + inversion]
+  if (chordType === 'triad') {
+    romanInversionOptions = [
+      roman + inversionDisplay,
+      roman + inversionDisplay + '63',
+      roman + inversionDisplay + '64'
+    ]
+  } else if (chordType === 'seventh') {
+    romanInversionOptions = [
+      roman + inversionDisplay,
+      roman + inversionDisplay + '65',
+      roman + inversionDisplay + '43',
+      roman + inversionDisplay + '42'
+    ]
+  }
+  return {
+    "type": "Inversions",
+    "questionText": "What's the inversion?",
+    "answers": [roman + inversionDisplay + inversion],
+    "choices": romanInversionOptions
+  }
 }
 
 /**

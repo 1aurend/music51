@@ -4,7 +4,7 @@ import { ChordType } from './ChordType'
 // may be extended over time, and care must be taken to support new
 // questions down the line.
 export const QuestionType = {
-  LETTER_POSITIONS: "Letter Positions",
+  LETTER_NAMES: "Letter Names",
   ROOT: "Root",
   DEGREES: "Degrees",
   ROLE: "Role",
@@ -27,7 +27,7 @@ function questionTypes(chordType) {
       // fallthrough
     case ChordType.SEVENTH:
       return [
-        QuestionType.LETTER_POSITIONS,
+        QuestionType.LETTER_NAMES,
         QuestionType.ROOT,
         QuestionType.DEGREES,
         QuestionType.NUMERALS,
@@ -35,7 +35,7 @@ function questionTypes(chordType) {
       ]
     case ChordType.CHROMATIC_VARIATION:
       return [
-        QuestionType.LETTER_POSITIONS,
+        QuestionType.LETTER_NAMES,
         QuestionType.ROOT,
         QuestionType.DEGREES,
         QuestionType.ROLE,
@@ -44,7 +44,7 @@ function questionTypes(chordType) {
       ]
     case ChordType.MODE_MIXTURE:
       return [
-        QuestionType.LETTER_POSITIONS,
+        QuestionType.LETTER_NAMES,
         QuestionType.ROOT,
         QuestionType.DEGREES,
         QuestionType.ROLE,
@@ -53,7 +53,7 @@ function questionTypes(chordType) {
       ]
     case ChordType.APPLIED_CHORD:
       return [
-        QuestionType.LETTER_POSITIONS,
+        QuestionType.LETTER_NAMES,
         QuestionType.ROOT,
         QuestionType.DEGREES,
         QuestionType.ROLE,
