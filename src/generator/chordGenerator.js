@@ -466,9 +466,10 @@ export function concretizeRoot(keySignature, modeNote) {
   // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
   const shape = Shapes[keySignature]
   for (var i = 0; i < shape.notes.length; i++) {
-    if (Shapes[keySignature].notes[i].mode === modeNote) {
-      const rootAccidental = shape.notes[i].accidental
-      const rootSyllable = shape.notes[i].refIP
+    if (shape.notes[i].mode === modeNote) {
+      const note = shape.notes[i]
+      const rootAccidental = note.accidental
+      const rootSyllable = note.refIP
       // Get the offset from the root accidental from `NATURAL`
       const offset = Accidental.offsetFromNatural(rootAccidental)
       // FIXME: (James) Implement convenience getter over `LetterName`
