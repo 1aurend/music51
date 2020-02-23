@@ -12,6 +12,7 @@ import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
+import { Question, questionsForChordType } from './Question'
 
 // TODO: (James) Audit this type. Is it used anywhere?
 const RootOption = {
@@ -32,140 +33,9 @@ const RootOption = {
  * @todo                Move to own file, potentially in a Class of its own
  */
 export function questions(chordContext) {
-
-  const rootLetter = chordContext.chordDescription.root.letter
-  const rootAccidental = chordContext.chordDescription.root.accidental
-  const inversion = chordContext.chordDescription.inversion
-  const degree = chordContext.romanNumeralContext.degree
-  const roman = chordContext.romanNumeralContext.romanNumeral
-  const key = chordContext.modeLabel
-  const chordType = chordContext.chordType
-
-  // TODO: Wrap up in own function
-
-  // roman numeral question options
-  let romanOptions
-  if (chordType === 'triad') {
-    romanOptions = [
-      roman.toUpperCase(),
-      roman.toLowerCase(),
-      roman.toLowerCase() + 'o',
-      roman.toUpperCase() + '+'
-    ]
-  }
-  if (chordType === 'seventh') {
-    romanOptions = [
-      roman.toUpperCase() + '7',
-      roman.toLowerCase() + '7',
-      roman.toLowerCase() + 'ø7',
-      roman.toLowerCase() + 'o7'
-    ]
-  }
-  
-  const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
-  let romanInversionOptions
-  // [roman + inversionQuality + " " + inversion]
-  if (chordType === 'triad') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '63',
-      roman + inversionDisplay + '64'
-    ]
-  } else if (chordType === 'seventh') {
-    romanInversionOptions = [
-      roman + inversionDisplay,
-      roman + inversionDisplay + '65',
-      roman + inversionDisplay + '43',
-      roman + inversionDisplay + '42'
-    ]
-  }
-
-  // Consider breaking this out to a factory-type function, like:
-  // question(chordContext, type)
-  let skeleton = [
-    {
-      "type": "Names",
-      "questionText": "Name the letter positions from lowest to highest.",
-      "answers": chordContext.notes.map(note => note.letter),
-      "ordered": true,
-      "choices": [
-          "A",
-          "B",
-          "C",
-          "D",
-          "E",
-          "F",
-          "G"
-      ]
-    },
-    {
-      "type": "Roots",
-      "questionText": "What's the root note?",
-      "answers": [rootLetter + rootAccidental],
-      // FIXME: Currently not filtering out naturals
-      "choices": chordContext.notes.map(note => note.letter + note.accidental)
-    },
-    {
-      "type": "Degrees",
-      "questionText": "In a " + key + " key, what degree is this chord built on?",
-      "answers": [degree + "^"],
-      "choices": [
-          "1^",
-          "2^",
-          "3^",
-          "4^",
-          "5^",
-          "6^",
-          "7^"
-      ]
-    },
-    {
-      "type": "Quality",
-      "questionText": "What's the chord's quality?",
-      "answers": [rootLetter + rootAccidental + chordContext.chordDescription.structure.displayName],
-      "choices": [...chordStructures(chordContext.chordType)]
-        .map(structure => structure.displayName)
-        .map(quality => rootLetter + rootAccidental + quality)
-    },
-    {
-      "type": "Numerals",
-      "questionText": "Which roman numeral describes this chord’s degree and quality?",
-      "answers": [roman + romanQuality(chordContext.chordDescription.structure)],
-      "choices": romanOptions
-    },
-    {
-      "type": "Inversions",
-      "questionText": "What's the inversion?",
-      "answers": [roman + inversionDisplay + inversion],
-      "choices": romanInversionOptions
-    }
-  ]
-
-  // TODO:
-  // for note in template: 
-    // // push notes into questions before adjusting accidentals for key sig
-    // chord.questions[0].answers.push(noteLetter);
-
-
-    // // FIXME: This should be its own function
-    // // only show natural in question choices if it's an alteration from the key sig
-    // if(accidental != '♮'){
-    //   chord.questions[1].choices.push(noteLetter+accidental);
-    // }
-    // else if ((accidental === '♮') && (keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental != '♮')){
-    //   chord.questions[1].choices.push(noteLetter+'♮');
-    // }
-    // else {
-    //   chord.questions[1].choices.push(noteLetter);
-    // }
-
-    // // adjust accidentals for key sig (if an accidental is in the key sig, don't add it to the note)
-    // if(accidental === keySignatures[keySignature].notes[keySignatures[keySignature].notes.findIndex(function(syllable){return syllable.refIP === noteSyllable})].accidental){
-    //   accidental = "";
-    // }
-  // }
-
-  return skeleton
+  // Retrieve all of the question for the `chordType` of the given `chordContext`,
+  // and apply them to the given `chordContext`.
+  return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
 }
 
 /**
@@ -184,12 +54,12 @@ export function questions(chordContext) {
  *                               "keySignature": KeySignature,
  *                               "notes": [ { "letter", "accidental", "octave" } ],
  *                               "questions": [
- *                                  { 
- *                                    "type": ("Names" | "Degrees", etc. ), 
- *                                    "questionText": "...", 
+ *                                  {
+ *                                    "type": ("Names" | "Degrees", etc. ),
+ *                                    "questionText": "...",
  *                                    "answers": [ "iv7", ... ] ,
- *                                    "ordered": Boolean, 
- *                                    "choices": [ { "choice": "IV7", "key": "7" } ] 
+ *                                    "ordered": Boolean,
+ *                                    "choices": [ { "choice": "IV7", "key": "7" } ]
  *                                  }
  *                               ]
  *                            }
@@ -201,27 +71,26 @@ export default function(numQs, options) {
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
     let chordContext = randomChordContext(options)
-    chordContext.questions = questions(chordContext)  
+    chordContext.questions = questions(chordContext)
     chords.push(chordContext)
   }
   addKeystrokes(chords)
-  console.log(chords)
   return chords
 }
 
 /**
- * randomChord - A big function to generate a random, correctly spelled chord structure within 
+ * randomChord - A big function to generate a random, correctly spelled chord structure within
  *               clef/ staff limits
- * 
+ *
  * @param options The user settings for a given session, in the form:
  *                {
- *                  { 
+ *                  {
  *                    chordTypes: { triads: true, sevenths: true },
-                      roots: { common: true, any: false } 
+                      roots: { common: true, any: false }
  *                  }
  *                }
- * @return chord  A contextualized chord object in the form: 
- *                { 
+ * @return chord  A contextualized chord object in the form:
+ *                {
  *                  clef, keySignature, chordType, inversion, notes
  *                }
  */
@@ -236,7 +105,7 @@ export function randomChordContext(options) {
   const inversion = chooseInversion(chordType)
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
-  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -257,17 +126,18 @@ export function randomChordContext(options) {
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
-  
+
   // Bundle up all of the information useful to graphically represent the notes on the screen.
-  // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g., 
+  // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g.,
   //       `chordDescription`, `romanNumeralContext`, etc.
   const result = {
     clef: clef,
+    shape: keySignature,
     keySignature: vexFlowKeySignature,
     modeLabel: modeLabel,
     chordType: chordType,
-    chordDescription,
-    romanNumeralContext,
+    chordDescription: chordDescription,
+    romanNumeralContext: romanNumeralContext,
     notes: staffAdjustedNotes
   }
   // All done!
@@ -277,7 +147,7 @@ export function randomChordContext(options) {
 // TODO: Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
 export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
-  // Concretize the root by situating the roman numeral context's `modeNote` in the given 
+  // Concretize the root by situating the roman numeral context's `modeNote` in the given
   // `keySignature`.
   const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
   return {
@@ -350,11 +220,17 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
     prevLetterNamePosition = notePosition
 
-    // Create the note with all of our nice new data
-    const note = { 
-      letter: noteLetter, 
-      accidental: accidental(noteIP, syllable), 
-      octave: octaveDisplacement 
+    const accid = accidental(noteIP, syllable)
+    const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
+      noteLetter,
+      accid,
+      keySignature
+    )
+
+    const note = {
+      letter: noteLetter,
+      accidental: shouldFilterOutAccidental ? "" : accidental(noteIP, syllable),
+      octave: octaveDisplacement
     }
 
     // Append our new note to the array to be returned
@@ -364,6 +240,44 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   return notes
 }
 
+/**
+ * accidentalForLetterNameIsInKeySignature - description
+ *
+ * @param  LetterName   letterName
+ * @param  Accidental   accidental
+ * @param  KeySignature keySignature
+ * @return Boolean      `true` if the given `letterName` is inherent in the given
+ *                      `keySignature` is associated with the given `accidental`.
+ *                      Otherwise, `false`.
+ * @todo                Move to `Accidental` or somewhere similarly low-level
+ */
+export function accidentalForLetterNameIsInKeySignature(letterName, accidental, keySignature) {
+  const noteInKeySignature = Shapes[keySignature].notes.find(note =>
+    note.refIP == letterNameToRefIP(letterName)
+  )
+  return accidental == noteInKeySignature.accidental
+}
+
+function letterNameToRefIP(letter) {
+  switch (letter) {
+    case LetterName.C:
+      return IndependentPitch.DO
+    case LetterName.D:
+      return IndependentPitch.RE
+    case LetterName.E:
+      return IndependentPitch.MI
+    case LetterName.F:
+      return IndependentPitch.FA
+    case LetterName.G:
+      return IndependentPitch.SO
+    case LetterName.A:
+      return IndependentPitch.LA
+    case LetterName.B:
+      return IndependentPitch.TI
+    default:
+      throw 'invalid letter name'
+  }
+}
 
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
 
@@ -492,7 +406,7 @@ export function requiredOctaveDisplacement(staffPositions, range) {
 /**
  * @param Array of notes chord  notes   The notes to be adjusted, in the form:
                                           { letter, accidental }
- * @param Clef                  clef    The clef context in which we are positioning the given 
+ * @param Clef                  clef    The clef context in which we are positioning the given
  *                                      `notes`.
  * @return An array of notes positioned properly within the context of the given `clef`.
 */
@@ -529,7 +443,7 @@ function constrainAccidental(syllable, structure, initialChoice) {
   )
   const containsTripleSharp = (
     initialChoice === Accidental.SHARP &&
-    structure === ChordStructure.AUGMENTED &&
+    structure === ChordStructure.AUGMENTED_TRIAD &&
     syllable === IndependentPitch.TI
   )
   if (containsTripleFlat || containsTripleSharp) {
@@ -537,35 +451,6 @@ function constrainAccidental(syllable, structure, initialChoice) {
   }
   return initialChoice
 }
-
-// TODO: Decide if we still need this function. Is this now covered by concretizeRoot? If so, we'll need to deal with chooseRootAccidental above to make sure we're still dealing with the egregious edge cases.
-// => {
-//  syllable: Syllable,
-//  accidental: Accidental,
-//  keySignature: KeySignature
-// }
-// function chooseRootSyllableAccidentalAndKeySignature(
-//   rootOption,
-//   structure,
-//   rootSyllable,
-//   keySignatures
-// ) {
-//   // TODO: Inject keySignatures
-//   // TODO: Inject subsets
-//   // TODO: Inject rootAccidentals
-//   switch (rootOption) {
-//     case RootOption.ANY:
-//       return {
-//         "syllable": subsets.B.randomElement(),
-//         "accidental": chooseRootAccidental(rootSyllable, structure),
-//         "keySignature": Object.keys(keySignatures).randomElement()
-//       }
-//     case RootOption.COMMON:
-//       // TODO
-//     default:
-//       //
-//   }
-// }
 
 /**
  * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
@@ -612,27 +497,14 @@ export function concretizeRoot(keySignature, modeNote) {
  */
 export function romanNumeral(chordStructure, degree) {
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
-    case ChordStructure.AUGMENTED:
+    case ChordStructure.MAJOR_TRIAD:
+    case ChordStructure.AUGMENTED_TRIAD:
     case ChordStructure.DOMINANT_SEVENTH:
     case ChordStructure.MAJOR_SEVENTH:
       return degreeAndQualityToRomanNumeral(degree, true)
     default:
       return degreeAndQualityToRomanNumeral(degree, false)
   }
-}
-
-//These are KP's choices. See note in randomRomanNumeralContext re: configurability.
-const allowedModesByChordStructure = {
-  [ChordStructure.MAJOR]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.MINOR]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.DIMINISHED]: [Mode.MAJOR],
-  [ChordStructure.AUGMENTED]: [Mode.MAJOR],
-  [ChordStructure.DOMINANT_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.MAJOR_SEVENTH]: [Mode.MAJOR],
-  [ChordStructure.MINOR_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.HALF_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR],
-  [ChordStructure.FULLY_DIMINISHED_SEVENTH]: [Mode.MAJOR, Mode.MINOR]
 }
 
 export function translateNoteIPIndex(componentIP) {
@@ -662,9 +534,9 @@ function handleInversion(chord, inversion) {
 /**
  * invert - return a brand new array of notes inverted the amount of times indicated by `inversion`. For example, `0` is equal to "root inversion", while `1` is equal to "first inversion".
  *
- * @param  {type} chord   Note values to be inverted
+ * @param  {type} chord     Note values to be inverted
  * @param  {type} inversion The amount of inversions to perform
- * @return {type}         An array of notes inverted the amount of times indicated by `inversion`
+ * @return {type}           An array of notes inverted the amount of times indicated by `inversion`
  */
 export function invert(chord, inversion) {
   let notes = [...chord]
@@ -702,7 +574,7 @@ export function chooseInversion(chordType) {
 
 /**
  * @return  A random key signature within the realm of reason (omitting c+f flat, e+b sharp)
- * @todo    Add some configurability with an input of allowed key signatures, with some 
+ * @todo    Add some configurability with an input of allowed key signatures, with some
  *          sensible default
  */
 export function chooseKeySignature() {
@@ -783,7 +655,7 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
  * @todo                  Rename to `chooseRomanNumeralContext`
  */
 export function randomRomanNumeralContext(chordStructure, modeLabel) {
-  // FIXME: Codify "Major" and "minor" here!  
+  // FIXME: Codify "Major" and "minor" here!
   let mode
   switch (modeLabel) {
     case "Major":
@@ -794,7 +666,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       break
   }
   switch (chordStructure) {
-    case ChordStructure.MAJOR:
+    case ChordStructure.MAJOR_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement()
@@ -817,7 +689,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
           }
         }
       }
-    case ChordStructure.MINOR:
+    case ChordStructure.MINOR_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
@@ -840,7 +712,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
           }
         }
       }
-    case ChordStructure.DIMINISHED:
+    case ChordStructure.DIMINISHED_TRIAD:
       switch (mode) {
         case Mode.MAJOR: {
           const modeNote = Mode.LOCRIAN
@@ -863,7 +735,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
           }
         }
       }
-    case ChordStructure.AUGMENTED: {
+    case ChordStructure.AUGMENTED_TRIAD: {
       const modeNote = Mode.MAJOR
       const scaleDegree = degree(mode, modeNote)
       return {
@@ -962,53 +834,35 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
         romanNumeral: romanNumeral(chordStructure, scaleDegree)
       }
     }
+    case ChordStructure.NEAPOLITAN_SIXTH:
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+      // We have fallen through to here
+      // FIXME: This is a fake value for now. We must alter the input to this function
+      //        in order to handle chromatic alterations.
+      return {
+        mode: mode,
+        modeNote: Mode.MAJOR,
+        degree: 1,
+        romanNumeral: RomanNumeral.I
+      }
     default:
-      throw new Error("Invalid chord structure")
+      throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }
-}
-
-export function inversionQuality(chordStructure) {
-  switch (chordStructure) {
-    case ChordStructure.MAJOR:
-      return ''
-    case ChordStructure.MINOR:
-      return ''
-    case ChordStructure.DIMINISHED:
-      return 'o'
-    case ChordStructure.AUGMENTED:
-      return '+'
-    case ChordStructure.DOMINANT_SEVENTH:
-      return ''
-    case ChordStructure.MAJOR_SEVENTH:
-      return ''
-    case ChordStructure.MINOR_SEVENTH:
-      return ''
-    case ChordStructure.HALF_DIMINISHED_SEVENTH:
-      return 'ø'
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
-      return 'o'
-  } 
-}
-
-export function romanQuality(chordStructure) {
-  switch (chordStructure) {
-    case ChordStructure.MAJOR:
-      return ''
-    case ChordStructure.MINOR:
-      return ''
-    case ChordStructure.DIMINISHED:
-      return 'o'
-    case ChordStructure.AUGMENTED:
-      return '+'
-    case ChordStructure.DOMINANT_SEVENTH:
-      return '7'
-    case ChordStructure.MAJOR_SEVENTH:
-      return '7'
-    case ChordStructure.MINOR_SEVENTH:
-      return '7'
-    case ChordStructure.HALF_DIMINISHED_SEVENTH:
-      return 'ø7'
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
-      return 'o7'
-  } 
 }

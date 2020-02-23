@@ -1,13 +1,14 @@
-import { 
-  randomChordContext, 
+import {
+  randomChordContext,
   chooseChordType,
-  chooseChordStructure, 
+  chooseChordStructure,
   chooseInversion,
   chooseKeySignature,
   randomRomanNumeralContext,
   makeChordDescription,
   partiallyConcretizeChord,
-  concretizeRoot
+  concretizeRoot,
+  accidentalForLetterNameIsInKeySignature
 } from '../generator/chordGenerator'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
@@ -36,7 +37,7 @@ test('makeChordDescription makes a chordDescription', () => {
   const chordStructure = chooseChordStructure(chordType)
   const inversion = chooseInversion(chordType)
   const keySignature = chooseKeySignature()
-  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(chordDescription).toBeDefined()
@@ -47,9 +48,9 @@ test('partially concretize chord notes makes three notes for a triad', () => {
   const chordStructure = chooseChordStructure(chordType)
   const inversion = chooseInversion(chordType)
   const keySignature = chooseKeySignature()
-  const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) 
+  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
 })
 
@@ -140,12 +141,21 @@ test('randomChordContext does not blow up', () => {
 })
 
 test('randomRomanNumeralContext returns a valid mode note and degree', () => {
-  const chordStructure = ChordStructure.MINOR
+  const chordStructure = ChordStructure.MINOR_TRIAD
   for (var i = 0; i < 100; i++) {
-    const modeLabel = chordStructure.possibleModeEnvironments.randomElement()
+    const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
     const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
     expect(romanNumeralContext.modeNote).toBeDefined()
     expect(romanNumeralContext.degree).toBeDefined()
   }
 })
 
+test('c natural is in key signature with no sharps nor flats', () => {
+  expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.NATURAL, "B"))
+    .toBeTruthy()
+})
+
+test('c sharp is not in key signature with no sharps nor flats', () => {
+  expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.SHARP, "B"))
+    .toBeFalsy()
+})
