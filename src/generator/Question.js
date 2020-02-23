@@ -1,5 +1,6 @@
 import { ChordType } from './ChordType'
 import { ChordStructure, chordStructures } from './ChordStructure'
+import { accidentalForLetterNameIsInKeySignature } from './chordGenerator'
 
 /**
  * `Question` is a collection of functions which each take a `chordContext`, and return
@@ -20,10 +21,23 @@ export const Question = {
     // FIXME: Filter out accidentals if they are inherent in the key signature.
     const rootLetter = chordContext.chordDescription.root.letter
     const rootAccidental = chordContext.chordDescription.root.accidental
+
+    console.log("key signature: " + JSON.stringify(chordContext.keySignature))
+
+    const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
+      rootLetter,
+      rootAccidental,
+      chordContext.shape
+    )
+
+    const rootAccidentalDisplay = shouldFilterOutAccidental
+      ? ""
+      : chordContext.chordDescription.root.accidental
+
     return {
       "type": "Roots",
       "questionText": "What's the root note?",
-      "answers": [rootLetter + rootAccidental],
+      "answers": [rootLetter + rootAccidentalDisplay],
       // FIXME: Currently not filtering out naturals
       "choices": chordContext.notes.map(note => note.letter + note.accidental)
     }

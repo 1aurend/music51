@@ -132,6 +132,7 @@ export function randomChordContext(options) {
   //       `chordDescription`, `romanNumeralContext`, etc.
   const result = {
     clef: clef,
+    shape: keySignature,
     keySignature: vexFlowKeySignature,
     modeLabel: modeLabel,
     chordType: chordType,
@@ -248,6 +249,7 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
  * @return Boolean      `true` if the given `letterName` is inherent in the given
  *                      `keySignature` is associated with the given `accidental`.
  *                      Otherwise, `false`.
+ * @todo                Move to `Accidental` or somewhere similarly low-level
  */
 export function accidentalForLetterNameIsInKeySignature(letterName, accidental, keySignature) {
   const noteInKeySignature = Shapes[keySignature].notes.find(note =>
