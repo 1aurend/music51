@@ -1,6 +1,10 @@
 import { ChordType } from './ChordType'
 import { ChordStructure, chordStructures } from './ChordStructure'
 
+/**
+ * `Question` is a collection of functions which each take a `chordContext`, and return
+ * a valid question object.
+ */
 export const Question = {
   letterNames: function(chordContext) {
     return {
