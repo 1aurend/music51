@@ -14,12 +14,6 @@ import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 import { Question, questionsForChordType } from './Question'
 
-// TODO: (James) Audit this type. Is it used anywhere?
-const RootOption = {
-  ANY: "any",
-  COMMON: "common"
-}
-
 /**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
