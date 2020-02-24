@@ -191,7 +191,6 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
-
   const inversion = chordDescription.inversion
 
   // TODO: First, codify `inversion` in a stronger way
