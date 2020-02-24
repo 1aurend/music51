@@ -57,11 +57,23 @@ export const Question = {
         "Mixture", // keystroke "m" (Borrowed: Mode Mixture)
         "Applied" // keystroke "a" (Borrowed: Applied)
     ]
-    const answer = ""
+    let answer
+    switch (chordContext.chordType) {
+      case ChordType.TRIAD:
+        // fallthrough
+      case ChordType.SEVENTH:
+        return "In-Key"
+      case ChordType.CHROMATIC_VARIATION:
+        return "Chromatic Variation"
+      case ChordType.MODE_MIXTURE:
+        return "Mode Mixture"
+      case ChordType.APPLIED_CHORD:
+        return "Applied"
+    }
     return {
       "type": "Role",
       "questionText": "What is this chord's relationship to the key?",
-      "answers": [], // "In-Key" if the chord grouping is triad or seventh, otherwise the name of the grouping.
+      "answers": [answer],
       "choices": choices
     }
   },
