@@ -236,10 +236,10 @@ export default function addKeystrokes(chords) {
                       }}
                 break
 
-                    default:
-                      console.log("something went wrong with the text of this question");
-                      break
-                  }
+              default:
+                console.log("something went wrong with the text of this question");
+                break
+            }
     }
     questions[j].choices = choicesWithKeys
   }
