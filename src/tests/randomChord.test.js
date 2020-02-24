@@ -184,7 +184,7 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
   for (var i = 0; i < 100; i++) {
     const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
     const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
-    expect(romanNumeralContext.modeNote).toBeDefined()
+    expect(romanNumeralContext.mode).toBeDefined()
     expect(romanNumeralContext.degree).toBeDefined()
   }
 })
