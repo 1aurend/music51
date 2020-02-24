@@ -89,7 +89,6 @@ export const Question = {
       "questionText": "What's the chord's quality?",
       "choices": choices,
       "answers": [answer]
-
     }
   },
   numerals: function(chordContext) {
@@ -172,7 +171,7 @@ export const Question = {
         case "Major":
           answer = "viio"
         case "minor":
-          throw 'Invalid chord structure ' + JSON.stringify(chordStructure) + 'in mode ' + JSON.stringify(modeLabel)
+          throw 'Invalid chord structure ' + JSON.stringify(chordContext.chordStructure) + 'in mode ' + JSON.stringify(chordContext.modeLabel)
       }
       break
       default:
