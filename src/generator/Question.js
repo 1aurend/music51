@@ -201,7 +201,7 @@ export function romanInversionOptions(romanNumeral, inversion, chordType) {
       ]
     case ChordType.SEVENTH:
       return [
-        romanNumeral + inversion + '7',
+        romanNumeral + inversion,
         romanNumeral + inversion + '65',
         romanNumeral + inversion + '43',
         romanNumeral + inversion + '42'
