@@ -56,14 +56,6 @@ test('concretizeRoot returns DO NATURAL for MAJOR mode note in C major', () => {
   expect(concretizedRoot.accidental).toBe(Accidental.NATURAL)
 })
 
-test('concretizeRoot returns KE FLAT for MAJOR mode note in F major', () => {
-  const keySignature = 'R1' /*B means bottom shape*/
-  const modeNote = Mode.LYDIAN
-  const concretizedRoot = concretizeRoot(keySignature, modeNote)
-  expect(concretizedRoot.independentPitch).toBe(IndependentPitch.KE)
-  expect(concretizedRoot.accidental).toBe(Accidental.FLAT)
-})
-
 test('translateNoteIPIndex returns 0', () => {
   const rootIP = IndependentPitch.DO
   const componentIP = IndependentPitch.DO
