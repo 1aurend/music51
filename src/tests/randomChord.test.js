@@ -194,11 +194,6 @@ test('randomRomanNumeralContext for Major_TRIAD test bed', () => {
 
 })
 
-// test('randomRomanNumeralContext for Neapolitan test bed', () => {
-//   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.NEAPOLITAN_SIXTH, "Major")
-//
-// })
-
 test('c natural is in key signature with no sharps nor flats', () => {
   expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.NATURAL, "B"))
     .toBeTruthy()
