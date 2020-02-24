@@ -49,7 +49,6 @@ export const Question = {
       "answers": [answer]
     }
   },
-  // FIXME: Finish implementation!
   role: function(chordContext) {
     const choices = [
         "In-Key", // keystroke "k"
