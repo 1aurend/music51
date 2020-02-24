@@ -83,7 +83,6 @@ export function randomChordContext(options) {
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chooseModeLabel(chordStructure)
-
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -92,7 +91,12 @@ export function randomChordContext(options) {
   //    structure: ChordStructure,
   //    inversion: Int
   // }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+  const chordDescription = makeChordDescription(
+    chordStructure,
+    inversion,
+    keySignature,
+    romanNumeralContext
+  )
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
@@ -124,10 +128,18 @@ export function randomChordContext(options) {
 
 // TODO: Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
-export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
+export function makeChordDescription(
+  chordStructure,
+  inversion,
+  keySignature,
+  romanNumeralContext
+) {
   // Concretize the root by situating the roman numeral context's `modeNote` in the given
   // `keySignature`.
-  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
+  const concretizedRoot = concretizeRoot(
+    keySignature,
+    romanNumeralContext
+  )
   return {
     root: concretizedRoot,
     structure: chordStructure,
@@ -138,32 +150,33 @@ export function makeChordDescription(chordStructure, inversion, keySignature, ro
 /**
  * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
  *
- * @param  {type} keySignature A randomly chosen key signature represented as a shape
- * @param  {type} modeNote     The mode of the root note
+ * @param  KeySignature         keySignature A randomly chosen key signature represented as a shape
+ * @param  RomanNumeralContext  romanNumeralContext     The mode of the root note
  * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
  * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
  */
-export function concretizeRoot(keySignature, modeNote) {
-  // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
-  // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
-  // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
+export function concretizeRoot(keySignature, romanNumeralContext) {
   const shape = Shapes[keySignature]
-  const note = shape.notes.find(note => note.mode === modeNote)
-  const rootAccidental = note.accidental
-  const rootSyllable = note.refIP
-  // Get the offset from the root accidental from `NATURAL`
-  const offset = Accidental.offsetFromNatural(rootAccidental)
-  // FIXME: (James) Implement convenience getter over `LetterName`
-  const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-  // FIXME: (James) Implement convenience getter over `IndependentPitch`
-  const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-  const rootIPIndex = (rootSyllableIndex + offset) % 12
+  const initialIndex = shape.notes.findIndex(note => note.mode === romanNumeralContext.mode)
+  const initial = shape.notes[initialIndex]
+  const initialLetterName = refIPToLetter(initial.refIP)
+  const initialLetterNameIndex = Object.values(LetterName).indexOf(initialLetterName)
+  const rootLetterNameIndex = (initialLetterNameIndex + (romanNumeralContext.degree - 1)) % 7
+  const rootLetterName = Object.values(LetterName)[rootLetterNameIndex]
+  const initialIP = initial.refIP
+  const initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+  const rootIPIndex = (initialIPIndex + romanNumeralContext.rootOffset) % 12
   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+  const rootSyllable = Object.values(IndependentPitch)[rootIPIndex + romanNumeralContext.incidental]
+  const rootIndex = (initialIndex + (romanNumeralContext.degree - 1) * 2) % 7
+  const rootAccidental = shape.notes[rootIndex].accidental
+  // FIXME: Audit worth of sending `independentPitch`, `letter`, AND `syllable` (as `syllable` is
+  //        isomorphic to `letter`)
   return {
     independentPitch: rootIP,
     accidental: rootAccidental,
-    letter: rootLetter,
-    syllable: rootSyllable
+    letter: rootLetterName,
+    syllable: letterNameToRefIP(rootLetterName)
   }
 }
 
@@ -286,6 +299,25 @@ function letterNameToRefIP(letter) {
       return IndependentPitch.TI
     default:
       throw 'invalid letter name'
+  }
+}
+
+function refIPToLetter(refIP) {
+  switch (refIP) {
+    case IndependentPitch.DO:
+      return LetterName.C
+    case IndependentPitch.RE:
+      return LetterName.D
+    case IndependentPitch.MI:
+      return LetterName.E
+    case IndependentPitch.FA:
+      return LetterName.F
+    case IndependentPitch.SO:
+      return LetterName.G
+    case IndependentPitch.LA:
+      return LetterName.A
+    case IndependentPitch.TI:
+      return LetterName.B
   }
 }
 
@@ -657,16 +689,13 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       mode = Mode.MINOR
       break
   }
-  console.log("chord structure: " + JSON.stringify(chordStructure) + "; mode label: " + modeLabel)
   const commonRootOffsets = chordStructure.commonRootOffsets[modeLabel]
-  console.log("common root offsets: " + JSON.stringify(commonRootOffsets))
   const rootOffset = commonRootOffsets.randomElement()
-  console.log("root offset: " + rootOffset)
   const noteIdentity = noteIdentities(mode)[rootOffset]
-  console.log("note identity: " + JSON.stringify(noteIdentity))
   const scaleDegree = noteIdentity.tensionMod7
   return {
     mode: mode,
+    rootOffset: rootOffset,
     degree: scaleDegree,
     romanNumeral: romanNumeral(chordStructure, scaleDegree),
     incidental: noteIdentity.incidental
