@@ -657,9 +657,13 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       mode = Mode.MINOR
       break
   }
+  console.log("chord structure: " + JSON.stringify(chordStructure) + "; mode label: " + modeLabel)
   const commonRootOffsets = chordStructure.commonRootOffsets[modeLabel]
+  console.log("common root offsets: " + JSON.stringify(commonRootOffsets))
   const rootOffset = commonRootOffsets.randomElement()
+  console.log("root offset: " + rootOffset)
   const noteIdentity = noteIdentities(mode)[rootOffset]
+  console.log("note identity: " + JSON.stringify(noteIdentity))
   const scaleDegree = noteIdentity.tensionMod7
   return {
     mode: mode,
