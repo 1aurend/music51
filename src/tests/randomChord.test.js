@@ -4,6 +4,7 @@ import {
   chooseChordStructure,
   chooseInversion,
   chooseKeySignature,
+  chooseModeLabel,
   randomRomanNumeralContext,
   makeChordDescription,
   partiallyConcretizeChord,
@@ -16,16 +17,18 @@ import { LetterName } from '../generator/LetterName'
 import { ChordType } from '../generator/ChordType'
 import { ChordTypesOption } from '../generator/ChordTypesOption'
 import { ChordStructure } from '../generator/ChordStructure'
+import { Mode } from '../generator/Mode'
 
 test('chooseChordStructure returns a value for all valid inputs', () => {
-  expect(chooseChordStructure(ChordType.TRIAD)).toBeDefined()
-  expect(chooseChordStructure(ChordType.SEVENTH)).toBeDefined()
-  // TODO: Add tests for borrowed and applied chords
+  Object.values(ChordType).forEach(chordType => {
+    expect(chooseChordStructure(chordType))
+  })
 })
 
 test('chooseInversion returns a value for all valid inputs', () => {
-  expect(chooseInversion(ChordType.TRIAD)).toBeDefined()
-  expect(chooseInversion(ChordType.SEVENTH)).toBeDefined()
+  Object.values(ChordStructure).forEach(chordStructure => {
+    expect(chooseInversion(chordStructure)).toBeDefined()
+  })
 })
 
 test('chooseKeySignature returns something', () => {
@@ -35,9 +38,9 @@ test('chooseKeySignature returns something', () => {
 test('makeChordDescription makes a chordDescription', () => {
   const chordType = chooseChordType(ChordTypesOption.BOTH)
   const chordStructure = chooseChordStructure(chordType)
-  const inversion = chooseInversion(chordType)
+  const inversion = chooseInversion(chordStructure)
   const keySignature = chooseKeySignature()
-  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+  const modeLabel = chooseModeLabel(chordStructure)
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(chordDescription).toBeDefined()
@@ -46,9 +49,9 @@ test('makeChordDescription makes a chordDescription', () => {
 test('partially concretize chord notes makes three notes for a triad', () => {
   const chordType = ChordType.TRIAD
   const chordStructure = chooseChordStructure(chordType)
-  const inversion = chooseInversion(chordType)
+  const inversion = chooseInversion(chordStructure)
   const keySignature = chooseKeySignature()
-  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+  const modeLabel = chooseModeLabel(chordStructure)
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
   expect(partiallyConcretizeChord(chordDescription, keySignature).length).toBe(3)
@@ -56,79 +59,115 @@ test('partially concretize chord notes makes three notes for a triad', () => {
 
 test('concretizeRoot c natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
-  const modeNote = 'Maj'
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 0,
+    degree: 1,
+    romanNumeral: "I",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.DO,
     accidental: Accidental.NATURAL,
     letter: LetterName.C,
     syllable: IndependentPitch.DO
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
 test('concretizeRoot e natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
-  const modeNote = 'phr'
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 4,
+    degree: 3,
+    romanNumeral: "iii",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.MI,
     accidental: Accidental.NATURAL,
     letter: LetterName.E,
     syllable: IndependentPitch.MI
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
 test('concretizeRoot g natural in C', () => {
   const keySignature = 'B' // "Bottom", i.e., C major
-  const modeNote = 'Dom'
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 7,
+    degree: 5,
+    romanNumeral: "V",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.SO,
     accidental: Accidental.NATURAL,
     letter: LetterName.G,
     syllable: IndependentPitch.SO
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
 test('concretizeRoot d natural in D', () => {
   const keySignature = 'L2' // D major
-  const modeNote = 'Maj'
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 0,
+    degree: 1,
+    romanNumeral: "I",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.RE,
     accidental: Accidental.NATURAL,
     letter: LetterName.D,
     syllable: IndependentPitch.RE
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
 test('concretizeRoot f natural in d', () => {
   const keySignature = 'R1' // d min
-  const modeNote = 'Maj'
+  const romanNumeralContext = {
+    mode: Mode.MINOR,
+    rootOffset: 3,
+    degree: 3,
+    romanNumeral: "III",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.FA,
     accidental: Accidental.NATURAL,
     letter: LetterName.F,
     syllable: IndependentPitch.FA
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
 test('concretizeRoot E flat in g', () => {
   const keySignature = 'R2' // g min
-  const modeNote = 'Lyd'
+  const romanNumeralContext = {
+    mode: Mode.MINOR,
+    rootOffset: 8,
+    degree: 6,
+    romanNumeral: "vi",
+    incidental: 0
+  }
   const expected = {
     independentPitch: IndependentPitch.NA,
     accidental: Accidental.FLAT,
     letter: LetterName.E,
     syllable: IndependentPitch.MI
   }
-  const result = concretizeRoot(keySignature, modeNote)
+  const result = concretizeRoot(keySignature, romanNumeralContext)
   expect(result).toStrictEqual(expected)
 })
 
@@ -145,9 +184,14 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
   for (var i = 0; i < 100; i++) {
     const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
     const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
-    expect(romanNumeralContext.modeNote).toBeDefined()
+    expect(romanNumeralContext.mode).toBeDefined()
     expect(romanNumeralContext.degree).toBeDefined()
   }
+})
+
+test('randomRomanNumeralContext for Major_TRIAD test bed', () => {
+  const romanNumeralContext = randomRomanNumeralContext(ChordStructure.MAJOR_TRIAD, "Major")
+  expect(romanNumeralContext).toBeDefined()
 })
 
 test('c natural is in key signature with no sharps nor flats', () => {
@@ -158,4 +202,10 @@ test('c natural is in key signature with no sharps nor flats', () => {
 test('c sharp is not in key signature with no sharps nor flats', () => {
   expect(accidentalForLetterNameIsInKeySignature(LetterName.C, Accidental.SHARP, "B"))
     .toBeFalsy()
+})
+
+test('chooseModeLabel always returns a valid mode label', () => {
+  Object.values(ChordStructure).forEach(chordStructure => {
+    expect(chooseModeLabel(chordStructure)).toBeDefined()
+  })
 })

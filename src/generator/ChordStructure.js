@@ -5,7 +5,7 @@ import { ChordType } from "./ChordType"
 export const ChordStructure = {
   MAJOR_TRIAD: {
     displayName: "M",
-    modeConstructor: Mode.MAJOR, // TODO: David to define all modeConstructors in mode.js
+    modeConstructor: Mode.MAJOR,
     structure: [
       IndependentPitch.DO,
       IndependentPitch.MI,
@@ -55,7 +55,6 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     commonRootOffsets: {
-      Major: [], // none defined.
       minor: [3] // III+
     }
   },
@@ -85,8 +84,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     commonRootOffsets: {
-      Major: [0, 5], // IMaj7 or IVMaj7
-      minor: [] // none defined.
+      Major: [0, 5] // IMaj7 or IVMaj7
     }
   },
   MINOR_SEVENTH: {
@@ -130,7 +128,6 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     commonRootOffsets: {
-      Major: [], // none defined.
       minor: [10] // viio7
     }
   },
@@ -202,8 +199,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [3],
     commonRootOffsets: {
-      Major: [3],
-      minor: [] // none defined.
+      Major: [3]
     }
   },
   FLAT_SIX_MAJOR_TRIAD: {
@@ -216,8 +212,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [8],
     commonRootOffsets: {
-      Major: [8],
-      minor: [] // none defined.
+      Major: [8]
     }
   },
   FLAT_SEVEN_MAJOR_TRIAD: {
@@ -230,8 +225,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [10],
     commonRootOffsets: {
-      Major: [10],
-      minor: [] // none defined.
+      Major: [10]
     }
   },
   TONIC_MAJOR_TRIAD_IN_MINOR: {
@@ -244,7 +238,6 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0],
     commonRootOffsets: {
-      Major: [], // none defined.
       minor: [0]
     }
   },
@@ -258,7 +251,6 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [5],
     commonRootOffsets: {
-      Major: [], // none defined.
       minor: [5]
     }
   },
@@ -301,8 +293,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [4],
     commonRootOffsets: {
-      Major: [4],
-      minor: [] // none defined.
+      Major: [4]
     }
   },
   FIVE_SEVEN_OF_SIX: {
@@ -316,8 +307,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [4],
     commonRootOffsets: {
-      Major: [4], // none defined.
-      minor: []
+      Major: [4] // none defined.
     }
   },
   FIVE_SEVEN_OF_MAJOR_FOUR: {
@@ -331,8 +321,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0],
     commonRootOffsets: {
-      Major: [0],
-      minor: [] // none defined.
+      Major: [0]
     }
   },
   FIVE_SEVEN_OF_MINOR_FOUR: {
@@ -346,7 +335,6 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0],
     commonRootOffsets: {
-      Major: [],
       minor: [0] // none defined.
     }
   },
@@ -376,8 +364,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [10],
     commonRootOffsets: {
-      Major: [10], // none defined.
-      minor: []
+      Major: [10] // none defined.
     }
   },
   FIVE_OF_SEVEN_DIMINISHED: {
@@ -390,8 +377,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [6],
     commonRootOffsets: {
-      Major: [6],
-      minor: [] // none defined.
+      Major: [6]
     }
   },
   FIVE_SEVEN_OF_SEVEN_DIMINISHED: {
@@ -405,8 +391,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [6],
     commonRootOffsets: {
-      Major: [6],
-      minor: [] // none defined.
+      Major: [6]
     }
   }
 }

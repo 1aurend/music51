@@ -14,30 +14,6 @@ import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
 import { Question, questionsForChordType } from './Question'
 
-// TODO: (James) Audit this type. Is it used anywhere?
-const RootOption = {
-  ANY: "any",
-  COMMON: "common"
-}
-
-/**
- * @param chordContext  Object Object in the form:
- *                      {
- *                        clef,
- *                        keySignature
- *                        chordDescription,
- *                        romanNumeralContext,
- *                        notes
- *                       }
- * @returns             An array of questions (and answers) for the given `chordContext`.
- * @todo                Move to own file, potentially in a Class of its own
- */
-export function questions(chordContext) {
-  // Retrieve all of the question for the `chordType` of the given `chordContext`,
-  // and apply them to the given `chordContext`.
-  return questionsForChordType(chordContext.chordType).map(question => question(chordContext))
-}
-
 /**
  * export default - This is the interface between the generator and chord crusher or any other app
  *
@@ -70,8 +46,9 @@ export default function(numQs, options) {
   let chords = []
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
-    let chordContext = randomChordContext(options)
-    chordContext.questions = questions(chordContext)
+    let chordContext = randomChordContext()
+    chordContext.questions = questionsForChordType(chordContext.chordType)
+      .map(question => question(chordContext))
     chords.push(chordContext)
   }
   addKeystrokes(chords)
@@ -98,14 +75,14 @@ export function randomChordContext(options) {
   // Choose a random `KeySignature`
   const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
-  const chordType = chooseChordType(chordTypesOption(options.chordTypes))
+  const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
-  const inversion = chooseInversion(chordType)
+  const inversion = chooseInversion(chordStructure)
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
-  const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+  const modeLabel = chooseModeLabel(chordStructure)
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -114,7 +91,12 @@ export function randomChordContext(options) {
   //    structure: ChordStructure,
   //    inversion: Int
   // }
-  const chordDescription = makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext)
+  const chordDescription = makeChordDescription(
+    chordStructure,
+    inversion,
+    keySignature,
+    romanNumeralContext
+  )
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
@@ -146,14 +128,55 @@ export function randomChordContext(options) {
 
 // TODO: Consider making `Chord` a class. Add a class method on `Chord`: `random()`, which produces one
 // random chord!
-export function makeChordDescription(chordStructure, inversion, keySignature, romanNumeralContext) {
+export function makeChordDescription(
+  chordStructure,
+  inversion,
+  keySignature,
+  romanNumeralContext
+) {
   // Concretize the root by situating the roman numeral context's `modeNote` in the given
   // `keySignature`.
-  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext.modeNote)
+  const concretizedRoot = concretizeRoot(
+    keySignature,
+    romanNumeralContext
+  )
   return {
     root: concretizedRoot,
     structure: chordStructure,
     inversion: inversion
+  }
+}
+
+/**
+ * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
+ *
+ * @param  KeySignature         keySignature A randomly chosen key signature represented as a shape
+ * @param  RomanNumeralContext  romanNumeralContext     The mode of the root note
+ * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
+ * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
+ */
+export function concretizeRoot(keySignature, romanNumeralContext) {
+  const shape = Shapes[keySignature]
+  const initialIndex = shape.notes.findIndex(note => note.mode === romanNumeralContext.mode)
+  const initial = shape.notes[initialIndex]
+  const initialLetterName = refIPToLetter(initial.refIP)
+  const initialLetterNameIndex = Object.values(LetterName).indexOf(initialLetterName)
+  const rootLetterNameIndex = (initialLetterNameIndex + (romanNumeralContext.degree - 1)) % 7
+  const rootLetterName = Object.values(LetterName)[rootLetterNameIndex]
+  const initialIP = initial.refIP
+  const initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+  const rootIPIndex = (initialIPIndex + romanNumeralContext.rootOffset) % 12
+  const rootIP = Object.values(IndependentPitch)[rootIPIndex]
+  const rootSyllable = Object.values(IndependentPitch)[rootIPIndex + romanNumeralContext.incidental]
+  const rootIndex = (initialIndex + (romanNumeralContext.degree - 1) * 2) % 7
+  const rootAccidental = shape.notes[rootIndex].accidental
+  // FIXME: Audit worth of sending `independentPitch`, `letter`, AND `syllable` (as `syllable` is
+  //        isomorphic to `letter`)
+  return {
+    independentPitch: rootIP,
+    accidental: rootAccidental,
+    letter: rootLetterName,
+    syllable: letterNameToRefIP(rootLetterName)
   }
 }
 
@@ -168,7 +191,6 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
-
   const inversion = chordDescription.inversion
 
   // TODO: First, codify `inversion` in a stronger way
@@ -276,6 +298,25 @@ function letterNameToRefIP(letter) {
       return IndependentPitch.TI
     default:
       throw 'invalid letter name'
+  }
+}
+
+function refIPToLetter(refIP) {
+  switch (refIP) {
+    case IndependentPitch.DO:
+      return LetterName.C
+    case IndependentPitch.RE:
+      return LetterName.D
+    case IndependentPitch.MI:
+      return LetterName.E
+    case IndependentPitch.FA:
+      return LetterName.F
+    case IndependentPitch.SO:
+      return LetterName.G
+    case IndependentPitch.LA:
+      return LetterName.A
+    case IndependentPitch.TI:
+      return LetterName.B
   }
 }
 
@@ -453,42 +494,6 @@ function constrainAccidental(syllable, structure, initialChoice) {
 }
 
 /**
- * concretizeRoot - Returns a letter name, an independent pitch, and an accidental for a root note given a key signature and a mode note.
- *
- * @param  {type} keySignature A randomly chosen key signature represented as a shape
- * @param  {type} modeNote     The mode of the root note
- * @return {type}              An object consisting of the independent pitch, the accidental, and the letter name for the root note.
- * @todo                       This algorithm works in quadratic time, but could quite possibly work in constant time.
- */
-export function concretizeRoot(keySignature, modeNote) {
-  // TODO: ask David-- how do we know accidental at the shapes level of abstraction?
-  // TODO: Configure the Shapes object so we don't have iterate through an array of notes each time
-  // TODO: Use this function to generate every note not just roots? If so, rename to something like concretizeNote.
-  const shape = Shapes[keySignature]
-  for (var i = 0; i < shape.notes.length; i++) {
-    if (Shapes[keySignature].notes[i].mode === modeNote) {
-      const rootAccidental = shape.notes[i].accidental
-      const rootSyllable = shape.notes[i].refIP
-      // Get the offset from the root accidental from `NATURAL`
-      const offset = Accidental.offsetFromNatural(rootAccidental)
-      // FIXME: (James) Implement convenience getter over `LetterName`
-      const rootLetter = Object.values(LetterName)[Object.values(IndependentPitchSubset.BOTTOM).indexOf(rootSyllable)]
-      // FIXME: (James) Implement convenience getter over `IndependentPitch`
-      const rootSyllableIndex = Object.values(IndependentPitch).indexOf(rootSyllable)
-      const rootIPIndex = (rootSyllableIndex + offset) % 12
-      const rootIP = Object.values(IndependentPitch)[rootIPIndex]
-      return {
-        independentPitch: rootIP,
-        accidental: rootAccidental,
-        letter: rootLetter,
-        syllable: rootSyllable
-      }
-    }
-  }
-  throw new Error('modeNote ' + modeNote + ' not found in keySignature ' + keySignature)
-}
-
-/**
  * romanNumeral - Returns a roman numeral or romanette of the appropriate number given a chord structure and scale degree.
  *
  * @param  {type} chordStructure The type of chord for which to generate a numeral
@@ -549,27 +554,60 @@ export function invert(chord, inversion) {
 }
 
 /**
- * @param ChordType chordType The `ChordType` of a chord (either a `TRIAD` or `SEVENTH` for now) for which you would like
- *        an enumeration of inversions.
- * @return An array of strings representing the various inversions available for a `TRIAD` or `SEVENTH` chord.
- */
-function inversions(chordType) {
-  // TODO: Consider moving this functionality over be over `ChordType`.
-  switch (chordType) {
-    case ChordType.TRIAD:
-      return ["","63","64"]
-    case ChordType.SEVENTH:
-      return ["","65","43","42"]
-  }
-}
-
-/**
  * @param ChordType chordType The type of chord affording inversions from which to select
  * @return A random inversion from those afforded by the given `chordType`
  */
 export function chooseInversion(chordType) {
   // TODO: Implement inversions as an instance method over `ChordType`
   return inversions(chordType).randomElement()
+}
+
+/**
+ * @param ChordStructure chordStructure The `ChordStructure` of a chord
+ * @return                              An array of strings representing the various inversions
+ *                                      available for the given `chordStructure`
+ * @todo                                Create an `Inversion` abstraction
+ */
+function inversions(chordStructure) {
+  switch (chordStructure) {
+    // Triads
+    case ChordStructure.MAJOR_TRIAD:
+    case ChordStructure.MINOR_TRIAD:
+    case ChordStructure.DIMINISHED_TRIAD:
+    case ChordStructure.AUGMENTED_TRIAD:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+      return ["","63","64"]
+    // Sevenths
+    case ChordStructure.DOMINANT_SEVENTH:
+    case ChordStructure.MAJOR_SEVENTH:
+    case ChordStructure.MINOR_SEVENTH:
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+      return ["","65","43","42"]
+    // Unique cases
+    case ChordStructure.NEAPOLITAN_SIXTH:
+      return ["", "6"]
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+      return ["6"]
+    default:
+      throw "Invalid chord structure: " + JSON.stringify(chordStructure)
+  }
 }
 
 /**
@@ -595,30 +633,11 @@ export function chooseChordStructure(chordType) {
   return chordStructures(chordType).randomElement()
 }
 
-function chordTypesOption(chordTypes) {
-  if (chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.BOTH
-  } else if (chordTypes.triads && !chordTypes.sevenths) {
-    return ChordTypesOption.TRIADS
-  } else if (!chordTypes.triads && chordTypes.sevenths) {
-    return ChordTypesOption.SEVENTHS
-  } else {
-    throw "Invalid chord types selection"
-  }
-}
-
-// return Type of the chord we are constructing
-export function chooseChordType(chordTypesOption) {
-  switch (chordTypesOption) {
-    case ChordTypesOption.TRIADS:
-      return ChordType.TRIAD
-    case ChordTypesOption.SEVENTHS:
-      return ChordType.SEVENTH
-    case ChordTypesOption.BOTH:
-      return [ChordType.TRIAD, ChordType.SEVENTH].randomElement()
-    default:
-      throw 'Impossible ChordTypesOption'
-  }
+/**
+ * @return A random `ChordType` value.
+ */
+export function chooseChordType() {
+  return ChordType.randomElement()
 }
 
 function chooseInitialOctave(clef) {
@@ -646,6 +665,10 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
     chooseRandomAccidental(allowedAccidentals))
 }
 
+export function chooseModeLabel(chordStructure) {
+  return Object.keys(chordStructure.commonRootOffsets).randomElement()
+}
+
 /**
  * randomRomanNumeralContext - Choose a random roman numeral context -- mode, mode note, scale degree, and numeral -- given a chord structure.
  *
@@ -665,204 +688,15 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       mode = Mode.MINOR
       break
   }
-  switch (chordStructure) {
-    case ChordStructure.MAJOR_TRIAD:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = [Mode.MAJOR, Mode.LYDIAN, Mode.DOMINANT].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = [Mode.MAJOR, Mode.PHRYGIAN, Mode.LYDIAN, Mode.DOMINANT].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.MINOR_TRIAD:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = [Mode.MINOR, Mode.DORIAN, Mode.LOCRIAN].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: scaleDegree,
-            modeNote: modeNote,
-            degree: degree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.DIMINISHED_TRIAD:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = Mode.LOCRIAN
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = [Mode.LOCRIAN, Mode.DORIAN].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.AUGMENTED_TRIAD: {
-      const modeNote = Mode.MAJOR
-      const scaleDegree = degree(mode, modeNote)
-      return {
-        mode: mode,
-        modeNote: modeNote,
-        degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
-      }
-    }
-    case ChordStructure.DOMINANT_SEVENTH:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = Mode.DOMINANT
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = Mode.PHRYGIAN
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.MAJOR_SEVENTH: {
-      const modeNote = [Mode.MAJOR, Mode.LYDIAN].randomElement()
-      const scaleDegree = degree(mode, modeNote)
-      return {
-        mode: mode,
-        modeNote: modeNote,
-        degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
-      }
-    }
-    case ChordStructure.MINOR_SEVENTH:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = [Mode.DORIAN, Mode.PHRYGIAN, Mode.MINOR].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = [Mode.MINOR, Mode.DORIAN].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.HALF_DIMINISHED_SEVENTH:
-      switch (mode) {
-        case Mode.MAJOR: {
-          const modeNote = Mode.LOCRIAN
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-        case Mode.MINOR: {
-          const modeNote = [Mode.LOCRIAN, Mode.DORIAN].randomElement()
-          const scaleDegree = degree(mode, modeNote)
-          return {
-            mode: mode,
-            modeNote: modeNote,
-            degree: scaleDegree,
-            romanNumeral: romanNumeral(chordStructure, scaleDegree)
-          }
-        }
-      }
-    case ChordStructure.FULLY_DIMINISHED_SEVENTH: {
-      const modeNote = Mode.DORIAN
-      const scaleDegree = degree(mode, modeNote)
-      return {
-        mode: mode,
-        modeNote: modeNote,
-        degree: scaleDegree,
-        romanNumeral: romanNumeral(chordStructure, scaleDegree)
-      }
-    }
-    case ChordStructure.NEAPOLITAN_SIXTH:
-    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
-    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
-    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
-    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
-    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
-    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
-    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
-    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
-    case ChordStructure.FIVE_OF_FIVE:
-    case ChordStructure.FIVE_SEVEN_OF_FIVE:
-    case ChordStructure.FIVE_OF_SIX:
-    case ChordStructure.FIVE_SEVEN_OF_SIX:
-    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
-    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
-    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
-    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
-    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
-    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
-      // We have fallen through to here
-      // FIXME: This is a fake value for now. We must alter the input to this function
-      //        in order to handle chromatic alterations.
-      return {
-        mode: mode,
-        modeNote: Mode.MAJOR,
-        degree: 1,
-        romanNumeral: RomanNumeral.I
-      }
-    default:
-      throw "Invalid chord structure: " + JSON.stringify(chordStructure)
+  const commonRootOffsets = chordStructure.commonRootOffsets[modeLabel]
+  const rootOffset = commonRootOffsets.randomElement()
+  const noteIdentity = noteIdentities(mode)[rootOffset]
+  const scaleDegree = noteIdentity.tensionMod7
+  return {
+    mode: mode,
+    rootOffset: rootOffset,
+    degree: scaleDegree,
+    romanNumeral: romanNumeral(chordStructure, scaleDegree),
+    incidental: noteIdentity.incidental
   }
 }
