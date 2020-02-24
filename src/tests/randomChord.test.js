@@ -191,7 +191,7 @@ test('randomRomanNumeralContext returns a valid mode note and degree', () => {
 
 test('randomRomanNumeralContext for Major_TRIAD test bed', () => {
   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.MAJOR_TRIAD, "Major")
-
+  expect(romanNumeralContext).toBeDefined()
 })
 
 test('c natural is in key signature with no sharps nor flats', () => {
