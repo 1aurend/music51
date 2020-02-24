@@ -7,9 +7,10 @@ export default function addKeystrokes(chords) {
     DEGREE: `Degrees`,
     QUALITY: `Quality`,
     NUMERAL: `Numerals`,
-    INVERSION: `Inversions`
+    INVERSION: `Inversions`,
+    ROLE: 'Role',
+    WHAT_FOLLOWS: 'What Follows'
   }
-
 
   for (var i = 0; i < chords.length; i++) {
     let questions = chords[i].questions
