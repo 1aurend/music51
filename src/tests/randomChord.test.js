@@ -194,6 +194,11 @@ test('randomRomanNumeralContext for N6 is valid', () => {
   expect(romanNumeralContext).toBeDefined()
 })
 
+test('randomRomanNumeralContext for Ger+6 in C Major is valid', () => {
+  const romanNumeralContext = randomRomanNumeralContext(ChordStructure.GERMAN_AUGMENTED_SIXTH, "Major")
+  expect(romanNumeralContext).toBeDefined()
+})
+
 test('concretized root for N6 in C Major is valid', () => {
   const keySignature = 'B' // C
   const chordStructure = ChordStructure.NEAPOLITAN_SIXTH
@@ -204,6 +209,20 @@ test('concretized root for N6 in C Major is valid', () => {
     accidental: Accidental.FLAT,
     letter: LetterName.D,
     syllable: IndependentPitch.RE
+  }
+  expect(concretizedRoot).toStrictEqual(expected)
+})
+
+test('concretized root for Ger+6 in C Major is valid', () => {
+  const keySignature = 'B' // C
+  const chordStructure = ChordStructure.GERMAN_AUGMENTED_SIXTH
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, "Major")
+  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext)
+  const expected = {
+    independentPitch: IndependentPitch.PE,
+    accidental: Accidental.FLAT,
+    letter: LetterName.A,
+    syllable: IndependentPitch.LA
   }
   expect(concretizedRoot).toStrictEqual(expected)
 })

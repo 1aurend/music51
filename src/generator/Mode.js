@@ -146,10 +146,12 @@ export function noteIdentities(mode) {
           "quality": 0,
           "incidental": 0
         },
+        // This was originally (5, 1, 1).
+        // FIXME: (David) ponder what this should be in perpetuity
         {
-          "tensionMod7": 5,
+          "tensionMod7": 6,
           "quality": 1,
-          "incidental": 1
+          "incidental": -1
         },
         {
           "tensionMod7": 6,
