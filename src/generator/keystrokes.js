@@ -12,242 +12,253 @@ export default function addKeystrokes(chords) {
     WHAT_FOLLOWS: 'What Follows'
   }
 
-  for (var i = 0; i < chords.length; i++) {
-    let questions = chords[i].questions
-
-    for (var j = 0; j < questions.length; j++) {
+  // FIXME: Consider nesting `map` or `forEach` type functions
+  for (var ch = 0; ch < chords.length; ch++) {
+    var chord = chords[ch]
+    var questions = chord.questions
+    for (var q = 0; q < questions.length; q++) {
+      var question = questions[q]
       let choicesWithKeys = []
-
-      for (var k = 0; k < questions[j].choices.length; k++) {
+      for (var c = 0; c < question.choices.length; c++) {
+        const choice = question.choices[c]
         let withKeystroke
-
-          switch(questions[j].type) {
-
+          switch(question.type) {
             case questionTypes.NAMES:
+              // fallthrough
             case questionTypes.ROOT:
-                switch (questions[j].choices[k]) {
-                  case 'A':
-                  case "A♮":
-                  case "A♭":
-                  case "A𝄫":
-                  case "A♯":
-                  case "A𝄪":
-                  case 'B':
-                  case "B♮":
-                  case "B♭":
-                  case "B𝄫":
-                  case "B♯":
-                  case "B𝄪":
-                  case 'C':
-                  case "C♮":
-                  case "C♭":
-                  case "C𝄫":
-                  case "C♯":
-                  case "C𝄪":
-                  case 'D':
-                  case "D♮":
-                  case "D♭":
-                  case "D𝄫":
-                  case "D♯":
-                  case "D𝄪":
-                  case 'E':
-                  case "E♮":
-                  case "E♭":
-                  case "E𝄫":
-                  case "E♯":
-                  case "E𝄪":
-                  case 'F':
-                  case "F♮":
-                  case "F♭":
-                  case "F𝄫":
-                  case "F♯":
-                  case "F𝄪":
-                  case 'G':
-                  case "G♮":
-                  case "G♭":
-                  case "G𝄫":
-                  case "G♯":
-                  case "G𝄪":
-                      withKeystroke = {choice: questions[j].choices[k], key: questions[j].choices[k].charAt(0).toLowerCase()}
-                      choicesWithKeys.push(withKeystroke)
-                      break
-                  default:
-                    console.log("found an answer choice that isn't a letter name: " + questions[j].choices[k]);
+              switch (choice) {
+                case 'A':
+                case "A♮":
+                case "A♭":
+                case "A𝄫":
+                case "A♯":
+                case "A𝄪":
+                case 'B':
+                case "B♮":
+                case "B♭":
+                case "B𝄫":
+                case "B♯":
+                case "B𝄪":
+                case 'C':
+                case "C♮":
+                case "C♭":
+                case "C𝄫":
+                case "C♯":
+                case "C𝄪":
+                case 'D':
+                case "D♮":
+                case "D♭":
+                case "D𝄫":
+                case "D♯":
+                case "D𝄪":
+                case 'E':
+                case "E♮":
+                case "E♭":
+                case "E𝄫":
+                case "E♯":
+                case "E𝄪":
+                case 'F':
+                case "F♮":
+                case "F♭":
+                case "F𝄫":
+                case "F♯":
+                case "F𝄪":
+                case 'G':
+                case "G♮":
+                case "G♭":
+                case "G𝄫":
+                case "G♯":
+                case "G𝄪":
+                    withKeystroke = {choice: choice, key: choice.charAt(0).toLowerCase()}
+                    choicesWithKeys.push(withKeystroke)
                     break
-                  }
-            break
-
+                default:
+                  console.log("found an answer choice that isn't a letter name: " + choice);
+                  break
+                }
+              break
             case questionTypes.DEGREE:
-                switch (questions[j].choices[k]) {
-                    case '1^':
-                    case '2^':
-                    case '3^':
-                    case '4^':
-                    case '5^':
-                    case '6^':
-                    case '7^':
-                        withKeystroke = {choice: questions[j].choices[k], key: questions[j].choices[k].charAt(0)}
-                        choicesWithKeys.push(withKeystroke)
-                        break
-                    default:
-                      console.log("found an answer choice that isn't a scale degree: " + questions[j].choices[k]);
-                      break
-                      }
-            break
-
+              switch (choice) {
+                case '1^':
+                case '2^':
+                case '3^':
+                case '4^':
+                case '5^':
+                case '6^':
+                case '7^':
+                    withKeystroke = {choice: choice, key: choice.charAt(0)}
+                    choicesWithKeys.push(withKeystroke)
+                    break
+                default:
+                  console.log("found an answer choice that isn't a scale degree: " + choice);
+                  break
+                }
+              break
             case questionTypes.QUALITY:
-              if (questions[j].choices.length === 4) {
-                switch (k) {
+
+              // FIXME: Audit this for correctness.
+              //        See if we can find a more flexible way to do this!
+              if (question.choices.length === 4) {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'M'}
-                      choicesWithKeys.push(withKeystroke)
-                      break
+                    withKeystroke = {choice: choice, key: 'M'}
+                    choicesWithKeys.push(withKeystroke)
+                    break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'm'}
-                      choicesWithKeys.push(withKeystroke)
-                      break
+                    withKeystroke = {choice: choice, key: 'm'}
+                    choicesWithKeys.push(withKeystroke)
+                    break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'd'}
-                      choicesWithKeys.push(withKeystroke)
-                      break
+                    withKeystroke = {choice: choice, key: 'd'}
+                    choicesWithKeys.push(withKeystroke)
+                    break
                   case 3:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'A'}
-                      choicesWithKeys.push(withKeystroke)
-                      break
+                    withKeystroke = {choice: choice, key: 'A'}
+                    choicesWithKeys.push(withKeystroke)
+                    break
                   default:
-                      console.log("found an answer choice that isn't a valid chord quality: " + questions[j].choices[k]);
-                      break
-                    }}
-              else if (questions[j].choices.length === 5) {
-                switch (k) {
+                    console.log("found an answer choice that isn't a valid chord quality: " + choice);
+                    break
+                }
+              } else if (question.choices.length === 5) {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: '7'}
+                      withKeystroke = {choice: choice, key: '7'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'M'}
+                      withKeystroke = {choice: choice, key: 'M'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'm'}
+                      withKeystroke = {choice: choice, key: 'm'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 3:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'h'}
+                      withKeystroke = {choice: choice, key: 'h'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 4:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'd'}
+                      withKeystroke = {choice: choice, key: 'd'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   default:
-                      console.log("found an answer choice that isn't a valid chord quality: " + questions[j].choices[k]);
+                      console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }}
-            break
-
+                    }
+                  }
+                break
             case questionTypes.NUMERAL:
-              if (questions[j].choices[k].includes('7')) {
-                switch (k) {
+              if (choice.includes('7')) {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: '7'}
+                      withKeystroke = {choice: choice, key: '7'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'm'}
+                      withKeystroke = {choice: choice, key: 'm'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'h'}
+                      withKeystroke = {choice: choice, key: 'h'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 3:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'd'}
+                      withKeystroke = {choice: choice, key: 'd'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   default:
-                      console.log("found an answer choice that isn't a valid roman numeral: " + questions[j].choices[k]);
+                      console.log("found an answer choice that isn't a valid roman numeral: " + choice);
                       break
-                    }}
-              else {
-                switch (k) {
+                }
+              } else {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'M'}
+                      withKeystroke = {choice: choice, key: 'M'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'm'}
+                      withKeystroke = {choice: choice, key: 'm'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'd'}
+                      withKeystroke = {choice: choice, key: 'd'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 3:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'A'}
+                      withKeystroke = {choice: choice, key: 'A'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   default:
-                      console.log("found an answer choice that isn't a valid roman numeral: " + questions[j].choices[k]);
+                      console.log("found an answer choice that isn't a valid roman numeral: " + choice);
                       break
-                    }}
-            break
-
+                    }
+                }
+              break
             case questionTypes.INVERSION:
-              if (questions[j].choices.length === 3) {
-                switch (k) {
+              if (question.choices.length === 3) {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'r'}
+                      withKeystroke = {choice: choice, key: 'r'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: '3'}
+                      withKeystroke = {choice: choice, key: '3'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: '4'}
+                      withKeystroke = {choice: choice, key: '4'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   default:
-                      console.log("found an answer choice that isn't a valid chord quality: " + questions[j].choices[k]);
+                      console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
                     }}
-              else if (questions[j].choices.length === 4) {
-                switch (k) {
+              else if (question.choices.length === 4) {
+                switch (c) {
                   case 0:
-                      withKeystroke = {choice: questions[j].choices[k], key: 'r'}
+                      withKeystroke = {choice: choice, key: 'r'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 1:
-                      withKeystroke = {choice: questions[j].choices[k], key: '5'}
+                      withKeystroke = {choice: choice, key: '5'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 2:
-                      withKeystroke = {choice: questions[j].choices[k], key: '3'}
+                      withKeystroke = {choice: choice, key: '3'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   case 3:
-                      withKeystroke = {choice: questions[j].choices[k], key: '2'}
+                      withKeystroke = {choice: choice, key: '2'}
                       choicesWithKeys.push(withKeystroke)
                       break
                   default:
-                      console.log("found an answer choice that isn't a valid chord quality: " + questions[j].choices[k]);
+                      console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
                     }}
               break
             case questionTypes.ROLE:
-              throw "Role question needs keystrokes!!"
-            case questionTypes.WHAT_FOLLOWS:
-              throw "What Follows question needs keystrokes!!"
+              const map = {
+                'In-Key': 'k',
+                'Chromatic': 'c',
+                'Mixture': 'm',
+                'Applied': 'a'
+              }
+              withKeystroke = { choice: choice, key: map[choice] }
+              choicesWithKeys.push(withKeystroke)
 
+            case questionTypes.WHAT_FOLLOWS:
+              // FIXME: Establish what the keystrokes are for the What Follows question!
+              withKeystroke = { choice: choice, key: "xxx" }
+              choicesWithKeys.push(withKeystroke)
             default:
               console.log("something went wrong with the text of this question");
               break
           }
     }
-    questions[j].choices = choicesWithKeys
+    question.choices = choicesWithKeys
   }
-  chords[i].questions = questions
+  chord.questions = questions
 }
 
 return chords
