@@ -193,9 +193,9 @@ export const ChordStructure = {
     displayName: "bIII",
     modeConstructor: Mode.MAJOR,
     structure: [
-      IndependentPitch.NA, // Eb
-      IndependentPitch.SO, // G
-      IndependentPitch.KE // Bb
+      IndependentPitch.DO, // Eb
+      IndependentPitch.MI, // G
+      IndependentPitch.SO // Bb
     ],
     possibleRootOffsets: [3],
     commonRootOffsets: {
@@ -206,9 +206,9 @@ export const ChordStructure = {
     displayName: "bVI",
     modeConstructor: Mode.MAJOR,
     structure: [
-      IndependentPitch.PE, // Ab
-      IndependentPitch.DO, // C
-      IndependentPitch.NA // Eb
+      IndependentPitch.DO, // Ab
+      IndependentPitch.MI, // C
+      IndependentPitch.SO // Eb
     ],
     possibleRootOffsets: [8],
     commonRootOffsets: {
@@ -219,9 +219,9 @@ export const ChordStructure = {
     displayName: "bVII",
     modeConstructor: Mode.MAJOR,
     structure: [
-      IndependentPitch.KE, // Bb
-      IndependentPitch.RE, // D
-      IndependentPitch.FA // F
+      IndependentPitch.DO, // Bb
+      IndependentPitch.MI, // D
+      IndependentPitch.SO // F
     ],
     possibleRootOffsets: [10],
     commonRootOffsets: {
@@ -245,9 +245,9 @@ export const ChordStructure = {
     displayName: "IV",
     modeConstructor: Mode.LYDIAN,
     structure: [
-      IndependentPitch.FA, // F
-      IndependentPitch.LA, // A
-      IndependentPitch.DO // C
+      IndependentPitch.DO, // F
+      IndependentPitch.MI, // A
+      IndependentPitch.SO // C
     ],
     possibleRootOffsets: [5],
     commonRootOffsets: {
@@ -258,9 +258,9 @@ export const ChordStructure = {
     displayName: "V/V",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.RE, // D
-      IndependentPitch.VE, // F#
-      IndependentPitch.LA // A
+      IndependentPitch.DO, // D
+      IndependentPitch.MI, // F#
+      IndependentPitch.SO // A
     ],
     possibleRootOffsets: [2],
     commonRootOffsets: {
@@ -272,10 +272,10 @@ export const ChordStructure = {
     displayName: "V7/V",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.RE, // D
-      IndependentPitch.VE, // F#
-      IndependentPitch.LA, // A
-      IndependentPitch.DO // C
+      IndependentPitch.DO, // D
+      IndependentPitch.MI, // F#
+      IndependentPitch.SO, // A
+      IndependentPitch.KE // C
     ],
     possibleRootOffsets: [2],
     commonRootOffsets: {
@@ -287,9 +287,9 @@ export const ChordStructure = {
     displayName: "V/vi",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.MI, // E
-      IndependentPitch.PE, // G#
-      IndependentPitch.KE // B
+      IndependentPitch.DO, // E
+      IndependentPitch.MI, // G#
+      IndependentPitch.SO // B
     ],
     possibleRootOffsets: [4],
     commonRootOffsets: {
@@ -300,10 +300,10 @@ export const ChordStructure = {
     displayName: "V7/vi",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.MI, // E
-      IndependentPitch.PE, // G#
-      IndependentPitch.KE, // B
-      IndependentPitch.RE // D
+      IndependentPitch.DO, // E
+      IndependentPitch.MI, // G#
+      IndependentPitch.SO, // B
+      IndependentPitch.KE // D
     ],
     possibleRootOffsets: [4],
     commonRootOffsets: {
@@ -342,10 +342,10 @@ export const ChordStructure = {
     displayName: "viio7/V",
     modeConstructor: Mode.DIMINISHED,
     structure: [
-      IndependentPitch.VE, // F#
-      IndependentPitch.LA, // A
-      IndependentPitch.DO, // C
-      IndependentPitch.NA // Eb
+      IndependentPitch.DO, // F#
+      IndependentPitch.NA, // A
+      IndependentPitch.VE, // C
+      IndependentPitch.LA // Eb
     ],
     possibleRootOffsets: [6],
     commonRootOffsets: {
@@ -357,10 +357,10 @@ export const ChordStructure = {
     displayName: "viiø7/vii",
     modeConstructor: Mode.DIMINISHED_MINOR,
     structure: [
-      IndependentPitch.KE, // A#
-      IndependentPitch.BA, // C#
-      IndependentPitch.MI, // E
-      IndependentPitch.PE // G#
+      IndependentPitch.DO, // A#
+      IndependentPitch.NA, // C#
+      IndependentPitch.VE, // E
+      IndependentPitch.KE // G#
     ],
     possibleRootOffsets: [10],
     commonRootOffsets: {
@@ -371,9 +371,9 @@ export const ChordStructure = {
     displayName: "V/viio",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.VE, // F#
-      IndependentPitch.KE, // A#
-      IndependentPitch.BA // C#
+      IndependentPitch.DO, // F#
+      IndependentPitch.MI, // A#
+      IndependentPitch.SO // C#
     ],
     possibleRootOffsets: [6],
     commonRootOffsets: {
@@ -384,10 +384,10 @@ export const ChordStructure = {
     displayName: "V7/viio",
     modeConstructor: Mode.DOMINANT,
     structure: [
-      IndependentPitch.VE, // F#
-      IndependentPitch.KE, // A#
-      IndependentPitch.BA, // C#
-      IndependentPitch.MI // E
+      IndependentPitch.DO, // F#
+      IndependentPitch.MI, // A#
+      IndependentPitch.SO, // C#
+      IndependentPitch.KE // E
     ],
     possibleRootOffsets: [6],
     commonRootOffsets: {
