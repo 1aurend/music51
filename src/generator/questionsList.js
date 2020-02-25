@@ -2,7 +2,7 @@
 
 export const questionsList = {
   LETTER_NAMES: {
-    fullName: 'Letter Positions',
+    fullName: 'Letter Names',
     fullText: 'Name the letter positions from lowest to highest.',
     shortName: 'Notes',
     abbrev: 'LP',

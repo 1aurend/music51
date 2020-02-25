@@ -1,12 +1,12 @@
 import { rounded } from '../../utility'
 import { questionsList } from '../../generator/questionsList'
 
+
 export function findYMax(data, qTypes, param) {
   return Math.max(...(qTypes.map( type => {
     return data[type][param]
   })).flat())
 }
-//don't add points for null values
 export function getDataPoints(data, qTypes, param) {
   return qTypes.map(type => {
     return {
@@ -47,17 +47,26 @@ export function findThreeLargestDeltas(means, param) {
 }
 export function getChartData(means, round) {
   const categoriesToChartAtt = ['Overall', ...findThreeLargestDeltas(means, 'attempts')]
+  const colorScaleAtt = ['#50FA97',
+    categoriesToChartAtt.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
+  ].flat()
+  console.log(colorScaleAtt);
   const categoriesToChartTime = ['Overall', ...findThreeLargestDeltas(means, 'times')]
+  console.log(categoriesToChartTime);
+  const colorScaleTime = ['#50FA97',
+    categoriesToChartTime.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
+  ].flat()
+  console.log(colorScaleTime)
   const data = means.tally
   const chartData = {
     domainMaxYAtt: findYMax(data, categoriesToChartAtt, 'attempts'),
     domainMaxYTime: findYMax(data, categoriesToChartTime, 'times'),
     labelsX: Array(round).fill(1).map((x, i) => x + i),
-    //decide what to do about colors and legend
-    // legend: categoriesToChartAtt.map( type => {
-    //   return { name: type.toUpperCase(), labels: {fontSize: 10, fontFamily: "'Overpass Mono', monospace"}, symbol: {type: 'square'}}
-    // }),
     categoriesIncluded: [...new Set(categoriesToChartAtt, categoriesToChartTime)],
+    categoriesAtt: categoriesToChartAtt,
+    categoriesTime: categoriesToChartTime,
+    colorScaleAtt: colorScaleAtt,
+    colorScaleTime: colorScaleTime,
     data: {
       attempts: getDataPoints(data, categoriesToChartAtt, 'attempts'),
       times: getDataPoints(data, categoriesToChartTime, 'times')

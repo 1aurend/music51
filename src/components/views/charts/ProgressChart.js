@@ -17,7 +17,8 @@ function ProgressChart(props) {
   const domainMaxY = metric === 'attempts' ? chartData.chartData.domainMaxYAtt : chartData.chartData.domainMaxYTime
   const yLabel = metric === 'attempts' ? '# ATTEMPTS' : 'TIME (secs)'
   const labelsX = chartData.chartData.labelsX
-  const colorScale = ['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#26AD5E']
+  // const colorScale = ['#b7b8bc', '#898a8d', '#9fbfdf', '#6699cc', '#5b5c5e', '#26AD5E']
+  const colorScale = metric === 'attempts' ? chartData.chartData.colorScaleAtt : chartData.chartData.colorScaleTime
   //not sure useMemo helps here because data will always be different because object identity??
   const chartLines = useMemo(() => {
     return qTypes.map( type => {
@@ -40,7 +41,7 @@ function ProgressChart(props) {
         style={{ border: { stroke: "black"}, flexShrink:1} }
         data={chartData.chartData.legend}
         colorScale={colorScale}
-        />}
+        />*/}
       <VictoryAxis
         style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 18}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 22, padding: 5}}}
         tickValues={labelsX}

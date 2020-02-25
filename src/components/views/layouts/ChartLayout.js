@@ -1,6 +1,5 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import {
-  Container,
   Row,
   Col,
 } from 'shards-react'
@@ -9,7 +8,6 @@ import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
-import { Session } from '../../data/Context'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
 import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
 import Theme from '../Theme'
@@ -67,7 +65,7 @@ color: ${props => props.theme.colors.light};
 `
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
-  const qTypes = chartData.chartData.categoriesIncluded
+  // const qTypes = chartData.chartData.categoriesIncluded
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb
