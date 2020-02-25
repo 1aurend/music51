@@ -33,16 +33,16 @@ function ProgressChart(props) {
     })
   }, [qTypes, data])
   return (
-    <VictoryChart height={200} width={600} domainPadding={{x: 0}} style={{parent: {maxHeight: '40%'}}}>
+    <VictoryChart domainPadding={{x: 0}} style={{parent: {maxHeight: '40%'}}}>
       {showLegend && <VictoryLegend x={75} y={0}
         orientation="horizontal"
         gutter={20}
-        style={{ border: { stroke: "black" }} }
+        style={{ border: { stroke: "black"}, flexShrink:1} }
         data={chartData.chartData.legend}
         colorScale={colorScale}
         />}
       <VictoryAxis
-        style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 18}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+        style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 18}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 22, padding: 5}}}
         tickValues={labelsX}
         tickFormat={(t) => `${Math.round(t)}`}
         label={'ROUNDS'}
@@ -50,7 +50,7 @@ function ProgressChart(props) {
       <VictoryAxis
         dependentAxis
         label={yLabel}
-        style={{axisLabel: {fontFamily: "'Overpass Mono', monospace", fontSize: 11, padding: 30}, tickLabels: {fontFamily: "'Overpass Mono', monospace", fontSize: 10, padding: 5}}}
+        style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 30}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 22, padding: 5}}}
         domain={{y: [0, domainMaxY]}}
         tickFormat={(t) => rounded(t, 2)}
         />

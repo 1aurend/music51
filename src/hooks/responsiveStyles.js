@@ -1,4 +1,3 @@
-
 const fontHeading = "'Fipps Regular', monospace"
 const fontBody = "'Thintel', monospace"
 
@@ -31,6 +30,9 @@ const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacin
   return result
 }
 
+const sidebarLayout = {gridTemplateAreas: '"B A A" "C A A"'}
+const stackedLayout = {gridTemplateAreas: '"B B B" "A A A" "C C C"'}
+
 export const h1 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:26,letterSpacing:3, textTransform:'uppercase'})
 export const h2 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:18,letterSpacing:1, textTransform:'lowercase'})
 export const h3 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:36,letterSpacing:2,lineHeight:1, textTransform:'uppercase'})
@@ -55,31 +57,18 @@ export const answerText = {
   SMALL: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28}
 }
 
-
-export const rowOrCol = {
-  LARGE: {flexFlow: 'row'},
-  MEDIUM: {flexFlow: 'row'},
-  SMALL: {flexFlow: 'column'}
+export const layoutInfo ={
+  LARGE: sidebarLayout,
+  MEDIUM: sidebarLayout,
+  SMALL: stackedLayout
 }
 
-export const gridMarquee = {
-  // rowstart/colstart/rowend/colend
-  LARGE: {gridArea:'2/2/2/3'},
-  MEDIUM: {gridArea:'2/2/2/3'},
-  SMALL: {gridArea:'2/2/2/5'}
+export const layoutQuiz ={
+  LARGE: stackedLayout,
+  MEDIUM: stackedLayout,
+  SMALL: stackedLayout
 }
 
-export const gridMain = {
-  LARGE: {gridArea:'2/3/5/5'},
-  MEDIUM: {gridArea:'2/3/5/5'},
-  SMALL: {gridArea:'3/2/3/5'}
-}
-
-export const gridMisc = {
-  LARGE: {gridArea:'3/2/3/3'},
-  MEDIUM: {gridArea:'3/2/3/3'},
-  SMALL: {gridArea:'4/2/4/5'}
-}
 
 export const progressTitle = {
   LARGE: {fontFamily: fontHeading, textAlign: 'center', fontSize: '2.5em', lineHeight: '1.5em'},
@@ -121,8 +110,8 @@ export const staveSize = {
     viewBoxHeight: 125,
   },
   SMALL: {
-    svgWidth: '300px',
-    svgHeight: '150px',
+    svgWidth: '250px',
+    svgHeight: '125px',
     viewBoxWidth: 250,
     viewBoxHeight: 125,
   }
@@ -132,6 +121,13 @@ export const tableSize = {
   LARGE: 901,
   SMALL: 899
 }
+
+export const answerChoiceSize = {
+  LARGE: '100px',
+  MEDIUM: '90px',
+  SMALL: '80px'
+}
+
 
 export const loadingMargin = {
   LARGE: '5%',

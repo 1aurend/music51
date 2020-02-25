@@ -9,37 +9,37 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../buttons/RoundEndNav'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell, BugWrapper} from './Grids'
+import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
 import {Bug} from '../buttons/Bug'
 import Theme from '../Theme'
 
 const StatsH1 = styled.h1`
-color: ${props => props.theme.colors.dark};
+  color: ${props => props.theme.colors.dark};
 `
 
 const StatsH3 = styled.h3`
-color: ${props => props.theme.colors.tertiary};
+  color: ${props => props.theme.colors.tertiary};
+  line-height: 0.75em!important;
+
 `
 const StatsH4 = styled.h4`
-color: ${props => props.theme.colors.light};
-.category {
-  color: ${props => props.theme.colors.tertiary};
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.num {
-  color: ${props => props.theme.colors.secondary};
-}
+  color: ${props => props.theme.colors.light};
+  .category {
+    color: ${props => props.theme.colors.tertiary};
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .num {
+    color: ${props => props.theme.colors.secondary};
+  }
 `
-
-
 
 export default function StatLines(props) {
   const { round, setShowStats, nextRound, finished } = props
   const means = useContext(Session).means.tally
   const qTypes = useContext(Session).means.questionsCurrentRound
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, gridMarquee, gridMain, gridMisc, rowOrCol} = sizedStyles
+  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -61,28 +61,24 @@ export default function StatLines(props) {
 
   return (
     <Theme>
-      <Grid>
-        <Cell style={gridMarquee}>
-          <MegaPixelBorder>
-            <StatsH1 style={h1}>{headline}</StatsH1>
-          </MegaPixelBorder>
-        </Cell>
-        <Cell style={gridMain}>
-          <SmallPixelBorderOutline>
-            <StatsH3 style={h3}>{subtitle}</StatsH3>
-            <StatsH4 style={h4}>{statLines}</StatsH4>
-            <StatsH3 style={h3}>{closing}</StatsH3>
-          </SmallPixelBorderOutline>
-        </Cell>
-        <Cell style={gridMisc}>
-          <SubCell>
+      <Universe>
+        <Grid style={layoutInfo}>
+          <Appetizer>
+            <MegaPixelBorder>
+              <StatsH1 style={h1}>{headline}</StatsH1>
+            </MegaPixelBorder>
             <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
-          </SubCell>
-        </Cell>
-        <BugWrapper>
-          <Bug />
-        </BugWrapper>
-      </Grid>
+          </Appetizer>
+          <Entree>
+            <SmallPixelBorderOutline>
+              <StatsH3 style={h3}>{subtitle}</StatsH3>
+              <StatsH4 style={h4}>{statLines}</StatsH4>
+              <StatsH3 style={h3}>{closing}</StatsH3>
+            </SmallPixelBorderOutline>
+          </Entree>
+        </Grid>
+        <Bug />
+      </Universe>
     </Theme>
 
   )

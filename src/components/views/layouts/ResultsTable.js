@@ -8,7 +8,7 @@ import { questionsList } from '../../../generator/questionsList'
 import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell, BugWrapper} from './Grids'
+import {Grid, Cell, SubCell} from './Grids'
 import Theme from '../Theme'
 
 
@@ -91,9 +91,7 @@ export default function ResultsTable(props) {
                 verticalTableAtt={verticalTableAtt}
                 verticalTableT={verticalTableT}
                 startOver={startOver} />
-        <BugWrapper>
-          <Bug />
-        </BugWrapper>
+        <Bug />
       </Theme>
     )
 

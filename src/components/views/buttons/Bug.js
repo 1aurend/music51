@@ -5,19 +5,30 @@ import styled from 'styled-components'
 
 const formLink = 'https://forms.gle/qwFKMPGCG12vo8xM6'
 
-const StyledSvgButton = styled.div`
+const BugWrapper = styled.div`
+  display: grid;
+  grid-template-rows:  50px auto;
+  grid-template-columns: auto 50px 50px;
+  padding-bottom: 5%;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+`
+
+const StyledButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
   padding: 0;
-  grid-column: 2/2;
+  grid-column: 3/3;
   grid-row: 2/2;
 `
 
-const StyledSvgBubbleDiv = styled.div`
+const StyledBubbleDiv = styled.div`
   display: block;
   color:${props => props.theme.colors.tertiary};
-  padding: 0;
+  padding: 5px;
+  grid-column: 2/2;
   grid-row: 1/1;
   background-repeat: no-repeat;
   background-size: cover;
@@ -33,20 +44,29 @@ const StyledSvgBubbleDiv = styled.div`
 
 export function Bug({ onClick }) {
   return (
-    <StyledSvgButton onClick={onClick}>
-      <a href={formLink} alt='Bug Report Google Form'>
-        <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
-      </a>
-    </StyledSvgButton>
+    <BugWrapper>
+      <StyledButton onClick={onClick}>
+        <a href={formLink} alt='Bug Report Google Form'>
+          <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
+        </a>
+      </StyledButton>
+    </BugWrapper>
   )
 }
 
-export function SpeechBubble({ onClick }) {
+export function BugWithSpeechBubble({ onClick }) {
   return (
-      <StyledSvgBubbleDiv
+    <BugWrapper>
+      <StyledBubbleDiv
         onClick={onClick}
         style={{backgroundImage: `url(${bubbleSvg})`}}
         ><h4>BUGS?</h4>
-      </StyledSvgBubbleDiv>
+      </StyledBubbleDiv>
+      <StyledButton onClick={onClick}>
+        <a href={formLink} alt='Bug Report Google Form'>
+          <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
+        </a>
+      </StyledButton>
+    </BugWrapper>
   )
 }

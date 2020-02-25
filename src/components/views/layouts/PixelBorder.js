@@ -96,6 +96,7 @@ const ButtonText = styled.h3`
   color: white;
   line-height: 20px;
   white-space: nowrap;
+  transition: 0.5s;
   &:hover {
     color: ${props => props.theme.colors.dark};
 `

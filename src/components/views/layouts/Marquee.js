@@ -6,6 +6,7 @@ const MarqueeDiv = styled.div`
   display: flex;
   flex-direction:column;
   justify-content: center;
+
   > h1 {
     color: ${props => props.theme.colors.dark};
   }

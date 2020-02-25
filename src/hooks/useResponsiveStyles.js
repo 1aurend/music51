@@ -18,11 +18,9 @@ export default function useResponsiveStyles() {
         h3: responsiveStyles.h3[screen],
         h4: responsiveStyles.h4[screen],
         para: responsiveStyles.para[screen],
-        gridMarquee: responsiveStyles.gridMarquee[screen],
-        gridMain: responsiveStyles.gridMain[screen],
-        gridMisc: responsiveStyles.gridMisc[screen],
+        layoutInfo: responsiveStyles.layoutInfo[screen],
+        layoutQuiz: responsiveStyles.layoutQuiz[screen],
         input: responsiveStyles.input[screen],
-        rowOrCol: responsiveStyles.rowOrCol[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
         progressSubtitle: responsiveStyles.progressSubtitle[screen],
@@ -31,7 +29,8 @@ export default function useResponsiveStyles() {
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
         tableSize: responsiveStyles.tableSize[table],
-        loadingMargin: responsiveStyles.loadingMargin[screen]
+        loadingMargin: responsiveStyles.loadingMargin[screen],
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
       }
     } else {
       return setSizedStyles({
@@ -40,11 +39,9 @@ export default function useResponsiveStyles() {
         h3: responsiveStyles.h3[screen],
         h4: responsiveStyles.h4[screen],
         para: responsiveStyles.para[screen],
-        gridMarquee: responsiveStyles.gridMarquee[screen],
-        gridMain: responsiveStyles.gridMain[screen],
-        gridMisc: responsiveStyles.gridMisc[screen],
+        layoutInfo: responsiveStyles.layoutInfo[screen],
+        layoutQuiz: responsiveStyles.layoutQuiz[screen],
         input: responsiveStyles.input[screen],
-        rowOrCol: responsiveStyles.rowOrCol[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
         progressSubtitle: responsiveStyles.progressSubtitle[screen],
@@ -53,7 +50,8 @@ export default function useResponsiveStyles() {
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
         tableSize: responsiveStyles.tableSize[table],
-        loadingMargin: responsiveStyles.loadingMargin[screen]
+        loadingMargin: responsiveStyles.loadingMargin[screen],
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
       })
     }
   }

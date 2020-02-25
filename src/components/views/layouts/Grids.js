@@ -1,21 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto auto auto 1fr;
-  grid-template-rows: 1fr auto auto auto 1fr;
+export const Universe = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10% 10% 0 10%;
   background-color: ${props => props.theme.colors.dark};
-  grid-gap: 2%;
   height: 100vh;
   width: 100vw;
   overflow: scroll;
 `
 
-export const Cell = styled.div`
+export const Grid = styled.div`
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(2,1fr)
+  overflow: scroll;
+`
+
+export const Appetizer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  grid-area: B;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column nowrap;
+`
+export const Entree = styled.div`
   display: block;
   width: 100%;
   height: 100%;
+  grid-area: A;
+  align-items: center;
+  justify-content: center;
+`
+export const Dessert = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  grid-area: C;
+  align-items: center;
+  justify-content: center;
 `
 
 export const SubCell = styled.div`
@@ -33,13 +60,4 @@ export const SubCellMargin = styled.div`
   > * {
     margin: 2%
   }
-`
-
-export const BugWrapper = styled.div`
-  display: grid;
-  grid-template-rows:  42px 50px;
-  grid-template-columns: 50px 50px;
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
 `

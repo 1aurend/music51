@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {ButtonBorder} from '../layouts/PixelBorder'
-
-const buttonSize = '8vh'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
 const StyledChoiceButton = styled.div`
   display: block;
@@ -11,12 +10,17 @@ const StyledChoiceButton = styled.div`
   margin: 3px;
   background-color: ${props => props.color};
   &:hover {
-    background-color: #186E3C;
+    background-color: ${props => props.theme.colors.primary};
   }
-  min-height: ${buttonSize};
-  min-width: ${buttonSize};
-  font-size: 2rem;
+  min-height: ${props => props.buttonSize};
+  min-width: ${props => props.buttonSize};
   text-align: center;
+  padding-top: 10px;
+  > span, h4, div {
+    color: ${props => props.theme.colors.dark} !important;
+    font-size: 2rem;
+    font-weight: 800;
+  }
 `
 
 const StyledKeystrokeSymbol = styled.p`
@@ -32,11 +36,13 @@ const StyledChoice = styled.h4`
 
 
 export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
+  const sizedStyles = useResponsiveStyles()
+  const {answerChoiceSize} = sizedStyles
   const background = (() => {
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
     if (colors.length > 0 && thisInput.color === 'red' && thisInput.input === choice) {
-      return '#c4183c'
+      return '#FF3863'
     } else if (greens.includes(choice)) {
       return '#26AD5E'
     }
@@ -55,7 +61,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
       )
     } else if (choice.includes('6') || choice.includes('4')) {
       return (
-        <>
+        <span>
         {choice.slice(0,-2)}
           <span style={{postion: 'absolute'}}>
             <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
@@ -65,7 +71,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
               {choice.charAt(choice.length-1)}
             </sub>
           </span>
-        </>
+        </span>
       )
     }
     return <StyledChoice>{choice}</StyledChoice>
@@ -77,6 +83,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
       <StyledChoiceButton
         color={background}
         onClick={onClick}
+        buttonSize={answerChoiceSize}
         >
           {formattedChoice}
           <StyledKeystrokeSymbol>

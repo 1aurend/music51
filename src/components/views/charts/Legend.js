@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { types } from 'somewhere'
+import { Session } from '../../data/Context'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
+
 
 const LegendWrapper = styled.div`
   display: block;
@@ -26,11 +28,13 @@ const LegendDot = styled.div`
   }
 `
 
-export function Legend({types}) {
+export function Legend({chartData}) {
+  const qTypes = chartData.chartData.categoriesIncluded
   return (
     <LegendWrapper>
-      <LegendDot>
-      </LegendDot>
+      {qTypes.map((value,index)=>{
+        return <LegendDot />
+      })}
     </LegendWrapper>
   )
 }
