@@ -140,7 +140,6 @@ export function makeChordDescription(
     keySignature,
     romanNumeralContext
   )
-  console.log("concretized root: " + concretizedRoot.letter + concretizedRoot.accidental)
   return {
     root: concretizedRoot,
     structure: chordStructure,

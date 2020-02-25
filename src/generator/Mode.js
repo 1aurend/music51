@@ -696,19 +696,13 @@ export function noteIdentities(mode) {
           "incidental": 0
         },
         {
-          // "tensionMod7": 2,
-          // "quality": -1,
-          // "incidental": -1
+          // nope
         },
         {
-          // "tensionMod7": 2,
-          // "quality": 1,
-          // "incidental": 0
+          // nope
         },
         {
-          // "tensionMod7": 2,
-          // "quality": 2,
-          // "incidental": 1
+          // nope
         },
         {
           "tensionMod7": 3,
@@ -716,9 +710,7 @@ export function noteIdentities(mode) {
           "incidental": 0
         },
         {
-          // "tensionMod7": 4,
-          // "quality": 0,
-          // "incidental": -1
+          // nope
         },
         {
           "tensionMod7": 4,
@@ -726,19 +718,15 @@ export function noteIdentities(mode) {
           "incidental": 0
         },
         {
-          // "tensionMod7": 5,
-          // "quality": 0,
-          // "incidental": -1
+          "tensionMod7": 5,
+          "quality": 0,
+          "incidental": -1
         },
         {
-          // "tensionMod7": 5,
-          // "quality": 1,
-          // "incidental": 0
+          // nope
         },
         {
-          // "tensionMod7": 6,
-          // "quality": -2,
-          // "incidental": 1
+          // nope
         },
         {
           "tensionMod7": 6,
@@ -746,9 +734,7 @@ export function noteIdentities(mode) {
           "incidental": 1
         },
         {
-          // "tensionMod7": 7,
-          // "quality": 1,
-          // "incidental": 1
+          // nope
         }
       ]
     default:

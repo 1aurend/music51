@@ -176,12 +176,12 @@ export const ChordStructure = {
   },
   GERMAN_AUGMENTED_SIXTH: {
     displayName: "Ger+6",
-    modeConstructor: Mode.PHRYGIAN,
+    modeConstructor: Mode.AUGMENTED_SIXTH,
     structure: [
-      IndependentPitch.PE, // Ab (in the bass)
-      IndependentPitch.DO, // C
-      IndependentPitch.NA, // EB
-      IndependentPitch.VE // F#
+      IndependentPitch.DO, // C (in the bass)
+      IndependentPitch.MI, // E
+      IndependentPitch.SO, // Ab
+      IndependentPitch.KE // F#
     ],
     possibleRootOffsets: [8],
     commonRootOffsets: {

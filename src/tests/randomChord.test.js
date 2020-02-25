@@ -313,6 +313,49 @@ test('Fr+6 in C Major is spelled correctly', () => {
   expect(partiallyConcretized).toStrictEqual(expected)
 })
 
+test('Gr+6 in C Major is spelled correctly', () => {
+  const chordStructure = ChordStructure.GERMAN_AUGMENTED_SIXTH
+  const inversion = ""
+  const keySignature = 'B' // C
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 8,
+    degree: 6,
+    romanNumeral: 'Gr+6',
+    incidental: -1
+  }
+  const chordDescription = makeChordDescription(
+    chordStructure,
+    inversion,
+    keySignature,
+    romanNumeralContext
+  )
+  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
+  const expected = [
+    {
+      letter: LetterName.A,
+      accidental: Accidental.FLAT,
+      octave: 0
+    },
+    {
+      letter: LetterName.C,
+      accidental: "",
+      octave: 1
+    },
+    {
+      letter: LetterName.E,
+      accidental: Accidental.FLAT,
+      octave: 1
+    },
+    {
+      letter: LetterName.F,
+      accidental: Accidental.SHARP,
+      octave: 1
+    }
+  ]
+  expect(partiallyConcretized).toStrictEqual(expected)
+})
+
 
 test('randomRomanNumeralContext for Ger+6 in C Major is valid', () => {
   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.GERMAN_AUGMENTED_SIXTH, "Major")
