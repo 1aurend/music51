@@ -61,13 +61,17 @@ export const Question = {
       case ChordType.TRIAD:
         // fallthrough
       case ChordType.SEVENTH:
-        return "In-Key"
+        answer = "In-Key"
+        break
       case ChordType.CHROMATIC_VARIATION:
-        return "Chromatic Variation"
+        answer = "Chromatic Variation"
+        break
       case ChordType.MODE_MIXTURE:
-        return "Mode Mixture"
+        answer = "Mode Mixture"
+        break
       case ChordType.APPLIED_CHORD:
-        return "Applied"
+        answer = "Applied"
+        break
     }
     return {
       "type": "Role",
@@ -119,7 +123,7 @@ export const Question = {
   },
   whatFollows: function(chordContext) {
     let answer
-    switch (chordContext.chordStructure) {
+    switch (chordContext.chordDescription.structure) {
       // Chromatic variation
       case ChordStructure.NEAPOLITAN_SIXTH:
         // fallthrough
@@ -167,18 +171,19 @@ export const Question = {
         break
       case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
       case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
-      switch (chordContext.modeLabel) {
-        case "Major":
-          answer = "viio"
-        case "minor":
-          throw 'Invalid chord structure ' + JSON.stringify(chordContext.chordStructure) + 'in mode ' + JSON.stringify(chordContext.modeLabel)
-      }
-      break
+        switch (chordContext.modeLabel) {
+          case "Major":
+            answer = "viio"
+            break
+          case "minor":
+            throw 'Invalid chord structure ' + JSON.stringify(chordContext.chordDescription.structure) + '; in mode ' + JSON.stringify(chordContext.modeLabel)
+        }
+        break
       default:
-        throw "Invalid chord structure: " + JSON.stringify(chordContext.chordStructure)
+        throw "Invalid chord structure: " + JSON.stringify(chordContext.chordDescription.structure)
     }
     let choices
-    switch (chordContext.chordStructure) {
+    switch (chordContext.chordDescription.structure) {
       case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
       case ChordStructure.FRENCH_AUGMENTED_SIXTH:
       case ChordStructure.GERMAN_AUGMENTED_SIXTH:
@@ -190,6 +195,7 @@ export const Question = {
             choices = ["V", "Cad64", "i"]
             break
         }
+        break
       case ChordStructure.NEAPOLITAN_SIXTH:
       case ChordStructure.FIVE_OF_FIVE:
       case ChordStructure.FIVE_SEVEN_OF_FIVE:
@@ -209,8 +215,9 @@ export const Question = {
             choices = ["i", "iio", "III", "iv", "V", "VI", "viio", "i"]
             break
         }
-        default:
-          throw "Invalid chord structure: " + JSON.stringify(chordContext.chordStructure)
+        break
+      default:
+        throw "Invalid chord structure: " + JSON.stringify(chordContext.chordDescription.structure)
     }
     return {
       "type": "What Follows",
@@ -302,6 +309,11 @@ export function romanInversionOptions(romanNumeral, inversion, chordType) {
         romanNumeral + inversion + '43',
         romanNumeral + inversion + '42'
       ]
+    // FIXME: Finish implementation!
+    case ChordType.CHROMATIC_VARIATION:
+    case ChordType.MODE_MIXTURE:
+    case ChordType.APPLIED_CHORD:
+      return []
   }
 }
 
@@ -325,6 +337,27 @@ export function romanQuality(chordStructure) {
       return 'ø7'
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       return 'o7'
+    // FIXME: Finish implementation!
+    case ChordStructure.NEAPOLITAN_SIXTH:
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+      return ''
   }
 }
 
@@ -348,5 +381,26 @@ export function inversionQuality(chordStructure) {
       return 'ø'
     case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       return 'o'
+    // FIXME: Finish implementation!
+    case ChordStructure.NEAPOLITAN_SIXTH:
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+      return ''
   }
 }
