@@ -147,9 +147,9 @@ export function noteIdentities(mode) {
           "incidental": 0
         },
         {
-          "tensionMod7": 5,
+          "tensionMod7": 6,
           "quality": 1,
-          "incidental": 1
+          "incidental": -1
         },
         {
           "tensionMod7": 6,
