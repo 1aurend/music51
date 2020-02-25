@@ -119,7 +119,7 @@ export const Question = {
   },
   whatFollows: function(chordContext) {
     let answer
-    switch (chordContext.chordStructure) {
+    switch (chordContext.chordDescription.structure) {
       // Chromatic variation
       case ChordStructure.NEAPOLITAN_SIXTH:
         // fallthrough
@@ -167,18 +167,18 @@ export const Question = {
         break
       case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
       case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
-      switch (chordContext.modeLabel) {
-        case "Major":
-          answer = "viio"
-        case "minor":
-          throw 'Invalid chord structure ' + JSON.stringify(chordContext.chordStructure) + 'in mode ' + JSON.stringify(chordContext.modeLabel)
-      }
-      break
+        switch (chordContext.modeLabel) {
+          case "Major":
+            answer = "viio"
+          case "minor":
+            throw 'Invalid chord structure ' + JSON.stringify(chordContext.chordStructure) + 'in mode ' + JSON.stringify(chordContext.modeLabel)
+        }
+        break
       default:
         throw "Invalid chord structure: " + JSON.stringify(chordContext.chordStructure)
     }
     let choices
-    switch (chordContext.chordStructure) {
+    switch (chordContext.chordDescription.structure) {
       case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
       case ChordStructure.FRENCH_AUGMENTED_SIXTH:
       case ChordStructure.GERMAN_AUGMENTED_SIXTH:
@@ -190,6 +190,7 @@ export const Question = {
             choices = ["V", "Cad64", "i"]
             break
         }
+        break
       case ChordStructure.NEAPOLITAN_SIXTH:
       case ChordStructure.FIVE_OF_FIVE:
       case ChordStructure.FIVE_SEVEN_OF_FIVE:
@@ -209,8 +210,9 @@ export const Question = {
             choices = ["i", "iio", "III", "iv", "V", "VI", "viio", "i"]
             break
         }
-        default:
-          throw "Invalid chord structure: " + JSON.stringify(chordContext.chordStructure)
+        break
+      default:
+        throw "Invalid chord structure: " + JSON.stringify(chordContext.chordDescription.structure)
     }
     return {
       "type": "What Follows",
