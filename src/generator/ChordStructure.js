@@ -135,9 +135,9 @@ export const ChordStructure = {
     displayName: "N6",
     modeConstructor: Mode.MAJOR,
     structure: [
-      IndependentPitch.BA, // Db (root)
-      IndependentPitch.FA, // F
-      IndependentPitch.PE // Ab
+      IndependentPitch.DO, // C
+      IndependentPitch.MI, // E
+      IndependentPitch.SO // G
     ],
     possibleRootOffsets: [1], // TODO: possibleRootOffsets is not necessary in specified non-diatonic chords.
     commonRootOffsets: {

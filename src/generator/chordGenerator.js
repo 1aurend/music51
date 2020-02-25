@@ -195,10 +195,10 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   const rootSyllable = chordDescription.root.syllable
   const inversion = chordDescription.inversion
 
-  // TODO: First, codify `inversion` in a stronger way
-  // TODO: Then, pull this out to its own function
   let template = chordDescription.structure.structure
 
+  // TODO: First, codify `inversion` in a stronger way
+  // TODO: Then, pull this out to its own function
   // Rotates the independent pitches in the `template` based on the `inversion`.
   if ((inversion === "63") || (inversion === "65")) {
     template.rotate(1)
@@ -227,14 +227,13 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   // build the structure with correct spellings
   // FIXME: Assess schema (diving `structure.structure` is not elegant)
   // TODO: Consider breaking out the body of this loop into its own function
-  for(var i=0; i<template.length; i++){
+  for (var i=0; i<template.length; i++) {
     // Translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(template[i])
     // Compute the syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
     // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
-
     const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
     const noteLetter = Object.values(LetterName)[syllableIndex]
     const notePosition = letterNamePosition(noteLetter)
@@ -245,6 +244,8 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
     prevLetterNamePosition = notePosition
 
     const accid = accidental(noteIP, syllable)
+
+    // FIXME: This should happen at a later point in the pipeline!
     const shouldFilterOutAccidental = accidentalForLetterNameIsInKeySignature(
       noteLetter,
       accid,
@@ -262,6 +263,18 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   }
 
   return notes
+}
+
+function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
+  // FIXME: Come up with a name that is neither `whiteNotes` nor `.BOTTOM`
+  const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
+  const rootSyllable = chordDescription.root.syllable
+  const rootSyllableIndex = whiteNotes.indexOf(rootSyllable)
+  const modeConstructor = chordDescription.structure.modeConstructor
+  const modeNoteIdentities = noteIdentities(modeConstructor)
+  const tensionMod7 = modeNoteIdentities[translatedNoteIPIndex].tensionMod7
+  const index = (rootSyllableIndex + tensionMod7 - 1) % 7
+  return whiteNotes[index]
 }
 
 /**
@@ -322,38 +335,12 @@ function refIPToLetter(refIP) {
   }
 }
 
-function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
-
-  // FIXME: Come up with a name that is neither `whiteNotes` nor `.BOTTOM`
-  const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
-  const rootSyllable = chordDescription.root.syllable
-  const rootSyllableIndex = whiteNotes.indexOf(rootSyllable)
-  let modeConstructor = chordDescription.structure.modeConstructor
-
-  // FIXME: This sanitizes the mode constructors for chords which are set as `MAJOR` or `DOMINANT`,
-  //        and changes them to `LYDIAN_DOMINANT`. Likewise, we change `MINOR` inputs to `DORIAN`.
-  //
-  //        Either, we need change the values of the chord structure schema, or we need to flesh out
-  //        our `noteIdentities(mode)`.
-  if (modeConstructor === Mode.MAJOR || modeConstructor === Mode.DOMINANT) {
-    modeConstructor = Mode.LYDIAN_DOMINANT
-  } else if (modeConstructor === Mode.MINOR) {
-    modeConstructor = Mode.DORIAN
-  }
-
-  const modeNoteIdentities = noteIdentities(modeConstructor)
-  const tensionMod7 = noteIdentities(modeConstructor)[translatedNoteIPIndex].tensionMod7
-  const index = (rootSyllableIndex + tensionMod7 - 1) % 7
-  return whiteNotes[index]
-}
-
 /**
  * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
  * @param translatedNoteIPIndex  Int               The index of the translated note independent pitch
- * @param keySignature      KeySignature      The KeySignature context of the chord
  */
 // find the equivalent IP based on the rootIp and tensionMod12 value in the class
-function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex, keySignature) {
+function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex) {
   const ips = Object.values(IndependentPitch)
   const rootIPIndex = ips.indexOf(rootIP)
   return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
