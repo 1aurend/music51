@@ -270,11 +270,34 @@ export default function addKeystrokes(chords) {
               choicesWithKeys.push(withKeystroke)
               break
             case questionTypes.WHAT_FOLLOWS:
+              // // FIXME: (James) This is a hack which should be handled more
+              // //        elegantly.
+              // if (chord.chordType === ChordType.CHROMATIC_VARIATION) {
+              //   let chromaticKey
+              //   switch (choice) {
+              //     case 'I':
+              //     case 'i':
+              //     case 'V':
+              //       chromaticKey = choice
+              //       break
+              //     case 'Cad64':
+              //       chromaticKey = 'c'
+              //       break
+              //     default:
+              //       throw "Unsupported choice for Role question: " + choice
+              //   }
+              //   withKeystroke = { choice: choice, key: chromaticKey }
+              //   choicesWithKeys.push(withKeystroke)
+              //   break
+              // }
+
               let key
               switch (choice) {
                 case 'I':
+                  key = 'I'
+                  break
                 case 'i':
-                  key = '1'
+                  key = 'i'
                   break
                 case 'ii':
                 case 'iio':
@@ -290,7 +313,7 @@ export default function addKeystrokes(chords) {
                   break
                 case 'V':
                 case 'v':
-                  key = '5'
+                  key = 'V'
                   break
                 case 'VI':
                 case 'vi':
