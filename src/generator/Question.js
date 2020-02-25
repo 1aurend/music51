@@ -64,10 +64,10 @@ export const Question = {
         answer = "In-Key"
         break
       case ChordType.CHROMATIC_VARIATION:
-        answer = "Chromatic Variation"
+        answer = "Chromatic"
         break
       case ChordType.MODE_MIXTURE:
-        answer = "Mode Mixture"
+        answer = "Mixture"
         break
       case ChordType.APPLIED_CHORD:
         answer = "Applied"
