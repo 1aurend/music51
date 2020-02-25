@@ -76,8 +76,10 @@ export function randomChordContext(options) {
   const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType()
+  console.log("Chord Type: " + JSON.stringify(chordType))
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
+  console.log("Chord Structure: " + chordStructure.displayName)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordStructure)
   // Choose whether we will be in a major or minor mode.
@@ -140,6 +142,7 @@ export function makeChordDescription(
     keySignature,
     romanNumeralContext
   )
+  console.log("ROOT: " + concretizedRoot.letter + concretizedRoot.accidental)
   return {
     root: concretizedRoot,
     structure: chordStructure,
