@@ -356,6 +356,81 @@ test('Gr+6 in C Major is spelled correctly', () => {
   expect(partiallyConcretized).toStrictEqual(expected)
 })
 
+test('bVII in C Major is spelled correctly', () => {
+  const chordStructure = ChordStructure.FLAT_SEVEN_MAJOR_TRIAD
+  const inversion = ""
+  const keySignature = 'B' // C
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 10,
+    degree: 7,
+    romanNumeral: 'bVII',
+    incidental: -1
+  }
+  const chordDescription = makeChordDescription(
+    chordStructure,
+    inversion,
+    keySignature,
+    romanNumeralContext
+  )
+  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
+  const expected = [
+    {
+      letter: LetterName.B,
+      accidental: Accidental.FLAT,
+      octave: 0
+    },
+    {
+      letter: LetterName.D,
+      accidental: "",
+      octave: 1
+    },
+    {
+      letter: LetterName.F,
+      accidental: "",
+      octave: 1
+    }
+  ]
+  expect(partiallyConcretized).toStrictEqual(expected)
+})
+
+test('bVII in B flat Major is spelled correctly', () => {
+  const chordStructure = ChordStructure.FLAT_SEVEN_MAJOR_TRIAD
+  const inversion = ""
+  const keySignature = 'R2' // C
+  const romanNumeralContext = {
+    mode: Mode.MAJOR,
+    rootOffset: 10,
+    degree: 7,
+    romanNumeral: 'bVII',
+    incidental: -1
+  }
+  const chordDescription = makeChordDescription(
+    chordStructure,
+    inversion,
+    keySignature,
+    romanNumeralContext
+  )
+  const partiallyConcretized = partiallyConcretizeChord(chordDescription, keySignature)
+  const expected = [
+    {
+      letter: LetterName.A,
+      accidental: Accidental.FLAT,
+      octave: 0
+    },
+    {
+      letter: LetterName.C,
+      accidental: "",
+      octave: 1
+    },
+    {
+      letter: LetterName.E,
+      accidental: Accidental.FLAT,
+      octave: 1
+    }
+  ]
+  expect(partiallyConcretized).toStrictEqual(expected)
+})
 
 test('randomRomanNumeralContext for Ger+6 in C Major is valid', () => {
   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.GERMAN_AUGMENTED_SIXTH, "Major")
