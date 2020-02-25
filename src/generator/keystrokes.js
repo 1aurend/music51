@@ -1,3 +1,4 @@
+import { ChordType } from './ChordType'
 
 export default function addKeystrokes(chords) {
 
@@ -95,6 +96,27 @@ export default function addKeystrokes(chords) {
                 }
               break
             case questionTypes.QUALITY:
+              // FIXME: (James) This is a bit of hack. In the future, I think it
+              //        it would be wise if we make the keystroke aggregation
+              //        and the question aggregation more cohesive.
+              if (chord.chordType === ChordType.CHROMATIC_VARIATION) {
+                if (choice.includes("N")) {
+                  withKeystroke =  { choice: choice, key: "n" }
+                  choicesWithKeys.push(withKeystroke)
+                } else if (choice.includes("I")) {
+                  withKeystroke =  { choice: choice, key: "i" }
+                  choicesWithKeys.push(withKeystroke)
+                } else if (choice.includes("F")) {
+                  withKeystroke =  { choice: choice, key: "f" }
+                  choicesWithKeys.push(withKeystroke)
+                } else if (choice.includes("G")) {
+                  withKeystroke =  { choice: choice, key: "g" }
+                  choicesWithKeys.push(withKeystroke)
+                } else {
+                  throw "Unsupported choice for chromatic variation question"
+                }
+                break
+              }
 
               // FIXME: Audit this for correctness.
               //        See if we can find a more flexible way to do this!
