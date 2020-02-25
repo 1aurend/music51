@@ -255,6 +255,34 @@ test('concretized root for Fr+6 in C Major is valid', () => {
   expect(concretizedRoot).toStrictEqual(expected)
 })
 
+test('concretized root for V/V in C Major is valid', () => {
+  const keySignature = 'B' // C
+  const chordStructure = ChordStructure.FIVE_OF_FIVE
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, "Major")
+  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext)
+  const expected = {
+    independentPitch: IndependentPitch.RE,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.D,
+    syllable: IndependentPitch.RE
+  }
+  expect(concretizedRoot).toStrictEqual(expected)
+})
+
+test('concretized root for V/vi in C Major is valid', () => {
+  const keySignature = 'B' // C
+  const chordStructure = ChordStructure.FIVE_OF_SIX
+  const romanNumeralContext = randomRomanNumeralContext(chordStructure, "Major")
+  const concretizedRoot = concretizeRoot(keySignature, romanNumeralContext)
+  const expected = {
+    independentPitch: IndependentPitch.MI,
+    accidental: Accidental.NATURAL,
+    letter: LetterName.E,
+    syllable: IndependentPitch.MI
+  }
+  expect(concretizedRoot).toStrictEqual(expected)
+})
+
 test('randomRomanNumeralContext for MAJOR_TRIAD test bed', () => {
   const romanNumeralContext = randomRomanNumeralContext(ChordStructure.MAJOR_TRIAD, "Major")
   expect(romanNumeralContext).toBeDefined()
