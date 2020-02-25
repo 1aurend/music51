@@ -12,7 +12,7 @@ import { ChordType } from './ChordType'
 import { ChordTypesOption } from './ChordTypesOption'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { RomanNumeral, degreeAndQualityToRomanNumeral } from './RomanNumeral'
-import { Question, questionsForChordType } from './Question'
+import { Question, questionsForChordStructure } from './Question'
 
 /**
  * export default - This is the interface between the generator and chord crusher or any other app
@@ -47,7 +47,7 @@ export default function(numQs, options) {
   for (var i = 0; i < numQs; i++) {
     // Create the chords for each round.
     let chordContext = randomChordContext()
-    chordContext.questions = questionsForChordType(chordContext.chordType)
+    chordContext.questions = questionsForChordStructure(chordContext.chordDescription.structure)
       .map(question => question(chordContext))
     chords.push(chordContext)
   }

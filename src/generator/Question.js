@@ -228,11 +228,17 @@ export const Question = {
   }
 }
 
-export function questionsForChordType(chordType) {
-  switch (chordType) {
-    case ChordType.TRIAD:
-      // fallthrough
-    case ChordType.SEVENTH:
+export function questionsForChordStructure(chordStructure) {
+  switch (chordStructure) {
+    case ChordStructure.MAJOR_TRIAD:
+    case ChordStructure.MINOR_TRIAD:
+    case ChordStructure.DIMINISHED_TRIAD:
+    case ChordStructure.AUGMENTED_TRIAD:
+    case ChordStructure.DOMINANT_SEVENTH:
+    case ChordStructure.MAJOR_SEVENTH:
+    case ChordStructure.MINOR_SEVENTH:
+    case ChordStructure.HALF_DIMINISHED_SEVENTH:
+    case ChordStructure.FULLY_DIMINISHED_SEVENTH:
       return [
         Question.letterNames,
         Question.root,
@@ -240,7 +246,7 @@ export function questionsForChordType(chordType) {
         Question.numerals,
         Question.inversion,
       ]
-    case ChordType.CHROMATIC_VARIATION:
+    case ChordStructure.NEAPOLITAN_SIXTH:
       return [
         Question.letterNames,
         Question.root,
@@ -249,7 +255,21 @@ export function questionsForChordType(chordType) {
         Question.quality,
         Question.whatFollows,
       ]
-    case ChordType.MODE_MIXTURE:
+    case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
+    case ChordStructure.FRENCH_AUGMENTED_SIXTH:
+    case ChordStructure.GERMAN_AUGMENTED_SIXTH:
+      return [
+        Question.letterNames,
+        Question.degrees,
+        Question.role,
+        Question.quality,
+        Question.whatFollows,
+      ]
+    case ChordStructure.FLAT_THREE_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SIX_MAJOR_TRIAD:
+    case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD:
+    case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR:
+    case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR:
       return [
         Question.letterNames,
         Question.root,
@@ -258,7 +278,16 @@ export function questionsForChordType(chordType) {
         Question.quality,
         Question.inversion,
       ]
-    case ChordType.APPLIED_CHORD:
+    case ChordStructure.FIVE_OF_FIVE:
+    case ChordStructure.FIVE_SEVEN_OF_FIVE:
+    case ChordStructure.FIVE_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_SIX:
+    case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+    case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+    case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+    case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+    case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+    case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
       return [
         Question.letterNames,
         Question.root,
@@ -269,7 +298,7 @@ export function questionsForChordType(chordType) {
         Question.whatFollows,
       ]
     default:
-      throw "Invalid chordType: " + JSON.stringify(chordType)
+      throw "Invalid chordStructure: " + JSON.stringify(chordStructure)
   }
 }
 
