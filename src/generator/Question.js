@@ -61,13 +61,17 @@ export const Question = {
       case ChordType.TRIAD:
         // fallthrough
       case ChordType.SEVENTH:
-        return "In-Key"
+        answer = "In-Key"
+        break
       case ChordType.CHROMATIC_VARIATION:
-        return "Chromatic Variation"
+        answer = "Chromatic Variation"
+        break
       case ChordType.MODE_MIXTURE:
-        return "Mode Mixture"
+        answer = "Mode Mixture"
+        break
       case ChordType.APPLIED_CHORD:
-        return "Applied"
+        answer = "Applied"
+        break
     }
     return {
       "type": "Role",
