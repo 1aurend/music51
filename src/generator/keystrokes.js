@@ -246,11 +246,12 @@ export default function addKeystrokes(chords) {
               }
               withKeystroke = { choice: choice, key: map[choice] }
               choicesWithKeys.push(withKeystroke)
-
+              break
             case questionTypes.WHAT_FOLLOWS:
               // FIXME: Establish what the keystrokes are for the What Follows question!
               withKeystroke = { choice: choice, key: "xxx" }
               choicesWithKeys.push(withKeystroke)
+              break
             default:
               console.log("something went wrong with the text of this question");
               break
