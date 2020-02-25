@@ -161,12 +161,12 @@ export const ChordStructure = {
   },
   FRENCH_AUGMENTED_SIXTH: {
     displayName: "Fr+6",
-    modeConstructor: Mode.PHRYGIAN,
+    modeConstructor: Mode.AUGMENTED_SIXTH,
     structure: [
-      IndependentPitch.PE, // Ab (in the bass)
-      IndependentPitch.DO, // C
-      IndependentPitch.RE, // D
-      IndependentPitch.VE // F#
+      IndependentPitch.DO, // C (in the bass)
+      IndependentPitch.MI, // E
+      IndependentPitch.VE, // G
+      IndependentPitch.KE // A#
     ],
     possibleRootOffsets: [8],
     commonRootOffsets: {
