@@ -140,6 +140,7 @@ export function makeChordDescription(
     keySignature,
     romanNumeralContext
   )
+  console.log("concretized root: " + concretizedRoot.letter + concretizedRoot.accidental)
   return {
     root: concretizedRoot,
     structure: chordStructure,
@@ -589,11 +590,11 @@ function inversions(chordStructure) {
       return ["","65","43","42"]
     // Unique cases
     case ChordStructure.NEAPOLITAN_SIXTH:
-      return ["", "6"]
+      return ["", "63"]
     case ChordStructure.ITALIAN_AUGMENTED_SIXTH:
     case ChordStructure.FRENCH_AUGMENTED_SIXTH:
     case ChordStructure.GERMAN_AUGMENTED_SIXTH:
-      return ["6"]
+      return [""]
     default:
       throw "Invalid chord structure: " + JSON.stringify(chordStructure)
   }

@@ -147,11 +147,11 @@ export const ChordStructure = {
   },
   ITALIAN_AUGMENTED_SIXTH: {
     displayName: "It+6",
-    modeConstructor: Mode.PHRYGIAN, // TODO: consider an intervalic approach rather than modeConstructor. See commit comments.
+    modeConstructor: Mode.AUGMENTED_SIXTH, // TODO: consider an intervalic approach rather than modeConstructor. See commit comments.
     structure: [
-      IndependentPitch.PE, // Ab (in the bass)
-      IndependentPitch.DO, // C
-      IndependentPitch.VE // F#
+      IndependentPitch.DO, // C (in the bass)
+      IndependentPitch.MI, // E
+      IndependentPitch.KE // A#
     ],
     possibleRootOffsets: [8],
     commonRootOffsets: {

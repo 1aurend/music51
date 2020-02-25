@@ -16,6 +16,8 @@ export const Mode = { // TODO: these should be called modeConstructor to differe
   DOMINANT_ALTERED: "DA",
   DIMINISHED: 'dim',
   AUGMENTED_DOMINANT: 'AD',
+  // FIXME: This is added by James as a hack to spell augmented sixth chords properly
+  AUGMENTED_SIXTH: 'A6'
 }
 
 export const ModeSubset = {
@@ -685,6 +687,69 @@ export function noteIdentities(mode) {
           "incidental": 1
         }
       ]
+    case Mode.AUGMENTED_SIXTH:
+    return [
+      {
+        "tensionMod7": 1,
+        "quality": 0,
+        "incidental": 0
+      },
+      {
+        // "tensionMod7": 2,
+        // "quality": -1,
+        // "incidental": -1
+      },
+      {
+        // "tensionMod7": 2,
+        // "quality": 1,
+        // "incidental": 0
+      },
+      {
+        // "tensionMod7": 2,
+        // "quality": 2,
+        // "incidental": 1
+      },
+      {
+        "tensionMod7": 3,
+        "quality": 1,
+        "incidental": 0
+      },
+      {
+        // "tensionMod7": 4,
+        // "quality": 0,
+        // "incidental": -1
+      },
+      {
+        // "tensionMod7": 4,
+        // "quality": 1,
+        // "incidental": 0
+      },
+      {
+        // "tensionMod7": 5,
+        // "quality": 0,
+        // "incidental": -1
+      },
+      {
+        // "tensionMod7": 5,
+        // "quality": 1,
+        // "incidental": 0
+      },
+      {
+        // "tensionMod7": 6,
+        // "quality": -2,
+        // "incidental": 1
+      },
+      {
+        "tensionMod7": 6,
+        "quality": 1,
+        "incidental": 1
+      },
+      {
+        // "tensionMod7": 7,
+        // "quality": 1,
+        // "incidental": 1
+      }
+    ]
     default:
       throw "Unsupported Mode: " + JSON.stringify(mode)
   }
