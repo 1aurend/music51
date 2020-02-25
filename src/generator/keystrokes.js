@@ -248,8 +248,42 @@ export default function addKeystrokes(chords) {
               choicesWithKeys.push(withKeystroke)
               break
             case questionTypes.WHAT_FOLLOWS:
-              // FIXME: Establish what the keystrokes are for the What Follows question!
-              withKeystroke = { choice: choice, key: "xxx" }
+              let key
+              switch (choice) {
+                case 'I':
+                case 'i':
+                  key = '1'
+                  break
+                case 'ii':
+                case 'iio':
+                  key = '2'
+                  break
+                case 'III':
+                case 'iii':
+                  key = '3'
+                  break
+                case 'IV':
+                case 'iv':
+                  key = '4'
+                  break
+                case 'V':
+                case 'v':
+                  key = '5'
+                  break
+                case 'VI':
+                case 'vi':
+                  key = '6'
+                  break
+                case 'viio':
+                  key = '7'
+                  break
+                case 'Cad64':
+                  key = 'c'
+                  break
+                default:
+                  throw "Unsupported choice for Role question: " + choice
+              }
+              withKeystroke = { choice: choice, key: key }
               choicesWithKeys.push(withKeystroke)
               break
             default:
