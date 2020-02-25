@@ -169,12 +169,14 @@ export function concretizeRoot(keySignature, romanNumeralContext) {
   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
   const rootSyllable = Object.values(IndependentPitch)[rootIPIndex + romanNumeralContext.incidental]
   const rootIndex = (initialIndex + (romanNumeralContext.degree - 1) * 2) % 7
-  const rootAccidental = shape.notes[rootIndex].accidental
+  const unalteredRootAccidental = shape.notes[rootIndex].accidental
+  const unalteredRootAccidentalIndex = Object.values(Accidental).indexOf(unalteredRootAccidental)
+  const alteredRootAccidental = Object.values(Accidental)[unalteredRootAccidentalIndex + romanNumeralContext.incidental]
   // FIXME: Audit worth of sending `independentPitch`, `letter`, AND `syllable` (as `syllable` is
   //        isomorphic to `letter`)
   return {
     independentPitch: rootIP,
-    accidental: rootAccidental,
+    accidental: alteredRootAccidental,
     letter: rootLetterName,
     syllable: letterNameToRefIP(rootLetterName)
   }
