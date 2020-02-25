@@ -11,6 +11,7 @@ import {Bug} from '../buttons/Bug'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
 import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
 import Theme from '../Theme'
+import Legend from '../charts/Legend'
 
 const StyledRow = styled(Row)`
   display: flex;
@@ -35,14 +36,6 @@ const ChartWrapper = styled.div`
   justify-content: center
 `
 
-const StyledEntree = styled(Entree)`
-  display: flex;
-  flex-flow: column nowrap;
-  > * {
-    margin: 10px;
-  }
-`
-
 
 
 const StatsH1 = styled.h1`
@@ -65,7 +58,6 @@ color: ${props => props.theme.colors.light};
 `
 // QUESTION: should we not display graphs on moblile? too small to read? or how to scale?
 function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
-  // const qTypes = chartData.chartData.categoriesIncluded
   const timesSummary = chartData.progressSummary.times
   const attemptsSummary = chartData.progressSummary.attempts
   const verbT = timesSummary.verb
@@ -74,7 +66,7 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
-
+  console.log(chartData.chartData.categoriesIncluded);
   useEffect(() => {
       window.scrollTo(0, 0)
   },[])
@@ -88,60 +80,61 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
               <StatsH1 style={h1}>Round {round} Complete!</StatsH1>
             </MegaPixelBorder>
           </Appetizer>
-          <StyledEntree>
-              <SmallPixelBorderOutline>
-                <StatsH3 style={h3}>Here's Your Progress:</StatsH3>
-                <StyledRow>
-                  <StatsH4 style={h4}>
-                    <span class='category'>
-                      attempts:
-                    </span><br />
-                     Your total attempt count{'\u00A0'}
-                    <span style={vAColor}>
-                      {verbA}{'\u00A0'}
-                    </span>
-                     by{'\u00A0'}
-                    <span class='num'>
-                      {attemptsSummary.num}{'\u00A0'}
-                    </span>
-                     attempts per question or{'\u00A0'}
-                    <span class='num'>
-                      {`${attemptsSummary.percent}%`}
-                    </span>
-                    .
-                  </StatsH4>
-                </StyledRow>
-                <StyledRow>
-                  <StatsH4 style={h4}>
-                    <span class='category'>
-                      time:
-                    </span><br />
-                    Your overall time{'\u00A0'}
-                    <span style={vTColor}>
-                      {verbT}{'\u00A0'}
-                    </span>
-                     by{'\u00A0'}
-                    <span class='num'>
-                      {timesSummary.num}{'\u00A0'}
-                    </span>
-                     seconds per question or{'\u00A0'}
-                    <span class='num'>
-                      {`${timesSummary.percent}%`}
-                    </span>
-                    .
-                  </StatsH4>
-                </StyledRow>
-              </SmallPixelBorderOutline>
+          <Entree>
               <SmallPixelBorderDouble>
                   <StatsH3 style={h3}>Here's what changed the most this round!</StatsH3>
                 <ChartWrapper>
-                  <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'attempts'} />
-                  <Chart showLegend={false} chartData={chartData} qTypes={qTypes} metric={'times'} />
+                  <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesAtt} metric={'attempts'} />
+                  <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesTime} metric={'times'} />
                 </ChartWrapper>
+                <Legend chartData={chartData} />
               </ SmallPixelBorderDouble>
-          </StyledEntree>
+          </Entree>
           <Dessert>
-              <NavButtons viewStats={viewStats} nextRound={nextRound} finished={finished}/>
+            <SmallPixelBorderOutline>
+              <StatsH3 style={h3}>Here's Your Progress:</StatsH3>
+              <StyledRow>
+                <StatsH4 style={h4}>
+                  <span class='category'>
+                    attempts:
+                  </span><br />
+                   Your total attempt count{'\u00A0'}
+                  <span style={vAColor}>
+                    {verbA}{'\u00A0'}
+                  </span>
+                   by{'\u00A0'}
+                  <span class='num'>
+                    {attemptsSummary.num}{'\u00A0'}
+                  </span>
+                   attempts per question or{'\u00A0'}
+                  <span class='num'>
+                    {`${attemptsSummary.percent}%`}
+                  </span>
+                  .
+                </StatsH4>
+              </StyledRow>
+              <StyledRow>
+                <StatsH4 style={h4}>
+                  <span class='category'>
+                    time:
+                  </span><br />
+                  Your overall time{'\u00A0'}
+                  <span style={vTColor}>
+                    {verbT}{'\u00A0'}
+                  </span>
+                   by{'\u00A0'}
+                  <span class='num'>
+                    {timesSummary.num}{'\u00A0'}
+                  </span>
+                   seconds per question or{'\u00A0'}
+                  <span class='num'>
+                    {`${timesSummary.percent}%`}
+                  </span>
+                  .
+                </StatsH4>
+              </StyledRow>
+            </SmallPixelBorderOutline>
+            <NavButtons viewStats={viewStats} nextRound={nextRound} finished={finished}/>
           </Dessert>
         </Grid>
         <Bug />

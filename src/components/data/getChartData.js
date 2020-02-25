@@ -50,19 +50,16 @@ export function getChartData(means, round) {
   const colorScaleAtt = ['#50FA97',
     categoriesToChartAtt.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
   ].flat()
-  console.log(colorScaleAtt);
   const categoriesToChartTime = ['Overall', ...findThreeLargestDeltas(means, 'times')]
-  console.log(categoriesToChartTime);
   const colorScaleTime = ['#50FA97',
     categoriesToChartTime.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
   ].flat()
-  console.log(colorScaleTime)
   const data = means.tally
   const chartData = {
     domainMaxYAtt: findYMax(data, categoriesToChartAtt, 'attempts'),
     domainMaxYTime: findYMax(data, categoriesToChartTime, 'times'),
     labelsX: Array(round).fill(1).map((x, i) => x + i),
-    categoriesIncluded: [...new Set(categoriesToChartAtt, categoriesToChartTime)],
+    categoriesIncluded: [...new Set([...categoriesToChartAtt, ...categoriesToChartTime])],
     categoriesAtt: categoriesToChartAtt,
     categoriesTime: categoriesToChartTime,
     colorScaleAtt: colorScaleAtt,
@@ -72,6 +69,7 @@ export function getChartData(means, round) {
       times: getDataPoints(data, categoriesToChartTime, 'times')
     }
   }
+  console.log([...new Set(categoriesToChartAtt, categoriesToChartTime)]);
   const progressSummary = {
     attempts: getSummaryData(data, 'attempts', round),
     times: getSummaryData(data, 'times', round)

@@ -41,7 +41,7 @@ function ProgressChart(props) {
         style={{ border: { stroke: "black"}, flexShrink:1} }
         data={chartData.chartData.legend}
         colorScale={colorScale}
-        />*/}
+        />}
       <VictoryAxis
         style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 18}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 22, padding: 5}}}
         tickValues={labelsX}
@@ -55,9 +55,7 @@ function ProgressChart(props) {
         domain={{y: [0, domainMaxY]}}
         tickFormat={(t) => rounded(t, 2)}
         />
-      <VictoryGroup offset={20}
-        colorScale={colorScale}
-        >
+      <VictoryGroup offset={20} colorScale={colorScale}>
         {chartLines}
       </VictoryGroup>
     </VictoryChart>
