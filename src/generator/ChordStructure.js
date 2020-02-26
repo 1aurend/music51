@@ -338,35 +338,6 @@ export const ChordStructure = {
       minor: [0] // none defined.
     }
   },
-  SEVEN_DIMINISHED_SEVENTH_OF_FIVE: {
-    displayName: "viio7/V",
-    modeConstructor: Mode.DIMINISHED,
-    structure: [
-      IndependentPitch.DO, // F#
-      IndependentPitch.NA, // A
-      IndependentPitch.VE, // C
-      IndependentPitch.LA // Eb
-    ],
-    possibleRootOffsets: [6],
-    commonRootOffsets: {
-      Major: [6],
-      minor: [6]
-    }
-  },
-  SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN: {
-    displayName: "viiø7/vii",
-    modeConstructor: Mode.DIMINISHED_MINOR,
-    structure: [
-      IndependentPitch.DO, // A#
-      IndependentPitch.NA, // C#
-      IndependentPitch.VE, // E
-      IndependentPitch.KE // G#
-    ],
-    possibleRootOffsets: [10],
-    commonRootOffsets: {
-      Major: [10] // none defined.
-    }
-  },
   FIVE_OF_SEVEN_DIMINISHED: {
     displayName: "V/viio",
     modeConstructor: Mode.DOMINANT,
@@ -438,8 +409,6 @@ export function chordStructures(chordType) {
         ChordStructure.FIVE_SEVEN_OF_SIX,
         ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR,
         ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR,
-        ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE,
-        ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN,
         ChordStructure.FIVE_OF_SEVEN_DIMINISHED,
         ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED
       ])
