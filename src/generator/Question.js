@@ -13,7 +13,7 @@ export const Question = {
     return {
       // FIXME: Should this be "Names" or "Letter Names"?
       "type": "Names",
-      "questionText": "Name the letter names from lowest to highest.",
+      "questionText": "What are the letter names from lowest to highest?",
       "choices": choices,
       "answers": answers,
       "ordered": true
