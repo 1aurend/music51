@@ -12,7 +12,6 @@ import { rounded } from '../../../utility'
 
 function ProgressChart(props) {
   const { showLegend, chartData, qTypes, metric } = props
-  console.log(qTypes)
   const data = chartData.chartData.data[metric]
   const domainMaxY = metric === 'attempts' ? chartData.chartData.domainMaxYAtt : chartData.chartData.domainMaxYTime
   const yLabel = metric === 'attempts' ? '# ATTEMPTS' : 'TIME (secs)'

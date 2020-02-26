@@ -69,7 +69,6 @@ export function getChartData(means, round) {
       times: getDataPoints(data, categoriesToChartTime, 'times')
     }
   }
-  console.log([...new Set(categoriesToChartAtt, categoriesToChartTime)]);
   const progressSummary = {
     attempts: getSummaryData(data, 'attempts', round),
     times: getSummaryData(data, 'times', round)

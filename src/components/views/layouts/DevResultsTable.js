@@ -1,14 +1,9 @@
-import React, { useContext, useEffect } from 'react'
-import { Session } from '../../data/Context'
-import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
+import React, { useEffect } from 'react'
 import { rounded } from '../../../utility'
-import HorizontalTable from '../charts/HorizontalTable'
+// import HorizontalTable from '../charts/HorizontalTable'
 import VerticalTable from '../charts/VerticalTable'
 import { questionsList } from '../../../generator/questionsList'
-import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Grid, Cell, SubCell} from './Grids'
 import Theme from '../Theme'
 
 const testData = {
@@ -137,8 +132,6 @@ export default function DevResultsTable(props) {
   const { round, startOver } = props
   const means = testData
   const qTypes = Object.keys(questionsList)
-  // const sizedStyles = useResponsiveStyles()
-  // const { tableSize } = sizedStyles
   const perfectRounds = (means.Overall.attempts.filter(average => average === 1)).length
   const greeting = perfectRounds >= 1 ? `Pefection! You completed ${perfectRounds} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
 
