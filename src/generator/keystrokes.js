@@ -169,8 +169,9 @@ export default function addKeystrokes(chords) {
                       break
                   }
                 } else {
-                  withKeystroke = { choice: choice, key: 'x' }
+                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
                   choicesWithKeys.push(withKeystroke)
+                  break
                 }
                 break
             case questionTypes.NUMERAL:
@@ -263,7 +264,7 @@ export default function addKeystrokes(chords) {
                       break
                     }
                 } else {
-                  withKeystroke = { choice: choice, key: 'x' }
+                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
                   choicesWithKeys.push(withKeystroke)
                   break
                 }
