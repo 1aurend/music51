@@ -117,6 +117,10 @@ export default function addKeystrokes(chords) {
                   throw "Unsupported choice for chromatic variation question"
                 }
                 break
+              } else if (chord.chordType === ChordType.APPLIED_CHORD) {
+                withKeystroke = { choice: choice, key: (c + 1).toString() }
+                choicesWithKeys.push(withKeystroke)
+                break
               }
 
               // FIXME: Audit this for correctness.
