@@ -175,112 +175,112 @@ test('getDataPoints filters out nulls', () => {
   expect(result['2'].length).toBe(2)
 })
 
-// // TODO: add more tests in here to so we don't have to verify by looking at the log
-// test('getChartData returns expected values', () => {
-//   const data = {
-//          "tally": {
-//             "": {
-//                "attempts": [
-//                   3,
-//                   1,
-//                   7
-//                ],
-//                "times": [
-//                   2.3,
-//                   1.85,
-//                   67.3
-//                ]
-//             },
-//             "ROOT": {
-//                "attempts": [
-//                   null,
-//                   null
-//                ],
-//                "times": [
-//                   null,
-//                   null
-//                ]
-//             },
-//             "DEGREE": {
-//                "attempts": [
-//                   4,
-//                   9
-//                ],
-//                "times": [
-//                   4.5,
-//                   6
-//                ]
-//             },
-//             "ROLE": {
-//                "attempts": [
-//                   2,
-//                   6
-//                ],
-//                "times": [
-//                   1.2,
-//                   1.2
-//                ]
-//             },
-//             "NUMERAL": {
-//                "attempts": [
-//                   null,
-//                   null
-//                ],
-//                "times": [
-//                   null,
-//                   null
-//                ]
-//             },
-//             "QUALITY": {
-//                "attempts": [
-//                   null,
-//                   4
-//                ],
-//                "times": [
-//                   null,
-//                   0.5
-//                ]
-//             },
-//             "INVERSION": {
-//                "attempts": [
-//                   2,
-//                   null
-//                ],
-//                "times": [
-//                   0.3,
-//                   null
-//                ]
-//             },
-//             "FOLLOWED_BY": {
-//                "attempts": [
-//                   null,
-//                   null
-//                ],
-//                "times": [
-//                   null,
-//                   null
-//                ]
-//             },
-//             "Overall": {
-//                "attempts": [
-//                   3,
-//                   2
-//                ],
-//                "times": [
-//                   1.18,
-//                   2.3
-//                ]
-//             }
-//          },
-//          "questionsCurrentRound": [
-//             "ROLE",
-//             "LETTER_NAMES",
-//             "QUALITY",
-//             "DEGREE",
-//             "Overall"
-//          ]
-//       }
-//   const result = getChartData(data, 2)
-//   console.log(JSON.stringify(result, null, 2))
-//   expect(result).toBeTruthy()
-// })
+// TODO: add more tests in here to so we don't have to verify by looking at the log
+test('getChartData returns expected values', () => {
+  const data = {
+         "tally": {
+            "Names": {
+               "attempts": [
+                  3,
+                  1,
+                  7
+               ],
+               "times": [
+                  2.3,
+                  1.85,
+                  67.3
+               ]
+            },
+            "Root": {
+               "attempts": [
+                  null,
+                  null
+               ],
+               "times": [
+                  null,
+                  null
+               ]
+            },
+            "Degrees": {
+               "attempts": [
+                  4,
+                  9
+               ],
+               "times": [
+                  4.5,
+                  6
+               ]
+            },
+            "Role": {
+               "attempts": [
+                  2,
+                  6
+               ],
+               "times": [
+                  1.2,
+                  1.2
+               ]
+            },
+            "Numerals": {
+               "attempts": [
+                  null,
+                  null
+               ],
+               "times": [
+                  null,
+                  null
+               ]
+            },
+            "Quality": {
+               "attempts": [
+                  null,
+                  4
+               ],
+               "times": [
+                  null,
+                  0.5
+               ]
+            },
+            "Inversions": {
+               "attempts": [
+                  2,
+                  null
+               ],
+               "times": [
+                  0.3,
+                  null
+               ]
+            },
+            "Follows": {
+               "attempts": [
+                  null,
+                  null
+               ],
+               "times": [
+                  null,
+                  null
+               ]
+            },
+            "Overall": {
+               "attempts": [
+                  3,
+                  2
+               ],
+               "times": [
+                  1.18,
+                  2.3
+               ]
+            }
+         },
+         "questionsCurrentRound": [
+            "Role",
+            "Names",
+            "Quality",
+            "Degrees",
+            "Overall"
+         ]
+      }
+  const result = getChartData(data, 2)
+  console.log(JSON.stringify(result, null, 2))
+  expect(result).toBeTruthy()
+})
