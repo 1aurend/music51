@@ -10,7 +10,7 @@ export default function addKeystrokes(chords) {
     NUMERAL: `Numerals`,
     INVERSION: `Inversions`,
     ROLE: 'Role',
-    WHAT_FOLLOWS: 'What Follows'
+    WHAT_FOLLOWS: 'Follows'
   }
 
   // FIXME: Consider nesting `map` or `forEach` type functions
