@@ -14,7 +14,7 @@ export default function Go({ onClick }) {
   return (
     <>
       <StyledSvgButton
-        onClick={onClick} title='go'
+        onClick={onClick} title='go' alt='go'
         >
         <SolidButtonGreen props='GO!' />
       </StyledSvgButton>

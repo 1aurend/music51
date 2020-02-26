@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import Theme from '../Theme'
+
 
 const PixelWrapper = styled.div`
   display: flex;
@@ -180,341 +182,361 @@ const BtR2h = styled.div`
 
 export const SmallPixelBorderDouble = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px2v /><ContentPane>
-          {children}
-        </ContentPane><Px2v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px2v /><ContentPane>
+            {children}
+          </ContentPane><Px2v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 
 export const SmallPixelBorderSingle = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px0v /><ContentPane>
-          {children}
-        </ContentPane><Px0v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px0v /><ContentPane>
+            {children}
+          </ContentPane><Px0v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 export const SmallPixelBorderOutline = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px0v /><ContentPaneClear>
-          {children}
-        </ContentPaneClear><Px0v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px0v /><ContentPaneClear>
+            {children}
+          </ContentPaneClear><Px0v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0h /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 export const MediumPixelBorder = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px2v /><ContentPane>
-          {children}
-        </ContentPane><Px2v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px2v /><ContentPane>
+            {children}
+          </ContentPane><Px2v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 
 export const LargePixelBorder = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px0v /><Px2v /><ContentPane>
-          {children}
-        </ContentPane><Px2v /><Px0v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px0v /><Px2v /><ContentPane>
+            {children}
+          </ContentPane><Px2v /><Px0v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0h /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 
 export const JumboPixelBorder = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px1v /><Px0v /><Px0v /><Px2v /><ContentPane>
-          {children}
-        </ContentPane><Px2v /><Px0v /><Px0v /><Px1v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px1v /><Px0v /><Px0v /><Px2v /><ContentPane>
+            {children}
+          </ContentPane><Px2v /><Px0v /><Px0v /><Px1v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 export const MegaPixelBorder = ({children}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
-      </ PixelRow>
-      <PixelRow>
-        <Px2 /><Px0 /><Px1h /><Px0 /><Px2 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px1v /><Px0v /><Px0v /><Px2v /><Px2v /><ContentPane>
-          {children}
-        </ContentPane><Px2v /><Px2v /><Px0v /><Px0v /><Px1v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px2 /><Px0 /><Px1h /><Px0 /><Px2 />
-      </ PixelRow>
-      <PixelRow>
-        <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
-      </ PixelRow>
-    </PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
+        </ PixelRow>
+        <PixelRow>
+          <Px2 /><Px0 /><Px1h /><Px0 /><Px2 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px1v /><Px0v /><Px0v /><Px2v /><Px2v /><ContentPane>
+            {children}
+          </ContentPane><Px2v /><Px2v /><Px0v /><Px0v /><Px1v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px0 /><Px0 /><Px0 /><Px2h /><Px0 /><Px0 /><Px0 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px1 /><Px1 /><Px0h /><Px1 /><Px1 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px2 /><Px0 /><Px1h /><Px0 /><Px2 />
+        </ PixelRow>
+        <PixelRow>
+          <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
+        </ PixelRow>
+      </PixelWrapper>
+    </Theme>
   )
 }
 
 export const ButtonBorder = ({children}) => {
   return (
-    <PixelButtonWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px1v /><Px0v /><Px2v /><ButtonContent>
-          {children}
-        </ButtonContent><Px2v /><Px0v /><Px1v />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
-      </ PixelRow>
-    </PixelButtonWrapper>
+    <Theme>
+      <PixelButtonWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px1v /><Px0v /><Px2v /><ButtonContent>
+            {children}
+          </ButtonContent><Px2v /><Px0v /><Px1v />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px1 /><Px0 /><Px2h /><Px0 /><Px1 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px1 /><Px0h /><Px1 /><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
+        </ PixelRow>
+      </PixelButtonWrapper>
+    </Theme>
   )
 }
 
 export const SolidButtonGreen = ({props}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><BtG1h/><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><BtG1h/><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <BtG1 /><BtG1h /><BtG1 />
-      </ PixelRow>
-      <PixelRow>
-        <BtG1h><ButtonText>{props}</ButtonText></ BtG1h>
-      </ PixelRow>
-      <PixelRow>
-        <BtG2 /><BtG1h /><BtG2 />
-      </PixelRow>
-      <PixelRow>
-        <BtG2 /><BtG2 /><BtG1h /><BtG2 /><BtG2 />
-      </PixelRow>
-      <PixelRow>
-        <Px0 /><BtG2h /><Px0 />
-      </PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><BtG2h/><Px0 /><Px0 />
-      </ PixelRow>
-    </ PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><BtG1h/><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><BtG1h/><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <BtG1 /><BtG1h /><BtG1 />
+        </ PixelRow>
+        <PixelRow>
+          <BtG1h><ButtonText>{props}</ButtonText></ BtG1h>
+        </ PixelRow>
+        <PixelRow>
+          <BtG2 /><BtG1h /><BtG2 />
+        </PixelRow>
+        <PixelRow>
+          <BtG2 /><BtG2 /><BtG1h /><BtG2 /><BtG2 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><BtG2h /><Px0 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><BtG2h/><Px0 /><Px0 />
+        </ PixelRow>
+      </ PixelWrapper>
+    </Theme>
   )
 }
 
 export const SolidButtonRed = ({props}) => {
   return (
-    <PixelWrapper>
-      <PixelRow>
-        <Px0 /><Px0 /><BtR1h/><Px0 /><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <Px0 /><BtR1h/><Px0 />
-      </ PixelRow>
-      <PixelRow>
-        <BtR1 /><BtR1h /><BtR1 />
-      </ PixelRow>
-      <PixelRow>
-        <BtR1h><ButtonText>{props}</ButtonText></ BtR1h>
-      </ PixelRow>
-      <PixelRow>
-        <BtR2 /><BtR1h /><BtR2 />
-      </PixelRow>
-      <PixelRow>
-        <BtR2 /><BtR2 /><BtR1h /><BtR2 /><BtR2 />
-      </PixelRow>
-      <PixelRow>
-        <Px0 /><BtR2h /><Px0 />
-      </PixelRow>
-      <PixelRow>
-        <Px0 /><Px0 /><BtR2h/><Px0 /><Px0 />
-      </ PixelRow>
-    </ PixelWrapper>
+    <Theme>
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><BtR1h/><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><BtR1h/><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <BtR1 /><BtR1h /><BtR1 />
+        </ PixelRow>
+        <PixelRow>
+          <BtR1h><ButtonText>{props}</ButtonText></ BtR1h>
+        </ PixelRow>
+        <PixelRow>
+          <BtR2 /><BtR1h /><BtR2 />
+        </PixelRow>
+        <PixelRow>
+          <BtR2 /><BtR2 /><BtR1h /><BtR2 /><BtR2 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><BtR2h /><Px0 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><BtR2h/><Px0 /><Px0 />
+        </ PixelRow>
+      </ PixelWrapper>
+    </Theme>
   )
 }
