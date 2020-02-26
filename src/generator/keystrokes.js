@@ -1,4 +1,5 @@
 import { ChordType } from './ChordType'
+import { randomArrayElement } from './utility'
 
 export default function addKeystrokes(chords) {
 
