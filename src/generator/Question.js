@@ -125,7 +125,7 @@ export const Question = {
     const roman = chordContext.romanNumeralContext.romanNumeral
     const inversionDisplay = inversionQuality(chordContext.chordDescription.structure)
     const answer = roman + inversionDisplay + inversion
-    const choices = romanInversionOptions(roman, inversionDisplay, chordType)
+    const choices = romanInversionOptions(roman, inversionDisplay, chordContext)
     return {
       "type": "Inversions",
       "questionText": "What's the inversion?",
@@ -288,8 +288,7 @@ export function questionsForChordStructure(chordStructure) {
         Question.root,
         Question.degrees,
         Question.role,
-        Question.quality,
-        Question.inversion,
+        Question.quality
       ]
     case ChordStructure.FIVE_OF_FIVE:
     case ChordStructure.FIVE_SEVEN_OF_FIVE:
@@ -336,8 +335,8 @@ export function romanOptions(romanNumeral, chordType) {
   }
 }
 
-export function romanInversionOptions(romanNumeral, inversion, chordType) {
-  switch (chordType) {
+export function romanInversionOptions(romanNumeral, inversion, chordContext) {
+  switch (chordContext.chordType) {
     case ChordType.TRIAD:
       return [
         romanNumeral + inversion,
@@ -351,11 +350,39 @@ export function romanInversionOptions(romanNumeral, inversion, chordType) {
         romanNumeral + inversion + '43',
         romanNumeral + inversion + '42'
       ]
-    // FIXME: Finish implementation!
     case ChordType.CHROMATIC_VARIATION:
+      break
     case ChordType.MODE_MIXTURE:
+      return [
+        romanNumeral + inversion,
+        romanNumeral + inversion + '63',
+        romanNumeral + inversion + '64'
+      ]
     case ChordType.APPLIED_CHORD:
-      return []
+      switch (chordContext.chordDescription.structure) {
+        case ChordStructure.FIVE_OF_FIVE:
+        case ChordStructure.FIVE_SEVEN_OF_FIVE:
+        case ChordStructure.FIVE_OF_SIX:
+          return [
+            romanNumeral + inversion,
+            romanNumeral + inversion + '63',
+            romanNumeral + inversion + '64'
+          ]
+        case ChordStructure.FIVE_SEVEN_OF_SIX:
+        case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
+        case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
+        case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+        case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
+        case ChordStructure.FIVE_OF_SEVEN_DIMINISHED:
+        case ChordStructure.FIVE_SEVEN_OF_SEVEN_DIMINISHED:
+        return [
+          romanNumeral + inversion,
+          romanNumeral + inversion + '65',
+          romanNumeral + inversion + '43',
+          romanNumeral + inversion + '42'
+        ]
+      }
+      throw "Unsupported chord structure: " + JSON.stringify(chordContext.chordDescription.structure.displayName)
   }
 }
 
