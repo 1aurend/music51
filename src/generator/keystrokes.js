@@ -169,7 +169,7 @@ export default function addKeystrokes(chords) {
                       break
                   }
                 } else {
-                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
+                  withKeystroke = { choice: choice, key: randomArrayElement([1,2,3,4,5,6,7,8,9]) }
                   choicesWithKeys.push(withKeystroke)
                   break
                 }
@@ -264,7 +264,7 @@ export default function addKeystrokes(chords) {
                       break
                     }
                 } else {
-                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
+                  withKeystroke = { choice: choice, key: randomArrayElement([1,2,3,4,5,6,7,8,9]) }
                   choicesWithKeys.push(withKeystroke)
                   break
                 }
