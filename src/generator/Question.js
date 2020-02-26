@@ -81,16 +81,29 @@ export const Question = {
     }
   },
   quality: function(chordContext) {
-    const rootLetter = chordContext.chordDescription.root.letter
-    const rootAccidental = chordContext.chordDescription.root.accidental
-    const chordStructureDisplay = chordContext.chordDescription.structure.displayName
-    const choices = [...chordStructures(chordContext.chordType)]
-      .map(structure => structure.displayName)
-      .map(quality => rootLetter + rootAccidental + quality)
-    const answer = rootLetter + rootAccidental + chordStructureDisplay
+    let grouping
+    switch (chordContext.chordType) {
+      case ChordType.TRIAD:
+        grouping = "in-key triad"
+      case ChordType.SEVENTH:
+        grouping = "in-key seventh chord"
+        break
+      case ChordType.CHROMATIC_VARIATION:
+        grouping = "chromatic variation"
+        break
+      case ChordType.MODE_MIXTURE:
+        grouping = "mode mixture"
+        break
+      case ChordType.APPLIED_CHORD:
+        grouping = "applied chord"
+        break
+    }
+    const allStructures = chordStructures(chordContext.chordType)
+    const choices = [...chordStructures(chordContext.chordType)].map(structure => structure.displayName)
+    const answer = chordContext.chordDescription.structure.displayName
     return {
       "type": "Quality",
-      "questionText": "What's the chord's quality?",
+      "questionText": "What type of " + grouping + " is it?",
       "choices": choices,
       "answers": [answer]
     }

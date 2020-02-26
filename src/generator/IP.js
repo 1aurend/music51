@@ -1,11 +1,11 @@
 // Independent pitch name. Extension of the traditional _solfege_ language which includes
 // non-contextualized names for the pitches in between the traditional instances.
-// 
-// The traditional solfege syllables are contained here: 
-//    
+//
+// The traditional solfege syllables are contained here:
+//
 //    [`Re`, `Mi`, `Fa`, `So`, `La`, `Ti`, `Do`]
 //
-// In between these are: 
+// In between these are:
 //
 //    [`Na`, `Ve`, `Pe`, `Ke`, `Ba`]
 //

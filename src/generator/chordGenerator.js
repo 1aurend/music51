@@ -80,7 +80,6 @@ export function randomChordContext(options) {
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordStructure)
-  // const inversion = ""
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chooseModeLabel(chordStructure)
