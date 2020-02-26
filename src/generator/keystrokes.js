@@ -1,4 +1,5 @@
 import { ChordType } from './ChordType'
+import { ChordStructure } from './ChordStructure'
 import { randomArrayElement } from './utility'
 
 export default function addKeystrokes(chords) {
@@ -121,8 +122,32 @@ export default function addKeystrokes(chords) {
                 withKeystroke = { choice: choice, key: (c + 1).toString() }
                 choicesWithKeys.push(withKeystroke)
                 break
+              } else if (chord.chordType === ChordType.MODE_MIXTURE) {
+                const chordStructure = chord.chordDescription.structure
+                let key
+                switch (choice) {
+                  case ChordStructure.FLAT_THREE_MAJOR_TRIAD.displayName:
+                    key = '3'
+                    break
+                  case ChordStructure.FLAT_SIX_MAJOR_TRIAD.displayName:
+                    key = '6'
+                    break
+                  case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD.displayName:
+                    key = '7'
+                    break
+                  case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR.displayName:
+                    key = '1'
+                    break
+                  case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR.displayName:
+                    key = '4'
+                    break
+                }
+                withKeystroke = { choice: choice, key: key }
+                choicesWithKeys.push(withKeystroke)
+                break
               }
 
+              // In-Key
               // FIXME: Audit this for correctness.
               //        See if we can find a more flexible way to do this!
               if (question.choices.length === 4) {
