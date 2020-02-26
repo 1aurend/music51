@@ -262,9 +262,10 @@ export default function addKeystrokes(chords) {
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
                     }
-                  } else {
-                    withKeystroke = { choice: choice, key: 'x' }
-                    choicesWithKeys.push(withKeystroke)
+                } else {
+                  withKeystroke = { choice: choice, key: 'x' }
+                  choicesWithKeys.push(withKeystroke)
+                  break
                 }
               break
             case questionTypes.ROLE:
