@@ -1,9 +1,10 @@
+import React from 'react'
 import styled from 'styled-components'
 
 export const Universe = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10% 10% 0 10%;
+  padding: 10% 10% 10% 10%;
   background-color: ${props => props.theme.colors.dark};
   height: 100vh;
   width: 100vw;
@@ -40,7 +41,7 @@ export const Dessert = styled.div`
   height: 100%;
   grid-area: C;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `
 
 export const SubCell = styled.div`

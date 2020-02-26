@@ -46,9 +46,9 @@ export const mode = {
 }
 
 export const input = {
-  LARGE: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
-  MEDIUM: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
-  SMALL: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28}
+  LARGE: {fontFamily: fontBody, maxWidth:'100px', minWidth: '80px', textAlign:'center', fontSize:28},
+  MEDIUM: {fontFamily: fontBody, maxWidth:'100px',  minWidth: '80px', textAlign:'center', fontSize:28},
+  SMALL: {fontFamily: fontBody, maxWidth:'100px',  minWidth: '80px', textAlign:'center', fontSize:28}
 }
 
 export const answerText = {

@@ -16,7 +16,7 @@ import styled from 'styled-components'
 
 const Flexer = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row wrap;s
   align-items: stretch;
   justify-content: space-evenly;
   > * {
