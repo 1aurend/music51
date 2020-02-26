@@ -212,7 +212,7 @@ export const Question = {
             choices = ["I", "ii", "iii", "IV", "V", "vi", "viio"]
             break
           case "minor":
-            choices = ["i", "iio", "III", "iv", "V", "VI", "viio", "i"]
+            choices = ["i", "iio", "III", "iv", "V", "VI", "viio"]
             break
         }
         break

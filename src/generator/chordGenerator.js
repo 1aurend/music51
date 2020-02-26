@@ -80,6 +80,7 @@ export function randomChordContext(options) {
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordStructure)
+  // const inversion = ""
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chooseModeLabel(chordStructure)
@@ -163,8 +164,18 @@ export function concretizeRoot(keySignature, romanNumeralContext) {
   const initialLetterNameIndex = Object.values(LetterName).indexOf(initialLetterName)
   const rootLetterNameIndex = (initialLetterNameIndex + (romanNumeralContext.degree - 1)) % 7
   const rootLetterName = Object.values(LetterName)[rootLetterNameIndex]
+  // FIXME: This is currently thinking in mod7 version of IP, but it needs to be the objective mod12 version
   const initialIP = initial.refIP
-  const initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+
+  // FIXME: This is a horrible hack. Help.
+  let initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+
+  if (initial.accidental === Accidental.FLAT) {
+    initialIPIndex -= 1
+  } else if (initial.accidental === Accidental.SHARP) {
+    initialIPIndex += 1
+  }
+
   const rootIPIndex = (initialIPIndex + romanNumeralContext.rootOffset) % 12
   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
   const rootSyllable = Object.values(IndependentPitch)[rootIPIndex + romanNumeralContext.incidental]
@@ -188,7 +199,6 @@ export function concretizeRoot(keySignature, romanNumeralContext) {
  * @return An array of octave-displaced spelled pitches comprising a `chord`.
  */
 export function partiallyConcretizeChord(chordDescription, keySignature) {
-
   const rootLetter = chordDescription.root.letter
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
@@ -230,19 +240,18 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   for (var i=0; i<template.length; i++) {
     // Translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(template[i])
-    // Compute the syllable of the chord component
+    // Compute the letterName equivalent mod7 IP syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
     // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    // FIXME: This is currently incorrect for certain situations.
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
-    const syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
-    const noteLetter = Object.values(LetterName)[syllableIndex]
+    const noteLetter = refIPToLetter(syllable)
     const notePosition = letterNamePosition(noteLetter)
 
     // Handle octave displacement if we cross over the mod7 boundary
     // FIXME: Consider doing this in another pass
     if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
     prevLetterNamePosition = notePosition
-
     const accid = accidental(noteIP, syllable)
 
     // FIXME: This should happen at a later point in the pipeline!
@@ -265,6 +274,12 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   return notes
 }
 
+export function translateNoteIPIndex(componentIP) {
+  const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
+  const anchorIndex = Object.values(IndependentPitch).indexOf("D")
+  return (untranslatedIndex - anchorIndex + 12).mod(12)
+}
+
 function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
   // FIXME: Come up with a name that is neither `whiteNotes` nor `.BOTTOM`
   const whiteNotes = Object.values(IndependentPitchSubset.BOTTOM)
@@ -275,6 +290,37 @@ function chordComponentSyllable(translatedNoteIPIndex, chordDescription) {
   const tensionMod7 = modeNoteIdentities[translatedNoteIPIndex].tensionMod7
   const index = (rootSyllableIndex + tensionMod7 - 1) % 7
   return whiteNotes[index]
+}
+
+/**
+ * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
+ * @param translatedNoteIPIndex  Int               The index of the translated note independent pitch
+ */
+// find the equivalent IP based on the rootIp and tensionMod12 value in the class
+function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex) {
+  const ips = Object.values(IndependentPitch)
+  const rootIPIndex = ips.indexOf(rootIP)
+  return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
+}
+
+function accidental(independentPitch, syllable) {
+  // FIXME: (James) Make a helper function that tidies this up
+  // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
+  let accidentalVal = (Object.values(IndependentPitch).indexOf(independentPitch))-(Object.values(IndependentPitch).indexOf(syllable))
+
+  // FIXME: (James) Perhaps break this into a function of its own
+  // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
+  // adjusts for IPs on opposite ends of the array, like "D" from "R"
+  // but something about this feels hacky... is there a better way?
+  if (accidentalVal > Object.values(IndependentPitch).length/2) {
+    accidentalVal -= Object.values(IndependentPitch).length
+  }
+  if (-accidentalVal > Object.values(IndependentPitch).length/2) {
+    accidentalVal += Object.values(IndependentPitch).length
+  }
+  // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
+  const accidental = Object.values(Accidental)[(2 + accidentalVal) % 5]
+  return accidental
 }
 
 /**
@@ -333,37 +379,6 @@ function refIPToLetter(refIP) {
     case IndependentPitch.TI:
       return LetterName.B
   }
-}
-
-/**
- * @param rootIP            IndependentPitch  The IndependentPitch syllable of the root of a chord
- * @param translatedNoteIPIndex  Int               The index of the translated note independent pitch
- */
-// find the equivalent IP based on the rootIp and tensionMod12 value in the class
-function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex) {
-  const ips = Object.values(IndependentPitch)
-  const rootIPIndex = ips.indexOf(rootIP)
-  return ips[(rootIPIndex + translatedNoteIPIndex) % 12]
-}
-
-function accidental(independentPitch, syllable) {
-  // FIXME: (James) Make a helper function that tidies this up
-  // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
-  let accidentalVal = (Object.values(IndependentPitch).indexOf(independentPitch))-(Object.values(IndependentPitch).indexOf(syllable))
-
-  // FIXME: (James) Perhaps break this into a function of its own
-  // FIXME: Add convenience getters to IndependentPitch to avoid the `Object.values` choreography
-  // adjusts for IPs on opposite ends of the array, like "D" from "R"
-  // but something about this feels hacky... is there a better way?
-  if (accidentalVal > Object.values(IndependentPitch).length/2) {
-    accidentalVal -= Object.values(IndependentPitch).length
-  }
-  if (-accidentalVal > Object.values(IndependentPitch).length/2) {
-    accidentalVal += Object.values(IndependentPitch).length
-  }
-  // FIXME: (James) Add a convenience getter to Accidental to avoid the `Object.values` choreography
-  const accidental = Object.values(Accidental)[(2 + accidentalVal)%5]
-  return accidental
 }
 
 /**
@@ -499,12 +514,6 @@ export function romanNumeral(chordStructure, degree) {
     default:
       return degreeAndQualityToRomanNumeral(degree, false)
   }
-}
-
-export function translateNoteIPIndex(componentIP) {
-  const untranslatedIndex = Object.values(IndependentPitch).indexOf(componentIP)
-  const anchorIndex = Object.values(IndependentPitch).indexOf("D")
-  return (untranslatedIndex - anchorIndex + 12).mod(12)
 }
 
 // TODO: Decouple inversion from amount of notes in chord
