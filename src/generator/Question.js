@@ -81,17 +81,6 @@ export const Question = {
     }
   },
   quality: function(chordContext) {
-    // “answers”: [],
-    // “choices”: [] // define keystrokes for non-diatonic chords
-
-    // const rootLetter = chordContext.chordDescription.root.letter
-    // const rootAccidental = chordContext.chordDescription.root.accidental
-    // const chordStructureDisplay = chordContext.chordDescription.structure.displayName
-    // const choices = [...chordStructures(chordContext.chordType)]
-    //   .map(structure => structure.displayName)
-    //   .map(quality => rootLetter + rootAccidental + quality)
-    // const answer = rootLetter + rootAccidental + chordStructureDisplay
-    //
     let grouping
     switch (chordContext.chordType) {
       case ChordType.TRIAD:
