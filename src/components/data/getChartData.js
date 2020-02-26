@@ -47,11 +47,11 @@ export function findThreeLargestDeltas(means, param) {
 }
 export function getChartData(means, round) {
   const categoriesToChartAtt = ['Overall', ...findThreeLargestDeltas(means, 'attempts')]
-  const colorScaleAtt = ['#50FA97',
+  const colorScaleAtt = ['#000000',
     categoriesToChartAtt.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
   ].flat()
   const categoriesToChartTime = ['Overall', ...findThreeLargestDeltas(means, 'times')]
-  const colorScaleTime = ['#50FA97',
+  const colorScaleTime = ['#000000',
     categoriesToChartTime.filter( type => type !== 'Overall' ).map( type => {return questionsList[type].chartColor} )
   ].flat()
   const data = means.tally
