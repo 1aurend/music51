@@ -9,12 +9,12 @@ export function randomArrayElement(array) {
 }
 
 export function randomSetElement(set) {
-    const array = Array.from(set.values())
-    return randomArrayElement(array)
+  const array = Array.from(set.values())
+  return randomArrayElement(array)
 }
 
 Number.prototype.mod = function(n) {
-    return ((this%n)+n)%n
+  return ((this%n)+n)%n
 }
 
 Array.prototype.rotate = (function() {
