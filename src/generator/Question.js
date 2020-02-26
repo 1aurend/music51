@@ -1,6 +1,7 @@
 import { ChordType } from './ChordType'
 import { ChordStructure, chordStructures } from './ChordStructure'
 import { accidentalForLetterNameIsInKeySignature } from './chordGenerator'
+import { randomSetElement } from './utility.js'
 
 /**
  * `Question` is a collection of functions which each take a `chordContext`, and return
@@ -82,9 +83,23 @@ export const Question = {
   },
   quality: function(chordContext) {
     const chordStructureDisplay = chordContext.chordDescription.structure.displayName
-    const choices = [...chordStructures(chordContext.chordType)]
-      .map(structure => structure.displayName)
     const answer = chordStructureDisplay
+    let choices
+    switch (chordContext.chordType) {
+      case ChordType.APPLIED_CHORD:
+        // FIXME: Implement a method which returns exactly *n* random elements from a collection.
+        //        Bonus points for *n* random _unique_ elements.
+        const wrongChoices = [1,2,3,4,5,6].map(i => {
+          const randomAppliedChord = randomSetElement(chordStructures(ChordType.APPLIED_CHORD))
+          return randomAppliedChord.displayName
+        })
+        var setOfChoices = new Set([...wrongChoices, answer])
+        choices = [...setOfChoices]
+        break
+      default:
+        choices = [...chordStructures(chordContext.chordType)]
+        .map(structure => structure.displayName)
+    }
     return {
       "type": "Quality",
       "questionText": "What's the chord's quality?",
