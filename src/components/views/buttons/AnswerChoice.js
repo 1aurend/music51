@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import {ButtonBorder} from '../layouts/PixelBorder'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
+// &:hover {
+//   background-color: ${props => props.theme.colors.primary};
+// }
 const StyledChoiceButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
   margin: 3px;
   background-color: ${props => props.color};
-  &:hover {
-    background-color: ${props => props.theme.colors.primary};
-  }
   min-height: ${props => props.buttonSize};
   min-width: ${props => props.buttonSize};
   text-align: center;
