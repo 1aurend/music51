@@ -1,13 +1,5 @@
 // Utility
 
-// Object.prototype.randomElement = function () {
-//   return Object.values(this).randomElement()
-// }
-
-// Array.prototype.randomElement = function () {
-//   return this[Math.floor(Math.random() * this.length)]
-// }
-
 export function randomObjectElement(object) {
   return randomArrayElement(Object.values(object))
 }
@@ -20,10 +12,6 @@ export function randomSetElement(set) {
     const array = Array.from(set.values())
     return randomArrayElement(array)
 }
-// Set.prototype.randomElement = function () {
-//   const array = Array.from(this.values())
-//   return array.randomElement()
-// }
 
 Number.prototype.mod = function(n) {
     return ((this%n)+n)%n
