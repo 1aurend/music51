@@ -37,6 +37,7 @@ export const h1 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',ba
 export const h2 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:18,letterSpacing:1, textTransform:'lowercase'})
 export const h3 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:36,letterSpacing:2,lineHeight:1, textTransform:'uppercase'})
 export const h4 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:28,letterSpacing:1, lineHeight:1, textTransform:'lowercase'})
+export const h5 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:32,letterSpacing:1, lineHeight:1})
 export const para = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:24,letterSpacing:1, lineHeight:1,textTransform:'none'})
 export const questionText = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:20,textTransform:'none'})
 

@@ -9,7 +9,7 @@ import {Universe, Grid, Entree, Dessert} from './Grids'
 import Theme from '../Theme'
 
 
-const QuestionH4 = styled.h4`
+const QuestionH5 = styled.h5`
   color: ${props => props.theme.colors.light};
   padding: 0 5% 5% 5%;
 `
@@ -31,7 +31,7 @@ const VexFlowCenteringDiv = styled.div`
 
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
-  const { h4, layoutQuiz } = sizedStyles
+  const { h5, layoutQuiz } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
   const noteColors = question.type === 'LETTER_NAMES' || question.type === 'ROOT' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
@@ -49,7 +49,7 @@ export default function QuizQuestion(props) {
         <Universe>
           <Grid style={layoutQuiz}>
             <Entree>
-              <QuestionH4 style={h4}>{question.questionText}</QuestionH4>
+              <QuestionH5 style={h5}>{question.questionText}</QuestionH5>
               <MegaPixelBorder>
                 <VexFlowCenteringDiv>
                   <Vexflow
