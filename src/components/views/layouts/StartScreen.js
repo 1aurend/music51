@@ -2,18 +2,18 @@ import React, { useEffect } from 'react'
 import SessionOptions from '../buttons/SessionOptions'
 import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import {SmallPixelBorderSingle, MegaPixelBorder, SolidButtonGreen, SolidButtonRed} from './PixelBorder'
+import {SmallPixelBorderSingle, MegaPixelBorder} from './PixelBorder'
 import Marquee from './Marquee'
 import Expander from './Expander'
 import Instructions from './Instructions'
 import {BugWithSpeechBubble} from '../buttons/Bug'
-import {Universe, Grid, Appetizer, Entree, Dessert, SubCell, SubCellMargin, BugWrapper} from './Grids'
+import {Universe, Grid, Appetizer, Entree, Dessert, SubCellMargin} from './Grids'
 import Theme from '../Theme'
 
 
 export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
+  const { input, layoutInfo } = sizedStyles
 
   useEffect(() => {
     window.scrollTo(0, 0)

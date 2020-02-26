@@ -3,10 +3,9 @@ import Vexflow from '../Vexflow'
 import AnswerChoice from '../buttons/AnswerChoice'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import Marquee from './Marquee'
+import {MegaPixelBorder} from './PixelBorder'
 import {Bug} from '../buttons/Bug'
-import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
+import {Universe, Grid, Entree, Dessert} from './Grids'
 import Theme from '../Theme'
 
 
@@ -32,7 +31,7 @@ const VexFlowCenteringDiv = styled.div`
 
 export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
+  const { h4, layoutQuiz } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
   const noteColors = question.type === 'LETTER_NAMES' || question.type === 'ROOT' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
@@ -54,12 +53,12 @@ export default function QuizQuestion(props) {
               <MegaPixelBorder>
                 <VexFlowCenteringDiv>
                   <Vexflow
-                          notes={chord.current.notes}
-                          octaves={chord.current.octaves}
-                          clef={chord.current.clef}
-                          keySig={chord.current.keySignature}
-                          colors={noteColors}
-                          />
+                    notes={chord.current.notes}
+                    octaves={chord.current.octaves}
+                    clef={chord.current.clef}
+                    keySig={chord.current.keySignature}
+                    colors={noteColors}
+                    />
                 </VexFlowCenteringDiv>
               </MegaPixelBorder>
             </Entree>

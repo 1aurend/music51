@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
-import {
-  Row,
-  Col,
-} from 'shards-react'
+import { Row } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
 import Chart from '../charts/ProgressChart'
 import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
-import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
+import {SmallPixelBorderDouble, SmallPixelBorderOutline, MegaPixelBorder} from './PixelBorder'
+import {Universe, Grid, Appetizer, Entree, Dessert} from './Grids'
 import Theme from '../Theme'
 import Legend from '../charts/Legend'
 
@@ -22,22 +19,11 @@ const StyledRow = styled(Row)`
   margin-top: ${props => props.margintop || 0};
   margin-bottom: ${props => props.marginbottom || 0};
 `
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 2%;
-  background-color: #e5e6eb;
-`
 const ChartWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center
 `
-
-
-
 const StatsH1 = styled.h1`
 color: ${props => props.theme.colors.dark};
 `
@@ -63,10 +49,9 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const verbT = timesSummary.verb
   const verbA = attemptsSummary.verb
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
+  const { h1, h3, h4, layoutInfo } = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
-  console.log(chartData.chartData.categoriesIncluded);
   useEffect(() => {
       window.scrollTo(0, 0)
   },[])

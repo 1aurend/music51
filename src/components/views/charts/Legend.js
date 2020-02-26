@@ -1,7 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Session } from '../../data/Context'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from '../layouts/PixelBorder'
 import { questionsList } from '../../../generator/questionsList'
 
 
@@ -35,17 +33,15 @@ const LegendText = styled.h3`
 `
 
 export default function Legend({ chartData }) {
-  console.log(chartData.chartData.categoriesIncluded);
-  let legendItems = chartData.chartData.categoriesIncluded.map( type => {
-    if (type !== 'Overall') {
-      return (
-        <LegendItem>
-          <LegendDot dotColor={questionsList[type].chartColor} />
-          <LegendText>{questionsList[type].shortName}</LegendText>
-        </LegendItem>
-      )
-    }
-  })
+  let legendItems = chartData.chartData.categoriesIncluded.filter(type => type !== 'Overall')
+    .map( type => {
+        return (
+          <LegendItem>
+            <LegendDot dotColor={questionsList[type].chartColor} />
+            <LegendText>{questionsList[type].shortName}</LegendText>
+          </LegendItem>
+        )
+    })
   legendItems = [...legendItems,
     <LegendItem>
       <LegendDot dotColor={'#000000'} />
