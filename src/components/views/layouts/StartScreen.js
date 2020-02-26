@@ -1,69 +1,60 @@
 import React, { useEffect } from 'react'
-import {
-  Container,
-  Row,
-  Col,
-} from 'shards-react'
 import SessionOptions from '../buttons/SessionOptions'
 import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
-import styled from 'styled-components'
+import {SmallPixelBorderSingle, MegaPixelBorder} from './PixelBorder'
+import Marquee from './Marquee'
+import Expander from './Expander'
+import Instructions from './Instructions'
+import {BugWithSpeechBubble} from '../buttons/Bug'
+import {Universe, Grid, Appetizer, Entree, Dessert, SubCellMargin} from './Grids'
+import Theme from '../Theme'
+import {whatDoINeedToKnow} from '../../../whatDoINeedToKnow'
 
-const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: ${props => props.margintop || 0};
-  margin-bottom: ${props => props.marginbottom || 0};
-`
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-  background-color: #e5e6eb;
-`
 
 export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
-  const {chordCrusher, music51, beta, input} = sizedStyles
+  const { input, layoutInfo } = sizedStyles
+  const onKeyPressed = (e) => {
+    if (e.key === 'Enter') {
+      generateQuiz()
+    }
+  }
 
   useEffect(() => {
-      window.scrollTo(0, 0)
-  },[])
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
-    <Container fluid className="main-content-container px-4" style={{backgroundColor: 'black', minHeight: '120vh'}}>
-      <Row noGutters style={{paddingTop: '3%'}}></Row>
-      <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <StyledCenterPane sm='12' lg='8'>
-          <StyledRow margintop='5%'>
-            <h1 style={chordCrusher}>{title.headline}</h1>
-          </StyledRow>
-          <StyledRow>
-            <h2 style={beta}>Roman Numerals Mode</h2>
-          </StyledRow>
-          <StyledRow>
-            <h2 style={beta}>{title.beta}</h2>
-          </StyledRow>
-          <StyledRow marginbottom='2%'>
-            <h2 style={music51}>{title.subtitle}</h2>
-          </StyledRow>
-          <StyledRow>
-            <h4 style={{fontFamily: "'Overpass Mono', monospace", fontWeight: '600', marginBottom: '0'}}>INSTRUCTIONS</h4>
-          </StyledRow>
-          <StyledRow>
-            <p style={{fontFamily: "'Overpass Mono', monospace", marginBottom: '0', textAlign: 'left'}}>
-              In a session of Chord Crusher, you'll complete multiple rounds; see if you can improve your time and accuracy on each round. You can set rounds from 5-25 chords in length. For each chord, there are four questions that aggregate to name the chord, quality, and inversion. If this is your first time, try 5 chords per round. After that, choose as many as you want!</p>
-          </StyledRow>
-          <SessionOptions checked={options} onChange={(e) => {numQs.current = e.target.value}} onCheck={onCheck} size={input}/>
-        </StyledCenterPane>
-      </Row>
-      <Row style={{display: 'flex', justifyContent: 'center', marginTop: '2%', paddingBottom: '5%'}} noGutters>
-        <Go onClick={generateQuiz}/>
-      </Row>
-    </Container>
+    <Theme>
+      <div style={{outline:'none'}}
+        onKeyDown={(e) => onKeyPressed(e)}
+        tabIndex="1"
+        ref={keyboard => keyboard && keyboard.focus()}
+        >
+        <Universe>
+          <Grid style={layoutInfo}>
+            <Appetizer>
+              <MegaPixelBorder>
+                <Marquee title={title}/>
+              </MegaPixelBorder>
+              <SubCellMargin>
+                <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
+                <Go onClick={generateQuiz} />
+              </SubCellMargin>
+            </Appetizer>
+            <Entree>
+              <SmallPixelBorderSingle>
+                  <Instructions infoText="In a round of Chord Crusher, you/’ll answer a series of questions about each chord. You can choose the number of chords in a round (if you/’re a newbie, try 5 chords). The goal is to answer questions in a round as quickly as possible, and then to beat your time in each successive round. Will you crush the chords? Or will the chords crush YOU?!"/>
+              </SmallPixelBorderSingle>
+              <Expander infoText={whatDoINeedToKnow}/>
+            </Entree>
+            <Dessert>
+            </Dessert>
+          </Grid>
+          <BugWithSpeechBubble />
+        </Universe>
+      </div>
+    </Theme>
   )
 }

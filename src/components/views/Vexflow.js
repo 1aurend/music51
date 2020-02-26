@@ -6,8 +6,10 @@ import styled from 'styled-components'
 const StyledSvgContainer = styled.div`
   display: block;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  height: auto;
+  width: auto;
+  background-color: ${props => props.theme.colors.light};
+;
 `
 
 // QUESTION: I seem to remember we talked about pushing some other formatting work related to Vexflow out of the generator and into here. What did that include?
@@ -56,7 +58,7 @@ function Vexflow(props) {
     vexNotes[0].addAccidental(accidental.note, new VF.Accidental(accidental.accidental))
   })
   noteColors.forEach(index => {
-    vexNotes[0].setKeyStyle(index, { fillStyle: '#17c671'})
+    vexNotes[0].setKeyStyle(index, { fillStyle: '#26AD5E'})
   })
   const voice = new VF.Voice({num_beats: 4,  beat_value: 4})
   voice.addTickables(vexNotes)

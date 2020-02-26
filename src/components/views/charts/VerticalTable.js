@@ -1,100 +1,122 @@
 import React from 'react'
 import {
-  Container,
   Row,
   Col,
-  Card,
-  CardHeader,
-  CardBody
 } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
+import {SmallPixelBorderDouble, MegaPixelBorder} from '../layouts/PixelBorder'
+import {Universe, Grid, Appetizer, Entree, Dessert} from '../layouts/Grids'
+import Theme from '../Theme'
+import styled from 'styled-components'
+
+const Flexer = styled.div`
+  display: flex;
+  flex-flow: row wrap;s
+  align-items: stretch;
+  justify-content: space-evenly;
+  > * {
+    height: inherit !important;
+    width: inherit;
+    margin: 10px;
+  }
+`
+
+const StyledTh = styled.th`
+  font-family: 'Thintel', monospace;
+  color: ${props => props.theme.colors.secondary};
+  font-size: 30px;
+  font-weight: 600;
+`
+
+const StyledTBody = styled.tbody`
+  font-family: 'Thintel', monospace;
+  color: ${props => props.theme.colors.dark};
+  font-size: 28px;
+`
 
 // TODO: add styled-components
 export default function VerticalTable(props) {
   const { greeting, verticalTableAtt, verticalTableT, startOver } = props
   const sizedStyles = useResponsiveStyles()
-  const { sessionTitle } = sizedStyles
+  const {h2, h3, para, layoutInfo} = sizedStyles
 
   return (
-    <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '100vh', fontFamily: "'Overpass Mono', monospace"}}>
-      <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <Col sm='12' lg='8' style={{border: '5px solid black', borderRadius: '1rem', marginLeft: '5%', marginRight: '5%', marginTop: '2%', backgroundColor: '#e5e6eb', fontFamily: "'Overpass Mono', monospace"}}>
-          <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={sessionTitle}>Session Status</h2></Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <p style={{marginBottom: '4%'}}>{greeting}</p>
-            </Row>
-            <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
-              <Col sm='12' lg='10'>
-              <Row>
-                <Col>
-                  <Card small className="mb-4">
-                    <CardHeader className="border-bottom">
-                      <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>ATTEMPTS</h5>
-                    </CardHeader>
-                    <CardBody className="p-0 pb-3">
-                      <table className="table mb-0">
-                        <thead className="bg-light">
+    <Theme>
+      <Universe>
+        <Grid style={layoutInfo}>
+          <Appetizer>
+            <MegaPixelBorder>
+              <Row style={{display: 'flex', justifyContent: 'center', margin: '5%'}}><h2 style={h2}>Session Status</h2></Row>
+              <Row style={{display: 'flex', justifyContent: 'center', marginLeft: '5%', marginRight: '5%'}}>
+                    <p style={para}>{greeting}</p>
+              </Row>
+            </MegaPixelBorder>
+          </Appetizer>
+          <Entree>
+            <Flexer>
+              <SmallPixelBorderDouble>
+                <Row >
+                  <Col>
+                            <h3 className="m-0" style={h3}>ATTEMPTS</h3>
+                            <table className="table mb-0">
+                              <thead>
+                                <tr>
+                                  <StyledTh scope="col" className="border-0">
+                                  </StyledTh>
+                                  <StyledTh scope="col" className="border-0">
+                                    1ST
+                                  </StyledTh>
+                                  <StyledTh scope="col" className="border-0">
+                                    LAST
+                                  </StyledTh>
+                                  <StyledTh scope="col" className="border-0">
+                                    BEST
+                                  </StyledTh>
+                                </tr>
+                              </thead>
+                              <StyledTBody>
+                                {verticalTableAtt}
+                              </StyledTBody>
+                            </table>
+                      </Col>
+                    </Row>
+                </ SmallPixelBorderDouble>
+                <SmallPixelBorderDouble>
+
+                <Row >
+                  <Col>
+                        <h3 className="m-0" style={h3}>TIMES</h3>
+                        <table className="table mb-0">
+                          <thead>
                           <tr>
-                            <th scope="col" className="border-0">
-                            </th>
-                            <th scope="col" className="border-0">
+                            <StyledTh scope="col" className="border-0">
+                            </StyledTh>
+                            <StyledTh scope="col" className="border-0">
                               1ST
-                            </th>
-                            <th scope="col" className="border-0">
+                            </StyledTh>
+                            <StyledTh scope="col" className="border-0">
                               LAST
-                            </th>
-                            <th scope="col" className="border-0">
+                            </StyledTh>
+                            <StyledTh scope="col" className="border-0">
                               BEST
-                            </th>
+                            </StyledTh>
                           </tr>
                         </thead>
-                        <tbody>
-                          {verticalTableAtt}
-                        </tbody>
-                      </table>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-              <Row style={{paddingTop: '2%'}}>
-                <Col>
-                  <Card small className="mb-4">
-                    <CardHeader className="border-bottom">
-                      <h5 className="m-0" style={{textAlign: 'center', fontFamily: "'Overpass Mono', monospace", fontWeight: '800'}}>TIMES</h5>
-                    </CardHeader>
-                    <CardBody className="p-0 pb-3">
-                      <table className="table mb-0">
-                        <thead className="bg-light">
-                        <tr>
-                          <th scope="col" className="border-0">
-                          </th>
-                          <th scope="col" className="border-0">
-                            1ST
-                          </th>
-                          <th scope="col" className="border-0">
-                            LAST
-                          </th>
-                          <th scope="col" className="border-0">
-                            BEST
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {verticalTableT}
-                        </tbody>
-                      </table>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-            <Row style={{display: 'flex', justifyContent: 'center'}}>
-              <NavButtons table startOver={startOver}/>
-            </Row>
-          </Col>
-        </Row>
-    </Container>
+                        <StyledTBody>
+                          {verticalTableT}
+                          </StyledTBody>
+                        </table>
+                  </Col>
+                </Row>
+              </ SmallPixelBorderDouble>
+            </Flexer>
+          </Entree>
+          <Dessert>
+            <NavButtons table startOver={startOver}/>
+          </Dessert>
+        </Grid>
+      </Universe>
+    </Theme>
   )
 }
