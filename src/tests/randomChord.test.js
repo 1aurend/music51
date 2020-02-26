@@ -11,6 +11,7 @@ import {
   concretizeRoot,
   accidentalForLetterNameIsInKeySignature
 } from '../generator/chordGenerator'
+import { randomArrayElement } from '../generator/utility'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
 import { LetterName } from '../generator/LetterName'
@@ -182,7 +183,7 @@ test('randomChordContext does not blow up', () => {
 test('randomRomanNumeralContext returns a valid mode note and degree', () => {
   const chordStructure = ChordStructure.MINOR_TRIAD
   for (var i = 0; i < 100; i++) {
-    const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+    const modeLabel = randomArrayElement(Object.keys(chordStructure.commonRootOffsets))
     const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
     expect(romanNumeralContext.mode).toBeDefined()
     expect(romanNumeralContext.degree).toBeDefined()

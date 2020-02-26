@@ -7,6 +7,7 @@ import {
   concretizeRoot,
   translateNoteIPIndex
  } from '../generator/chordGenerator'
+import { randomArrayElement } from '../generator/utility'
 import { IndependentPitch } from '../generator/IP'
 import { Accidental } from '../generator/Accidental'
 import { Mode } from '../generator/Mode'
@@ -37,7 +38,7 @@ test('seventh chord comes out when we generate a seventh chord', () => {
 test('make roman numeral context', () => {
   for (var i = 0; i < Object.keys(ChordStructure).length; i++) {
     const chordStructure = Object.values(ChordStructure)[i]
-    const modeLabel = Object.keys(chordStructure.commonRootOffsets).randomElement()
+    const modeLabel = randomArrayElement(Object.keys(chordStructure.commonRootOffsets))
     expect(randomRomanNumeralContext(chordStructure, modeLabel)).toBeTruthy()
   }
 })
