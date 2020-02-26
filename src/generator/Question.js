@@ -306,7 +306,6 @@ export function questionsForChordStructure(chordStructure) {
         Question.degrees,
         Question.role,
         Question.quality,
-        Question.inversion,
         Question.whatFollows,
       ]
     default:
