@@ -15,8 +15,7 @@ export const Grid = styled.div`
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(3,1fr);
-  grid-template-rows: repeat(2,1fr)
-  overflow: scroll;
+  grid-template-rows: minmax(min-content, max-content);
 `
 
 export const Appetizer = styled.div`
