@@ -135,9 +135,6 @@ export default function addKeystrokes(chords) {
                   case ChordStructure.FLAT_SEVEN_MAJOR_TRIAD.displayName:
                     key = '7'
                     break
-                  case ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR.displayName:
-                    key = '1'
-                    break
                   case ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR.displayName:
                     key = '4'
                     break
