@@ -83,8 +83,119 @@ const sampleChord =
          },
        ]
      }
-
 const sampleRef = {current: sampleChord}
+const mockData = {
+          "Names": {
+             "attempts": [
+                3,
+                1,
+                7
+             ],
+             "times": [
+                2.3,
+                1.85,
+                67.3
+             ]
+          },
+          "Roots": {
+             "attempts": [
+                null,
+                null,
+                null,
+             ],
+             "times": [
+                null,
+                null,
+                null
+             ]
+          },
+          "Degrees": {
+             "attempts": [
+                4,
+                9,
+                2
+             ],
+             "times": [
+                4.5,
+                6,
+                1.2
+             ]
+          },
+          "Role": {
+             "attempts": [
+                2,
+                6,
+                3
+             ],
+             "times": [
+                1.2,
+                1.2,
+                3.4
+             ]
+          },
+          "Numerals": {
+             "attempts": [
+                null,
+                null,
+                null
+             ],
+             "times": [
+                null,
+                null,
+                null
+             ]
+          },
+          "Quality": {
+             "attempts": [
+                null,
+                4,
+                1,
+                5
+             ],
+             "times": [
+                null,
+                0.5,
+                1.2,
+                1.9
+             ]
+          },
+          "Inversions": {
+             "attempts": [
+                2,
+                null,
+                null
+             ],
+             "times": [
+                0.3,
+                null,
+                null
+             ]
+          },
+          "Follows": {
+             "attempts": [
+                null,
+                null,
+                2
+             ],
+             "times": [
+                null,
+                null,
+                3.4
+             ]
+          },
+          "Overall": {
+             "attempts": [
+                3,
+                2,
+                5
+             ],
+             "times": [
+                1.18,
+                2.3,
+                6.4
+             ]
+          }
+    }
 
 export default function Router() {
     return (
@@ -124,6 +235,7 @@ export default function Router() {
         <Route path='/table' exact render={() => <DevResultsTable
             round={3}
             startOver={mock}
+            mockData={mockData}
             />} />
       </BrowserRouter>
     )
