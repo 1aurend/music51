@@ -14,6 +14,11 @@ import Theme from '../Theme'
 export default function StartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
   const { input, layoutInfo } = sizedStyles
+  const onKeyPressed = (e) => {
+    if (e.key === 'Enter') {
+      generateQuiz()
+    }
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
