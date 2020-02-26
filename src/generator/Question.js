@@ -163,7 +163,8 @@ export const Question = {
         }
         break
       case ChordStructure.FIVE_SEVEN_OF_MAJOR_FOUR:
-        // fallthrough
+          answer = "IV"
+          break
       case ChordStructure.FIVE_SEVEN_OF_MINOR_FOUR:
         switch (chordContext.modeLabel) {
           case "Major":
@@ -173,6 +174,8 @@ export const Question = {
         }
         break
       case ChordStructure.SEVEN_DIMINISHED_SEVENTH_OF_FIVE:
+        answer = "V"
+        break
       case ChordStructure.SEVEN_HALF_DIMINISHED_SEVENTH_OF_SEVEN:
         switch (chordContext.modeLabel) {
           case "Major":
