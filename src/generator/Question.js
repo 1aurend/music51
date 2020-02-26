@@ -98,8 +98,8 @@ export const Question = {
         grouping = "applied chord"
         break
     }
-    // FIXME: Finish implementation!
-    const choices = chordStructures(chordContext.chordType).map(structure => structure.displayName)
+    const allStructures = chordStructures(chordContext.chordType)
+    const choices = [...chordStructures(chordContext.chordType)].map(structure => structure.displayName)
     const answer = chordContext.chordDescription.structure.displayName
     return {
       "type": "Quality",
