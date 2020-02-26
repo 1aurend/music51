@@ -73,8 +73,7 @@ export default function(numQs, options) {
  */
 export function randomChordContext(options) {
   // Choose a random `KeySignature`
-  // const keySignature = chooseKeySignature()
-  const keySignature = 'R2'
+  const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
