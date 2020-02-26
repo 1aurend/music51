@@ -24,7 +24,7 @@ export const Appetizer = styled.div`
   height: 100%;
   grid-area: B;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-flow: column nowrap;
 `
 export const Entree = styled.div`

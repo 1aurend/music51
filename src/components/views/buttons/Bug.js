@@ -46,7 +46,7 @@ export function Bug({ onClick }) {
   return (
     <BugWrapper>
       <StyledButton onClick={onClick}>
-        <a href={formLink} alt='Bug Report Google Form'>
+        <a href={formLink} alt='Bug Report Google Form' target="_blank" rel="noopener noreferrer">
           <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
         </a>
       </StyledButton>
@@ -63,7 +63,7 @@ export function BugWithSpeechBubble({ onClick }) {
         ><h4>BUGS?</h4>
       </StyledBubbleDiv>
       <StyledButton onClick={onClick}>
-        <a href={formLink} alt='Bug Report Google Form'>
+        <a href={formLink} alt='Bug Report Google Form' target="_blank" rel="noopener noreferrer">
           <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
         </a>
       </StyledButton>

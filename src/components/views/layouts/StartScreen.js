@@ -38,6 +38,10 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
               <MegaPixelBorder>
                 <Marquee title={title}/>
               </MegaPixelBorder>
+              <SubCellMargin>
+                <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
+                <Go onClick={generateQuiz} />
+              </SubCellMargin>
             </Appetizer>
             <Entree>
               <SmallPixelBorderSingle>
@@ -46,10 +50,6 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
               <Expander infoText={whatDoINeedToKnow}/>
             </Entree>
             <Dessert>
-              <SubCellMargin>
-                <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
-                <Go onClick={generateQuiz} />
-              </SubCellMargin>
             </Dessert>
           </Grid>
           <BugWithSpeechBubble />
