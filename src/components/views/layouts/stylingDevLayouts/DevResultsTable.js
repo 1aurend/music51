@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { rounded } from '../../../utility'
+import { rounded } from '../../../../utility'
 // import HorizontalTable from '../charts/HorizontalTable'
-import VerticalTable from '../charts/VerticalTable'
-import { questionsList } from '../../../generator/questionsList'
-import {Bug} from '../buttons/Bug'
-import Theme from '../Theme'
+import VerticalTable from '../../charts/VerticalTable'
+import { questionsList } from '../../../../generator/questionsList'
+import {Bug} from '../../buttons/Bug'
+import Theme from '../../Theme'
 
 const testData = {
           "LETTER_NAMES": {
