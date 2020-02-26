@@ -74,9 +74,33 @@ const classicblue20 = {
   buttonColors:buttonColors
 }
 
+const fewerHues = {
+  colors: {
+    primary: '#0F4C81',
+    secondary: '#26AD5E',
+    tertiary: '#0F4C81',
+    light: '#FFFFFF',
+    dark: '#082742'
+  },
+  pixelWeight:pixelWeight,
+  buttonColors:buttonColors
+}
+
+const grayScale = {
+  colors: {
+    primary: '#747578',
+    secondary: '#26AD5E',
+    tertiary: '#a3a4a6',
+    light: '#FFFFFF',
+    dark: '#353637'
+  },
+  pixelWeight:pixelWeight,
+  buttonColors:buttonColors
+}
+
 export default function Theme({ children }){
   return(
-    <ThemeProvider theme={classicblue20}>
+    <ThemeProvider theme={grayScale}>
       <GlobalFonts />{children}
     </ThemeProvider>
   )
