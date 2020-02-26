@@ -167,8 +167,12 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }
                   }
+                } else {
+                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
+                  choicesWithKeys.push(withKeystroke)
+                  break
+                }
                 break
             case questionTypes.NUMERAL:
               if (choice.includes('7')) {
@@ -235,7 +239,8 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }}
+                    }
+                  }
               else if (question.choices.length === 4) {
                 switch (c) {
                   case 0:
@@ -257,7 +262,12 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }}
+                    }
+                } else {
+                  withKeystroke = { choice: choice, key: [1,2,3,4,5,6,7,8,9].randomElement() }
+                  choicesWithKeys.push(withKeystroke)
+                  break
+                }
               break
             case questionTypes.ROLE:
               const map = {

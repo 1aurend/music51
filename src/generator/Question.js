@@ -353,9 +353,21 @@ export function romanInversionOptions(romanNumeral, inversion, chordType) {
       ]
     // FIXME: Finish implementation!
     case ChordType.CHROMATIC_VARIATION:
+      throw "We should not be making roman inversion options for a chromatic variation chord!"
     case ChordType.MODE_MIXTURE:
+      return [
+        romanNumeral + inversion,
+        romanNumeral + inversion + '63',
+        romanNumeral + inversion + '64'
+      ]
     case ChordType.APPLIED_CHORD:
-      return []
+      // FIXME: We need to pull apart the chord to see if its a triad / seventh
+      return [
+        romanNumeral + inversion,
+        romanNumeral + inversion + '65',
+        romanNumeral + inversion + '43',
+        romanNumeral + inversion + '42'
+      ]
   }
 }
 
