@@ -50,7 +50,30 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
   })()
 
   function formatButtonText(choice) {
-    if (choice.includes('^')) {
+    // FIXME: (James) This is quite a hack. Do this in a more structured manner.
+    if (choice === 'N6') {
+      return (
+        <span>
+        {'N'}
+          <span style={{postion: 'absolute'}}>
+            <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
+              {'6'}
+            </sup>
+          </span>
+        </span>
+      )
+    } else if (['It+6', 'Fr+6', 'Ger+6'].includes(choice)) {
+      return (
+        <span>
+        {choice.slice(0,-2)}
+          <span style={{postion: 'absolute'}}>
+            <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
+              {'+6'}
+            </sup>
+          </span>
+        </span>
+      )
+    } else if (choice.includes('^')) {
       return (
         <span>
           &nbsp;{choice.charAt(0)}
