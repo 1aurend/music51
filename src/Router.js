@@ -196,6 +196,183 @@ const mockData = {
              ]
           }
     }
+const mockChart = {
+        "chartData": {
+          "domainMaxYAtt": 9,
+          "domainMaxYTime": 67.3,
+          "labelsX": [
+            1,
+            2
+          ],
+          "categoriesIncluded": [
+            "Overall",
+            "Degrees",
+            "Names",
+            "Role",
+            "Quality"
+          ],
+          "categoriesAtt": [
+            "Overall",
+            "Degrees",
+            "Names",
+            "Role"
+          ],
+          "categoriesTime": [
+            "Overall",
+            "Names",
+            "Degrees",
+            "Quality"
+          ],
+          "colorScaleAtt": [
+            "#000000",
+            "#f8c000",
+            "#cc351f",
+            "#3b9b4d"
+          ],
+          "colorScaleTime": [
+            "#000000",
+            "#cc351f",
+            "#f8c000",
+            "#1c4af2"
+          ],
+          "data": {
+            "attempts": {
+              "Overall": [
+                {
+                  "x": 1,
+                  "y": 3,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Degrees": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 9,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Names": [
+                {
+                  "x": 1,
+                  "y": 3,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Role": [
+                {
+                  "x": 1,
+                  "y": 2,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ]
+            },
+            "times": {
+              "Overall": [
+                {
+                  "x": 1,
+                  "y": 1.18,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 2.3,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Names": [
+                {
+                  "x": 1,
+                  "y": 2.3,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 1.85,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 3,
+                  "y": 67.3,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Degrees": [
+                {
+                  "x": 1,
+                  "y": 4.5,
+                  "symbol": "square",
+                  "size": 5
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ],
+              "Quality": [
+                {
+                  "x": 2,
+                  "y": 0.5,
+                  "symbol": "square",
+                  "size": 5
+                }
+              ]
+            }
+          }
+        },
+        "progressSummary": {
+          "attempts": {
+            "num": 1,
+            "percent": 33,
+            "verb": "decreased"
+          },
+          "times": {
+            "num": 1.12,
+            "percent": 95,
+            "verb": "increased"
+          }
+        }
+}
 
 export default function Router() {
     return (
@@ -220,13 +397,14 @@ export default function Router() {
             currentInput={'a'}
             />} />
         <Route path='/stats' exact render={() => <DevStatLines
-            round={3}
+            round={3} /*change this prop to 1 to see the other look*/
             setShowStats={mock}
             nextRound={mock}
             finished={mock}
+            mockData={mockData}
             />} />
           <Route path='/chart' exact render={() => <DevChartLayout
-              chartData
+              chartData={mockChart}
               round={3}
               finished={mock}
               viewStats={mock}

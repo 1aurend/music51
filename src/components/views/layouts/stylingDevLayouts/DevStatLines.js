@@ -35,9 +35,15 @@ const StatsH4 = styled.h4`
 `
 
 export default function DevStatLines(props) {
-  const { round, setShowStats, nextRound, finished } = props
-  const means = useContext(Session).means.tally
-  const qTypes = useContext(Session).means.questionsCurrentRound
+  const { round, setShowStats, nextRound, finished, mockData } = props
+  const means = mockData
+  const qTypes = [
+     "Role",
+     "Names",
+     "Quality",
+     "Degrees",
+     "Overall"
+  ]
   const sizedStyles = useResponsiveStyles()
   const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
 
