@@ -99,8 +99,8 @@ export const Question = {
         break
     }
     // FIXME: Finish implementation!
-    const choices = []
-    const answer = ""
+    const choices = chordStructures(chordContext.chordType).map(structure => structure.displayName)
+    const answer = chordContext.chordDescription.structure.displayName
     return {
       "type": "Quality",
       "questionText": "What type of " + grouping + " is it?",
