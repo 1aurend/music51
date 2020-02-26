@@ -73,14 +73,14 @@ export default function(numQs, options) {
  */
 export function randomChordContext(options) {
   // Choose a random `KeySignature`
-  const keySignature = chooseKeySignature()
+  // const keySignature = chooseKeySignature()
+  const keySignature = 'R2'
   // Choose a random `ChordType` from the constraints provided by the user
   const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
   const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordStructure)
-  // const inversion = ""
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chooseModeLabel(chordStructure)
