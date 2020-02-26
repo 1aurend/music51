@@ -1,7 +1,7 @@
 import { classes, keySignatures } from './chordConsts'
 import addKeystrokes from './keystrokes'
 import './utility.js'
-import { shuffle } from './utility'
+import { randomArrayElement, randomObjectElement, randomSetElement, shuffle } from './utility'
 import { LetterName, letterNamePosition } from './LetterName'
 import { Clef } from './Clef'
 import { Accidental } from './Accidental'
@@ -101,7 +101,7 @@ export function randomChordContext(options) {
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
   // Choose a random clef
-  const clef = Clef.randomElement()
+  const clef = randomObjectElement(Clef)
   // Fully concretize the notes on the staff as is appropriate for the randomly chosen `clef`.
   const staffAdjustedNotes = staffAdjust(partiallyConcretizedNotes, clef)
   // Get the VexFlow representation of the "Shapes" key signature.
@@ -556,7 +556,7 @@ export function invert(chord, inversion) {
  */
 export function chooseInversion(chordType) {
   // TODO: Implement inversions as an instance method over `ChordType`
-  return inversions(chordType).randomElement()
+  return randomArrayElement(inversions(chordType))
 }
 
 /**
@@ -613,28 +613,28 @@ function inversions(chordStructure) {
  *          sensible default
  */
 export function chooseKeySignature() {
-  return Object.keys(Shapes).slice(3, 12).randomElement()
+  return randomArrayElement(Object.keys(Shapes).slice(3, 12))
 }
 
 /**
  * @return A random `Clef`.
  */
 export function chooseClef() {
-  return Clef.randomElement()
+  return randomObjectElement(Clef)
 }
 
 /**
  * @return A random `ChordStructure` for the given `chordType`.
  */
 export function chooseChordStructure(chordType) {
-  return chordStructures(chordType).randomElement()
+  return randomSetElement(chordStructures(chordType))
 }
 
 /**
  * @return A random `ChordType` value.
  */
 export function chooseChordType() {
-  return ChordType.randomElement()
+  return randomObjectElement(ChordType)
 }
 
 function chooseInitialOctave(clef) {
@@ -651,7 +651,7 @@ function chooseInitialOctave(clef) {
 }
 
 function chooseRandomAccidental(allowedAccidentals) {
-  return allowedAccidentals.randomElement()
+  return randomArrayElement(allowedAccidentals)
 }
 
 // Make a random choice of root accidentals while filtering out egregious edge cases (e.g., 𝄫♭, and `𝄪♯`)
@@ -663,7 +663,7 @@ function chooseRootAccidental(syllable, structure, allowedAccidentals) {
 }
 
 export function chooseModeLabel(chordStructure) {
-  return Object.keys(chordStructure.commonRootOffsets).randomElement()
+  return randomArrayElement(Object.keys(chordStructure.commonRootOffsets))
 }
 
 /**
@@ -686,7 +686,7 @@ export function randomRomanNumeralContext(chordStructure, modeLabel) {
       break
   }
   const commonRootOffsets = chordStructure.commonRootOffsets[modeLabel]
-  const rootOffset = commonRootOffsets.randomElement()
+  const rootOffset = randomArrayElement(commonRootOffsets)
   const noteIdentity = noteIdentities(mode)[rootOffset]
   const scaleDegree = noteIdentity.tensionMod7
   return {

@@ -1,20 +1,20 @@
 // Utility
 
-Object.prototype.randomElement = function () {
-  return Object.values(this).randomElement()
+export function randomObjectElement(object) {
+  return randomArrayElement(Object.values(object))
 }
 
-Array.prototype.randomElement = function () {
-  return this[Math.floor(Math.random() * this.length)]
+export function randomArrayElement(array) {
+  return array[Math.floor(Math.random() * array.length)]
 }
 
-Set.prototype.randomElement = function () {
-  const array = Array.from(this.values())
-  return array.randomElement()
+export function randomSetElement(set) {
+  const array = Array.from(set.values())
+  return randomArrayElement(array)
 }
 
 Number.prototype.mod = function(n) {
-    return ((this%n)+n)%n
+  return ((this%n)+n)%n
 }
 
 Array.prototype.rotate = (function() {
