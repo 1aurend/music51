@@ -81,29 +81,16 @@ export const Question = {
     }
   },
   quality: function(chordContext) {
-    let grouping
-    switch (chordContext.chordType) {
-      case ChordType.TRIAD:
-        grouping = "in-key triad"
-      case ChordType.SEVENTH:
-        grouping = "in-key seventh chord"
-        break
-      case ChordType.CHROMATIC_VARIATION:
-        grouping = "chromatic variation"
-        break
-      case ChordType.MODE_MIXTURE:
-        grouping = "mode mixture"
-        break
-      case ChordType.APPLIED_CHORD:
-        grouping = "applied chord"
-        break
-    }
-    const allStructures = chordStructures(chordContext.chordType)
-    const choices = [...chordStructures(chordContext.chordType)].map(structure => structure.displayName)
-    const answer = chordContext.chordDescription.structure.displayName
+    const rootLetter = chordContext.chordDescription.root.letter
+    const rootAccidental = chordContext.chordDescription.root.accidental
+    const chordStructureDisplay = chordContext.chordDescription.structure.displayName
+    const choices = [...chordStructures(chordContext.chordType)]
+      .map(structure => structure.displayName)
+      .map(quality => rootLetter + rootAccidental + quality)
+    const answer = rootLetter + rootAccidental + chordStructureDisplay
     return {
       "type": "Quality",
-      "questionText": "What type of " + grouping + " is it?",
+      "questionText": "What's the chord's quality?",
       "choices": choices,
       "answers": [answer]
     }
@@ -233,7 +220,7 @@ export const Question = {
         throw "Invalid chord structure: " + JSON.stringify(chordContext.chordDescription.structure)
     }
     return {
-      "type": "Follows",
+      "type": "What Follows",
       "questionText": "Which chord is most likely to follow this chord?",
       "answers": [answer],
       "choices": choices
@@ -256,6 +243,7 @@ export function questionsForChordStructure(chordStructure) {
         Question.letterNames,
         Question.root,
         Question.degrees,
+        Question.role,
         Question.numerals,
         Question.inversion,
       ]
@@ -353,21 +341,9 @@ export function romanInversionOptions(romanNumeral, inversion, chordType) {
       ]
     // FIXME: Finish implementation!
     case ChordType.CHROMATIC_VARIATION:
-      throw "We should not be making roman inversion options for a chromatic variation chord!"
     case ChordType.MODE_MIXTURE:
-      return [
-        romanNumeral + inversion,
-        romanNumeral + inversion + '63',
-        romanNumeral + inversion + '64'
-      ]
     case ChordType.APPLIED_CHORD:
-      // FIXME: We need to pull apart the chord to see if its a triad / seventh
-      return [
-        romanNumeral + inversion,
-        romanNumeral + inversion + '65',
-        romanNumeral + inversion + '43',
-        romanNumeral + inversion + '42'
-      ]
+      return []
   }
 }
 
