@@ -228,19 +228,6 @@ export const ChordStructure = {
       Major: [10]
     }
   },
-  TONIC_MAJOR_TRIAD_IN_MINOR: {
-    displayName: "I",
-    modeConstructor: Mode.MAJOR,
-    structure: [
-      IndependentPitch.DO, // C
-      IndependentPitch.MI, // E
-      IndependentPitch.SO // G
-    ],
-    possibleRootOffsets: [0],
-    commonRootOffsets: {
-      minor: [0]
-    }
-  },
   SUBDOMINANT_MAJOR_TRIAD_IN_MINOR: {
     displayName: "IV",
     modeConstructor: Mode.LYDIAN,
@@ -398,7 +385,6 @@ export function chordStructures(chordType) {
         ChordStructure.FLAT_THREE_MAJOR_TRIAD,
         ChordStructure.FLAT_SIX_MAJOR_TRIAD,
         ChordStructure.FLAT_SEVEN_MAJOR_TRIAD,
-        ChordStructure.TONIC_MAJOR_TRIAD_IN_MINOR,
         ChordStructure.SUBDOMINANT_MAJOR_TRIAD_IN_MINOR
       ])
     case ChordType.APPLIED_CHORD:
