@@ -96,9 +96,6 @@ export default function addKeystrokes(chords) {
                 }
               break
             case questionTypes.QUALITY:
-
-              console.log("QUALITY KEYSTROKE")
-
               // FIXME: (James) This is a bit of hack. In the future, I think it
               //        it would be wise if we make the keystroke aggregation
               //        and the question aggregation more cohesive.
