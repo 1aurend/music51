@@ -109,7 +109,9 @@ export const Question = {
         grouping = "applied chord"
         break
     }
-    // const answer =
+    // FIXME: Finish implementation!
+    const choices = []
+    const answer = ""
     return {
       "type": "Quality",
       "questionText": "What type of " + grouping + " is it?",
