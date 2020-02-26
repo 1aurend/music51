@@ -96,6 +96,9 @@ export default function addKeystrokes(chords) {
                 }
               break
             case questionTypes.QUALITY:
+
+              console.log("QUALITY KEYSTROKE")
+
               // FIXME: (James) This is a bit of hack. In the future, I think it
               //        it would be wise if we make the keystroke aggregation
               //        and the question aggregation more cohesive.
@@ -167,8 +170,11 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }
                   }
+                } else {
+                  withKeystroke = { choice: choice, key: 'x' }
+                  choicesWithKeys.push(withKeystroke)
+                }
                 break
             case questionTypes.NUMERAL:
               if (choice.includes('7')) {
