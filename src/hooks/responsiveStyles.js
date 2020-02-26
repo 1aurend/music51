@@ -4,7 +4,7 @@ const fontBody = "'Thintel', monospace"
 const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacing, lineHeight, textTransform, multiplier}) {
   const largeFactor = 1.15
   const mediumFactor = 1.1
-  const multiply = multiplier ? 2 : 1
+  const multiply = multiplier ? 1.25 : 1
   let result = {LARGE:{}, MEDIUM:{}, SMALL:{}}
   result.LARGE = {
     fontFamily:fontFamily,

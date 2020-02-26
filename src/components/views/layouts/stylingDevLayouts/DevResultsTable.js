@@ -1,123 +1,10 @@
 import React, { useEffect } from 'react'
-import { rounded } from '../../../utility'
+import { rounded } from '../../../../utility'
 // import HorizontalTable from '../charts/HorizontalTable'
-import VerticalTable from '../charts/VerticalTable'
-import { questionsList } from '../../../generator/questionsList'
-import {Bug} from '../buttons/Bug'
-import Theme from '../Theme'
-
-const testData = {
-          "LETTER_NAMES": {
-             "attempts": [
-                3,
-                1,
-                7
-             ],
-             "times": [
-                2.3,
-                1.85,
-                67.3
-             ]
-          },
-          "ROOT": {
-             "attempts": [
-                null,
-                null,
-                null,
-             ],
-             "times": [
-                null,
-                null,
-                null
-             ]
-          },
-          "DEGREE": {
-             "attempts": [
-                4,
-                9,
-                2
-             ],
-             "times": [
-                4.5,
-                6,
-                1.2
-             ]
-          },
-          "ROLE": {
-             "attempts": [
-                2,
-                6,
-                3
-             ],
-             "times": [
-                1.2,
-                1.2,
-                3.4
-             ]
-          },
-          "NUMERAL": {
-             "attempts": [
-                null,
-                null,
-                null
-             ],
-             "times": [
-                null,
-                null,
-                null
-             ]
-          },
-          "QUALITY": {
-             "attempts": [
-                null,
-                4,
-                1,
-                5
-             ],
-             "times": [
-                null,
-                0.5,
-                1.2,
-                1.9
-             ]
-          },
-          "INVERSION": {
-             "attempts": [
-                2,
-                null,
-                null
-             ],
-             "times": [
-                0.3,
-                null,
-                null
-             ]
-          },
-          "FOLLOWED_BY": {
-             "attempts": [
-                null,
-                null,
-                2
-             ],
-             "times": [
-                null,
-                null,
-                3.4
-             ]
-          },
-          "Overall": {
-             "attempts": [
-                3,
-                2,
-                5
-             ],
-             "times": [
-                1.18,
-                2.3,
-                6.4
-             ]
-          }
-    }
+import VerticalTable from '../../charts/VerticalTable'
+import { questionsList } from '../../../../generator/questionsList'
+import {Bug} from '../../buttons/Bug'
+import Theme from '../../Theme'
 
 
 function replaceNaNs(num) {
@@ -129,8 +16,8 @@ function replaceNaNs(num) {
 
 // QUESTION: when implementing reducers dispatch an update to session data that includes best/worst info?
 export default function DevResultsTable(props) {
-  const { round, startOver } = props
-  const means = testData
+  const { round, startOver, mockData } = props
+  const means = mockData
   const qTypes = Object.keys(questionsList)
   const perfectRounds = (means.Overall.attempts.filter(average => average === 1)).length
   const greeting = perfectRounds >= 1 ? `Pefection! You completed ${perfectRounds} rounds with 100% accuracy this session.` : `No perfect rounds this session, but you'll get there next time!`
