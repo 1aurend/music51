@@ -221,7 +221,6 @@ export default function addKeystrokes(chords) {
                 }
               break
             case questionTypes.INVERSION:
-              console.log("INVERSION QUESTION")
               if (question.choices.length === 3) {
                 switch (c) {
                   case 0:
@@ -263,8 +262,7 @@ export default function addKeystrokes(chords) {
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
                     }
-                  }
-                else {
+                  } else {
                     withKeystroke = { choice: choice, key: 'x' }
                     choicesWithKeys.push(withKeystroke)
                 }
