@@ -10,7 +10,9 @@ const ExpanderDiv = styled.div`
   margin-top: 4%;
   > p {
     color: ${props => props.theme.colors.light};
-  }
+    text-align: left !important;
+    margin: 0 15%;
+
 `
 const ExpanderLink = styled.a`
   cursor: pointer;
