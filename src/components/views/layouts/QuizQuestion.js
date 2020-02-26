@@ -33,7 +33,7 @@ export default function QuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
   const { h5, layoutQuiz } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
-  const noteColors = question.type === 'LETTER_NAMES' || question.type === 'ROOT' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
+  const noteColors = question.type === 'Names' || question.type === 'Roots' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
   useEffect(() => {
       window.scrollTo(0, 0)

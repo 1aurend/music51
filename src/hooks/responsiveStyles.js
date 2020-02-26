@@ -1,14 +1,15 @@
 const fontHeading = "'Fipps Regular', monospace"
 const fontBody = "'Thintel', monospace"
 
-const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacing, lineHeight, textTransform}) {
+const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacing, lineHeight, textTransform, multiplier}) {
   const largeFactor = 1.15
   const mediumFactor = 1.1
+  const multiply = multiplier ? 2 : 1
   let result = {LARGE:{}, MEDIUM:{}, SMALL:{}}
   result.LARGE = {
     fontFamily:fontFamily,
     textAlign:textAlign,
-    fontSize:String(baseSize*largeFactor).concat('px'),
+    fontSize:String(baseSize*largeFactor*multiply).concat('px'),
     letterSpacing:letterSpacing*largeFactor,
     lineHeight:lineHeight*largeFactor,
     textTransform:textTransform
@@ -37,7 +38,7 @@ export const h1 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',ba
 export const h2 = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:18,letterSpacing:1, textTransform:'lowercase'})
 export const h3 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:36,letterSpacing:2,lineHeight:1, textTransform:'uppercase'})
 export const h4 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:28,letterSpacing:1, lineHeight:1, textTransform:'lowercase'})
-export const h5 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:64,letterSpacing:1, lineHeight:1})
+export const h5 = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:32,letterSpacing:1, lineHeight:1, multiplier:true})
 export const para = makeBreakpoints({fontFamily:fontBody, textAlign:'center',baseSize:24,letterSpacing:1, lineHeight:1,textTransform:'none'})
 export const questionText = makeBreakpoints({fontFamily:fontHeading, textAlign:'center',baseSize:20,textTransform:'none'})
 
