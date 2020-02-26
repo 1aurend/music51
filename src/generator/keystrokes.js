@@ -310,10 +310,10 @@ export default function addKeystrokes(chords) {
               let key
               switch (choice) {
                 case 'I':
-                  key = 'I'
+                  key = '1'
                   break
                 case 'i':
-                  key = 'i'
+                  key = '1'
                   break
                 case 'ii':
                 case 'iio':
@@ -329,7 +329,7 @@ export default function addKeystrokes(chords) {
                   break
                 case 'V':
                 case 'v':
-                  key = 'V'
+                  key = '5'
                   break
                 case 'VI':
                 case 'vi':
