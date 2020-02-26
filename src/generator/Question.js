@@ -220,7 +220,7 @@ export const Question = {
         throw "Invalid chord structure: " + JSON.stringify(chordContext.chordDescription.structure)
     }
     return {
-      "type": "What Follows",
+      "type": "Follows",
       "questionText": "Which chord is most likely to follow this chord?",
       "answers": [answer],
       "choices": choices

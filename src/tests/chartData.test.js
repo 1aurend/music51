@@ -179,7 +179,7 @@ test('getDataPoints filters out nulls', () => {
 test('getChartData returns expected values', () => {
   const data = {
          "tally": {
-            "LETTER_NAMES": {
+            "Names": {
                "attempts": [
                   3,
                   1,
@@ -191,7 +191,7 @@ test('getChartData returns expected values', () => {
                   67.3
                ]
             },
-            "ROOT": {
+            "Root": {
                "attempts": [
                   null,
                   null
@@ -201,7 +201,7 @@ test('getChartData returns expected values', () => {
                   null
                ]
             },
-            "DEGREE": {
+            "Degrees": {
                "attempts": [
                   4,
                   9
@@ -211,7 +211,7 @@ test('getChartData returns expected values', () => {
                   6
                ]
             },
-            "ROLE": {
+            "Role": {
                "attempts": [
                   2,
                   6
@@ -221,7 +221,7 @@ test('getChartData returns expected values', () => {
                   1.2
                ]
             },
-            "NUMERAL": {
+            "Numerals": {
                "attempts": [
                   null,
                   null
@@ -231,7 +231,7 @@ test('getChartData returns expected values', () => {
                   null
                ]
             },
-            "QUALITY": {
+            "Quality": {
                "attempts": [
                   null,
                   4
@@ -241,7 +241,7 @@ test('getChartData returns expected values', () => {
                   0.5
                ]
             },
-            "INVERSION": {
+            "Inversions": {
                "attempts": [
                   2,
                   null
@@ -251,7 +251,7 @@ test('getChartData returns expected values', () => {
                   null
                ]
             },
-            "FOLLOWED_BY": {
+            "Follows": {
                "attempts": [
                   null,
                   null
@@ -273,10 +273,10 @@ test('getChartData returns expected values', () => {
             }
          },
          "questionsCurrentRound": [
-            "ROLE",
-            "LETTER_NAMES",
-            "QUALITY",
-            "DEGREE",
+            "Role",
+            "Names",
+            "Quality",
+            "Degrees",
             "Overall"
          ]
       }

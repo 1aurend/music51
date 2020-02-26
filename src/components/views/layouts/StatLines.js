@@ -49,6 +49,7 @@ export default function StatLines(props) {
   const subtitle = round === 1 ? `Here's Your Benchmark:` : null
   const closing = round === 1 ? 'Try to beat these numbers in the next round!' : null
   const statLines = qTypes.map( type => {
+    console.log("type:" + JSON.stringify(type))
     return <Row
             key={type}
             style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>

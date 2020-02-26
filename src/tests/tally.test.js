@@ -134,14 +134,14 @@ test('tallyRound returns an object', () => {
     {
       questions: [
         {
-          type: 'names',
+          type: 'Names',
           answers: [{
             tries: [1, 2],
             elapsedTime: 1.2
           }]
         },
         {
-          type: 'degree',
+          type: 'Degrees',
           answers: [{
             tries: [1, 2, 3],
             elapsedTime: 3.4
@@ -152,14 +152,14 @@ test('tallyRound returns an object', () => {
     {
       questions: [
         {
-          type: 'names',
+          type: 'Names',
           answers: [{
             tries: [1, 2, 3],
             elapsedTime: 2.3
           }]
         },
         {
-          type: 'degree',
+          type: 'Degrees',
           answers: [{
             tries: [1, 2, 3, 4],
             elapsedTime: 1.4
@@ -178,14 +178,14 @@ test('tallyMeans returns with nulls for unused questions', () => {
     {
       questions: [
         {
-          type: 'ROLE',
+          type: 'Role',
           answers: [{
             tries: [1, 2],
             elapsedTime: 1.2
           }]
         },
         {
-          type: 'LETTER_NAMES',
+          type: 'Names',
           answers: [{
             tries: [1, 2, 3],
             elapsedTime: 1.4
@@ -196,14 +196,14 @@ test('tallyMeans returns with nulls for unused questions', () => {
     {
       questions: [
         {
-          type: 'LETTER_NAMES',
+          type: 'Names',
           answers: [{
             tries: [1, 2, 3],
             elapsedTime: 2.3
           }]
         },
         {
-          type: 'QUALITY',
+          type: 'Quality',
           answers: [{
             tries: [1, 2, 3, 4],
             elapsedTime: 0.5
@@ -214,7 +214,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
   ]
   const state = {
          "tally": {
-            "LETTER_NAMES": {
+            "Names": {
                "attempts": [
                   3
                ],
@@ -222,7 +222,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   2.3
                ]
             },
-            "ROOT": {
+            "Root": {
                "attempts": [
                   null
                ],
@@ -230,7 +230,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   null
                ]
             },
-            "DEGREE": {
+            "Degrees": {
                "attempts": [
                   4
                ],
@@ -238,7 +238,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   4.5
                ]
             },
-            "ROLE": {
+            "Role": {
                "attempts": [
                   2
                ],
@@ -246,7 +246,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   1.2
                ]
             },
-            "NUMERAL": {
+            "Numerals": {
                "attempts": [
                   null
                ],
@@ -254,7 +254,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   null
                ]
             },
-            "QUALITY": {
+            "Quality": {
                "attempts": [
                   null
                ],
@@ -262,7 +262,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   null
                ]
             },
-            "INVERSION": {
+            "Inversions": {
                "attempts": [
                   2
                ],
@@ -270,7 +270,7 @@ test('tallyMeans returns with nulls for unused questions', () => {
                   0.3
                ]
             },
-            "FOLLOWED_BY": {
+            "Follows": {
                "attempts": [
                   null
                ],
@@ -280,17 +280,17 @@ test('tallyMeans returns with nulls for unused questions', () => {
             }
          },
          "questionTypes": [
-            "ROLE",
-            "LETTER_NAMES",
-            "DEGREE",
+            "Role",
+            "Names",
+            "Degrees",
             "Overall"
          ]
       }
   const means = tallyMeans(state, data)
   console.log(JSON.stringify(means, null, 3))
   expect(means).toBeTruthy()
-  const letterNames = means.tally.LETTER_NAMES.attempts
+  const letterNames = means.tally["Names"].attempts
   expect(letterNames).toEqual([3,3])
-  const quality = means.tally.QUALITY.times
+  const quality = means.tally["Quality"].times
   expect(quality).toEqual([null,0.5])
 })
