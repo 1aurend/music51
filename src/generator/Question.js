@@ -81,7 +81,6 @@ export const Question = {
     }
   },
   quality: function(chordContext) {
-    console.log("QUALITY QUESTION")
     let grouping
     switch (chordContext.chordType) {
       case ChordType.TRIAD:
@@ -101,9 +100,7 @@ export const Question = {
     }
     const allStructures = chordStructures(chordContext.chordType)
     const choices = [...chordStructures(chordContext.chordType)].map(structure => structure.displayName)
-    console.log("choices: " + JSON.stringify(choices))
     const answer = chordContext.chordDescription.structure.displayName
-    console.log("answer: " + answer)
     return {
       "type": "Quality",
       "questionText": "What type of " + grouping + " is it?",

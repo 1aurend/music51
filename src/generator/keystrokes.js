@@ -221,6 +221,7 @@ export default function addKeystrokes(chords) {
                 }
               break
             case questionTypes.INVERSION:
+              console.log("INVERSION QUESTION")
               if (question.choices.length === 3) {
                 switch (c) {
                   case 0:
@@ -238,7 +239,8 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }}
+                    }
+                  }
               else if (question.choices.length === 4) {
                 switch (c) {
                   case 0:
@@ -260,7 +262,12 @@ export default function addKeystrokes(chords) {
                   default:
                       console.log("found an answer choice that isn't a valid chord quality: " + choice);
                       break
-                    }}
+                    }
+                  }
+                else {
+                    withKeystroke = { choice: choice, key: 'x' }
+                    choicesWithKeys.push(withKeystroke)
+                }
               break
             case questionTypes.ROLE:
               const map = {
