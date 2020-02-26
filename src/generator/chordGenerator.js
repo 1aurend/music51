@@ -73,22 +73,17 @@ export default function(numQs, options) {
  */
 export function randomChordContext(options) {
   // Choose a random `KeySignature`
-  // const keySignature = chooseKeySignature()
-  const keySignature = 'R2'
+  const keySignature = chooseKeySignature()
   // Choose a random `ChordType` from the constraints provided by the user
-  // const chordType = chooseChordType()
-  const chordType = ChordType.MODE_MIXTURE
+  const chordType = chooseChordType()
   // Choose a random `ChordStructure` belonging to the chosen `ChordType` family
-  // const chordStructure = chooseChordStructure(chordType)
-  const chordStructure = ChordStructure.FLAT_SEVEN_MAJOR_TRIAD
-  console.log("chord structure: " + JSON.stringify(chordStructure))
+  const chordStructure = chooseChordStructure(chordType)
   // Choose a random inversion from those afforded by the chosen `ChordStructure`
   const inversion = chooseInversion(chordStructure)
   // const inversion = ""
   // Choose whether we will be in a major or minor mode.
   // FIXME: Consider better naming of `modeLabel`. More like `modeCategory`.
   const modeLabel = chooseModeLabel(chordStructure)
-  console.log("mode label: " + modeLabel)
   // Choose a random roman numeral context
   const romanNumeralContext = randomRomanNumeralContext(chordStructure, modeLabel)
   // Construct non—octave-positioned description of a chord, in the form:
@@ -106,7 +101,6 @@ export function randomChordContext(options) {
   // Construct the octave-displaced (but not concretely-octavized) notes for chord described above
   // TODO: Come up with a better name
   const partiallyConcretizedNotes = partiallyConcretizeChord(chordDescription, keySignature)
-  console.log("notes: " + JSON.stringify(partiallyConcretizedNotes))
   // Choose a random clef
   const clef = Clef.randomElement()
   // Fully concretize the notes on the staff as is appropriate for the randomly chosen `clef`.
@@ -115,7 +109,6 @@ export function randomChordContext(options) {
   // FIXME: Codify the relationship between "Shapes" key signatures, Common Western Notation key signatures,
   //        and Vexflow key signatures.
   const vexFlowKeySignature = keySignatures[keySignature].vexSig
-  console.log("key signature: " + vexFlowKeySignature)
 
   // Bundle up all of the information useful to graphically represent the notes on the screen.
   // TODO: Consider bundling up all of the informational artifacts we have created along the way, e.g.,
@@ -148,7 +141,6 @@ export function makeChordDescription(
     keySignature,
     romanNumeralContext
   )
-  console.log("root: " + concretizedRoot.letter + concretizedRoot.accidental)
   return {
     root: concretizedRoot,
     structure: chordStructure,
@@ -172,8 +164,18 @@ export function concretizeRoot(keySignature, romanNumeralContext) {
   const initialLetterNameIndex = Object.values(LetterName).indexOf(initialLetterName)
   const rootLetterNameIndex = (initialLetterNameIndex + (romanNumeralContext.degree - 1)) % 7
   const rootLetterName = Object.values(LetterName)[rootLetterNameIndex]
+  // FIXME: This is currently thinking in mod7 version of IP, but it needs to be the objective mod12 version
   const initialIP = initial.refIP
-  const initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+
+  // FIXME: This is a horrible hack. Help.
+  let initialIPIndex = Object.values(IndependentPitch).indexOf(initialIP)
+
+  if (initial.accidental === Accidental.FLAT) {
+    initialIPIndex -= 1
+  } else if (initial.accidental === Accidental.SHARP) {
+    initialIPIndex += 1
+  }
+
   const rootIPIndex = (initialIPIndex + romanNumeralContext.rootOffset) % 12
   const rootIP = Object.values(IndependentPitch)[rootIPIndex]
   const rootSyllable = Object.values(IndependentPitch)[rootIPIndex + romanNumeralContext.incidental]
@@ -197,15 +199,11 @@ export function concretizeRoot(keySignature, romanNumeralContext) {
  * @return An array of octave-displaced spelled pitches comprising a `chord`.
  */
 export function partiallyConcretizeChord(chordDescription, keySignature) {
-
   const rootLetter = chordDescription.root.letter
   const rootIP = chordDescription.root.independentPitch
   const rootAccidental = chordDescription.root.accidental
   const rootSyllable = chordDescription.root.syllable
   const inversion = chordDescription.inversion
-
-  console.log("root: " + rootLetter + rootAccidental)
-  console.log("inversion: " + inversion)
 
   let template = chordDescription.structure.structure
 
@@ -242,24 +240,18 @@ export function partiallyConcretizeChord(chordDescription, keySignature) {
   for (var i=0; i<template.length; i++) {
     // Translate the template ip to a relative note in the class
     const translatedNoteIP = translateNoteIPIndex(template[i])
-    console.log("translated note ip index: " + translatedNoteIP)
-    // Compute the syllable of the chord component
+    // Compute the letterName equivalent mod7 IP syllable of the chord component
     const syllable = chordComponentSyllable(translatedNoteIP, chordDescription)
     // Find the equivalent IP based on the rootIp and tensionMod12 value in the class
+    // FIXME: This is currently incorrect for certain situations.
     const noteIP = chordComponentIndependentPitch(rootIP, translatedNoteIP, keySignature)
-    let syllableIndex = Object.values(IndependentPitchSubset.BOTTOM).indexOf(syllable)
-    console.log("syllable index: " + syllableIndex)
-
-    const noteLetter = Object.values(LetterName)[syllableIndex]
+    const noteLetter = refIPToLetter(syllable)
     const notePosition = letterNamePosition(noteLetter)
 
     // Handle octave displacement if we cross over the mod7 boundary
     // FIXME: Consider doing this in another pass
     if (notePosition < prevLetterNamePosition) { octaveDisplacement += 1 }
     prevLetterNamePosition = notePosition
-
-    console.log("note ip (PC): " + noteIP)
-    console.log("syllable: " + syllable)
     const accid = accidental(noteIP, syllable)
 
     // FIXME: This should happen at a later point in the pipeline!
@@ -312,9 +304,6 @@ function chordComponentIndependentPitch(rootIP, translatedNoteIPIndex) {
 }
 
 function accidental(independentPitch, syllable) {
-
-  console.log("calculate accidental: ip: " + independentPitch + "; syllable: " + syllable)
-
   // FIXME: (James) Make a helper function that tidies this up
   // find the accidental from the diff between IP and "natural" syllable (natural is accidentals[2])
   let accidentalVal = (Object.values(IndependentPitch).indexOf(independentPitch))-(Object.values(IndependentPitch).indexOf(syllable))

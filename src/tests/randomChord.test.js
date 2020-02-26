@@ -425,7 +425,7 @@ test('bVII in B flat Major is spelled correctly', () => {
     },
     {
       letter: LetterName.E,
-      accidental: Accidental.FLAT,
+      accidental: "",
       octave: 1
     }
   ]
