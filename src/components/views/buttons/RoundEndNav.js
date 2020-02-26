@@ -10,6 +10,7 @@ import {
   Button,
 } from 'shards-react'
 import styled from 'styled-components'
+import {SolidButtonGreen, SolidButtonRed} from '../layouts/PixelBorder'
 
 
 const StyledRow = styled(Row)`
@@ -25,89 +26,83 @@ const StyledCol = styled(Col)`
   justify-content: center;
   margin-bottom: ${props => props.marginBottom || 0};
 `
-const StyledSvgButton = styled(Button)`
+
+const ButtonFlexContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items:center;
+  padding: 0;
+`
+
+const StyledSvgButton = styled.div`
   display: block;
   cursor: pointer;
-  background-color: #e5e6eb;
   border: none;
-  margin: 5%;
   padding: 0;
+  margin: 10px;
 `
 
 export default function NavButtons(props) {
   const { viewStats, nextRound, finished, round, statLines, table, startOver } = props
   if (round === 1) {
     return (
-      <StyledCol sm='8' lg='4'>
+      <ButtonFlexContainer>
         <StyledSvgButton
-          theme="light"
           onClick={() => {nextRound()}}
+          title='next round'
           >
-          <img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}/>
+          <SolidButtonGreen props='next round >>'/>
         </StyledSvgButton>
-      </StyledCol>
+      </ButtonFlexContainer>
     )
   } else if (statLines) {
     return (
-      <>
-        <StyledCol sm='8' lg='5' marginBottom='5%'>
+      <ButtonFlexContainer>
           <StyledSvgButton
-            theme="light"
             onClick={() => {viewStats(false)}}
+            title='back'
             >
-            <img src={backSvg} alt='back' style={{width: '10rem'}}/>
+            <SolidButtonGreen props='<< back'/>
           </StyledSvgButton>
-        </StyledCol>
-        <StyledCol sm='8' lg='5' marginBottom='5%'>
           <StyledSvgButton
-            theme="light"
             onClick={() => {nextRound()}}
+            title='next round'
             >
-            <img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}/>
+            <SolidButtonGreen props='next round >>'/>
           </StyledSvgButton>
-        </StyledCol>
-      </>
+      </ ButtonFlexContainer>
     )
   } else if (table) {
     return (
       <StyledSvgButton
-        theme="light"
         onClick={() => {startOver(true)}}
+        title='start over'
         >
-        <img src={startOverSvg} alt='start over' style={{width: '15rem'}}/>
+        <SolidButtonGreen props='start over?'/>
       </StyledSvgButton>
     )
   }
   return (
-    <>
-      <StyledRow>
-        <StyledCol sm='8' lg='5'>
+    <ButtonFlexContainer>
           <StyledSvgButton
-            theme="light"
             onClick={() => {viewStats(true)}}
+            title='round stats'
             >
-            <img src={roundStatsSvg} alt='round stats' style={{width: '15rem'}}/>
+            <SolidButtonGreen props='round stats'/>
           </StyledSvgButton>
-        </StyledCol>
-        <StyledCol sm='8' lg='5'>
           <StyledSvgButton
-            theme="light"
             onClick={() => {nextRound()}}
+            title='next round'
             >
-            <img src={nextRoundSvg} alt='next round' style={{width: '15rem'}}/>
+            <SolidButtonGreen props='next round >>'/>
           </StyledSvgButton>
-        </StyledCol>
-      </StyledRow>
-      <StyledRow marginBottom='5%'>
-        <StyledCol sm='8' lg='5'>
-         <StyledSvgButton
-            theme="light"
+          <StyledSvgButton
             onClick={() => {finished(true)}}
+            title='end session'
             >
-            <img src={endSessionSvg} alt='end session' style={{width: '15rem'}}/>
+            <SolidButtonRed props='end session'/>
           </StyledSvgButton>
-        </StyledCol>
-      </StyledRow>
-    </>
+    </ButtonFlexContainer>
   )
 }

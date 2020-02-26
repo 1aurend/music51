@@ -8,24 +8,30 @@ import {
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../buttons/RoundEndNav'
+import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
+import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from './Grids'
+import {Bug} from '../buttons/Bug'
+import Theme from '../Theme'
 
-// TODO: finish implementing styled-components and refactor
-const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: ${props => props.margintop || 0};
-  margin-bottom: ${props => props.marginbottom || 0};
-  font-family: ${props => props.font ? "'Overpass Mono', monospace ": 0}
+const StatsH1 = styled.h1`
+  color: ${props => props.theme.colors.dark};
 `
-const StyledCenterPane = styled(Col)`
-  border: 5px solid black;
-  border-radius: 1rem;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-  background-color: #e5e6eb;
+
+const StatsH3 = styled.h3`
+  color: ${props => props.theme.colors.tertiary};
+  line-height: 0.75em!important;
+
+`
+const StatsH4 = styled.h4`
+  color: ${props => props.theme.colors.light};
+  .category {
+    color: ${props => props.theme.colors.tertiary};
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .num {
+    color: ${props => props.theme.colors.secondary};
+  }
 `
 
 export default function StatLines(props) {
@@ -33,7 +39,7 @@ export default function StatLines(props) {
   const means = useContext(Session).means.tally
   const qTypes = useContext(Session).means.questionsCurrentRound
   const sizedStyles = useResponsiveStyles()
-  const { statsTitle, statsSubtitle } = sizedStyles
+  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -45,39 +51,35 @@ export default function StatLines(props) {
   const statLines = qTypes.map( type => {
     return <Row
             key={type}
-            style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}>
+            style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
               <p>
-                <span style={{fontWeight: '600'}}>{type.toUpperCase()}: </span>
-                {means[type].attempts[means[type].attempts.length-1]} attempts and {means[type].times[means[type].times.length-1]} seconds per question
+                <span class='category'>{type.toUpperCase()}: </span><br />
+                <span class='num'>{means[type].attempts[means[type].attempts.length-1]}</span> attempts and <span class='num'>{means[type].times[means[type].times.length-1]}</span> seconds per question
               </p>
             </Row>
   })
 
   return (
-    <Container fluid className="main-content-container px-4" id='container'style={{backgroundColor: 'black', minHeight: '120vh'}}>
-      <Row style={{display: 'flex', justifyContent: 'center'}} noGutters>
-        <StyledCenterPane sm='12' lg='8'>
-          <StyledRow margintop='5%'>
-            <h2 style={statsTitle}>
-              {headline}
-            </h2>
-          </StyledRow>
-          <StyledRow margintop='5%' marginbottom='2%' font>
-            <Col sm='12' lg='10'>
-              {subtitle && <Row style={{display: 'flex', justifyContent: 'center', marginBottom: '2%'}}>
-                <h3 style={statsSubtitle}>{subtitle}</h3>
-              </Row>}
-                {statLines}
-              {closing && <Row style={{display: 'flex', justifyContent: 'center'}}>
-                <h3 style={statsSubtitle}>{closing}</h3>
-              </Row>}
-            </Col>
-          </StyledRow>
-          <StyledRow marginbottom='5%'>
+    <Theme>
+      <Universe>
+        <Grid style={layoutInfo}>
+          <Appetizer>
+            <MegaPixelBorder>
+              <StatsH1 style={h1}>{headline}</StatsH1>
+            </MegaPixelBorder>
             <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
-          </StyledRow>
-        </StyledCenterPane>
-      </Row>
-    </Container>
+          </Appetizer>
+          <Entree>
+            <SmallPixelBorderOutline>
+              <StatsH3 style={h3}>{subtitle}</StatsH3>
+              <StatsH4 style={h4}>{statLines}</StatsH4>
+              <StatsH3 style={h3}>{closing}</StatsH3>
+            </SmallPixelBorderOutline>
+          </Entree>
+        </Grid>
+        <Bug />
+      </Universe>
+    </Theme>
+
   )
 }

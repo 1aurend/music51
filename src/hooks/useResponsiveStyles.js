@@ -9,14 +9,18 @@ export default function useResponsiveStyles() {
                                   })
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
-    const screen = size.width > 500 ? 'LARGE' : 'SMALL'
-    const matrix = size.width > 900 ? 'LARGE' : 'SMALL'
+    const screen = size.width >= 1024 ? 'LARGE' : size.width >= 640 ? 'MEDIUM' : 'SMALL'
+    const table = size.width >= 1024 ? 'LARGE' : size.width >= 640 ? 'MEDIUM' : 'SMALL'
     if (init) {
       return {
-        chordCrusher: responsiveStyles.chordCrusher[screen],
-        music51: responsiveStyles.music51[screen],
-        beta: responsiveStyles.beta[screen],
-        input: responsiveStyles.inputSize[screen],
+        h1: responsiveStyles.h1[screen],
+        h2: responsiveStyles.h2[screen],
+        h3: responsiveStyles.h3[screen],
+        h4: responsiveStyles.h4[screen],
+        para: responsiveStyles.para[screen],
+        layoutInfo: responsiveStyles.layoutInfo[screen],
+        layoutQuiz: responsiveStyles.layoutQuiz[screen],
+        input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
         progressSubtitle: responsiveStyles.progressSubtitle[screen],
@@ -24,15 +28,20 @@ export default function useResponsiveStyles() {
         statsTitle: responsiveStyles.statsTitle[screen],
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
-        matrixSize: responsiveStyles.matrixSize[matrix],
-        loadingMargin: responsiveStyles.loadingMargin[screen]
+        tableSize: responsiveStyles.tableSize[table],
+        loadingMargin: responsiveStyles.loadingMargin[screen],
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
       }
     } else {
       return setSizedStyles({
-        chordCrusher: responsiveStyles.chordCrusher[screen],
-        music51: responsiveStyles.music51[screen],
-        beta: responsiveStyles.beta[screen],
-        input: responsiveStyles.inputSize[screen],
+        h1: responsiveStyles.h1[screen],
+        h2: responsiveStyles.h2[screen],
+        h3: responsiveStyles.h3[screen],
+        h4: responsiveStyles.h4[screen],
+        para: responsiveStyles.para[screen],
+        layoutInfo: responsiveStyles.layoutInfo[screen],
+        layoutQuiz: responsiveStyles.layoutQuiz[screen],
+        input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
         progressSubtitle: responsiveStyles.progressSubtitle[screen],
@@ -40,8 +49,9 @@ export default function useResponsiveStyles() {
         statsTitle: responsiveStyles.statsTitle[screen],
         statsSubtitle: responsiveStyles.statsSubtitle[screen],
         staveSize: responsiveStyles.staveSize[screen],
-        matrixSize: responsiveStyles.matrixSize[matrix],
-        loadingMargin: responsiveStyles.loadingMargin[screen]
+        tableSize: responsiveStyles.tableSize[table],
+        loadingMargin: responsiveStyles.loadingMargin[screen],
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
       })
     }
   }

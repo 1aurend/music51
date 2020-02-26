@@ -7,11 +7,11 @@ import 'jest-styled-components'
 
 test('calls "generator" on click', () => {
   const generateQuiz = jest.fn(() => 'launching generator')
-  const { asFragment, getByRole } = render(
+  const { getByText } = render(
   <Go onClick={generateQuiz}/>
   )
-  fireEvent.click(getByRole('button'))
+  fireEvent.click(getByText('GO!'))
   expect(generateQuiz).toHaveBeenCalledTimes(1)
   expect(generateQuiz).toHaveReturnedWith('launching generator')
-  expect(asFragment()).toMatchSnapshot()
+  // expect(asFragment()).toMatchSnapshot()
 })

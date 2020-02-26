@@ -5,7 +5,7 @@ import EndOfRound from './EndOfRound'
 
 export default function Quiz ({ data, round }) {
   const dispatch = useContext(Dispatch)
-  const [devMode, setDevMode] = useState(false) //change to true to enable dev mode
+  const devMode = useState(false)[0] //change to true to enable dev mode
   const [currentQ, nextQ] = useState(data[0].questions[0])
   const [colors, setColors] = useState([])
   const thisInput = useRef(null)
