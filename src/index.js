@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from './Router'
-import DevResultsTable from './components/views/layouts/DevResultsTable'
+// import DevResultsTable from './components/views/layouts/DevResultsTable'
 // import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(<Router />, document.getElementById('root'))

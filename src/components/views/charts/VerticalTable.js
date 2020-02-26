@@ -1,16 +1,12 @@
 import React from 'react'
 import {
-  Container,
   Row,
   Col,
-  Card,
-  CardHeader,
-  CardBody
 } from 'shards-react'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
-import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from '../layouts/PixelBorder'
-import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from '../layouts/Grids'
+import {SmallPixelBorderDouble, MegaPixelBorder} from '../layouts/PixelBorder'
+import {Universe, Grid, Appetizer, Entree, Dessert} from '../layouts/Grids'
 import Theme from '../Theme'
 import styled from 'styled-components'
 
@@ -43,7 +39,7 @@ const StyledTBody = styled.tbody`
 export default function VerticalTable(props) {
   const { greeting, verticalTableAtt, verticalTableT, startOver } = props
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
+  const {h2, h3, para, layoutInfo} = sizedStyles
 
   return (
     <Theme>
