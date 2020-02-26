@@ -81,13 +81,10 @@ export const Question = {
     }
   },
   quality: function(chordContext) {
-    const rootLetter = chordContext.chordDescription.root.letter
-    const rootAccidental = chordContext.chordDescription.root.accidental
     const chordStructureDisplay = chordContext.chordDescription.structure.displayName
     const choices = [...chordStructures(chordContext.chordType)]
       .map(structure => structure.displayName)
-      .map(quality => rootLetter + rootAccidental + quality)
-    const answer = rootLetter + rootAccidental + chordStructureDisplay
+    const answer = chordStructureDisplay
     return {
       "type": "Quality",
       "questionText": "What's the chord's quality?",
