@@ -39,8 +39,7 @@ const StyledSvgButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
-  padding: 0;
-  margin: 10px;
+  padding: 10px;
 `
 
 export default function NavButtons(props) {

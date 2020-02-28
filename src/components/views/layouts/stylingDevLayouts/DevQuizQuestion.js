@@ -5,13 +5,12 @@ import useResponsiveStyles from '../../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import {MegaPixelBorder} from '../PixelBorder'
 import {Bug} from '../../buttons/Bug'
-import {Universe, Grid, Entree, Dessert} from '../Grids'
+import {Universe, Bento, VFlex, HFlex, Grid} from '../Grids'
 import Theme from '../../Theme'
 
 
 const QuestionH5 = styled.h5`
   color: ${props => props.theme.colors.light};
-  padding: 0 5% 5% 5%;
 `
 const ButtonBox = styled.div`
   display: flex;
@@ -31,7 +30,7 @@ const VexFlowCenteringDiv = styled.div`
 
 export default function DevQuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
-  const { h5, layoutQuiz } = sizedStyles
+  const { h5, layoutQuiz, universeSizing } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
   const noteColors = question.type === 'Names' || question.type === 'Roots' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
@@ -46,9 +45,9 @@ export default function DevQuizQuestion(props) {
         tabIndex="1"
         ref={keyboard => keyboard && keyboard.focus()}
         >
-        <Universe>
-          <Grid style={layoutQuiz}>
-            <Entree>
+        <Universe style={universeSizing}>
+          <Bento>
+            <div>
               <QuestionH5 style={h5}>{question.questionText}</QuestionH5>
               <MegaPixelBorder>
                 <VexFlowCenteringDiv>
@@ -61,24 +60,22 @@ export default function DevQuizQuestion(props) {
                     />
                 </VexFlowCenteringDiv>
               </MegaPixelBorder>
-            </Entree>
-            <Dessert>
-              <ButtonBox>
-                {question.choices.map(choice => {
-                  return (
-                    <AnswerChoice
-                      onClick={(e) => handleClick(choice.choice)}
-                      choice={choice.choice}
-                      key={choice.key}
-                      keystroke={choice.key}
-                      input={currentInput}
-                      colors={colors}
-                      />
-                  )}
+            </div>
+            <ButtonBox>
+              {question.choices.map(choice => {
+                return (
+                  <AnswerChoice
+                    onClick={(e) => handleClick(choice.choice)}
+                    choice={choice.choice}
+                    key={choice.key}
+                    keystroke={choice.key}
+                    input={currentInput}
+                    colors={colors}
+                    />
                 )}
-              </ButtonBox>
-            </Dessert>
-          </Grid>
+              )}
+            </ButtonBox>
+          </Bento>
           <Bug />
         </Universe>
       </div>

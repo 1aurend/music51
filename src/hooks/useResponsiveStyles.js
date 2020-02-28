@@ -9,8 +9,8 @@ export default function useResponsiveStyles() {
                                   })
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
-    const screen = size.width >= 1024 ? 'LARGE' : size.width >= 640 ? 'MEDIUM' : 'SMALL'
-    const table = size.width >= 1024 ? 'LARGE' : size.width >= 640 ? 'MEDIUM' : 'SMALL'
+    const screen = size.width >= 1024 ? 'LARGE' : 'SMALL'
+    const table = size.width >= 1024 ? 'LARGE' : 'SMALL'
     if (init) {
       return {
         h1: responsiveStyles.h1[screen],
@@ -19,8 +19,10 @@ export default function useResponsiveStyles() {
         h4: responsiveStyles.h4[screen],
         h5: responsiveStyles.h5[screen],
         para: responsiveStyles.para[screen],
+        universeSizing: responsiveStyles.universeSizing[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
+        layoutStart: responsiveStyles.layoutStart[screen],
         input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
@@ -41,8 +43,10 @@ export default function useResponsiveStyles() {
         h4: responsiveStyles.h4[screen],
         h5: responsiveStyles.h5[screen],
         para: responsiveStyles.para[screen],
+        universeSizing: responsiveStyles.universeSizing[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
+        layoutStart: responsiveStyles.layoutStart[screen],
         input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],

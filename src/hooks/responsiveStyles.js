@@ -3,9 +3,8 @@ const fontBody = "'Thintel', monospace"
 
 const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacing, lineHeight, textTransform, multiplier}) {
   const largeFactor = 1.15
-  const mediumFactor = 1.1
   const multiply = multiplier ? 1.25 : 1
-  let result = {LARGE:{}, MEDIUM:{}, SMALL:{}}
+  let result = {LARGE:{}, SMALL:{}}
   result.LARGE = {
     fontFamily:fontFamily,
     textAlign:textAlign,
@@ -14,13 +13,6 @@ const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacin
     lineHeight:lineHeight*largeFactor,
     textTransform:textTransform
   }
-  result.MEDIUM = {
-    fontFamily:fontFamily,
-    textAlign:textAlign,
-    fontSize:String(baseSize*mediumFactor).concat('px'),
-    letterSpacing:letterSpacing*mediumFactor,
-    lineHeight:lineHeight*mediumFactor,
-    textTransform:textTransform  }
   result.SMALL = {
     fontFamily:fontFamily,
     textAlign:textAlign,
@@ -29,6 +21,22 @@ const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacin
     lineHeight:lineHeight,
     textTransform:textTransform  }
   return result
+}
+
+export const universeSizing = {
+  LARGE: {
+      gridTemplateColumns: "1fr 800px 1fr",
+      gridTemplateRows: "1fr auto 1fr"
+  },
+  SMALL: {
+      gridTemplateColumns: "5% auto 5%",
+      gridTemplateRows: "1fr auto 1fr"
+  }
+}
+
+export const layoutStart = {
+  LARGE: {flexDirection:"row"},
+  SMALL: {flexDirection:"column"}
 }
 
 const sidebarLayout = {gridTemplateAreas: '"B A A" "C A A"'}
@@ -49,25 +57,21 @@ export const mode = {
 
 export const input = {
   LARGE: {fontFamily: fontBody, maxWidth:'100px', minWidth: '80px', textAlign:'center', fontSize:28},
-  MEDIUM: {fontFamily: fontBody, maxWidth:'100px',  minWidth: '80px', textAlign:'center', fontSize:28},
   SMALL: {fontFamily: fontBody, maxWidth:'100px',  minWidth: '80px', textAlign:'center', fontSize:28}
 }
 
 export const answerText = {
   LARGE: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
-  MEDIUM: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28},
   SMALL: {fontFamily: fontBody, maxWidth:'100px', textAlign:'center', fontSize:28}
 }
 
 export const layoutInfo ={
   LARGE: sidebarLayout,
-  MEDIUM: sidebarLayout,
   SMALL: stackedLayout
 }
 
 export const layoutQuiz ={
   LARGE: stackedLayout,
-  MEDIUM: stackedLayout,
   SMALL: stackedLayout
 }
 
@@ -105,12 +109,6 @@ export const staveSize = {
     viewBoxWidth: 250,
     viewBoxHeight: 125,
   },
-  MEDIUM: {
-    svgWidth: '400px',
-    svgHeight: '200px',
-    viewBoxWidth: 250,
-    viewBoxHeight: 125,
-  },
   SMALL: {
     svgWidth: '250px',
     svgHeight: '125px',
@@ -126,7 +124,6 @@ export const tableSize = {
 
 export const answerChoiceSize = {
   LARGE: '100px',
-  MEDIUM: '90px',
   SMALL: '80px'
 }
 

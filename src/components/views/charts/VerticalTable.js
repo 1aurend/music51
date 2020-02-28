@@ -7,6 +7,7 @@ import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import NavButtons from '../buttons/RoundEndNav'
 import {SmallPixelBorderDouble, MegaPixelBorder} from '../layouts/PixelBorder'
 import {Universe, Grid, Appetizer, Entree, Dessert} from '../layouts/Grids'
+import {Bug} from '../buttons/Bug'
 import Theme from '../Theme'
 import styled from 'styled-components'
 
@@ -39,11 +40,11 @@ const StyledTBody = styled.tbody`
 export default function VerticalTable(props) {
   const { greeting, verticalTableAtt, verticalTableT, startOver } = props
   const sizedStyles = useResponsiveStyles()
-  const {h2, h3, para, layoutInfo} = sizedStyles
+  const {h2, h3, para, layoutInfo, universeSizing} = sizedStyles
 
   return (
     <Theme>
-      <Universe>
+      <Universe style={universeSizing}>
         <Grid style={layoutInfo}>
           <Appetizer>
             <MegaPixelBorder>
@@ -116,6 +117,7 @@ export default function VerticalTable(props) {
             <NavButtons table startOver={startOver}/>
           </Dessert>
         </Grid>
+        <Bug />
       </Universe>
     </Theme>
   )

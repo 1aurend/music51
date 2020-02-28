@@ -7,14 +7,14 @@ import Marquee from '../Marquee'
 import Expander from '../Expander'
 import Instructions from '../Instructions'
 import {BugWithSpeechBubble} from '../../buttons/Bug'
-import {Universe, Grid, Appetizer, Entree, Dessert, SubCellMargin} from '../Grids'
+import {Universe, Bento, VFlex, HFlex, Grid} from '../Grids'
 import Theme from '../../Theme'
 import {whatDoINeedToKnow} from '../../../../whatDoINeedToKnow'
-
+import styled from 'styled-components'
 
 export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
-  const { input, layoutInfo } = sizedStyles
+  const { h1, input, layoutStart, universeSizing } = sizedStyles
   const onKeyPressed = (e) => {
     if (e.key === 'Enter') {
       generateQuiz()
@@ -32,26 +32,24 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
         tabIndex="1"
         ref={keyboard => keyboard && keyboard.focus()}
         >
-        <Universe>
-          <Grid style={layoutInfo}>
-            <Appetizer>
+        <Universe style={universeSizing}>
+          <Bento style={layoutStart}>
+            <VFlex>
               <MegaPixelBorder>
                 <Marquee title={title}/>
               </MegaPixelBorder>
-              <SubCellMargin>
+              <HFlex>
                 <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
                 <Go onClick={generateQuiz} />
-              </SubCellMargin>
-            </Appetizer>
-            <Entree>
+              </HFlex>
+            </VFlex>
+            <VFlex>
               <SmallPixelBorderSingle>
-                  <Instructions infoText="In a round of Chord Crusher, you/’ll answer a series of questions about each chord. You can choose the number of chords in a round (if you/’re a newbie, try 5 chords). The goal is to answer questions in a round as quickly as possible, and then to beat your time in each successive round. Will you crush the chords? Or will the chords crush YOU?!"/>
+                  <Instructions />
               </SmallPixelBorderSingle>
               <Expander infoText={whatDoINeedToKnow}/>
-            </Entree>
-            <Dessert>
-            </Dessert>
-          </Grid>
+            </VFlex>
+          </Bento>
           <BugWithSpeechBubble />
         </Universe>
       </div>

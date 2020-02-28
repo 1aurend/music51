@@ -7,12 +7,10 @@ const ExpanderDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  margin-top: 4%;
   > p {
     color: ${props => props.theme.colors.light};
     text-align: left !important;
-    margin: 0 15%;
-
+    padding-top: 10px;
 `
 const ExpanderLink = styled.a`
   cursor: pointer;

@@ -45,7 +45,7 @@ export default function DevStatLines(props) {
      "Overall"
   ]
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz} = sizedStyles
+  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz, universeSizing} = sizedStyles
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -68,7 +68,7 @@ export default function DevStatLines(props) {
 
   return (
     <Theme>
-      <Universe>
+      <Universe style={universeSizing}>
         <Grid style={layoutInfo}>
           <Appetizer>
             <MegaPixelBorder>

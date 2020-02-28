@@ -9,6 +9,7 @@ const BugWrapper = styled.div`
   display: grid;
   grid-template-rows:  50px auto;
   grid-template-columns: auto 50px 50px;
+  grid-area: bug;
   padding-bottom: 5%;
   position: absolute;
   bottom: 5%;

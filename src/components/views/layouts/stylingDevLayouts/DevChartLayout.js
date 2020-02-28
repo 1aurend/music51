@@ -49,7 +49,7 @@ function DevChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const verbT = timesSummary.verb
   const verbA = attemptsSummary.verb
   const sizedStyles = useResponsiveStyles()
-  const { h1, h3, h4, layoutInfo } = sizedStyles
+  const { h1, h3, h4, layoutInfo, universeSizing } = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   useEffect(() => {
@@ -58,7 +58,7 @@ function DevChartLayout({ chartData, round, finished, viewStats, nextRound }) {
 
   return (
     <Theme>
-      <Universe>
+      <Universe style={universeSizing}>
         <Grid style={layoutInfo}>
           <Appetizer>
             <MegaPixelBorder>
