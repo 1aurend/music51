@@ -128,7 +128,7 @@ export const ChordStructure = {
     ],
     possibleRootOffsets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     commonRootOffsets: {
-      minor: [10] // viio7
+      minor: [11] // viio7
     }
   },
   NEAPOLITAN_SIXTH: { // This is treated as a Major triad. It will most often show up in first inversion, but can also show up in root position. See commit notes about decoupling commonRootOffsets.
