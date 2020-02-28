@@ -36,4 +36,3 @@ brew doctor
 
 Our application uses [`Node.js`](https://nodejs.org/en/about/) for development, testing, and running our app.
 
-	
