@@ -24,7 +24,7 @@ export const VFlex = styled.div`
   flex-wrap: nowrap;
   align-items: stretch;
   > * {
-    margin: 10px 0px;
+    margin: 5px 0px;
   }
 `
 
@@ -35,7 +35,7 @@ export const HFlex = styled.div`
   justify-content: center;
   align-items: stretch;
   > * {
-    margin: 0px 10px;
+    margin: 0px 5px;
   }
 `
 

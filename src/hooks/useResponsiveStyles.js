@@ -9,8 +9,8 @@ export default function useResponsiveStyles() {
                                   })
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
-    const screen = size.width >= 1024 ? 'LARGE' : 'SMALL'
-    const table = size.width >= 1024 ? 'LARGE' : 'SMALL'
+    const screen = size.width >= 960 ? 'LARGE' : 'SMALL'
+    const table = size.width >= 960 ? 'LARGE' : 'SMALL'
     if (init) {
       return {
         h1: responsiveStyles.h1[screen],

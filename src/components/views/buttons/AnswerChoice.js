@@ -18,7 +18,7 @@ const StyledChoiceButton = styled.div`
   padding-top: 10px;
   > span, h4, div {
     color: ${props => props.theme.colors.dark} !important;
-    font-size: 2rem;
+    font-size: 24px;
     font-weight: 800;
   }
 `
@@ -87,7 +87,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
         >
           {formattedChoice}
           <StyledKeystrokeSymbol>
-            {keystroke}
+            [ {keystroke} ]
           </StyledKeystrokeSymbol>
       </StyledChoiceButton>
     </ButtonBorder>

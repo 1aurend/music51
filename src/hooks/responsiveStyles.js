@@ -2,7 +2,7 @@ const fontHeading = "'Fipps Regular', monospace"
 const fontBody = "'Thintel', monospace"
 
 const makeBreakpoints = function ({fontFamily, textAlign, baseSize, letterSpacing, lineHeight, textTransform, multiplier}) {
-  const largeFactor = 1.15
+  const largeFactor = 1.1
   const multiply = multiplier ? 1.25 : 1
   let result = {LARGE:{}, SMALL:{}}
   result.LARGE = {
@@ -110,8 +110,8 @@ export const staveSize = {
     viewBoxHeight: 125,
   },
   SMALL: {
-    svgWidth: '250px',
-    svgHeight: '125px',
+    svgWidth: '180px',
+    svgHeight: '120px',
     viewBoxWidth: 250,
     viewBoxHeight: 125,
   }
@@ -123,8 +123,8 @@ export const tableSize = {
 }
 
 export const answerChoiceSize = {
-  LARGE: '100px',
-  SMALL: '80px'
+  LARGE: '90px',
+  SMALL: '55px'
 }
 
 

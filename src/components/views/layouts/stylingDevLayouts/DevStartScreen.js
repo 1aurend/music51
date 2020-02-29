@@ -12,6 +12,10 @@ import Theme from '../../Theme'
 import {whatDoINeedToKnow} from '../../../../whatDoINeedToKnow'
 import styled from 'styled-components'
 
+const HFlex10pxTop = styled(HFlex)`
+  padding-top:10px;
+`
+
 export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
   const { h1, input, layoutStart, universeSizing } = sizedStyles
@@ -38,10 +42,10 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
               <MegaPixelBorder>
                 <Marquee title={title}/>
               </MegaPixelBorder>
-              <HFlex>
+              <HFlex10pxTop>
                 <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
                 <Go onClick={generateQuiz} />
-              </HFlex>
+              </HFlex10pxTop>
             </VFlex>
             <VFlex>
               <SmallPixelBorderSingle>
