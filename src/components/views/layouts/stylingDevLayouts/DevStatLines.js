@@ -9,17 +9,19 @@ import useResponsiveStyles from '../../../../hooks/useResponsiveStyles'
 import styled from 'styled-components'
 import NavButtons from '../../buttons/RoundEndNav'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from '../PixelBorder'
-import {Universe, Grid, Appetizer, Entree, Dessert, BugWrapper} from '../Grids'
+import {Universe, Bento, VFlex, HFlex, Grid} from '../Grids'
 import {Bug} from '../../buttons/Bug'
 import Theme from '../../Theme'
 
 const StatsH1 = styled.h1`
   color: ${props => props.theme.colors.dark};
+  margin: 12px 6px 4px 6px;
 `
 
 const StatsH3 = styled.h3`
   color: ${props => props.theme.colors.tertiary};
   line-height: 0.75em!important;
+  margin: 0;
 
 `
 const StatsH4 = styled.h4`
@@ -45,7 +47,7 @@ export default function DevStatLines(props) {
      "Overall"
   ]
   const sizedStyles = useResponsiveStyles()
-  const { h1, h2, h3, h4, para, input, layoutInfo, layoutQuiz, universeSizing} = sizedStyles
+  const { h1, h2, h3, h4, para, input, layoutQuiz, universeSizing} = sizedStyles
 
   useEffect(() => {
       window.scrollTo(0, 0)
@@ -59,9 +61,9 @@ export default function DevStatLines(props) {
     return <Row
             key={type}
             style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-              <p>
-                <span class='category'>{type.toUpperCase()}: </span><br />
-                <span class='num'>{means[type].attempts[means[type].attempts.length-1]}</span> attempts and <span class='num'>{means[type].times[means[type].times.length-1]}</span> seconds per question
+              <div class='category' style={{width:'100%', display:'block'}}>{type.toUpperCase()}: </div>
+              <p style={{lineHeight:0.8, marginBottom:'12px'}}>
+              <span class='num' >{means[type].attempts[means[type].attempts.length-1]}</span> attempts and <span class='num'>{means[type].times[means[type].times.length-1]}</span> seconds per question.
               </p>
             </Row>
   })
@@ -69,21 +71,19 @@ export default function DevStatLines(props) {
   return (
     <Theme>
       <Universe style={universeSizing}>
-        <Grid style={layoutInfo}>
-          <Appetizer>
-            <MegaPixelBorder>
-              <StatsH1 style={h1}>{headline}</StatsH1>
-            </MegaPixelBorder>
-            <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
-          </Appetizer>
-          <Entree>
-            <SmallPixelBorderOutline>
+        <Bento>
+          <MegaPixelBorder>
+            <StatsH1 style={h1}>{headline}</StatsH1>
+          </MegaPixelBorder>
+          <SmallPixelBorderOutline>
+            <div style={{padding:'10px 20px 0px 20px'}}>
               <StatsH3 style={h3}>{subtitle}</StatsH3>
               <StatsH4 style={h4}>{statLines}</StatsH4>
               <StatsH3 style={h3}>{closing}</StatsH3>
-            </SmallPixelBorderOutline>
-          </Entree>
-        </Grid>
+            </div>
+          </SmallPixelBorderOutline>
+          <NavButtons viewStats={setShowStats} nextRound={nextRound} finished={finished} round={round} statLines/>
+        </Bento>
         <Bug />
       </Universe>
     </Theme>

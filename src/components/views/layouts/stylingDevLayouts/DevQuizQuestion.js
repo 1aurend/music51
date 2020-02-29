@@ -11,15 +11,27 @@ import Theme from '../../Theme'
 
 const QuestionH5 = styled.h5`
   color: ${props => props.theme.colors.light};
+  grid-row: 0 / span 1;
+  align-self: end;
 `
 const ButtonBox = styled.div`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   flex-flow: row wrap;
   > * {
     margin: 2%;
   }
+`
+
+const MegaPixelBorderRow1 = styled(MegaPixelBorder)`
+  grid-row: 1 / span 1;
+`
+
+const QuestionVexFlowDiv = styled.div`
+  display: grid;
+  grid-template-rows: minmax(80px, min-content) auto;
+  grid-row-gap: 10px;
 `
 
 const VexFlowCenteringDiv = styled.div`
@@ -30,7 +42,7 @@ const VexFlowCenteringDiv = styled.div`
 
 export default function DevQuizQuestion(props) {
   const sizedStyles = useResponsiveStyles()
-  const { h5, layoutQuiz, universeSizing } = sizedStyles
+  const { questionText, layoutQuiz, universeSizing } = sizedStyles
   const { chord, question, colors, handleClick, onKeyPressed, currentInput } = props
   const noteColors = question.type === 'Names' || question.type === 'Roots' ? colors.filter(input => input.color === 'green').map(input => input.input) : []
 
@@ -47,9 +59,9 @@ export default function DevQuizQuestion(props) {
         >
         <Universe style={universeSizing}>
           <Bento>
-            <div>
-              <QuestionH5 style={h5}>{question.questionText}</QuestionH5>
-              <MegaPixelBorder>
+            <QuestionVexFlowDiv>
+              <QuestionH5 style={questionText}>{question.questionText}</QuestionH5>
+              <MegaPixelBorderRow1>
                 <VexFlowCenteringDiv>
                   <Vexflow
                     notes={chord.current.notes}
@@ -59,8 +71,8 @@ export default function DevQuizQuestion(props) {
                     colors={noteColors}
                     />
                 </VexFlowCenteringDiv>
-              </MegaPixelBorder>
-            </div>
+              </MegaPixelBorderRow1>
+            </QuestionVexFlowDiv>
             <ButtonBox>
               {question.choices.map(choice => {
                 return (

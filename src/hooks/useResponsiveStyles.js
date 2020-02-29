@@ -9,8 +9,8 @@ export default function useResponsiveStyles() {
                                   })
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
-    const screen = size.width >= 960 ? 'LARGE' : 'SMALL'
-    const table = size.width >= 960 ? 'LARGE' : 'SMALL'
+    const screen = size.width >= 768 ? 'LARGE' : 'SMALL'
+    const table = size.width >= 768 ? 'LARGE' : 'SMALL'
     if (init) {
       return {
         h1: responsiveStyles.h1[screen],
@@ -22,7 +22,8 @@ export default function useResponsiveStyles() {
         universeSizing: responsiveStyles.universeSizing[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
-        layoutStart: responsiveStyles.layoutStart[screen],
+        LargeHSmallV: responsiveStyles.LargeHSmallV[screen],
+        SmallHLargeV: responsiveStyles.SmallHLargeV[screen],
         input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
@@ -33,7 +34,9 @@ export default function useResponsiveStyles() {
         staveSize: responsiveStyles.staveSize[screen],
         tableSize: responsiveStyles.tableSize[table],
         loadingMargin: responsiveStyles.loadingMargin[screen],
-        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen],
+        answerTextSize: responsiveStyles.answerTextSize[screen],
+        navButtonFontSize: responsiveStyles.navButtonFontSize[screen]
       }
     } else {
       return setSizedStyles({
@@ -46,7 +49,8 @@ export default function useResponsiveStyles() {
         universeSizing: responsiveStyles.universeSizing[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
-        layoutStart: responsiveStyles.layoutStart[screen],
+        LargeHSmallV: responsiveStyles.LargeHSmallV[screen],
+        SmallHLargeV: responsiveStyles.SmallHLargeV[screen],
         input: responsiveStyles.input[screen],
         questionText: responsiveStyles.questionText[screen],
         progressTitle: responsiveStyles.progressTitle[screen],
@@ -57,7 +61,9 @@ export default function useResponsiveStyles() {
         staveSize: responsiveStyles.staveSize[screen],
         tableSize: responsiveStyles.tableSize[table],
         loadingMargin: responsiveStyles.loadingMargin[screen],
-        answerChoiceSize: responsiveStyles.answerChoiceSize[screen]
+        answerChoiceSize: responsiveStyles.answerChoiceSize[screen],
+        answerTextSize: responsiveStyles.answerTextSize[screen],
+        navButtonFontSize: responsiveStyles.navButtonFontSize[screen]
       })
     }
   }

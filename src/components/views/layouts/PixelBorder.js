@@ -77,13 +77,19 @@ const ContentPane = styled.div`
   background-color: ${props => props.theme.colors.light};
   height: 100%;
   width: 100%;
-  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
+
+
 const ContentPaneClear = styled.div`
   background-color: none;
   height: 100%;
   width: 100%;
-  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 
@@ -91,10 +97,9 @@ const ContentPaneClear = styled.div`
 // Button-specific definitions
 const ButtonText = styled.h3`
   font-family : 'Thintel', monospace;
-  font-size: 64px;
   text-align: center;
   font-weight: 600;
-  padding: 16px 20px 0px 20px;
+  padding: 12px 12px 0px 12px;
   color: white;
   line-height: 20px;
   white-space: nowrap;
@@ -443,6 +448,7 @@ export const MegaPixelBorder = ({children}) => {
   )
 }
 
+
 export const ButtonBorder = ({children}) => {
   return (
     <Theme>
@@ -475,7 +481,7 @@ export const ButtonBorder = ({children}) => {
   )
 }
 
-export const SolidButtonGreen = ({props}) => {
+export const SolidButtonGreen = ({text, fontSize}) => {
   return (
     <Theme>
       <PixelWrapper>
@@ -489,7 +495,7 @@ export const SolidButtonGreen = ({props}) => {
           <BtG1 /><BtG1h /><BtG1 />
         </ PixelRow>
         <PixelRow>
-          <BtG1h><ButtonText>{props}</ButtonText></ BtG1h>
+          <BtG1h><ButtonText style={fontSize}>{text}</ButtonText></ BtG1h>
         </ PixelRow>
         <PixelRow>
           <BtG2 /><BtG1h /><BtG2 />
@@ -508,7 +514,7 @@ export const SolidButtonGreen = ({props}) => {
   )
 }
 
-export const SolidButtonRed = ({props}) => {
+export const SolidButtonRed = ({text, fontSize}) => {
   return (
     <Theme>
       <PixelWrapper>
@@ -522,7 +528,7 @@ export const SolidButtonRed = ({props}) => {
           <BtR1 /><BtR1h /><BtR1 />
         </ PixelRow>
         <PixelRow>
-          <BtR1h><ButtonText>{props}</ButtonText></ BtR1h>
+          <BtR1h><ButtonText style={fontSize}>{text}</ButtonText></ BtR1h>
         </ PixelRow>
         <PixelRow>
           <BtR2 /><BtR1h /><BtR2 />

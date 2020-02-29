@@ -6,15 +6,18 @@ const MarqueeDiv = styled.div`
   display: flex;
   flex-direction:column;
   justify-content: center;
-
+  margin: 16px 16px 4px 16px;
   > h1 {
     color: ${props => props.theme.colors.dark};
+    margin-bottom:0;
   }
   > h2 {
     color: ${props => props.theme.colors.secondary};
+    margin-bottom:16px;
   }
   > h4 {
     color: ${props => props.theme.colors.tertiary};
+    margin-bottom:0;
   }
 `
 

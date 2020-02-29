@@ -81,6 +81,88 @@ const sampleChord =
                }
             ]
          },
+         {
+            "type": "Names",
+            "questionText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean rhoncus eu neque eget facilisis. Nam porttitor, leo vitae sagittis sollicitudin, augue lacus ultrices magna, eget blandit ligula lorem eu ex.",
+            "answers": [
+               "G",
+               "B",
+               "D",
+               "F"
+            ],
+            "ordered": true,
+            "choices": [
+               {
+                  "choice": "Lorem",
+                  "key": "a"
+               },
+               {
+                  "choice": "ipsum",
+                  "key": "b"
+               },
+               {
+                  "choice": "consectetur",
+                  "key": "c"
+               },
+               {
+                  "choice": "adipiscing",
+                  "key": "d"
+               },
+               {
+                  "choice": "elit",
+                  "key": "e"
+               },
+               {
+                  "choice": "Aenean",
+                  "key": "f"
+               },
+               {
+                  "choice": "Nam",
+                  "key": "g"
+               }
+            ]
+         },
+         {
+            "type": "Names",
+            "questionText": "Lorem ipsum dolor.",
+            "answers": [
+               "G",
+               "B",
+               "D",
+               "F"
+            ],
+            "ordered": true,
+            "choices": [
+               {
+                  "choice": "Lorem",
+                  "key": "a"
+               },
+               {
+                  "choice": "1",
+                  "key": "b"
+               },
+               {
+                  "choice": "consectetur",
+                  "key": "c"
+               },
+               {
+                  "choice": "2",
+                  "key": "d"
+               },
+               {
+                  "choice": "elit",
+                  "key": "e"
+               },
+               {
+                  "choice": "3",
+                  "key": "f"
+               },
+               {
+                  "choice": "Nam",
+                  "key": "g"
+               }
+            ]
+         },
        ]
      }
 const sampleRef = {current: sampleChord}
@@ -397,7 +479,7 @@ export default function Router() {
             currentInput={'a'}
             />} />
         <Route path='/stats' exact render={() => <DevStatLines
-            round={3} /*change this prop to 1 to see the other look*/
+            round={2} /*change this prop to 1 to see the other look*/
             setShowStats={mock}
             nextRound={mock}
             finished={mock}

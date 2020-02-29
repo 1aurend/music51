@@ -5,7 +5,7 @@ import { questionsList } from '../../../generator/questionsList'
 
 const LegendWrapper = styled.div`
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
@@ -15,21 +15,22 @@ const LegendWrapper = styled.div`
 const LegendItem = styled.div`
   display: flex;
   flex-flow: row nowrap;
+  align-items: baseline;
+  margin: 1px;
 `
 
 const LegendDot = styled.div`
   display: block;
   background-color:${props => props.dotColor};
-  width: 16px;
-  height: 16px;
-  margin: 8px;
+  width: 12px;
+  height: 12px;
+  margin: 5px;
 `
 
 const LegendText = styled.h3`
   font-family: 'Thintel', monospace;
   color: ${props => props.theme.colors.dark};
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;
 `
 
 export default function Legend({ chartData }) {

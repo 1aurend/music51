@@ -15,11 +15,11 @@ const StyledChoiceButton = styled.div`
   min-height: ${props => props.buttonSize};
   min-width: ${props => props.buttonSize};
   text-align: center;
-  padding-top: 10px;
+  padding: 12px 12px 0 12px;
   > span, h4, div {
     color: ${props => props.theme.colors.dark} !important;
-    font-size: 24px;
-    font-weight: 800;
+    font-family: 'Asap Condensed SemiBold', Arial, Sans-Serif;
+    margin-bottom: -3px;
   }
 `
 
@@ -37,7 +37,7 @@ const StyledChoice = styled.h4`
 
 export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
   const sizedStyles = useResponsiveStyles()
-  const {answerChoiceSize} = sizedStyles
+  const {answerChoiceSize, answerTextSize} = sizedStyles
   const background = (() => {
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
@@ -52,7 +52,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
   function formatButtonText(choice) {
     if (choice.includes('^')) {
       return (
-        <span>
+        <span style={answerTextSize}>
           &nbsp;{choice.charAt(0)}
           <sup style={{position:'relative', left:'-15px', top:'-17px'}}>
             ^
@@ -61,7 +61,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
       )
     } else if (choice.includes('6') || choice.includes('4')) {
       return (
-        <span>
+        <span style={answerTextSize}>
         {choice.slice(0,-2)}
           <span style={{postion: 'absolute'}}>
             <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
@@ -74,7 +74,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
         </span>
       )
     }
-    return <StyledChoice>{choice}</StyledChoice>
+    return <StyledChoice style={answerTextSize}>{choice}</StyledChoice>
   }
   const formattedChoice = formatButtonText(choice)
 
