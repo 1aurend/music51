@@ -34,12 +34,12 @@ export const universeSizing = {
   }
 }
 
-export const LargeHSmallV = {
+export const largeHSmallV = {
   LARGE: {flexFlow:"row nowrap"},
   SMALL: {flexFlow:"column nowrap"}
 }
 
-export const SmallHLargeV = {
+export const smallHLargeV = {
   LARGE: {flexFlow:"column nowrap"},
   SMALL: {flexFlow:"row nowrap"}
 }
@@ -134,7 +134,7 @@ export const answerTextSize = {
 
 export const navButtonFontSize = {
   LARGE: {fontSize:'50px'},
-  SMALL: {fontSize:'35px'}
+  SMALL: {fontSize:'33px'}
 }
 
 export const loadingMargin = {

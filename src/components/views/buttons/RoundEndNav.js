@@ -58,12 +58,14 @@ export default function NavButtons(props) {
     )
   } else if (table) {
     return (
-      <StyledSvgButton
-        onClick={() => {startOver(true)}}
-        title='start over'
-        >
-        <SolidButtonGreen text='start over?' fontSize={navButtonFontSize}/>
-      </StyledSvgButton>
+      <ButtonFlexContainer>
+        <StyledSvgButton
+          onClick={() => {startOver(true)}}
+          title='start over'
+          >
+          <SolidButtonGreen text='start over?' fontSize={navButtonFontSize}/>
+        </StyledSvgButton>
+      </ButtonFlexContainer>
     )
   }
   return (

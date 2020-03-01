@@ -64,14 +64,14 @@ export default function DevResultsTable(props) {
   } else {*/
     const verticalTableAtt = [
       <tr>
-        <td>Total</td>
+        <th>Total</th>
         <td>{rounded(means.Overall.attempts[0], 2)}</td>
         <td>{rounded(means.Overall.attempts[round-1],2)}</td>
         <td>{rounded(Math.min(...means.Overall.attempts), 2)}</td>
       </tr>,
       qTypes.map( (type, i) => {
       return <tr key={i}>
-              <td>{questionsList[type].abbrev}</td>
+              <th>{questionsList[type].abbrev}</th>
               <td>{replaceNaNs(rounded(means[type].attempts[0], 2))}</td>
               <td>{replaceNaNs(rounded(means[type].attempts[round-1],2))}</td>
               <td>{replaceNaNs(rounded(Math.min(...means[type].attempts), 2))}</td>
@@ -80,14 +80,14 @@ export default function DevResultsTable(props) {
     ]
     const verticalTableT = [
       <tr>
-        <td>Total</td>
+        <th>Total</th>
         <td>{rounded(means.Overall.times[0], 2)}</td>
         <td>{rounded(means.Overall.times[round-1],2)}</td>
         <td>{rounded(Math.min(...means.Overall.times), 2)}</td>
       </tr>,
       qTypes.map( (type, i) => {
         return <tr key={i}>
-                <td>{questionsList[type].abbrev}</td>
+                <th>{questionsList[type].abbrev}</th>
                 <td>{replaceNaNs(rounded(means[type].times[0], 2))}</td>
                 <td>{replaceNaNs(rounded(means[type].times[round-1],2))}</td>
                 <td>{replaceNaNs(rounded(Math.min(...means[type].times), 2))}</td>
@@ -101,7 +101,6 @@ export default function DevResultsTable(props) {
                 verticalTableAtt={verticalTableAtt}
                 verticalTableT={verticalTableT}
                 startOver={startOver} />
-        <Bug />
       </Theme>
     )
 

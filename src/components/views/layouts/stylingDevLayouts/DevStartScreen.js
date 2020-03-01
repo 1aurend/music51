@@ -13,12 +13,12 @@ import {whatDoINeedToKnow} from '../../../../whatDoINeedToKnow'
 import styled from 'styled-components'
 
 const HFlex10pxTop = styled(HFlex)`
-  padding-top:10px;
+  margin-top:10px;
 `
 
 export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, options }) {
   const sizedStyles = useResponsiveStyles()
-  const { h1, input, LargeHSmallV, universeSizing } = sizedStyles
+  const { h1, input, largeHSmallV, universeSizing } = sizedStyles
   const onKeyPressed = (e) => {
     if (e.key === 'Enter') {
       generateQuiz()
@@ -37,7 +37,7 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
         ref={keyboard => keyboard && keyboard.focus()}
         >
         <Universe style={universeSizing}>
-          <Bento style={LargeHSmallV}>
+          <Bento style={largeHSmallV}>
             <VFlex>
               <MegaPixelBorder>
                 <Marquee title={title}/>
@@ -49,11 +49,13 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
             </VFlex>
             <VFlex>
               <SmallPixelBorderSingle>
-                <div style={{padding:'0px 16px'}}>
+                <div style={{padding:'10px 16px 0 16px'}}>
                   <Instructions />
                 </div>
               </SmallPixelBorderSingle>
-              <Expander infoText={whatDoINeedToKnow}/>
+                <div style={{marginTop:'16px'}}>
+                  <Expander infoText={whatDoINeedToKnow}/>
+                </div>
             </VFlex>
           </Bento>
           <BugWithSpeechBubble />

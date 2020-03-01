@@ -7,13 +7,13 @@ const formLink = 'https://forms.gle/qwFKMPGCG12vo8xM6'
 
 const BugWrapper = styled.div`
   display: grid;
-  grid-template-rows:  50px auto;
-  grid-template-columns: auto 50px 50px;
+  grid-template-rows:  auto 25px;
+  grid-template-columns: 25px;
   grid-area: bug;
-  padding-bottom: 5%;
+  padding-bottom: 0;
   position: absolute;
-  bottom: 5%;
-  right: 5%;
+  bottom: 16px;
+  right: 12px;
 `
 
 const StyledButton = styled.div`
@@ -21,25 +21,22 @@ const StyledButton = styled.div`
   cursor: pointer;
   border: none;
   padding: 0;
-  grid-column: 3/3;
+  grid-column: 1/1;
   grid-row: 2/2;
 `
 
-const StyledBubbleDiv = styled.div`
+const StyledCaption = styled.div`
   display: block;
-  color:${props => props.theme.colors.tertiary};
-  padding: 5px;
-  grid-column: 2/2;
+  color:${props => props.theme.colors.secondary};
+  grid-column: 1/1;
   grid-row: 1/1;
-  background-repeat: no-repeat;
-  background-size: cover;
   > h4 {
     color: inherit;
     font-family : 'Thintel', monospace;
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
-    padding: 2px;
-    font-weight: 600;
+    letter-spacing: 1px;
+    margin: -8px;
   }
 `
 
@@ -48,7 +45,7 @@ export function Bug({ onClick }) {
     <BugWrapper>
       <StyledButton onClick={onClick}>
         <a href={formLink} alt='Bug Report Google Form' target="_blank" rel="noopener noreferrer">
-          <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
+          <img src={bugSvg} alt='report bugs' style={{width: '25px', transform:'rotate(300deg)'}}/>
         </a>
       </StyledButton>
     </BugWrapper>
@@ -58,16 +55,14 @@ export function Bug({ onClick }) {
 export function BugWithSpeechBubble({ onClick }) {
   return (
     <BugWrapper>
-      <StyledBubbleDiv
-        onClick={onClick}
-        style={{backgroundImage: `url(${bubbleSvg})`}}
-        ><h4>BUGS?</h4>
-      </StyledBubbleDiv>
-      <StyledButton onClick={onClick}>
-        <a href={formLink} alt='Bug Report Google Form' target="_blank" rel="noopener noreferrer">
-          <img src={bugSvg} alt='report bugs' style={{width: '50px', transform:'rotate(300deg)'}}/>
-        </a>
-      </StyledButton>
+      <a href={formLink} alt='Bug Report Google Form' target="_blank" rel="noopener noreferrer">
+        <StyledCaption onClick={onClick}
+          ><h4>BUGS?</h4>
+        </StyledCaption>
+        <StyledButton onClick={onClick}>
+            <img src={bugSvg} alt='report bugs' style={{width: '25px', transform:'rotate(300deg)'}}/>
+        </StyledButton>
+      </a>
     </BugWrapper>
   )
 }

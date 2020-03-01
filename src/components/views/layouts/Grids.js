@@ -23,9 +23,7 @@ export const VFlex = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
-  > * {
-    margin: 5px 0px;
-  }
+
 `
 
 export const HFlex = styled.div`
@@ -34,9 +32,7 @@ export const HFlex = styled.div`
   flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
-  > * {
-    margin: 0px 5px;
-  }
+
 `
 
 
@@ -48,7 +44,7 @@ export const Bento = styled.div`
   flex-wrap: nowrap;
   align-items: stretch;
   > * {
-    padding: 10px;
+    margin: 10px;
   }
 `
 

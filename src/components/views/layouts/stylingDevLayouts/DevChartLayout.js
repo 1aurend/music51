@@ -56,7 +56,7 @@ function DevChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   const verbT = timesSummary.verb
   const verbA = attemptsSummary.verb
   const sizedStyles = useResponsiveStyles()
-  const { h1, h3, h4, SmallHLargeV, LargeHSmallV, universeSizing } = sizedStyles
+  const { h1, h3, h4, largeHSmallV, universeSizing } = sizedStyles
   const vTColor = verbT === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   const vAColor = verbA === 'decreased' ? {color: '#26AD5E', fontWeight: '600'} : null
   useEffect(() => {
@@ -73,7 +73,7 @@ function DevChartLayout({ chartData, round, finished, viewStats, nextRound }) {
           <SmallPixelBorderOutline>
             <VFlex>
               <StatsH3 style={h3}>Here's Your Progress:</StatsH3>
-              <HVBox style={LargeHSmallV}>
+              <HVBox style={largeHSmallV}>
                 <Compartment>
                   <Stats style={h4}>
                     <div class='category' style={{width:'100%', display:'block'}}>
@@ -118,7 +118,7 @@ function DevChartLayout({ chartData, round, finished, viewStats, nextRound }) {
           <SmallPixelBorderDouble>
             <VFlex style={{margin:'10px 10px 0 10px'}}>
                 <StatsH3 style={h3}>Here's what changed the most this round!</StatsH3>
-                <HVBox style={LargeHSmallV}>
+                <HVBox style={largeHSmallV}>
                   <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesAtt} metric={'attempts'} />
                   <Chart showLegend={false} chartData={chartData} qTypes={chartData.chartData.categoriesTime} metric={'times'} />
                 </HVBox>
