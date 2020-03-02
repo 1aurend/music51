@@ -76,9 +76,9 @@ const classicblue20 = {
 
 const fewerHues = {
   colors: {
-    primary: '#0F4C81',
+    primary: '#0F4C81', // outline light-ish blue
     secondary: '#26AD5E',
-    tertiary: '#0F4C81',
+    tertiary: '#5088B8', // lighter blue text
     light: '#FFFFFF',
     dark: '#082742'
   },
@@ -100,7 +100,7 @@ const grayScale = {
 
 export default function Theme({ children }){
   return(
-    <ThemeProvider theme={grayScale}>
+    <ThemeProvider theme={fewerHues}>
       <GlobalFonts />{children}
     </ThemeProvider>
   )
