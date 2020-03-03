@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Theme from '../Theme'
 
 
 const PixelWrapper = styled.div`
@@ -182,12 +181,46 @@ const BtR2h = styled.div`
   height:${props => props.theme.pixelweight};
   width:100%;
 `
-
+const BtTh1 = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.secondary};
+  height:${props => props.theme.pixelWeight};
+  width:${props => props.theme.pixelWeight};
+`
+const BtTh1v = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.secondary};
+  height:1;
+  width:${props => props.theme.pixelWeight};
+`
+const BtTh1h = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.secondary};
+  height:${props => props.theme.pixelweight};
+  width:100%;
+`
+const BtTh2 = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.primary};
+  height:${props => props.theme.pixelWeight};
+  width:${props => props.theme.pixelWeight};
+`
+const BtTh2v = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.primary};
+  height:1;
+  width:${props => props.theme.pixelWeight};
+`
+const BtTh2h = styled.div`
+  display: block;
+  background-color: ${props => props.theme.colors.primary};
+  height:${props => props.theme.pixelweight};
+  width:100%;
+`
 
 
 export const SmallPixelBorderDouble = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
@@ -213,14 +246,12 @@ export const SmallPixelBorderDouble = ({children}) => {
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 
 export const SmallPixelBorderSingle = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
@@ -246,13 +277,11 @@ export const SmallPixelBorderSingle = ({children}) => {
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 export const SmallPixelBorderOutline = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
@@ -278,13 +307,11 @@ export const SmallPixelBorderOutline = ({children}) => {
           <Px0 /><Px0 /><Px1h /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 export const MediumPixelBorder = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
@@ -310,14 +337,12 @@ export const MediumPixelBorder = ({children}) => {
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 
 export const LargePixelBorder = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
@@ -349,14 +374,12 @@ export const LargePixelBorder = ({children}) => {
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 
 export const JumboPixelBorder = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
@@ -394,13 +417,11 @@ export const JumboPixelBorder = ({children}) => {
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 export const MegaPixelBorder = ({children}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
@@ -444,14 +465,12 @@ export const MegaPixelBorder = ({children}) => {
           <Px2 /><Px2 /><Px0 /><Px1h /><Px0 /><Px2 /><Px2 />
         </ PixelRow>
       </PixelWrapper>
-    </Theme>
   )
 }
 
 
 export const ButtonBorder = ({children}) => {
   return (
-    <Theme>
       <PixelButtonWrapper>
         <PixelRow>
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
@@ -477,13 +496,11 @@ export const ButtonBorder = ({children}) => {
           <Px0 /><Px0 /><Px0 /><Px1h /><Px0 /><Px0 /><Px0 />
         </ PixelRow>
       </PixelButtonWrapper>
-    </Theme>
   )
 }
 
 export const SolidButtonGreen = ({text, fontSize}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><BtG1h/><Px0 /><Px0 />
@@ -510,13 +527,11 @@ export const SolidButtonGreen = ({text, fontSize}) => {
           <Px0 /><Px0 /><BtG2h/><Px0 /><Px0 />
         </ PixelRow>
       </ PixelWrapper>
-    </Theme>
   )
 }
 
 export const SolidButtonRed = ({text, fontSize}) => {
   return (
-    <Theme>
       <PixelWrapper>
         <PixelRow>
           <Px0 /><Px0 /><BtR1h/><Px0 /><Px0 />
@@ -543,6 +558,36 @@ export const SolidButtonRed = ({text, fontSize}) => {
           <Px0 /><Px0 /><BtR2h/><Px0 /><Px0 />
         </ PixelRow>
       </ PixelWrapper>
-    </Theme>
+  )
+}
+
+export const SolidButtonTheme = ({text, fontSize}) => {
+  return (
+      <PixelWrapper>
+        <PixelRow>
+          <Px0 /><Px0 /><BtTh1h/><Px0 /><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <Px0 /><BtTh1h/><Px0 />
+        </ PixelRow>
+        <PixelRow>
+          <BtTh1 /><BtTh1h /><BtTh1 />
+        </ PixelRow>
+        <PixelRow>
+          <BtTh1h><ButtonText style={fontSize}>{text}</ButtonText></ BtTh1h>
+        </ PixelRow>
+        <PixelRow>
+          <BtTh2 /><BtTh1h /><BtTh2 />
+        </PixelRow>
+        <PixelRow>
+          <BtTh2 /><BtTh2 /><BtTh1h /><BtTh2 /><BtTh2 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><BtTh2h /><Px0 />
+        </PixelRow>
+        <PixelRow>
+          <Px0 /><Px0 /><BtTh2h/><Px0 /><Px0 />
+        </ PixelRow>
+      </ PixelWrapper>
   )
 }

@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import {MegaPixelBorder} from './PixelBorder'
 import {Bug} from '../buttons/Bug'
 import {Universe, LunchBox, VFlex, HFlex, Grid} from './Grids'
-import Theme from '../Theme'
 
 
 const QuestionH5 = styled.h5`
@@ -66,7 +65,6 @@ export default function QuizQuestion(props) {
   },[question])
 
   return (
-    <Theme>
       <div style={{outline:'none'}}
         onKeyDown={(e) => onKeyPressed(e)}
         tabIndex="1"
@@ -111,7 +109,6 @@ export default function QuizQuestion(props) {
           <Bug />
         </Universe>
       </div>
-    </Theme>
 
   )
 }

@@ -9,7 +9,6 @@ import {SmallPixelBorderDouble, MegaPixelBorder} from '../layouts/PixelBorder'
 import {Universe, Bento, HFlex, VFlex, Grid} from '../layouts/Grids'
 import {Bug} from '../buttons/Bug'
 import Marquee from '../layouts/Marquee'
-import Theme from '../Theme'
 import styled from 'styled-components'
 
 const HVBox = styled.div`
@@ -66,7 +65,6 @@ export default function VerticalTable(props) {
   const title = {"headline":"Session Status", "mode":greeting}
 
   return (
-    <Theme>
       <Universe style={universeSizing}>
         <Bento>
           <MegaPixelBorder>
@@ -132,6 +130,5 @@ export default function VerticalTable(props) {
         </Bento>
         <Bug />
       </Universe>
-    </Theme>
   )
 }

@@ -11,7 +11,6 @@ import NavButtons from '../buttons/RoundEndNav'
 import {SmallPixelBorderSingle, SmallPixelBorderDouble, SmallPixelBorderOutline, MediumPixelBorder, LargePixelBorder, JumboPixelBorder, MegaPixelBorder} from './PixelBorder'
 import {Universe, Bento, VFlex, HFlex, Grid} from './Grids'
 import {Bug} from '../buttons/Bug'
-import Theme from '../Theme'
 
 const StatsH1 = styled.h1`
   color: ${props => props.theme.colors.dark};
@@ -63,7 +62,6 @@ export default function StatLines(props) {
   })
 
   return (
-    <Theme>
       <Universe style={universeSizing}>
         <Bento>
           <MegaPixelBorder>
@@ -80,7 +78,6 @@ export default function StatLines(props) {
         </Bento>
         <Bug />
       </Universe>
-    </Theme>
 
   )
 }

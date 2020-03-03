@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import {Bug} from '../buttons/Bug'
 import {SmallPixelBorderDouble, SmallPixelBorderOutline, MegaPixelBorder} from './PixelBorder'
 import {Universe, Bento, VFlex, HFlex, Grid} from './Grids'
-import Theme from '../Theme'
 import Legend from '../charts/Legend'
 
 const Compartment = styled.div`
@@ -63,7 +62,6 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
   },[])
 
   return (
-    <Theme>
       <Universe style={universeSizing}>
         <Bento>
           <MegaPixelBorder>
@@ -129,7 +127,6 @@ function ChartLayout({ chartData, round, finished, viewStats, nextRound }) {
         </Bento>
         <Bug />
       </Universe>
-    </Theme>
   )
 }
 

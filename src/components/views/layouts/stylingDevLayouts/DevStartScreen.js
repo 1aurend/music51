@@ -8,7 +8,6 @@ import Expander from '../Expander'
 import Instructions from '../Instructions'
 import {BugWithSpeechBubble} from '../../buttons/Bug'
 import {Universe, Bento, VFlex, HFlex, Grid} from '../Grids'
-import Theme from '../../Theme'
 import {whatDoINeedToKnow} from '../../../../whatDoINeedToKnow'
 import styled from 'styled-components'
 
@@ -30,7 +29,6 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
   }, [])
 
   return (
-    <Theme>
       <div style={{outline:'none'}}
         onKeyDown={(e) => onKeyPressed(e)}
         tabIndex="1"
@@ -61,6 +59,5 @@ export default function DevStartScreen({ title, generateQuiz, numQs, onCheck, op
           <BugWithSpeechBubble />
         </Universe>
       </div>
-    </Theme>
   )
 }

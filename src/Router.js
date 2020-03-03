@@ -8,6 +8,10 @@ import DevStartScreen from './components/views/layouts/stylingDevLayouts/DevStar
 import DevQuizQuestion from './components/views/layouts/stylingDevLayouts/DevQuizQuestion'
 import DevStatLines from './components/views/layouts/stylingDevLayouts/DevStatLines'
 import DevChartLayout from './components/views/layouts/stylingDevLayouts/DevChartLayout'
+import * as Themes from './components/views/Theme'
+import { ThemeProvider } from "styled-components"
+import GlobalFonts from './fonts/fonts'
+
 
 
 const mock = () => {
@@ -458,45 +462,48 @@ const mockChart = {
 
 export default function Router() {
     return (
-      <BrowserRouter>
-        <Route path='/' exact component={Context} />
-        <Route path='/start' exact render={() => <DevStartScreen
-            title={{headline: 'Chord Crusher', mode: '*non-diatonic mode*', subtitle: 'MUSIC 51'}}
-            generateQuiz={mock}
-            numQs={1}
-            onCheck={mock}
-            options={{
-              chordTypes: {triads:true, sevenths:true},
-              roots: {common:true, any:false}
-            }}
-            />} />
-        <Route path='/quiz' exact render={() => <DevQuizQuestion
-            chord={sampleRef}
-            question={sampleChord.questions[0]}
-            colors={[]}
-            handleClick={mock}
-            onKeyPressed={mock}
-            currentInput={'a'}
-            />} />
-        <Route path='/stats' exact render={() => <DevStatLines
-            round={2} /*change this prop to 1 to see the other look*/
-            setShowStats={mock}
-            nextRound={mock}
-            finished={mock}
-            mockData={mockData}
-            />} />
-          <Route path='/chart' exact render={() => <DevChartLayout
-              chartData={mockChart}
-              round={3}
-              finished={mock}
-              viewStats={mock}
-              nextRound={mock}
+      <ThemeProvider theme={Themes.grayScale}>
+        <GlobalFonts />
+        <BrowserRouter>
+          <Route path='/' exact component={Context} />
+          <Route path='/start' exact render={() => <DevStartScreen
+              title={{headline: 'Chord Crusher', mode: '*non-diatonic mode*', subtitle: 'MUSIC 51'}}
+              generateQuiz={mock}
+              numQs={1}
+              onCheck={mock}
+              options={{
+                chordTypes: {triads:true, sevenths:true},
+                roots: {common:true, any:false}
+              }}
               />} />
-        <Route path='/table' exact render={() => <DevResultsTable
-            round={3}
-            startOver={mock}
-            mockData={mockData}
-            />} />
-      </BrowserRouter>
+          <Route path='/quiz' exact render={() => <DevQuizQuestion
+              chord={sampleRef}
+              question={sampleChord.questions[0]}
+              colors={[]}
+              handleClick={mock}
+              onKeyPressed={mock}
+              currentInput={'a'}
+              />} />
+          <Route path='/stats' exact render={() => <DevStatLines
+              round={2} /*change this prop to 1 to see the other look*/
+              setShowStats={mock}
+              nextRound={mock}
+              finished={mock}
+              mockData={mockData}
+              />} />
+            <Route path='/chart' exact render={() => <DevChartLayout
+                chartData={mockChart}
+                round={3}
+                finished={mock}
+                viewStats={mock}
+                nextRound={mock}
+                />} />
+          <Route path='/table' exact render={() => <DevResultsTable
+              round={3}
+              startOver={mock}
+              mockData={mockData}
+              />} />
+        </BrowserRouter>
+      </ThemeProvider>
     )
   }

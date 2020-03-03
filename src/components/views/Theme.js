@@ -1,8 +1,3 @@
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import GlobalFonts from '../../fonts/fonts';
-
-
 const pixelWeight = '3px'
 
 const buttonColors = {
@@ -14,7 +9,7 @@ const buttonColors = {
   red3: '#FF3863'
 }
 
-const rosequartz16 = {
+export const rosequartz16 = {
   colors: {
     primary: '#FFF9FF',
     secondary: '#3791B3',
@@ -26,7 +21,7 @@ const rosequartz16 = {
   buttonColors:buttonColors
 }
 
-const greenery17 = {
+export const greenery17 = {
   colors: {
     primary: '#88B04B',
     secondary: '#6E4BE3',
@@ -38,7 +33,7 @@ const greenery17 = {
   buttonColors:buttonColors
 }
 
-const ultraviolet18 = {
+export const ultraviolet18 = {
   colors: {
     primary: '#5F4B8B',
     secondary: '#D622F2',
@@ -50,7 +45,7 @@ const ultraviolet18 = {
   buttonColors:buttonColors
 }
 
-const livingcoral19 = {
+export const livingcoral19 = {
   colors: {
     primary: '#4082C7',
     secondary: '#FA7268',
@@ -62,7 +57,7 @@ const livingcoral19 = {
   buttonColors:buttonColors
 }
 
-const classicblue20 = {
+export const classicblue20 = {
   colors: {
     primary: '#0F4C81',
     secondary: '#B53F04',
@@ -74,7 +69,7 @@ const classicblue20 = {
   buttonColors:buttonColors
 }
 
-const fewerHues = {
+export const fewerHues = {
   colors: {
     primary: '#0F4C81', // outline light-ish blue
     secondary: '#26AD5E',
@@ -86,7 +81,7 @@ const fewerHues = {
   buttonColors:buttonColors
 }
 
-const grayScale = {
+export const grayScale = {
   colors: {
     primary: '#747578',
     secondary: '#26AD5E',
@@ -97,11 +92,3 @@ const grayScale = {
   pixelWeight:pixelWeight,
   buttonColors:buttonColors
 }
-
-export default function Theme({ children }){
-  return(
-    <ThemeProvider theme={fewerHues}>
-      <GlobalFonts />{children}
-    </ThemeProvider>
-  )
-};

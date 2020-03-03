@@ -4,11 +4,11 @@ import Go from '../buttons/Go'
 import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 import {SmallPixelBorderSingle, MegaPixelBorder} from './PixelBorder'
 import Marquee from './Marquee'
+import NextTheme from '../buttons/NextTheme'
 import Expander from './Expander'
 import Instructions from './Instructions'
 import {BugWithSpeechBubble} from '../buttons/Bug'
 import {Universe, Bento, VFlex, HFlex, Grid} from './Grids'
-import Theme from '../Theme'
 import {whatDoINeedToKnow} from '../../../whatDoINeedToKnow'
 import styled from 'styled-components'
 const HFlex10pxTop = styled(HFlex)`
@@ -29,7 +29,6 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
   }, [])
 
   return (
-    <Theme>
       <div style={{outline:'none'}}
         onKeyDown={(e) => onKeyPressed(e)}
         tabIndex="1"
@@ -42,6 +41,7 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
                 <Marquee title={title}/>
               </MegaPixelBorder>
               <HFlex10pxTop>
+                <NextTheme />
                 <SessionOptions checked={options} onChange={(e) => { numQs.current = e.target.value }} onCheck={onCheck} size={input} />
                 <Go onClick={generateQuiz} />
               </HFlex10pxTop>
@@ -60,6 +60,5 @@ export default function StartScreen({ title, generateQuiz, numQs, onCheck, optio
           <BugWithSpeechBubble />
         </Universe>
       </div>
-    </Theme>
   )
 }

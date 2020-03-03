@@ -4,7 +4,6 @@ import { rounded } from '../../../../utility'
 import VerticalTable from '../../charts/VerticalTable'
 import { questionsList } from '../../../../generator/questionsList'
 import {Bug} from '../../buttons/Bug'
-import Theme from '../../Theme'
 
 
 function replaceNaNs(num) {
@@ -95,13 +94,11 @@ export default function DevResultsTable(props) {
             })
     ]
     return (
-      <Theme>
         <VerticalTable
                 greeting={greeting}
                 verticalTableAtt={verticalTableAtt}
                 verticalTableT={verticalTableT}
                 startOver={startOver} />
-      </Theme>
     )
 
     /*}*/
