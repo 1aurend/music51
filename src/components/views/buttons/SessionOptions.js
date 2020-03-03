@@ -15,19 +15,33 @@ const StyledToggleRow = styled(Row)`
   margin-left: 25%;
 `
 const StyledColHeader = styled.h3`
-  text-align: center;
   color: ${props => props.theme.colors.light};
-  line-height: 10px;
+  line-height: 0.75em;
+  font-family: 'Thintel', monospace;
+  text-align: center;
+  font-size: 28px;
+  text-transform: lowercase
 `
 const ToggleDiv = styled.div`
   display: flex;
   flex-flow: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   > * {
-    margin: 5%
+    margin: 5px;
   }
 `
+
+const FormStyle = {
+  fontFamily: "'Thintel', monospace",
+  textAlign: "center",
+  fontSize: "28px",
+  textTransform: "lowercase",
+  maxWidth: "80px",
+  minWidth: "60px"
+}
+
+
 
 export default function SessionOptions({checked, onChange, onCheck, text, size}) {
   const sizedStyles = useResponsiveStyles()
@@ -35,8 +49,8 @@ export default function SessionOptions({checked, onChange, onCheck, text, size})
   return (
       <>
       <ToggleDiv>
-            <StyledColHeader style={h4}>chords/round:</StyledColHeader>
-          <FormInput onChange={onChange} type="text" placeholder="5" style={input}/>
+            <StyledColHeader>chords<br/>/round:</StyledColHeader>
+            <FormInput onChange={onChange} type="text" placeholder="5" style={FormStyle}/>
           {/*<Col sm='12' lg='4'>
             <StyledColHeader>CHORD TYPES</StyledColHeader>
             <StyledToggleRow>

@@ -15,11 +15,11 @@ const StyledChoiceButton = styled.div`
   min-height: ${props => props.buttonSize};
   min-width: ${props => props.buttonSize};
   text-align: center;
-  padding-top: 10px;
+  padding: 12px 12px 0 12px;
   > span, h4, div {
     color: ${props => props.theme.colors.dark} !important;
-    font-size: 2rem;
-    font-weight: 800;
+    font-family: 'Asap Condensed SemiBold', Arial, Sans-Serif;
+    margin-bottom: -3px;
   }
 `
 
@@ -37,7 +37,7 @@ const StyledChoice = styled.h4`
 
 export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
   const sizedStyles = useResponsiveStyles()
-  const {answerChoiceSize} = sizedStyles
+  const {answerChoiceSize, answerTextSize, supPosition, subPosition} = sizedStyles
   const background = (() => {
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
@@ -75,29 +75,29 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
       )
     } else if (choice.includes('^')) {
       return (
-        <span>
+        <span style={answerTextSize}>
           &nbsp;{choice.charAt(0)}
-          <sup style={{position:'relative', left:'-15px', top:'-17px'}}>
+          <sup style={supPosition}>
             ^
           </sup>
         </span>
       )
     } else if (choice.includes('6') || choice.includes('4')) {
       return (
-        <span>
+        <span style={answerTextSize}>
         {choice.slice(0,-2)}
           <span style={{postion: 'absolute'}}>
             <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
               {choice.charAt(choice.length-2)}
             </sup>
-            <sub style={{position:'relative', left:'-14px', top:'6px'}}>
+            <sub style={subPosition}>
               {choice.charAt(choice.length-1)}
             </sub>
           </span>
         </span>
       )
     }
-    return <StyledChoice>{choice}</StyledChoice>
+    return <StyledChoice style={answerTextSize}>{choice}</StyledChoice>
   }
   const formattedChoice = formatButtonText(choice)
 
@@ -110,7 +110,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
         >
           {formattedChoice}
           <StyledKeystrokeSymbol>
-            {keystroke}
+            [ {keystroke} ]
           </StyledKeystrokeSymbol>
       </StyledChoiceButton>
     </ButtonBorder>

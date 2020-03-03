@@ -4,28 +4,10 @@ import endSessionSvg from '../../../assets/svgs-endsessionred.svg'
 import roundStatsSvg from '../../../assets/svgs-roundstats.svg'
 import backSvg from '../../../assets/svgs-backarrows.svg'
 import startOverSvg from '../../../assets/svgs-startover.svg'
-import {
-  Row,
-  Col,
-  Button,
-} from 'shards-react'
 import styled from 'styled-components'
 import {SolidButtonGreen, SolidButtonRed} from '../layouts/PixelBorder'
+import useResponsiveStyles from '../../../hooks/useResponsiveStyles'
 
-
-const StyledRow = styled(Row)`
-  display: flex;
-  justify-content: center;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: ${props => props.marginTop || 0};
-  margin-bottom: ${props => props.marginBottom || 0};
-`
-const StyledCol = styled(Col)`
-  display: flex;
-  justify-content: center;
-  margin-bottom: ${props => props.marginBottom || 0};
-`
 
 const ButtonFlexContainer = styled.div`
   display: flex;
@@ -39,12 +21,13 @@ const StyledSvgButton = styled.div`
   display: block;
   cursor: pointer;
   border: none;
-  padding: 0;
-  margin: 10px;
+  padding: 10px;
 `
 
 export default function NavButtons(props) {
   const { viewStats, nextRound, finished, round, statLines, table, startOver } = props
+  const sizedStyles = useResponsiveStyles()
+  const { navButtonFontSize } = sizedStyles
   if (round === 1) {
     return (
       <ButtonFlexContainer>
@@ -52,7 +35,7 @@ export default function NavButtons(props) {
           onClick={() => {nextRound()}}
           title='next round'
           >
-          <SolidButtonGreen props='next round >>'/>
+          <SolidButtonGreen text='next round >>' fontSize={navButtonFontSize}/>
         </StyledSvgButton>
       </ButtonFlexContainer>
     )
@@ -63,24 +46,26 @@ export default function NavButtons(props) {
             onClick={() => {viewStats(false)}}
             title='back'
             >
-            <SolidButtonGreen props='<< back'/>
+            <SolidButtonGreen text='<< back' fontSize={navButtonFontSize}/>
           </StyledSvgButton>
           <StyledSvgButton
             onClick={() => {nextRound()}}
             title='next round'
             >
-            <SolidButtonGreen props='next round >>'/>
+            <SolidButtonGreen text='next round >>' fontSize={navButtonFontSize}/>
           </StyledSvgButton>
       </ ButtonFlexContainer>
     )
   } else if (table) {
     return (
-      <StyledSvgButton
-        onClick={() => {startOver(true)}}
-        title='start over'
-        >
-        <SolidButtonGreen props='start over?'/>
-      </StyledSvgButton>
+      <ButtonFlexContainer>
+        <StyledSvgButton
+          onClick={() => {startOver(true)}}
+          title='start over'
+          >
+          <SolidButtonGreen text='start over?' fontSize={navButtonFontSize}/>
+        </StyledSvgButton>
+      </ButtonFlexContainer>
     )
   }
   return (
@@ -89,19 +74,19 @@ export default function NavButtons(props) {
             onClick={() => {viewStats(true)}}
             title='round stats'
             >
-            <SolidButtonGreen props='round stats'/>
+            <SolidButtonGreen text='round stats' fontSize={navButtonFontSize}/>
           </StyledSvgButton>
           <StyledSvgButton
             onClick={() => {nextRound()}}
             title='next round'
             >
-            <SolidButtonGreen props='next round >>'/>
+            <SolidButtonGreen text='next round >>' fontSize={navButtonFontSize}/>
           </StyledSvgButton>
           <StyledSvgButton
             onClick={() => {finished(true)}}
             title='end session'
             >
-            <SolidButtonRed props='end session'/>
+            <SolidButtonRed text='end session' fontSize={navButtonFontSize}/>
           </StyledSvgButton>
     </ButtonFlexContainer>
   )
