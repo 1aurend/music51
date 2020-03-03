@@ -6,7 +6,7 @@ Chord Crusher is a chord identification training app.
 
 ## Development
 
-Follow these instructions for development on the Chord Crusher application.
+Follow these instructions to get you started hacking on the Chord Crusher application.
 
 ### 1. Open up your Terminal
 
