@@ -103,3 +103,44 @@ We can use `brew` to install both `Node.js` and `npm` with a single command:
 ```Zsh
 brew install node
 ```
+
+### 5. Update our dependencies
+
+The code in Chord Crusher is built on a bunch of other people's code.
+
+### 6. Run the test suite
+
+To make sure that all the plumbing is clean, let's run some tests. The tests exist so we know that the code is in good working order without having to get the whole machine running. Try running the following command:
+
+```Zsh
+npm test
+```
+
+If you get a message like this:
+
+```Zsh
+No tests found related to files changed since last commit.
+Press `a` to run all tests, or run Jest with `--watchAll`.
+
+Watch Usage
+ › Press a to run all tests.
+ › Press f to run only failed tests.
+ › Press q to quit watch mode.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a test name regex pattern.
+ › Press Enter to trigger a test run.
+```
+
+Follow the instructions and press `a`.
+
+You should hopefully get witness an avalanche of strange seeming information streaming down the terminal window.
+
+### 7. Run Chord Crusher
+
+If all of the tests are "green" (i.e., passing), let's run the application in a browser:
+
+```Zsh
+npm start
+```
+
+This should open up Chord Crusher in a window in your default web browser. Now you can play the game!
