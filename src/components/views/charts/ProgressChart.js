@@ -50,7 +50,7 @@ function ProgressChart(props) {
       <VictoryAxis
         dependentAxis
         label={yLabel}
-        style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 36, fontWeight:700, padding: 26}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 5}}}
+        style={{axisLabel: {fontFamily: "'Thintel', monospace", fontSize: 36, fontWeight:700, padding: 28}, tickLabels: {fontFamily: "'Thintel', monospace", fontSize: 28, padding: 5}}}
         domain={{y: [0, domainMaxY]}}
         tickFormat={(t) => rounded(t, 2)}
         />

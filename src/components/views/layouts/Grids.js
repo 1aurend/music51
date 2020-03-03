@@ -48,6 +48,19 @@ export const Bento = styled.div`
   }
 `
 
+
+export const LunchBox = styled.div`
+  display: grid;
+  grid-area: center;
+  grid-template-rows: 10% min-content auto;
+  grid-template-areas:  "header"
+                        "body"
+                        "footer";
+  justify-items: stretch;
+  height: 100%;
+  grid-gap: 20px;
+`
+
 export const Appetizer = styled.div`
   display: flex;
   width: 100%;

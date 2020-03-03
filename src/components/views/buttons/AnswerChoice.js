@@ -37,7 +37,7 @@ const StyledChoice = styled.h4`
 
 export default function AnswerChoice({ choice, keystroke, input, colors, onClick }) {
   const sizedStyles = useResponsiveStyles()
-  const {answerChoiceSize, answerTextSize} = sizedStyles
+  const {answerChoiceSize, answerTextSize, supPosition, subPosition} = sizedStyles
   const background = (() => {
     const thisInput = colors[colors.length-1]
     const greens = colors.filter(input => input.color === 'green').map(input => input.input)
@@ -54,7 +54,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
       return (
         <span style={answerTextSize}>
           &nbsp;{choice.charAt(0)}
-          <sup style={{position:'relative', left:'-15px', top:'-17px'}}>
+          <sup style={supPosition}>
             ^
           </sup>
         </span>
@@ -67,7 +67,7 @@ export default function AnswerChoice({ choice, keystroke, input, colors, onClick
             <sup style={{display:'inline-block', position:'relative', left:'0px', top:'-17px'}}>
               {choice.charAt(choice.length-2)}
             </sup>
-            <sub style={{position:'relative', left:'-14px', top:'6px'}}>
+            <sub style={subPosition}>
               {choice.charAt(choice.length-1)}
             </sub>
           </span>

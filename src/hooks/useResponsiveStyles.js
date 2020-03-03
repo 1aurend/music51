@@ -20,6 +20,7 @@ export default function useResponsiveStyles() {
         h5: responsiveStyles.h5[screen],
         para: responsiveStyles.para[screen],
         universeSizing: responsiveStyles.universeSizing[screen],
+        universeSizingQuiz: responsiveStyles.universeSizingQuiz[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
         largeHSmallV: responsiveStyles.largeHSmallV[screen],
@@ -36,7 +37,9 @@ export default function useResponsiveStyles() {
         loadingMargin: responsiveStyles.loadingMargin[screen],
         answerChoiceSize: responsiveStyles.answerChoiceSize[screen],
         answerTextSize: responsiveStyles.answerTextSize[screen],
-        navButtonFontSize: responsiveStyles.navButtonFontSize[screen]
+        navButtonFontSize: responsiveStyles.navButtonFontSize[screen],
+        supPosition: responsiveStyles.supPosition[screen],
+        subPosition: responsiveStyles.subPosition[screen]
       }
     } else {
       return setSizedStyles({
@@ -47,6 +50,7 @@ export default function useResponsiveStyles() {
         h5: responsiveStyles.h5[screen],
         para: responsiveStyles.para[screen],
         universeSizing: responsiveStyles.universeSizing[screen],
+        universeSizingQuiz: responsiveStyles.universeSizingQuiz[screen],
         layoutInfo: responsiveStyles.layoutInfo[screen],
         layoutQuiz: responsiveStyles.layoutQuiz[screen],
         largeHSmallV: responsiveStyles.largeHSmallV[screen],
@@ -63,7 +67,9 @@ export default function useResponsiveStyles() {
         loadingMargin: responsiveStyles.loadingMargin[screen],
         answerChoiceSize: responsiveStyles.answerChoiceSize[screen],
         answerTextSize: responsiveStyles.answerTextSize[screen],
-        navButtonFontSize: responsiveStyles.navButtonFontSize[screen]
+        navButtonFontSize: responsiveStyles.navButtonFontSize[screen],
+        supPosition: responsiveStyles.supPosition[screen],
+        subPosition: responsiveStyles.subPosition[screen]
       })
     }
   }

@@ -34,6 +34,17 @@ export const universeSizing = {
   }
 }
 
+export const universeSizingQuiz = {
+  LARGE: {
+      gridTemplateColumns: "1fr 768px 1fr",
+      gridTemplateRows: "10% 80% 10%"
+  },
+  SMALL: {
+      gridTemplateColumns: "5% auto 5%",
+      gridTemplateRows: "10% 80% 10%"
+  }
+}
+
 export const largeHSmallV = {
   LARGE: {flexFlow:"row nowrap"},
   SMALL: {flexFlow:"column nowrap"}
@@ -140,4 +151,14 @@ export const navButtonFontSize = {
 export const loadingMargin = {
   LARGE: '5%',
   SMALL: '25%'
+}
+
+export const supPosition = {
+  LARGE: {position:'relative', left: '-10px', top: '-17px'},
+  SMALL: {position:'relative', left: '-7px', top: '-13px'}
+}
+
+export const subPosition = {
+  LARGE: {position:'relative', left: '-10px', top: '12px'},
+  SMALL: {position:'relative', left: '-7px', top: '10px'}
 }
