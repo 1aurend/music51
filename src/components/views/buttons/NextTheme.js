@@ -13,9 +13,6 @@ const StyledSvgButton = styled.div`
 
 export default function NextTheme({ onClick }) {
   const themeUpdate = useContext(ThemeSwitch)
-  const testFunction = () =>{
-    console.log('this is a test');
-  }
   return (
     <>
       <StyledSvgButton

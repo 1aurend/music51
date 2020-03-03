@@ -16,9 +16,8 @@ export default function Context() {
   const [currentTheme, setCurrentTheme] = useState('fewerHues');
   const switchTheme = () => {
     setCurrentTheme(options[i])
-    console.log(options[i]);
     i+=1
-    if (i > options.length-1){
+    if (i >= options.length){
       i=0
     }
   }
