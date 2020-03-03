@@ -7,6 +7,7 @@ export default function useResponsiveStyles() {
                                     width: window.innerWidth,
                                     height: window.innerHeight
                                   })
+  const [prevWidth, setPrevWidth] = useState(window.innerWidth)
   const [sizedStyles, setSizedStyles] = useState(chooseSizedStyles(size, true))
   function chooseSizedStyles(size, init) {
     const screen = size.width >= 768 ? 'LARGE' : 'SMALL'
@@ -74,7 +75,11 @@ export default function useResponsiveStyles() {
     }
   }
   const handleResize = () => {
-    return setSize({width: window.innerWidth, height: window.innerHeight})
+    if (window.innerWidth === prevWidth) {
+      return
+    }
+    setSize({width: window.innerWidth, height: window.innerHeight})
+    setPrevWidth(window.innerWidth)
   }
   useEffect(() => {
     window.addEventListener('resize', handleResize)
