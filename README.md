@@ -62,7 +62,7 @@ Now that we have a warm, dry, and safe home for our Learning Lab work, let's get
 
 ### 2. Use `git` to checkout the code
 
-`git` is a command line program that makes it possible to keep track of the changes you make to your work, and to collaborate with other programmers in an efficient and safe way. It is hard to put into words how helpful this tool can be! What is particularly cool is that it comes pre-installed on your computer, so you don't need to install anything to get going.
+`git` is a command line program that makes it possible to keep track of the changes you make to your work, and to collaborate with other programmers in an efficient and safe way.
 
 Assuming that we are in our `bok` directory (run the `pwd` command to make sure!), run the following command to download all of the source code for the Chord Crusher application:
 
