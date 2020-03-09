@@ -110,6 +110,8 @@ Once installation is complete, run the following command to make sure that every
 brew doctor
 ```
 
+*We invoke the Homebrew program with the sleeker `brew`.*
+
 We can make sure that `brew` is up-to-date by running the following command:
 
 ```Zsh
