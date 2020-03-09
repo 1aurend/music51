@@ -130,7 +130,7 @@ brew install node
 
 ### 5. Update our dependencies
 
-The code in Chord Crusher is built on a bunch of other people's code. We need to download all of the correct versions of these packages with a single command.
+The code in Chord Crusher is built on a bunch of other people's code. We can download all of the correct versions of these packages with a single command.
 
 ```Zsh
 npm --install
