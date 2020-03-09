@@ -32,8 +32,6 @@ To get started, open up `Terminal`. From here, we can get a sense of our environ
 pwd
 ```
 
-This should show you where you are. 
-
 To get a sense of what files you have to work with in your current working directory, run the the `ls` (i.e., "list directory contents") command:
 
 ```Zsh
