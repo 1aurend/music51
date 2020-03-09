@@ -56,7 +56,7 @@ Next, navigate to your new directory with the `cd` command:
 cd bok
 ```
 
-Now that we have warm, dry, and safe home for our Learning Lab work, let's get coding.
+Now that we have a warm, dry, and safe home for our Learning Lab work, let's get coding.
 
 *To flex your `Terminal` muscles, you can run `cd ..` to navigate back up to where you were before you descended into your new `bok` directory. Run `cd bok` to spelunk back down.*
 
