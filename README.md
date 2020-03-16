@@ -130,6 +130,12 @@ We can use `brew` to install both `Node.js` and `npm` with a single command:
 brew install node
 ```
 
+Now we need to ensure that software downloaded with `npm` can be found by the system. Run the following command to make sure everything is in its right place:
+
+```Zsh
+npm config set prefix /usr/local
+```
+
 ### 5. Update our dependencies
 
 The code in Chord Crusher is built on a bunch of other people's code. We can download all of the correct versions of these packages with a single command.
