@@ -50,7 +50,7 @@ mkdir bok
 
 The `mkdir` command creates a directory (or a "folder" in macOS parlance) with the name that you provide. For now, stay away from spaces in your names (that confuses some programs). Instead, you can use `-` or `_` or a variety of other delimiters to split up compound-worded names.
 
-Next, navigate to your new directory with the `cd` command:
+Next, navigate to your new directory with the `cd` (i.e., "change directory") command:
 
 ```Bash
 cd bok
@@ -141,10 +141,10 @@ npm config set prefix /usr/local
 The code in Chord Crusher is built on a bunch of other people's code. We can download all of the correct versions of these packages with a single command.
 
 ```Bash
-npm --install
+npm install
 ```
 
-*If you are feeling particularly cool today, you can type `npm -i` for short.*
+*If you are feeling particularly cool today, you can type `npm i` for short.*
 
 This will take a little bit of time, and should present a deluge of colored comments in your terminal. It's going to be OK.
 
