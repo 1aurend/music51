@@ -28,13 +28,13 @@ Navigate to the `Terminal` application and open it up.
 
 To get started, open up `Terminal`. From here, we can get a sense of our environment with the `pwd` (i.e., "print working directory") command. All you need to do is type the following into your terminal and press ***enter*** or ***return*** to run the command.
 
-```Zsh
+```Bash
 pwd
 ```
 
 To get a sense of what files you have to work with in your current working directory, run the the `ls` (i.e., "list directory contents") command:
 
-```Zsh
+```Bash
 ls
 ```
 
@@ -44,7 +44,7 @@ This should enumerate all of the files and subdirectories in your current workin
 
 Let's make a directory for your work in the Bok Center Learning Lab. You can name it anything you like, but here we will just call it `bok`.
 
-```Zsh
+```Bash
 mkdir bok
 ```
 
@@ -52,7 +52,7 @@ The `mkdir` command creates a directory (or a "folder" in macOS parlance) with t
 
 Next, navigate to your new directory with the `cd` command:
 
-```Zsh
+```Bash
 cd bok
 ```
 
@@ -66,7 +66,7 @@ Now that we have a warm, dry, and safe home for our Learning Lab work, let's get
 
 Assuming that we are in our `bok` directory (run the `pwd` command to make sure!), run the following command to download all of the source code for the Chord Crusher application:
 
-```Zsh
+```Bash
 git clone https://github.com/1aurend/music51
 ```
 
@@ -74,7 +74,7 @@ You can verify that the directory was downloaded by running the `ls` command fro
 
 We aren't inside the `music51` directory yet, but we are instead hovering just outside of it. In order to break in, we can use the `cd` command we learned earlier:
 
-```Zsh
+```Bash
 cd music51
 ```
 
@@ -82,7 +82,7 @@ Again, run the `ls` command to see what we've go to play with. While we can't de
 
 If you want to escape the terminal for a moment, you can type in the following to open the current working directory in the `Finder`:
 
-```Zsh
+```Bash
 open .
 ```
 
@@ -98,7 +98,7 @@ There are many ways to install the software needed to develop, test, and run our
 
 To install Homebrew, copy and paste the following code into the terminal:
 
-```Zsh
+```Bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
@@ -106,7 +106,7 @@ Then, press **enter** or **return** to begin the download and installation.
 
 Once installation is complete, run the following command to make sure that everything went well:
 
-```Zsh
+```Bash
 brew doctor
 ```
 
@@ -114,7 +114,7 @@ brew doctor
 
 We can make sure that `brew` is up-to-date by running the following command:
 
-```Zsh
+```Bash
 brew update
 ```
 
@@ -126,13 +126,13 @@ Our application uses [`Node.js`](https://nodejs.org/en/about/) for development, 
 
 We can use `brew` to install both `Node.js` and `npm` with a single command:
 
-```Zsh
+```Bash
 brew install node
 ```
 
 Now we need to ensure that software downloaded with `npm` can be found by the system. Run the following command to make sure everything is in its right place:
 
-```Zsh
+```Bash
 npm config set prefix /usr/local
 ```
 
@@ -140,7 +140,7 @@ npm config set prefix /usr/local
 
 The code in Chord Crusher is built on a bunch of other people's code. We can download all of the correct versions of these packages with a single command.
 
-```Zsh
+```Bash
 npm --install
 ```
 
@@ -152,13 +152,13 @@ This will take a little bit of time, and should present a deluge of colored comm
 
 To make sure that all the plumbing is clean, let's run some tests. The tests exist so we know that the code is in good working order without having to get the whole machine running. Try running the following command:
 
-```Zsh
+```Bash
 npm test
 ```
 
 If you get a message like this:
 
-```Zsh
+```Bash
 No tests found related to files changed since last commit.
 Press `a` to run all tests, or run Jest with `--watchAll`.
 
@@ -179,7 +179,7 @@ You should hopefully witness an avalanche of strange seeming information streami
 
 If all of the tests are "green" (i.e., passing), let's run the application in a browser:
 
-```Zsh
+```Bash
 npm start
 ```
 
@@ -193,7 +193,7 @@ Navigate to the [Atom webpage](https://atom.io) to download the Atom text editor
 
 Once installed, you can get started with `Atom` by running the following command in the `Terminal`:
 
-```Zsh
+```Bash
 atom .
 ```
 
